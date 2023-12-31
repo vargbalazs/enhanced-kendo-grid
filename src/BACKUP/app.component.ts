@@ -9,8 +9,18 @@ import {
 } from '@progress/kendo-angular-grid';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
-import { CellData } from './interfaces/celldata.interface';
-import { Aggregate } from './interfaces/aggregate.interface';
+
+interface CellData {
+  value: number | string;
+}
+
+interface Aggregate {
+  sum: number;
+  avg: number;
+  count: number;
+  min: number;
+  max: number;
+}
 
 @Component({
   selector: 'app-root',
@@ -71,5 +81,9 @@ export class AppComponent {
         ) === index
     );
     return unique.length === this.selectedCells.length;
+  }
+
+  getAccountNumber(id: number): AccountNumber {
+    return this.accountNumbers.find((accNumber) => accNumber.id === id)!;
   }
 }

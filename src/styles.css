@@ -1,1 +1,222 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+.enhanced.k-grid .k-table-row.k-table-alt-row {
+  background-color: white;
+}
+
+.enhanced.k-grid td,
+.enhanced.k-grid .k-table-td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.enhanced.k-grid-md td,
+.enhanced.k-grid-md .k-table-td {
+  padding-block: 0px;
+  padding-inline: 2px;
+  position: relative;
+  color: #4f5e71;
+  height: 20px;
+  font-size: 12px;
+  font-family: "Inter";
+}
+
+.enhanced.k-grid-md .k-table-td .k-grid-ignore-click {
+  position: absolute;
+  left: -10px;
+  top: -5px;
+  width: 130%;
+  height: 150%;
+}
+
+.enhanced.k-grid td:not([kendogridfiltercell]):focus,
+.enhanced.k-grid .k-table-td:not([kendogridfiltercell]):focus {
+  box-shadow: rgb(1, 114, 203) 0px 0px 0px 1.5px inset;
+}
+
+.enhanced.k-grid td.k-selected,
+.enhanced.k-grid .k-table-row.k-selected > td,
+.enhanced.k-grid .k-table-td.k-selected,
+.enhanced.k-grid .k-table-row.k-selected > .k-table-td {
+  background-color: rgba(232, 244, 253, 0.5);
+}
+
+.enhanced.k-grid td.k-selected.k-grid-edit-cell,
+.enhanced.k-grid .k-table-td.k-selected.k-grid-edit-cell,
+.enhanced.k-grid td.k-grid-edit-cell,
+.enhanced.k-grid .k-table-td.k-grid-edit-cell {
+  background-color: rgb(232, 244, 253);
+  box-shadow: rgb(1, 114, 203) 0px 0px 0px 1.5px inset;
+}
+
+.enhanced.k-grid-md .k-grid-edit-row td,
+.enhanced.k-grid-md .k-grid-edit-row .k-table-td {
+  padding-block: 0px;
+  padding-inline: 2px;
+}
+
+.enhanced.k-grid-md .k-grid-edit-row td input.k-input,
+.enhanced.k-grid-md .k-grid-edit-row .k-table-td input.k-input,
+.enhanced.k-grid-md .k-grid-edit-row td .k-input-sm .k-input-inner {
+  padding-block: 0px;
+  padding-inline: 0px;
+}
+
+.enhanced.k-grid
+  .k-grid-edit-row
+  td
+  > input:not([type="checkbox"]):not([type="radio"]),
+.enhanced.k-grid
+  .k-grid-edit-row
+  .k-table-td
+  > input:not([type="checkbox"]):not([type="radio"]) {
+  border: none;
+  border-radius: 0px;
+  line-height: 1;
+  margin-top: -1px;
+  font-size: 12px;
+}
+
+.enhanced .k-grid-edit-cell .k-input-solid,
+.enhanced .k-grid-edit-cell .k-input-solid:focus {
+  box-shadow: none;
+  background-color: rgb(232, 244, 253);
+  border: none;
+  color: #4f5e71;
+  height: 16px;
+}
+
+.enhanced .k-grid-edit-cell .k-input-sm {
+  font-size: 12px;
+  margin-top: -1px;
+}
+
+.enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-touched,
+.enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-dirty {
+  background-color: #fef3f2;
+  color: #f04438;
+}
+
+.enhanced .k-grid-edit-cell:has(.k-input-solid.ng-invalid.ng-touched),
+.enhanced .k-grid-edit-cell:has(.k-input-solid.ng-invalid.ng-dirty) {
+  background-color: #fef3f2;
+  box-shadow: #f04438 0px 0px 0px 1.5px inset;
+}
+
+.enhanced .k-grid-edit-cell .k-combobox .k-button-solid-base {
+  color: #4f5e71;
+  border: none;
+  background: transparent;
+  padding: 0px;
+  width: 17px;
+}
+
+.enhanced .k-grid-edit-cell .k-combobox .k-button-solid-base:hover {
+  background: transparent;
+}
+
+.enhanced .k-grid-edit-cell .k-input-sm .k-clear-value {
+  padding: 0px;
+}
+
+.enhanced .k-grid-edit-cell .k-button-sm.k-icon-button .k-button-icon {
+  min-width: 17px;
+  min-height: 14px;
+}
+
+.enhanced .k-grid-edit-cell .k-svg-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.k-popup.k-list-container {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.k-popup.k-list-container .k-list {
+  background: unset;
+  color: #252a31;
+  padding-block: 0.4rem;
+}
+
+.k-popup.k-list-container .k-list-md,
+.k-popup.k-list-container .k-list-sm {
+  font-size: 12px;
+  font-family: "Inter";
+}
+
+.k-list-item:hover {
+  color: #2b7483;
+  background: #80b3ba66;
+}
+
+.k-list-item.k-selected,
+.k-list-item.k-selected:hover {
+  background: #2b7483;
+  color: white;
+  font-weight: 500;
+}
+
+.k-list-item.k-focus {
+  box-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f2f4f7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e4e7ec;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d0d5dd;
+}
+
+.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
+.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row).k-hover {
+  background-color: transparent;
+}
+
+.dashed-border {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, rgb(1, 114, 203) 50%, transparent 50%),
+    linear-gradient(90deg, rgb(1, 114, 203) 50%, transparent 50%),
+    linear-gradient(0deg, rgb(1, 114, 203) 50%, transparent 50%),
+    linear-gradient(0deg, rgb(1, 114, 203) 50%, transparent 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 5px 1.5px, 5px 1.5px, 1.5px 5px, 1.5px 5px;
+  background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%;
+  animation: dash 15s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    background-position: 100% 0%, 0% 100%, 0% 0%, 100% 100%;
+  }
+}
+
+.selected-area {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  border: 1px solid rgb(1, 114, 203);
+}

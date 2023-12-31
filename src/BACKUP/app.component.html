@@ -1,14 +1,11 @@
 <div class="selected-area" #selectedArea></div>
 <kendo-grid
-  class="enhanced"
   [kendoGridBinding]="rows"
   [kendoGridInCellEditing]="createFormGroup"
   [selectable]="selectableSettings"
   kendoGridSelectBy
   [(selectedKeys)]="selectedCells"
   [navigable]="true"
-  [filterable]="true"
-  [sortable]="true"
   changeCellFocusWithTab
   cellEditing
   [(selectedCells)]="selectedCells"
@@ -18,7 +15,6 @@
   [selectedArea]="selectedArea"
   selectingWithShift
   selectingWithMouse
-  copyPaste
   #grid
 >
   <kendo-grid-column field="id" [editable]="false">
@@ -27,10 +23,10 @@
       {{ dataItem.id }}
     </ng-template>
   </kendo-grid-column>
-  <kendo-grid-column field="accountNumber.accNumber">
+  <kendo-grid-column field="accountNumber">
     <ng-template kendoGridCellTemplate let-dataItem>
       <div class="k-grid-ignore-click"></div>
-      {{ dataItem.accountNumber.accNumber }}
+      {{ getAccountNumber(dataItem.accountNumber.id).accNumber }}
     </ng-template>
     <ng-template kendoGridEditTemplate let-formGroup="formGroup">
       <kendo-combobox
