@@ -86,6 +86,14 @@ export class SelectingWithShiftDirective implements OnInit, AfterViewInit {
   onKeydown(e: KeyboardEvent): void {
     // if we have copied something to the clipboard
     if (this.copyPasteDir.dataCopied) {
+      // we need the focus shadow back, if we press anything
+      this.renderer2.removeClass(
+        this.copyPasteDir.startingCell,
+        'no-focus-shadow'
+      );
+      // if no selection, then reset the selected area
+      // this is the case, if we copy only one cell
+      if (this.selectedCells.length == 0) resetSelectedArea(this.selectedArea);
       // by pressing esc keep the selection, but remove the dashed border
       if (e.key === 'Escape') {
         this.renderer2.removeClass(this.selectedArea, 'dashed-border');
@@ -129,6 +137,10 @@ export class SelectingWithShiftDirective implements OnInit, AfterViewInit {
       // if we copied something to the clipboard, then cancel the copying
       if (this.copyPasteDir.dataCopied) {
         this.renderer2.removeClass(this.selectedArea, 'dashed-border');
+        this.renderer2.removeClass(
+          this.copyPasteDir.startingCell,
+          'no-focus-shadow'
+        );
         this.copyPasteDir.dataCopied = false;
       }
       let target = <HTMLElement>e.target;

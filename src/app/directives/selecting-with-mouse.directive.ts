@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   Output,
+  Renderer2,
 } from '@angular/core';
 import {
   CellSelectionItem,
@@ -52,9 +53,10 @@ export class SelectingWithMouseDirective implements OnInit, AfterViewInit {
   private gridData: any[] = [];
   private key: string = '';
   private columns!: ColumnComponent[];
+  private firstSelectedCell: any;
   public selectingWithMouse = false;
 
-  constructor(private grid: GridComponent) {}
+  constructor(private grid: GridComponent, private renderer2: Renderer2) {}
 
   ngOnInit(): void {
     // store the border of the selected area and use it later
@@ -82,7 +84,10 @@ export class SelectingWithMouseDirective implements OnInit, AfterViewInit {
     this.selectingWithMouse = true;
     this.updateState();
     resetSelectedArea(this.selectedArea);
-    this.selectedArea.style.display = 'block';
+    // if we click after selection and copying, we need the focus shadow back
+    if (this.firstSelectedCell) {
+      this.renderer2.removeClass(this.firstSelectedCell, 'no-focus-shadow');
+    }
   }
 
   @HostListener('mouseup', ['$event'])
@@ -126,6 +131,7 @@ export class SelectingWithMouseDirective implements OnInit, AfterViewInit {
         )!.value;
         // store the first selected cell, it's position and it's value
         if (this.selectedCells.length === 0) {
+          this.firstSelectedCell = (<HTMLElement>e.target).parentElement;
           this.selectedCells.push({
             itemKey: dataRowIndex,
             columnKey: columnIndex,
