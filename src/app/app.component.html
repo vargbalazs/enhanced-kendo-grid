@@ -9,16 +9,8 @@
   [navigable]="true"
   [filterable]="true"
   [sortable]="true"
-  changeCellFocusWithTab
-  cellEditing
-  [(selectedCells)]="selectedCells"
-  [(selectedCellDatas)]="selectedDatas"
-  [(aggregates)]="aggregates"
-  [cellEditingFormGroup]="createFormGroup"
-  [selectedArea]="selectedArea"
-  selectingWithShift
-  selectingWithMouse
-  copyPaste
+  enhancedGrid
+  [changeCellFocusWithTab]="true"
   #grid
 >
   <kendo-grid-column field="id" [editable]="false">
