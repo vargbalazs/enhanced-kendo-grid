@@ -1,4 +1,3 @@
-<div class="selected-area" #selectedArea></div>
 <kendo-grid
   class="enhanced"
   [kendoGridBinding]="rows"
@@ -12,8 +11,8 @@
   enhancedGrid
   [changeCellFocusWithTab]="true"
   [selectingWithShift]="true"
+  [selectingWithMouse]="true"
   [(aggregates)]="aggregates"
-  #grid
 >
   <kendo-grid-column field="id" [editable]="false">
     <ng-template kendoGridCellTemplate let-dataItem>

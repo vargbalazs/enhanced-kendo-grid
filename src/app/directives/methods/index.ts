@@ -15,3 +15,4 @@ export * from './cell-is-selected';
 export * from './mark-cells-as-selected';
 export * from './calculate-aggregates';
 export * from './resize-selected-area';
+export * from './create-selected-area';

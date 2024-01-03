@@ -29,14 +29,14 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // config object for all the related data for the directive to work
   private config: EnhancedGridConfig;
 
-  // div element for the selected area
-  @Input() selectedArea: HTMLDivElement = document.createElement('div');
-
   // changes the focus with tab to the next cell
   @Input() changeCellFocusWithTab: boolean = false;
 
   // enables selecting cells with shift
   @Input() selectingWithShift: boolean = false;
+
+  // enables selecting cells with the mouse
+  @Input() selectingWithMouse: boolean = false;
 
   // input for the in-cell-editing directive
   @Input() kendoGridInCellEditing!: (args: CreateFormGroupArgs) => FormGroup;
@@ -77,16 +77,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       );
     });
 
-    // add the selected area div before the grid
-    const selectedArea = this.renderer2.createElement('div');
-    this.renderer2.addClass(selectedArea, 'selected-area');
-    this.renderer2.insertBefore(
-      this.element.nativeElement.parentNode,
-      selectedArea,
-      this.element.nativeElement.nextSibling
-    );
-
-    this.config.selectedArea = selectedArea;
+    // create the selected area div
+    methods.createSelectedArea(this.renderer2, this.element, this.config);
   }
 
   ngAfterViewInit(): void {
@@ -119,6 +111,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // if selecting with shift is allowed
     if (this.selectingWithShift) {
+      // display the selected area div
+      this.config.selectedArea.style.display = 'block';
+
       methods.selectWithShift(
         e,
         this.grid,
@@ -148,6 +143,67 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     if (this.kendoGridInCellEditing) {
       // sets the current cell into edit mode
       methods.cellDblClick(this.grid, this.config, this.kendoGridInCellEditing);
+    }
+  }
+
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(e: any) {
+    // if selecting with mouse is allowed
+    if (this.selectingWithMouse) {
+      // start selecting
+      this.resetState();
+      this.config.isMouseDown = true;
+      this.config.selectingWithMouse = true;
+    }
+  }
+
+  @HostListener('mouseup', ['$event'])
+  onMouseUp(e: any) {
+    // if selecting with mouse is allowed
+    if (this.selectingWithMouse) {
+      // end of selecting
+      this.config.isMouseDown = false;
+    }
+  }
+
+  @HostListener('mouseleave', ['$event'])
+  onMouseLeave(e: MouseEvent) {
+    // if selecting with mouse is allowed
+    if (this.selectingWithMouse) {
+      // this event handler is needed, if we move out of the table we set everything to default
+      const target = (<HTMLElement>e.target).parentElement;
+      if (
+        this.config.isMouseDown &&
+        !target?.hasAttribute('ng-reflect-data-row-index')
+      ) {
+        this.config.isMouseDown = false;
+        this.resetState();
+      }
+    }
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    // if selecting with mouse is allowed
+    if (this.selectingWithMouse) {
+      if (this.config.isMouseDown) {
+        e.preventDefault();
+        // get the target
+        const target = (<HTMLElement>e.target).parentElement;
+        // if we move on a data cell
+        if (
+          target?.hasAttribute('ng-reflect-data-row-index') &&
+          target?.hasAttribute('ng-reflect-col-index')
+        ) {
+          // get the indexes
+          const dataRowIndex = +target.attributes.getNamedItem(
+            'ng-reflect-data-row-index'
+          )!.value;
+          const columnIndex = +target.attributes.getNamedItem(
+            'ng-reflect-col-index'
+          )!.value;
+        }
+      }
     }
   }
 

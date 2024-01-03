@@ -214,13 +214,6 @@
   }
 }
 
-.selected-area {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  border: 1px solid rgb(1, 114, 203);
-}
-
 .no-focus-shadow {
   box-shadow: none !important;
 }

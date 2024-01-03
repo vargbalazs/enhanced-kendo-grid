@@ -1,15 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Row } from './model/row.model';
 import { accountNumbers, rows } from './data/data';
 import {
   CellSelectionItem,
   CreateFormGroupArgs,
-  GridComponent,
   SelectableSettings,
 } from '@progress/kendo-angular-grid';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
-import { CellData } from './interfaces/celldata.interface';
 import { Aggregate } from './interfaces/aggregate.interface';
 
 @Component({
@@ -39,16 +37,11 @@ export class AppComponent {
     dec: [0, Validators.required],
   });
 
-  @ViewChild('grid') grid!: GridComponent;
-  @ViewChild('selectedArea', { read: ElementRef })
-  selectedArea!: ElementRef<any>;
-
   selectableSettings: SelectableSettings = {
     cell: true,
   };
 
   selectedCells: CellSelectionItem[] = [];
-  selectedDatas: CellData[] = [];
   aggregates: Aggregate = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
 
   constructor(private formBuilder: FormBuilder) {
