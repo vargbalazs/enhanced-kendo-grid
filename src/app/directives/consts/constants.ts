@@ -5,6 +5,13 @@ export const ARROW_KEYS: string[] = [
   'ArrowRight',
 ];
 
+export enum ARROWS {
+  UP = 'ArrowUp',
+  DOWN = 'ArrowDown',
+  LEFT = 'ArrowLeft',
+  RIGHT = 'ArrowRight',
+}
+
 export const NOT_ALLOWED_KEYS_FOR_EDITING: string[] = [
   ...ARROW_KEYS,
   'Enter',

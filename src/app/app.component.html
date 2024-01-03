@@ -11,6 +11,8 @@
   [sortable]="true"
   enhancedGrid
   [changeCellFocusWithTab]="true"
+  [selectingWithShift]="true"
+  [(aggregates)]="aggregates"
   #grid
 >
   <kendo-grid-column field="id" [editable]="false">
