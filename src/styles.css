@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
+html {
+  font-size: 62.5%;
+}
+
 .enhanced.k-grid .k-table-row.k-table-alt-row {
   background-color: white;
 }
@@ -82,7 +86,7 @@
   background-color: rgb(232, 244, 253);
   border: none;
   color: #4f5e71;
-  height: 16px;
+  /* height: 16px; */
 }
 
 .enhanced .k-grid-edit-cell .k-input-sm {
