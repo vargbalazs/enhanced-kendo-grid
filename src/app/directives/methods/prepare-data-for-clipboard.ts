@@ -5,7 +5,7 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   let firstCell = config.firstSelectedCell;
   let lastCell = config.lastSelectedCell;
 
-  let data = '<table>';
+  let data = ''; //'<table>';
   let columnOffset = Math.abs(lastCell.columnKey - firstCell.columnKey) + 1;
   let rowOffset = Math.abs(lastCell.itemKey - firstCell.itemKey) + 1;
 
@@ -15,15 +15,19 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey <= lastCell.columnKey
   ) {
     for (let i = 0; i <= rowOffset - 1; i++) {
-      data = data.concat('<tr>');
       for (let j = 0; j <= columnOffset - 1; j++) {
-        data = data.concat(
-          '<td>',
-          config.selectedCellDatas[i + rowOffset * j].value.toString(),
-          '</td>'
-        );
+        if (j < columnOffset - 1) {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString(),
+            '\t'
+          );
+        } else {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString()
+          );
+        }
       }
-      data = data.concat('</tr>');
+      data = data.concat('\r\n');
     }
   }
 
@@ -33,15 +37,19 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey <= lastCell.columnKey
   ) {
     for (let i = rowOffset - 1; i >= 0; i--) {
-      data = data.concat('<tr>');
       for (let j = 0; j <= columnOffset - 1; j++) {
-        data = data.concat(
-          '<td>',
-          config.selectedCellDatas[i + rowOffset * j].value.toString(),
-          '</td>'
-        );
+        if (j < columnOffset - 1) {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString(),
+            '\t'
+          );
+        } else {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString()
+          );
+        }
       }
-      data = data.concat('</tr>');
+      data = data.concat('\r\n');
     }
   }
 
@@ -51,15 +59,19 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey > lastCell.columnKey
   ) {
     for (let i = rowOffset - 1; i >= 0; i--) {
-      data = data.concat('<tr>');
       for (let j = columnOffset - 1; j >= 0; j--) {
-        data = data.concat(
-          '<td>',
-          config.selectedCellDatas[i + rowOffset * j].value.toString(),
-          '</td>'
-        );
+        if (j > 0) {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString(),
+            '\t'
+          );
+        } else {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString()
+          );
+        }
       }
-      data = data.concat('</tr>');
+      data = data.concat('\r\n');
     }
   }
 
@@ -69,19 +81,21 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey > lastCell.columnKey
   ) {
     for (let i = 0; i <= rowOffset - 1; i++) {
-      data = data.concat('<tr>');
       for (let j = columnOffset - 1; j >= 0; j--) {
-        data = data.concat(
-          '<td>',
-          config.selectedCellDatas[i + rowOffset * j].value.toString(),
-          '</td>'
-        );
+        if (j > 0) {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString(),
+            '\t'
+          );
+        } else {
+          data = data.concat(
+            config.selectedCellDatas[i + rowOffset * j].value.toString()
+          );
+        }
       }
-      data = data.concat('</tr>');
+      data = data.concat('\r\n');
     }
   }
-
-  data = data + '</table>';
 
   config.copiedDataToClipboard = data;
 }

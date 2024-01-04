@@ -8,7 +8,7 @@ import {
 } from '@progress/kendo-angular-grid';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
-import { Aggregate } from './interfaces/aggregate.interface';
+import { Aggregate } from './directives/interfaces/aggregate.interface';
 
 @Component({
   selector: 'app-root',
