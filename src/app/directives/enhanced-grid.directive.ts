@@ -140,6 +140,16 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         this.updateState.bind(this)
       );
     }
+
+    // if pasing is allowed
+    if (this.enablePasting) {
+      methods.pasteFromClipboard(
+        e,
+        this.config,
+        this.grid,
+        this.updateState.bind(this)
+      );
+    }
   }
 
   @HostListener('click', ['$event'])

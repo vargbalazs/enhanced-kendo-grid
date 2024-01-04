@@ -20,3 +20,4 @@ export * from './mouse-leave-on-selecting';
 export * from './select-with-mouse';
 export * from './prepare-data-for-clipboard';
 export * from './copy-data-to-clipboard';
+export * from './paste-data-from-clipboard';
