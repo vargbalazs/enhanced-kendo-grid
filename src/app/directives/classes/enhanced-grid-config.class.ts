@@ -73,4 +73,13 @@ export class EnhancedGridConfig {
 
   // div element for the selected area
   public selectedArea: HTMLDivElement = document.createElement('div');
+
+  // html element of the first selected cell
+  public firstSelectedCellElement: any;
+
+  // store the initial border of the selected area
+  public selectedAreaBorder: string = '';
+
+  // the copied data to the clipboard
+  public copiedDataToClipboard: string = '';
 }

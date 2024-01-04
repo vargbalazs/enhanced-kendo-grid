@@ -16,3 +16,7 @@ export * from './mark-cells-as-selected';
 export * from './calculate-aggregates';
 export * from './resize-selected-area';
 export * from './create-selected-area';
+export * from './mouse-leave-on-selecting';
+export * from './select-with-mouse';
+export * from './prepare-data-for-clipboard';
+export * from './copy-data-to-clipboard';

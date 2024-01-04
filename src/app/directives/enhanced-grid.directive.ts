@@ -38,6 +38,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // enables selecting cells with the mouse
   @Input() selectingWithMouse: boolean = false;
 
+  // enables copying data to the clipboard
+  @Input() enableCopying: boolean = false;
+
+  // enables pasting data from the clipboard
+  @Input() enablePasting: boolean = false;
+
   // input for the in-cell-editing directive
   @Input() kendoGridInCellEditing!: (args: CreateFormGroupArgs) => FormGroup;
 
@@ -79,6 +85,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // create the selected area div
     methods.createSelectedArea(this.renderer2, this.element, this.config);
+
+    // reset the grid
+    this.resetState();
   }
 
   ngAfterViewInit(): void {
@@ -111,14 +120,23 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // if selecting with shift is allowed
     if (this.selectingWithShift) {
-      // display the selected area div
-      this.config.selectedArea.style.display = 'block';
-
       methods.selectWithShift(
         e,
         this.grid,
         this.config,
         this.resetState.bind(this),
+        this.updateState.bind(this),
+        this.renderer2
+      );
+    }
+
+    // if copying is allowed
+    if (this.enableCopying) {
+      methods.copyDataToClipboard(
+        e,
+        this.config,
+        this.renderer2,
+        this.grid,
         this.updateState.bind(this)
       );
     }
@@ -126,8 +144,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('click', ['$event'])
   onClick() {
-    // if editing is allowed
-    if (!!this.kendoGridInCellEditing) {
+    // if editing is allowed and we aren't selecting with the mouse
+    if (!!this.kendoGridInCellEditing && !this.config.selectingWithMouse) {
       // if we click an other data cell except the edited one, then close it
       methods.cellClickAfterEditing(
         this.grid,
@@ -153,7 +171,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       // start selecting
       this.resetState();
       this.config.isMouseDown = true;
-      this.config.selectingWithMouse = true;
     }
   }
 
@@ -170,15 +187,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   onMouseLeave(e: MouseEvent) {
     // if selecting with mouse is allowed
     if (this.selectingWithMouse) {
-      // this event handler is needed, if we move out of the table we set everything to default
-      const target = (<HTMLElement>e.target).parentElement;
-      if (
-        this.config.isMouseDown &&
-        !target?.hasAttribute('ng-reflect-data-row-index')
-      ) {
-        this.config.isMouseDown = false;
-        this.resetState();
-      }
+      // if we move out of the table we set everything to default
+      methods.mouseLeaveOnSelecting(e, this.config, this.resetState.bind(this));
     }
   }
 
@@ -187,22 +197,17 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if selecting with mouse is allowed
     if (this.selectingWithMouse) {
       if (this.config.isMouseDown) {
-        e.preventDefault();
-        // get the target
-        const target = (<HTMLElement>e.target).parentElement;
-        // if we move on a data cell
-        if (
-          target?.hasAttribute('ng-reflect-data-row-index') &&
-          target?.hasAttribute('ng-reflect-col-index')
-        ) {
-          // get the indexes
-          const dataRowIndex = +target.attributes.getNamedItem(
-            'ng-reflect-data-row-index'
-          )!.value;
-          const columnIndex = +target.attributes.getNamedItem(
-            'ng-reflect-col-index'
-          )!.value;
-        }
+        this.config.selectingWithMouse = true;
+
+        // set the border of the selected area
+        this.config.selectedArea.style.border = this.config.selectedAreaBorder;
+
+        methods.selectWithMouse(
+          this.config,
+          e,
+          this.grid,
+          this.updateState.bind(this)
+        );
       }
     }
   }
@@ -215,8 +220,15 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.aggregates = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
     this.aggregatesChange.emit(this.aggregates);
     this.config.selectingWithMouse = false;
+    this.config.dataCopied = false;
     // reset the selected area div
     methods.resetSelectedArea(this.config.selectedArea);
+    // remove the no-focus-shadow class if we copied something
+    if (this.config.firstSelectedCellElement)
+      this.renderer2.removeClass(
+        this.config.firstSelectedCellElement,
+        'no-focus-shadow'
+      );
   }
 
   // emits the appr. events in order to show the selection on the grid

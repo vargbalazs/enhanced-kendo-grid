@@ -2,6 +2,7 @@ import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 import { ARROWS, ARROW_KEYS } from '../consts/constants';
+import { Renderer2 } from '@angular/core';
 
 // select cells holding the shift key
 export function selectWithShift(
@@ -9,8 +10,21 @@ export function selectWithShift(
   grid: GridComponent,
   config: EnhancedGridConfig,
   resetFn: () => void,
-  updateFn: () => void
+  updateFn: () => void,
+  renderer2: Renderer2
 ) {
+  // if we have copied something to the clipboard
+  if (config.dataCopied) {
+    // by pressing esc keep the selection, but remove the dashed border
+    if (e.key === 'Escape') {
+      renderer2.removeClass(config.selectedArea, 'dashed-border');
+      renderer2.removeClass(config.firstSelectedCellElement, 'no-focus-shadow');
+      config.dataCopied = false;
+      navigator.clipboard.writeText('');
+      return;
+    }
+  }
+
   // if we just alt+tab, do nothing
   if (e.key === 'Alt' || (e.altKey && e.key === 'Tab')) return;
 
@@ -43,6 +57,13 @@ export function selectWithShift(
     ARROW_KEYS.includes(e.key) &&
     grid.activeCell.dataRowIndex != -1 // not header
   ) {
+    // if we copied something to the clipboard, then cancel the copying
+    if (config.dataCopied) {
+      renderer2.removeClass(config.selectedArea, 'dashed-border');
+      renderer2.removeClass(config.firstSelectedCellElement, 'no-focus-shadow');
+      config.dataCopied = false;
+    }
+
     // store the td element
     let target = <HTMLElement>e.target;
     // store the grid element
@@ -139,6 +160,9 @@ export function selectWithShift(
 
       // update also the selected area
       methods.resizeSelectedArea(config);
+
+      // set the border of the selected area
+      config.selectedArea.style.border = config.selectedAreaBorder;
     }
   }
 }

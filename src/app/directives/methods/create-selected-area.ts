@@ -11,11 +11,7 @@ export function createSelectedArea(
   const selectedArea = renderer2.createElement('div') as HTMLDivElement;
 
   // set the default style
-  selectedArea.style.position = 'absolute';
-  selectedArea.style.zIndex = '1';
-  selectedArea.style.pointerEvents = 'none';
-  selectedArea.style.border = '1px solid rgb(1, 114, 203)';
-  selectedArea.style.display = 'none';
+  renderer2.addClass(selectedArea, 'selected-area');
 
   // insert
   renderer2.insertBefore(
@@ -25,4 +21,7 @@ export function createSelectedArea(
   );
 
   config.selectedArea = selectedArea;
+
+  // store the initial border
+  config.selectedAreaBorder = getComputedStyle(selectedArea).border;
 }
