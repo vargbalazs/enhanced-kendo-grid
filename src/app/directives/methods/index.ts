@@ -21,3 +21,5 @@ export * from './select-with-mouse';
 export * from './prepare-data-for-clipboard';
 export * from './copy-data-to-clipboard';
 export * from './paste-data-from-clipboard';
+export * from './cancel-copying';
+export * from './reset-on-keydown';

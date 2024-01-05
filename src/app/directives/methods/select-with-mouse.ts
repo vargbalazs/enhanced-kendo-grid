@@ -11,7 +11,8 @@ export function selectWithMouse(
 ) {
   e.preventDefault();
   // get the target
-  const target = (<HTMLElement>e.target).parentElement;
+  const target = <HTMLElement>e.target; //.parentElement;
+  console.log(target);
   // if we move on a data cell
   if (
     target?.hasAttribute('ng-reflect-data-row-index') &&

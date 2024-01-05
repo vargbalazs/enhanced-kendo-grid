@@ -62,6 +62,8 @@ export class EnhancedGridConfig {
   // subscription for the cell close evenet in order to fire our own cell close event
   public cellClose$: Subscription = new Subscription();
 
+  public cellClick$: Subscription = new Subscription();
+
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];
 

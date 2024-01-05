@@ -13,29 +13,6 @@ export function selectWithShift(
   updateFn: () => void,
   renderer2: Renderer2
 ) {
-  // if we have copied something to the clipboard
-  if (config.dataCopied) {
-    // by pressing esc keep the selection, but remove the dashed border
-    if (e.key === 'Escape') {
-      renderer2.removeClass(config.selectedArea, 'dashed-border');
-      renderer2.removeClass(config.firstSelectedCellElement, 'no-focus-shadow');
-      config.dataCopied = false;
-      navigator.clipboard.writeText('');
-      return;
-    }
-  }
-
-  // if we just alt+tab, do nothing
-  if (e.key === 'Alt' || (e.altKey && e.key === 'Tab')) return;
-
-  // if we press any key, but not shift and control, then reset the state
-  // reset also, if we selected some cells with the mouse previously
-  if (!e.shiftKey && !e.ctrlKey) {
-    resetFn();
-  } else {
-    if (config.selectingWithMouse && !e.ctrlKey) resetFn();
-  }
-
   // if we move back from the header row, we can only move back to the same column index, which we had
   // when we moved to the header row, otherwise we cancel the selection
   if (

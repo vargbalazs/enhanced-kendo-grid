@@ -83,6 +83,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       );
     });
 
+    this.config.cellClick$ = this.grid.cellClick.subscribe((cellClickEvent) => {
+      console.log('belép');
+      this.grid.closeCell();
+      this.resetState();
+    });
+
     // create the selected area div
     methods.createSelectedArea(this.renderer2, this.element, this.config);
 
@@ -103,6 +109,16 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('keydown', ['$event'])
   onKeydown(e: KeyboardEvent): void {
+    // if we just alt+tab, do nothing
+    if (e.key === 'Alt' || (e.altKey && e.key === 'Tab')) return;
+
+    // general reset
+    methods.resetOnKeydown(e, this.resetState.bind(this), this.config);
+
+    // reset copying if any
+    if (this.config.dataCopied)
+      methods.cancelCopying(this.config, this.renderer2);
+
     // if changing focus with tab is allowed
     if (this.changeCellFocusWithTab)
       methods.changeCellFocusWithTab(this.grid, e);
@@ -154,6 +170,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('click', ['$event'])
   onClick() {
+    console.log('onclick');
     // if editing is allowed and we aren't selecting with the mouse
     if (!!this.kendoGridInCellEditing && !this.config.selectingWithMouse) {
       // if we click an other data cell except the edited one, then close it
@@ -181,6 +198,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       // start selecting
       this.resetState();
       this.config.isMouseDown = true;
+      // if we are editing a cell, then close it
+      methods.cellClickAfterEditing(
+        this.grid,
+        this.config,
+        this.resetState.bind(this)
+      );
     }
   }
 
@@ -233,7 +256,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.dataCopied = false;
     // reset the selected area div
     methods.resetSelectedArea(this.config.selectedArea);
-    // remove the no-focus-shadow class if we copied something
+    // remove the no-focus-shadow class if we copied something - applies only in case of mouse click
     if (this.config.firstSelectedCellElement)
       this.renderer2.removeClass(
         this.config.firstSelectedCellElement,

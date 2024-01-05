@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-html {
+/* html {
   font-size: 62.5%;
-}
+} */
 
 .enhanced.k-grid .k-table-row.k-table-alt-row {
   background-color: white;
@@ -76,7 +76,7 @@ html {
   border: none;
   border-radius: 0px;
   line-height: 1;
-  margin-top: -1px;
+  margin-top: -3px;
   font-size: 12px;
 }
 
@@ -86,12 +86,12 @@ html {
   background-color: rgb(232, 244, 253);
   border: none;
   color: #4f5e71;
-  /* height: 16px; */
+  height: 15px;
 }
 
 .enhanced .k-grid-edit-cell .k-input-sm {
   font-size: 12px;
-  margin-top: -1px;
+  margin-top: -3px;
 }
 
 .enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-touched,

@@ -7,14 +7,23 @@ export function cellClickAfterEditing(
   config: EnhancedGridConfig,
   resetFn: () => void
 ) {
-  if (grid.activeCell.dataItem) {
-    const sameCell =
-      config.editedColIndex === grid.activeCell.colIndex &&
-      config.editedRowIndex === grid.activeCell.dataRowIndex;
-    if (!sameCell) {
-      grid.closeCell();
-      config.noFocusingWithArrowKeys = false;
-      resetFn();
+  if (grid.activeCell) {
+    if (grid.activeCell.dataItem) {
+      // if we begin to select with the mouse, then close the edited cell
+      if (config.isMouseDown) {
+        grid.closeCell();
+        config.noFocusingWithArrowKeys = false;
+        resetFn();
+      }
+      // close also if we click somewhere else
+      const sameCell =
+        config.editedColIndex === grid.activeCell.colIndex &&
+        config.editedRowIndex === grid.activeCell.dataRowIndex;
+      if (!sameCell) {
+        grid.closeCell();
+        config.noFocusingWithArrowKeys = false;
+        resetFn();
+      }
     }
   }
 }
