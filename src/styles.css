@@ -19,6 +19,7 @@
   padding-inline: 2px;
   position: relative;
   color: #4f5e71;
+  background-color: white;
   height: 20px;
   font-size: 12px;
   font-family: "Inter";
@@ -132,7 +133,8 @@
   height: 14px;
 }
 
-.k-popup.k-list-container {
+.k-popup.k-list-container,
+.k-popup.k-dropdowngrid-popup {
   border: 1px solid #e5e7eb;
   border-radius: 4px;
   background: #ffffff;
@@ -149,7 +151,8 @@
 }
 
 .k-popup.k-list-container .k-list-md,
-.k-popup.k-list-container .k-list-sm {
+.k-popup.k-list-container .k-list-sm,
+.k-dropdowngrid-popup > .k-data-table {
   font-size: 12px;
   font-family: "Inter";
 }
@@ -168,6 +171,46 @@
 
 .k-list-item.k-focus {
   box-shadow: none;
+}
+
+.k-dropdowngrid-popup .k-table-header,
+.k-dropdowngrid-popup .k-table-thead {
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280;
+  background-color: #f9fafb;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.k-data-table .k-table-th,
+.k-data-table .k-table-header-wrap {
+  border: 0;
+}
+
+.k-table-list .k-table-td {
+  border: 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-block: 2px;
+}
+
+.k-table-list .k-table-alt-row {
+  background-color: transparent;
+}
+
+.k-table-list .k-table-row:hover {
+  background-color: #80b3ba66;
+  color: #2b7483;
+}
+
+.k-table-list .k-table-row.k-focus {
+  box-shadow: none;
+}
+
+.k-table-list .k-table-row.k-selected,
+.k-table-list .k-table-row.k-selected:hover {
+  background: #2b7483;
+  color: white;
+  font-weight: 500;
 }
 
 ::-webkit-scrollbar {
@@ -227,4 +270,8 @@
 
 .no-focus-shadow {
   box-shadow: none !important;
+}
+
+.non-editable {
+  background-color: #f9fafb !important;
 }

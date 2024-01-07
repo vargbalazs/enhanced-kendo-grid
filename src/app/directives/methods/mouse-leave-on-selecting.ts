@@ -6,7 +6,7 @@ export function mouseLeaveOnSelecting(
   config: EnhancedGridConfig,
   resetFn: () => void
 ) {
-  const target = (<HTMLElement>e.target).parentElement;
+  const target = <HTMLElement>e.target;
   if (
     config.isMouseDown &&
     !target?.hasAttribute('ng-reflect-data-row-index')

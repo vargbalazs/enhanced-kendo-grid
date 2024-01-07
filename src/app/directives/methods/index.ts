@@ -23,3 +23,5 @@ export * from './copy-data-to-clipboard';
 export * from './paste-data-from-clipboard';
 export * from './cancel-copying';
 export * from './reset-on-keydown';
+export * from './is-active-cell-different';
+export * from './close-edited-cell';

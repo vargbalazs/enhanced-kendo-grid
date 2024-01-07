@@ -16,17 +16,12 @@
   [enablePasting]="true"
   [(aggregates)]="aggregates"
 >
-  <kendo-grid-column field="id" [editable]="false">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.id }}
-    </ng-template>
-  </kendo-grid-column>
+  <kendo-grid-column
+    field="id"
+    [editable]="false"
+    [class]="'non-editable'"
+  ></kendo-grid-column>
   <kendo-grid-column field="accountNumber.accNumber">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.accountNumber.accNumber }}
-    </ng-template>
     <ng-template kendoGridEditTemplate let-formGroup="formGroup">
       <kendo-combobox
         kendoGridFocusable
@@ -37,80 +32,66 @@
         textField="accNumber"
         valueField="id"
         [kendoDropDownFilter]="{ operator: 'contains' }"
+        [popupSettings]="{ width: 'auto' }"
       >
       </kendo-combobox>
     </ng-template>
   </kendo-grid-column>
-  <kendo-grid-column field="jan" [class]="'!k-text-righttt'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <!-- <div class="k-grid-ignore-click"></div> -->
-      {{ dataItem.jan }}
+  <kendo-grid-column
+    field="accountNumber.accName"
+    [editable]="false"
+    [class]="'non-editable'"
+  ></kendo-grid-column>
+  <kendo-grid-column field="project.projNumber">
+    <ng-template kendoGridEditTemplate let-formGroup="formGroup">
+      <kendo-multicolumncombobox
+        kendoGridFocusable
+        size="small"
+        fillMode="solid"
+        [formControl]="formGroup.get('project')"
+        [data]="projects"
+        textField="projNumber"
+        valueField="id"
+        [kendoDropDownFilter]="{
+          operator: 'contains',
+          fields: ['projNumber', 'projName']
+        }"
+        [popupSettings]="{ width: '20%' }"
+      >
+        <kendo-combobox-column field="id"></kendo-combobox-column>
+        <kendo-combobox-column field="projNumber"></kendo-combobox-column>
+        <kendo-combobox-column field="projName"></kendo-combobox-column>
+      </kendo-multicolumncombobox>
     </ng-template>
   </kendo-grid-column>
-  <kendo-grid-column field="feb" [class]="'!k-text-right'">
+  <kendo-grid-column field="jan" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="feb" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="mar" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="apr" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="may" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="jun" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="jul" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="aug" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="sep" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="oct" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="nov" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column field="dec" [class]="'!k-text-right'"></kendo-grid-column>
+  <kendo-grid-column title="total" [class]="'!k-text-right'">
     <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.feb }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="mar" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.mar }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="apr" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.apr }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="may" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.may }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="jun" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.jun }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="jul" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.jul }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="aug" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.aug }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="sep" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.sep }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="oct" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.oct }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="nov" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.nov }}
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column field="dec" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <div class="k-grid-ignore-click"></div>
-      {{ dataItem.dec }}
+      {{
+        dataItem.jan +
+          dataItem.feb +
+          dataItem.mar +
+          dataItem.apr +
+          dataItem.may +
+          dataItem.jun +
+          dataItem.jul +
+          dataItem.aug +
+          dataItem.sep +
+          dataItem.oct +
+          dataItem.nov +
+          dataItem.dec
+      }}
     </ng-template>
   </kendo-grid-column>
   <ng-template kendoGridStatusBarTemplate>

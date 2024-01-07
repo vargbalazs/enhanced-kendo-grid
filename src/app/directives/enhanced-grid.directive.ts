@@ -56,6 +56,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // event emitter for updating the 'aggregates' input
   @Output() aggregatesChange = new EventEmitter<Aggregate>();
 
+  // cell was double clicked
+  private cellDblClicked: boolean = false;
+
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
@@ -83,8 +86,17 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       );
     });
 
+    // subscribe to the cellclick event - with this we override the default kendo logic and close the cell
+    // except if we are editing
     this.config.cellClick$ = this.grid.cellClick.subscribe((cellClickEvent) => {
-      console.log('belép');
+      // if we hit enter, the subscr is being called, but in this case we want to go into edit mode, so we return
+      if (cellClickEvent.originalEvent instanceof KeyboardEvent) return;
+      // if we double clicked a cell and edit mode is enabled, then enter in edit mode and return
+      if (this.cellDblClicked && !!this.kendoGridInCellEditing) {
+        this.onDblClick();
+        this.cellDblClicked = false;
+        return;
+      }
       this.grid.closeCell();
       this.resetState();
     });
@@ -105,6 +117,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.config.cellClose$.unsubscribe();
+    this.config.cellClick$.unsubscribe();
   }
 
   @HostListener('keydown', ['$event'])
@@ -170,7 +183,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('click', ['$event'])
   onClick() {
-    console.log('onclick');
+    this.cellDblClicked = false;
     // if editing is allowed and we aren't selecting with the mouse
     if (!!this.kendoGridInCellEditing && !this.config.selectingWithMouse) {
       // if we click an other data cell except the edited one, then close it
@@ -184,26 +197,28 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('dblclick', ['$event'])
   onDblClick() {
+    this.cellDblClicked = true;
     // if editing is allowed
     if (this.kendoGridInCellEditing) {
       // sets the current cell into edit mode
       methods.cellDblClick(this.grid, this.config, this.kendoGridInCellEditing);
+      // if we are on laptop and double tap, often the same cell will be selected twice, because mousemove fires twice
+      // so we remove one of them (this isn't really needed, but so it's clear)
+      if (this.config.selectedCells.length > 1)
+        this.config.selectedCells = this.config.selectedCells.splice(1);
     }
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(e: any) {
+    // if we double clicked and editing is allowed
+    this.cellDblClicked = e.detail == 2;
+
     // if selecting with mouse is allowed
     if (this.selectingWithMouse) {
       // start selecting
       this.resetState();
       this.config.isMouseDown = true;
-      // if we are editing a cell, then close it
-      methods.cellClickAfterEditing(
-        this.grid,
-        this.config,
-        this.resetState.bind(this)
-      );
     }
   }
 
@@ -232,8 +247,23 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       if (this.config.isMouseDown) {
         this.config.selectingWithMouse = true;
 
-        // set the border of the selected area
-        this.config.selectedArea.style.border = this.config.selectedAreaBorder;
+        // if we are editing an other cell, then close the edited one, else return
+        if (this.grid.isEditing()) {
+          if (methods.isActiveCellDifferent(this.config, this.grid)) {
+            methods.closeEditedCell(
+              this.grid,
+              this.config,
+              this.resetState.bind(this)
+            );
+          } else {
+            return;
+          }
+        }
+
+        // set the border of the selected area, but only if we are not after a double click
+        if (!this.cellDblClicked)
+          this.config.selectedArea.style.border =
+            this.config.selectedAreaBorder;
 
         methods.selectWithMouse(
           this.config,

@@ -28,8 +28,8 @@ export function cellClose(
   }
   // if we hit escape, then restore the original value
   if ((<KeyboardEvent>args.originalEvent)?.key === 'Escape') {
-    // if some filters are active
-    if (grid.filter?.filters) {
+    // if some filters or sorting are active
+    if (grid.filter?.filters || grid.sort!.length > 0) {
       // gridData will have only the filtered rows
       // dataRowIndex will have the correct row index according to the filtered data
       const gridData = (<GridDataResult>grid.data).data;

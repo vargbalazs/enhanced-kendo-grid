@@ -1,8 +1,10 @@
 import { AccountNumber } from './account-number.model';
+import { Project } from './project.model';
 
 export interface Row {
   id?: number;
   accountNumber?: AccountNumber;
+  project?: Project;
   jan?: number;
   feb?: number;
   mar?: number;

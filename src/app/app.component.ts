@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Row } from './model/row.model';
-import { accountNumbers, rows } from './data/data';
+import { accountNumbers, projects, rows } from './data/data';
 import {
   CellSelectionItem,
   CreateFormGroupArgs,
@@ -9,6 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
 import { Aggregate } from './directives/interfaces/aggregate.interface';
+import { Project } from './model/project.model';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,11 @@ export class AppComponent {
 
   rows: Row[] = rows;
   accountNumbers: AccountNumber[] = accountNumbers;
+  projects: Project[] = projects;
 
   formGroup = this.formBuilder.group({
-    accountNumber: [{ id: 0, accNumber: '' }, Validators.required],
+    accountNumber: [{ id: 0, accNumber: '', accName: '' }, Validators.required],
+    project: [{ id: 0, projNumber: '', projName: '' }, Validators.required],
     jan: [0, Validators.required],
     feb: [0, Validators.required],
     mar: [0, Validators.required],

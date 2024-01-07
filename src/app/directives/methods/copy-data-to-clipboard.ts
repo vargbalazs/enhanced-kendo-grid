@@ -42,10 +42,12 @@ export function copyDataToClipboard(
         itemKey: grid.activeCell.dataRowIndex,
         columnKey: grid.activeCell.colIndex,
       };
-      // resize the selected area and adjust style
-      methods.resizeSelectedArea(config);
-      config.selectedArea.style.border = config.selectedAreaBorder;
-      renderer2.addClass(config.selectedArea, 'dashed-border');
+      // resize the selected area and adjust style, but only if we aren't in edit mode
+      if (!grid.isEditing()) {
+        methods.resizeSelectedArea(config);
+        config.selectedArea.style.border = config.selectedAreaBorder;
+        renderer2.addClass(config.selectedArea, 'dashed-border');
+      }
       // get the data
       let fieldname = config.columns[grid.activeCell.colIndex].field;
       let value: string | number;
