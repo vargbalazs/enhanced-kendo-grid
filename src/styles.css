@@ -19,7 +19,6 @@
   padding-inline: 2px;
   position: relative;
   color: #4f5e71;
-  background-color: white;
   height: 20px;
   font-size: 12px;
   font-family: "Inter";
@@ -273,5 +272,5 @@
 }
 
 .non-editable {
-  background-color: #f9fafb !important;
+  background-color: #f9fafb;
 }

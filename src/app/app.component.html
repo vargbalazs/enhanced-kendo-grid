@@ -77,22 +77,7 @@
   <kendo-grid-column field="nov" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="dec" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column title="total" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      {{
-        dataItem.jan +
-          dataItem.feb +
-          dataItem.mar +
-          dataItem.apr +
-          dataItem.may +
-          dataItem.jun +
-          dataItem.jul +
-          dataItem.aug +
-          dataItem.sep +
-          dataItem.oct +
-          dataItem.nov +
-          dataItem.dec
-      }}
-    </ng-template>
+    <ng-template kendoGridCellTemplate let-dataItem> </ng-template>
   </kendo-grid-column>
   <ng-template kendoGridStatusBarTemplate>
     sum: {{ aggregates.sum }}, count: {{ aggregates.count }}, avg:
