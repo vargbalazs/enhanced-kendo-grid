@@ -76,9 +76,10 @@
   <kendo-grid-column field="oct" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="nov" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="dec" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column title="total" [class]="'!k-text-right'">
-    <ng-template kendoGridCellTemplate let-dataItem> </ng-template>
-  </kendo-grid-column>
+  <kendo-grid-column
+    field="total"
+    [class]="'!k-text-right'"
+  ></kendo-grid-column>
   <ng-template kendoGridStatusBarTemplate>
     sum: {{ aggregates.sum }}, count: {{ aggregates.count }}, avg:
     {{ aggregates.avg }}, min: {{ aggregates.min }}, max: {{ aggregates.max }}

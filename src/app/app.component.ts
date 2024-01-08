@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
 import { Aggregate } from './directives/interfaces/aggregate.interface';
 import { Project } from './model/project.model';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +39,7 @@ export class AppComponent {
     oct: [0, Validators.required],
     nov: [0, Validators.required],
     dec: [0, Validators.required],
+    total: [0],
   });
 
   selectableSettings: SelectableSettings = {
@@ -49,6 +51,13 @@ export class AppComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.createFormGroup = this.createFormGroup.bind(this);
+    this.formGroup.valueChanges.subscribe((value) => {
+      this.formGroup.controls.total.setValue(
+        +this.formGroup.controls.jan.value! +
+          +this.formGroup.controls.feb.value!,
+        { emitEvent: false }
+      );
+    });
   }
 
   createFormGroup(args: CreateFormGroupArgs): FormGroup {
