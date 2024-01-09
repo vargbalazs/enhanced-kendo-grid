@@ -17,4 +17,5 @@ export interface Row {
   oct?: number;
   nov?: number;
   dec?: number;
+  total?: number;
 }

@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
 import { Aggregate } from './directives/interfaces/aggregate.interface';
 import { Project } from './model/project.model';
-import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -50,13 +49,10 @@ export class AppComponent {
   aggregates: Aggregate = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
 
   constructor(private formBuilder: FormBuilder) {
+    this.calculateTotal(this.rows);
     this.createFormGroup = this.createFormGroup.bind(this);
     this.formGroup.valueChanges.subscribe((value) => {
-      this.formGroup.controls.total.setValue(
-        +this.formGroup.controls.jan.value! +
-          +this.formGroup.controls.feb.value!,
-        { emitEvent: false }
-      );
+      this.calculateTotalFromFormGroup(value);
     });
   }
 
@@ -76,5 +72,37 @@ export class AppComponent {
         ) === index
     );
     return unique.length === this.selectedCells.length;
+  }
+
+  calculateTotal(rows: Row[]) {
+    rows.forEach(
+      (row) =>
+        (row.total =
+          row.jan! +
+          row.feb! +
+          row.mar! +
+          row.apr! +
+          row.may! +
+          row.jun! +
+          row.jul! +
+          row.aug! +
+          row.sep! +
+          row.oct! +
+          row.nov! +
+          row.dec!)
+    );
+  }
+
+  calculateTotalFromFormGroup(formGroup: Partial<Row>) {
+    formGroup.controls.total.setValue(
+      this.anyToNumber(formGroup.controls.jan.value) +
+        this.anyToNumber(formGroup.controls.feb.value),
+      { emitEvent: false }
+    );
+  }
+
+  anyToNumber(value: any): number {
+    if (!isFinite(+value)) return 0;
+    return +value;
   }
 }
