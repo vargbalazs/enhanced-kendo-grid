@@ -132,6 +132,11 @@
   height: 14px;
 }
 
+.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
+.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row).k-hover {
+  background-color: transparent;
+}
+
 .k-popup.k-list-container,
 .k-popup.k-dropdowngrid-popup {
   border: 1px solid #e5e7eb;
@@ -234,11 +239,6 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #d0d5dd;
-}
-
-.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
-.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row).k-hover {
-  background-color: transparent;
 }
 
 .selected-area {

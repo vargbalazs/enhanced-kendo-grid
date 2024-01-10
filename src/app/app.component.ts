@@ -39,6 +39,7 @@ export class AppComponent {
     nov: [0, Validators.required],
     dec: [0, Validators.required],
     total: [0],
+    category: ['', Validators.required],
   });
 
   selectableSettings: SelectableSettings = {
@@ -52,7 +53,7 @@ export class AppComponent {
     this.calculateTotal(this.rows);
     this.createFormGroup = this.createFormGroup.bind(this);
     this.formGroup.valueChanges.subscribe((value) => {
-      this.calculateTotalFromFormGroup(value);
+      this.calculateTotalFromFormGroup(this.formGroup);
     });
   }
 
@@ -93,10 +94,20 @@ export class AppComponent {
     );
   }
 
-  calculateTotalFromFormGroup(formGroup: Partial<Row>) {
+  calculateTotalFromFormGroup(formGroup: typeof this.formGroup) {
     formGroup.controls.total.setValue(
       this.anyToNumber(formGroup.controls.jan.value) +
-        this.anyToNumber(formGroup.controls.feb.value),
+        this.anyToNumber(formGroup.controls.feb.value) +
+        this.anyToNumber(formGroup.controls.mar.value) +
+        this.anyToNumber(formGroup.controls.apr.value) +
+        this.anyToNumber(formGroup.controls.may.value) +
+        this.anyToNumber(formGroup.controls.jun.value) +
+        this.anyToNumber(formGroup.controls.jul.value) +
+        this.anyToNumber(formGroup.controls.aug.value) +
+        this.anyToNumber(formGroup.controls.sep.value) +
+        this.anyToNumber(formGroup.controls.oct.value) +
+        this.anyToNumber(formGroup.controls.nov.value) +
+        this.anyToNumber(formGroup.controls.dec.value),
       { emitEvent: false }
     );
   }

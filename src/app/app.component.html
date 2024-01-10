@@ -64,6 +64,11 @@
       </kendo-multicolumncombobox>
     </ng-template>
   </kendo-grid-column>
+  <kendo-grid-column
+    field="category"
+    [editable]="false"
+    [class]="'non-editable'"
+  ></kendo-grid-column>
   <kendo-grid-column field="jan" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="feb" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="mar" [class]="'!k-text-right'"></kendo-grid-column>

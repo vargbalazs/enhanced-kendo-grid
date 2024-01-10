@@ -18,4 +18,5 @@ export interface Row {
   nov?: number;
   dec?: number;
   total?: number;
+  category?: string;
 }

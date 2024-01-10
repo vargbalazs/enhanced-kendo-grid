@@ -33,6 +33,7 @@ function generateData(): Row[] {
       oct: Math.round(Math.random() * 1000),
       nov: Math.round(Math.random() * 1000),
       dec: Math.round(Math.random() * 1000),
+      category: `cat ${i < 5 ? '1' : '2'}`,
     });
   }
 
