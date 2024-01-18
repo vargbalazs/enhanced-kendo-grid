@@ -15,6 +15,13 @@ export function cellClose(
   cellEditingFormGroupFn: (args: CreateFormGroupArgs) => FormGroup,
   resetFn: () => void
 ) {
+  // if some filters or sorting are active, we have to override the edited row index
+  if (grid.filter?.filters || grid.sort!.length > 0) {
+    const gridData = (<GridDataResult>grid.data).data;
+    config.editedRowIndex = gridData.findIndex(
+      (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
+    );
+  }
   // if cell data is invalid, then put the cell back in edit mode
   // with this, we are preventing to focus out (except if we entered in edit mode with Enter)
   // in case of Enter, the old value gets written back
@@ -30,20 +37,20 @@ export function cellClose(
   if ((<KeyboardEvent>args.originalEvent)?.key === 'Escape') {
     // if some filters or sorting are active
     if (grid.filter?.filters || grid.sort!.length > 0) {
-      // gridData will have only the filtered rows
-      // dataRowIndex will have the correct row index according to the filtered data
+      // gridData will have only the filtered rows, so we have to determine the right edited row index
       const gridData = (<GridDataResult>grid.data).data;
+      config.editedRowIndex = gridData.findIndex(
+        (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
+      );
       gridData[config.editedRowIndex] = config.originalDataItem;
-      // get the dataRowIndex according to the original (not filtered) data source
-      config.dataRowIndexBeforeFiltering = config.gridData.find(
-        (row) => row.id === config.originalDataItem.id
-      ).dataRowIndex;
-      // use this dataRowIndex to set the originalDataItem back
-      config.gridData[config.dataRowIndexBeforeFiltering] =
-        config.originalDataItem;
     } else {
       config.gridData[config.editedRowIndex] = config.originalDataItem;
     }
+    // we have to restore the original values also in the full grid data
+    const index = config.fullGridData.findIndex(
+      (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
+    );
+    config.fullGridData[index] = config.originalDataItem;
     config.noFocusingWithArrowKeys = false;
     resetFn();
   }

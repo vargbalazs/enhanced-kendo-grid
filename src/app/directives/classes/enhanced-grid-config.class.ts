@@ -8,8 +8,11 @@ import { CellData } from '../interfaces/celldata.interface';
 import { Aggregate } from '../interfaces/aggregate.interface';
 
 export class EnhancedGridConfig {
-  // the data of the grid
+  // the data of the grid - just one page, if paging is enabled
   public gridData: any[] = [];
+
+  // the full grid data
+  public fullGridData: any[] = [];
 
   // the columns of the grid
   public columns: ColumnComponent[] = [];
@@ -64,6 +67,9 @@ export class EnhancedGridConfig {
 
   // subscription for the cell click evenet in order to override it
   public cellClick$: Subscription = new Subscription();
+
+  // subscription for the page change event
+  public pageChange$: Subscription = new Subscription();
 
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];

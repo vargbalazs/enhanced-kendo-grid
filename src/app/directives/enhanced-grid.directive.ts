@@ -50,6 +50,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // object for aggregated values of the selected data
   @Input() aggregates: Aggregate = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
 
+  // input for the full grid data
+  @Input() kendoGridBinding!: any[];
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -69,11 +72,18 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     // get the data of the grid
+    // if paging is enabled, this gets only the first page data
     this.config.gridData = (<GridDataResult>this.grid.data).data;
+
+    // get the full grid data
+    this.config.fullGridData = this.kendoGridBinding;
 
     // add a field 'dataRowIndex' to the grid data - this is needed, because if we are filtering, we have to store the 'dataRowIndex'
     // of the data item before filtering
     this.config.gridData.forEach((row, index) => (row.dataRowIndex = index));
+    this.config.fullGridData.forEach(
+      (row, index) => (row.dataRowIndex = index)
+    );
 
     // subscribe to the cellClose event
     this.config.cellClose$ = this.grid.cellClose.subscribe((cellCloseEvent) => {
@@ -101,6 +111,14 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.resetState();
     });
 
+    // subscribe to the page change event
+    this.config.pageChange$ = this.grid.pageChange.subscribe(
+      (pageChangeEvent) => {
+        // refresh the page data
+        this.config.gridData = (<GridDataResult>this.grid.data).data;
+      }
+    );
+
     // create the selected area div
     methods.createSelectedArea(this.renderer2, this.element, this.config);
 
@@ -118,6 +136,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.config.cellClose$.unsubscribe();
     this.config.cellClick$.unsubscribe();
+    this.config.pageChange$.unsubscribe();
   }
 
   @HostListener('keydown', ['$event'])
