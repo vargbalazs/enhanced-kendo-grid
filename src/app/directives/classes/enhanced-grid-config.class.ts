@@ -38,6 +38,9 @@ export class EnhancedGridConfig {
   // temporary variable to store the row index of an edited cell
   public editedRowIndex: number = -1;
 
+  // temporary variable to store the row index of an edited cell, if we filtered or sortet the data before
+  public editedRowIndexFilterOrSort: number = -1;
+
   // temporary variable to store the column index of an edited cell
   public editedColIndex: number = -1;
 

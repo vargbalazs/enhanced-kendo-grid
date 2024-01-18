@@ -26,12 +26,22 @@ export function cellClose(
   // with this, we are preventing to focus out (except if we entered in edit mode with Enter)
   // in case of Enter, the old value gets written back
   if (!(<FormGroup>args.formGroup).valid) {
-    args.formGroup = config.originalDataItem;
-    grid.editCell(
-      config.editedRowIndex,
-      config.editedColIndex,
-      cellEditingFormGroupFn(args)
-    );
+    // if some filters or sorting are active, we use the 'editedRowIndexFilterOrSort' for putting the cell in edit mode
+    if (grid.filter?.filters || grid.sort!.length > 0) {
+      args.formGroup = config.originalDataItem;
+      grid.editCell(
+        config.editedRowIndexFilterOrSort,
+        config.editedColIndex,
+        cellEditingFormGroupFn(args)
+      );
+    } else {
+      args.formGroup = config.originalDataItem;
+      grid.editCell(
+        config.editedRowIndex,
+        config.editedColIndex,
+        cellEditingFormGroupFn(args)
+      );
+    }
   }
   // if we hit escape, then restore the original value
   if ((<KeyboardEvent>args.originalEvent)?.key === 'Escape') {
