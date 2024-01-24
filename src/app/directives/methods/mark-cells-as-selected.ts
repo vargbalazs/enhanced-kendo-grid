@@ -1,8 +1,12 @@
+import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 
 // marks the cells as selected in every direction
-export function markCellsAsSelected(config: EnhancedGridConfig) {
+export function markCellsAsSelected(
+  config: EnhancedGridConfig,
+  grid: GridComponent
+) {
   const firstCell = config.firstSelectedCell;
   // calculate the ranges
   const rowOffset = Math.abs(
@@ -46,14 +50,18 @@ export function markCellsAsSelected(config: EnhancedGridConfig) {
           const objectKey = fieldname.substring(0, fieldname.indexOf('.'));
           const propertyKey = fieldname.substring(fieldname.indexOf('.') + 1);
           value =
-            config.gridData[firstCell.itemKey + j * verticalDirection][
-              objectKey
-            ][propertyKey];
+            config.gridData[
+              firstCell.itemKey -
+                (grid.skip ? grid.skip : 0) +
+                j * verticalDirection
+            ][objectKey][propertyKey];
         } else {
           value =
-            config.gridData[firstCell.itemKey + j * verticalDirection][
-              fieldname
-            ];
+            config.gridData[
+              firstCell.itemKey -
+                (grid.skip ? grid.skip : 0) +
+                j * verticalDirection
+            ][fieldname];
         }
         config.selectedCellDatas = [
           ...config.selectedCellDatas,

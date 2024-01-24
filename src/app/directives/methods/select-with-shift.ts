@@ -127,7 +127,7 @@ export function selectWithShift(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
-      methods.markCellsAsSelected(config);
+      methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
       updateFn();
 

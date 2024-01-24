@@ -71,7 +71,7 @@ export function selectWithMouse(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
-      methods.markCellsAsSelected(config);
+      methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
 
       // update only, if we are in another cell
