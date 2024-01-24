@@ -26,6 +26,10 @@ export function pasteFromClipboard(
         const totalGridColumnCount = config.columns.length;
         // set the focused cell
         let focusedCell = grid.activeCell;
+        // if paging is enabled, we have to adjust the dataRowIndex
+        focusedCell.dataRowIndex = grid.skip
+          ? focusedCell.dataRowIndex - grid.skip
+          : focusedCell.dataRowIndex;
         // iterate over the copied data
         for (let i = 0; i <= copiedColumnCount - 1; i++) {
           for (let j = 0; j <= values.length - 1; j++) {
@@ -68,7 +72,10 @@ export function pasteFromClipboard(
                 config.selectedCells = [
                   ...config.selectedCells,
                   {
-                    itemKey: focusedCell.dataRowIndex + j,
+                    itemKey:
+                      focusedCell.dataRowIndex +
+                      (grid.skip ? grid.skip : 0) +
+                      j,
                     columnKey: focusedCell.colIndex + i,
                   },
                 ];
