@@ -25,3 +25,4 @@ export * from './cancel-copying';
 export * from './reset-on-keydown';
 export * from './is-active-cell-different';
 export * from './close-edited-cell';
+export * from './draw-selected-area-border';

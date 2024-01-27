@@ -296,6 +296,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   // resets the state of the grid
   resetState() {
+    // reset the selected area div
+    methods.resetSelectedArea(this.config.selectedArea, this.config);
     this.config.selectedCells = [];
     this.selectedKeysChange.emit(this.config.selectedCells);
     this.config.selectedCellDatas = [];
@@ -303,8 +305,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.aggregatesChange.emit(this.aggregates);
     this.config.selectingWithMouse = false;
     this.config.dataCopied = false;
-    // reset the selected area div
-    methods.resetSelectedArea(this.config.selectedArea);
     // remove the no-focus-shadow class if we copied something - applies only in case of mouse click
     if (this.config.firstSelectedCellElement)
       this.renderer2.removeClass(

@@ -1,97 +1,114 @@
-<kendo-grid
-  class="enhanced"
-  [kendoGridBinding]="rows"
-  [kendoGridInCellEditing]="createFormGroup"
-  [selectable]="selectableSettings"
-  kendoGridSelectBy
-  [(selectedKeys)]="selectedCells"
-  [navigable]="true"
-  [filterable]="true"
-  [sortable]="true"
-  [pageable]="true"
-  [pageSize]="20"
-  enhancedGrid
-  [changeCellFocusWithTab]="true"
-  [selectingWithShift]="true"
-  [selectingWithMouse]="true"
-  [enableCopying]="true"
-  [enablePasting]="true"
-  [(aggregates)]="aggregates"
->
-  <kendo-grid-column
-    field="id"
-    [editable]="false"
-    [class]="'non-editable'"
-  ></kendo-grid-column>
-  <kendo-grid-column field="accountNumber.accNumber">
-    <ng-template kendoGridEditTemplate let-formGroup="formGroup">
-      <kendo-combobox
-        kendoGridFocusable
-        size="small"
-        fillMode="solid"
-        [formControl]="formGroup.get('accountNumber')"
-        [data]="accountNumbers"
-        textField="accNumber"
-        valueField="id"
-        [kendoDropDownFilter]="{ operator: 'contains' }"
-        [popupSettings]="{ width: 'auto' }"
-      >
-      </kendo-combobox>
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column
-    field="accountNumber.accName"
-    [editable]="false"
-    [class]="'non-editable'"
-  ></kendo-grid-column>
-  <kendo-grid-column field="project.projNumber">
-    <ng-template kendoGridEditTemplate let-formGroup="formGroup">
-      <kendo-multicolumncombobox
-        kendoGridFocusable
-        size="small"
-        fillMode="solid"
-        [formControl]="formGroup.get('project')"
-        [data]="projects"
-        textField="projNumber"
-        valueField="id"
-        [kendoDropDownFilter]="{
-          operator: 'contains',
-          fields: ['projNumber', 'projName']
-        }"
-        [popupSettings]="{ width: '20%' }"
-      >
-        <kendo-combobox-column field="id"></kendo-combobox-column>
-        <kendo-combobox-column field="projNumber"></kendo-combobox-column>
-        <kendo-combobox-column field="projName"></kendo-combobox-column>
-      </kendo-multicolumncombobox>
-    </ng-template>
-  </kendo-grid-column>
-  <kendo-grid-column
-    field="category"
-    [editable]="false"
-    [class]="'non-editable'"
-  ></kendo-grid-column>
-  <kendo-grid-column field="jan" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="feb" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="mar" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="apr" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="may" [class]="'!k-text-right'"></kendo-grid-column>
-  <!-- <kendo-grid-column field="jun" [class]="'!k-text-right'"></kendo-grid-column>
+<div style="height: 600px">
+  <kendo-grid
+    class="enhanced"
+    [kendoGridBinding]="rows"
+    [kendoGridInCellEditing]="createFormGroup"
+    [selectable]="selectableSettings"
+    kendoGridSelectBy
+    [(selectedKeys)]="selectedCells"
+    [navigable]="true"
+    [filterable]="true"
+    [sortable]="true"
+    [pageable]="true"
+    [pageSize]="20"
+    enhancedGrid
+    [changeCellFocusWithTab]="true"
+    [selectingWithShift]="true"
+    [selectingWithMouse]="true"
+    [enableCopying]="true"
+    [enablePasting]="true"
+    [(aggregates)]="aggregates"
+  >
+    <kendo-grid-column
+      field="id"
+      [editable]="false"
+      [class]="'non-editable'"
+    ></kendo-grid-column>
+    <kendo-grid-column field="accountNumber.accNumber">
+      <ng-template kendoGridEditTemplate let-formGroup="formGroup">
+        <kendo-combobox
+          kendoGridFocusable
+          size="small"
+          fillMode="solid"
+          [formControl]="formGroup.get('accountNumber')"
+          [data]="accountNumbers"
+          textField="accNumber"
+          valueField="id"
+          [kendoDropDownFilter]="{ operator: 'contains' }"
+          [popupSettings]="{ width: 'auto' }"
+        >
+        </kendo-combobox>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="accountNumber.accName"
+      [editable]="false"
+      [class]="'non-editable'"
+    ></kendo-grid-column>
+    <kendo-grid-column field="project.projNumber">
+      <ng-template kendoGridEditTemplate let-formGroup="formGroup">
+        <kendo-multicolumncombobox
+          kendoGridFocusable
+          size="small"
+          fillMode="solid"
+          [formControl]="formGroup.get('project')"
+          [data]="projects"
+          textField="projNumber"
+          valueField="id"
+          [kendoDropDownFilter]="{
+            operator: 'contains',
+            fields: ['projNumber', 'projName']
+          }"
+          [popupSettings]="{ width: '20%' }"
+        >
+          <kendo-combobox-column field="id"></kendo-combobox-column>
+          <kendo-combobox-column field="projNumber"></kendo-combobox-column>
+          <kendo-combobox-column field="projName"></kendo-combobox-column>
+        </kendo-multicolumncombobox>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="category"
+      [editable]="false"
+      [class]="'non-editable'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="jan"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="feb"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="mar"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="apr"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="may"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <!-- <kendo-grid-column field="jun" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="jul" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="aug" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="sep" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="oct" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="nov" [class]="'!k-text-right'"></kendo-grid-column>
   <kendo-grid-column field="dec" [class]="'!k-text-right'"></kendo-grid-column> -->
-  <kendo-grid-column
-    field="total"
-    [class]="'!k-text-right'"
-  ></kendo-grid-column>
-  <ng-template kendoGridStatusBarTemplate>
-    sum: {{ aggregates.sum }}, count: {{ aggregates.count }}, avg:
-    {{ aggregates.avg }}, min: {{ aggregates.min }}, max: {{ aggregates.max }}
-  </ng-template>
-</kendo-grid>
+    <kendo-grid-column
+      field="total"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <ng-template kendoGridStatusBarTemplate>
+      sum: {{ aggregates.sum }}, count: {{ aggregates.count }}, avg:
+      {{ aggregates.avg }}, min: {{ aggregates.min }}, max: {{ aggregates.max }}
+    </ng-template>
+  </kendo-grid>
+</div>
 <div>selected cells: {{ selectedCells | json }}</div>
 <div *ngIf="checkDuplicates()">no duplicates</div>
 <div *ngIf="!checkDuplicates()">duplicates</div>

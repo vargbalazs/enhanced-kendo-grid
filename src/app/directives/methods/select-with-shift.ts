@@ -45,6 +45,7 @@ export function selectWithShift(
     let target = <HTMLElement>e.target;
     // store the grid element
     const gridBody = target.parentElement?.parentElement;
+    config.gridBody = gridBody!;
 
     // store the first selected cell, it's position and it's value
     if (config.selectedCells.length === 0) {
@@ -127,6 +128,9 @@ export function selectWithShift(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
+      // reset the selected area - with this we also remove the borders from previous selected cells
+      methods.resetSelectedArea(document.createElement('div'), config);
+
       methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
       updateFn();
@@ -136,10 +140,11 @@ export function selectWithShift(
       config.colIndex = config.lastSelectedCell.columnKey;
 
       // update also the selected area
-      methods.resizeSelectedArea(config);
+      // methods.resizeSelectedArea(config);
+      methods.drawSelectedAreaBorder(config);
 
       // set the border of the selected area
-      config.selectedArea.style.border = config.selectedAreaBorder;
+      // config.selectedArea.style.border = config.selectedAreaBorder;
     }
   }
 }

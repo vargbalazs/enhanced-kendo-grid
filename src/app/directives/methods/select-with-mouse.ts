@@ -17,6 +17,8 @@ export function selectWithMouse(
     target?.hasAttribute('ng-reflect-data-row-index') &&
     target?.hasAttribute('ng-reflect-col-index')
   ) {
+    // store the grid body
+    config.gridBody = target.parentElement!.parentElement!;
     // get the indexes
     const dataRowIndex = +target.attributes.getNamedItem(
       'ng-reflect-data-row-index'
@@ -71,6 +73,9 @@ export function selectWithMouse(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
+      // reset the selected area - with this we also remove the borders from previous selected cells
+      methods.resetSelectedArea(document.createElement('div'), config);
+
       methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
 
@@ -82,7 +87,8 @@ export function selectWithMouse(
       config.colIndex = config.lastSelectedCell.columnKey;
 
       // update also the selected area
-      methods.resizeSelectedArea(config);
+      // methods.resizeSelectedArea(config);
+      methods.drawSelectedAreaBorder(config);
     }
   }
 }

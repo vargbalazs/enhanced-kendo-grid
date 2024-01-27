@@ -94,4 +94,7 @@ export class EnhancedGridConfig {
 
   // the copied data to the clipboard
   public copiedDataToClipboard: string = '';
+
+  // the grid body html element
+  public gridBody: HTMLElement = document.createElement('div');
 }

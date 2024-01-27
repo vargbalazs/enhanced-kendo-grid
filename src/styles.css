@@ -274,3 +274,23 @@
 .non-editable {
   background-color: #f9fafb;
 }
+
+.top-shadow {
+  /*box-shadow: inset 0px 1px 0px 0px rgb(1, 114, 203);*/
+  border-top: 1px solid rgb(1, 114, 203) !important;
+}
+
+.bottom-shadow {
+  /*box-shadow: inset 0px -1px 0px 0px rgb(1, 114, 203);*/
+  border-bottom: 1px solid rgb(1, 114, 203) !important;
+}
+
+.left-shadow {
+  /*box-shadow: inset 1px 0px 0px 0px rgb(1, 114, 203);*/
+  border-left: 1px solid rgb(1, 114, 203) !important;
+}
+
+.right-shadow {
+  /*box-shadow: inset -1px 0px 0px 0px rgb(1, 114, 203);*/
+  border-right: 1px solid rgb(1, 114, 203) !important;
+}
