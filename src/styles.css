@@ -256,7 +256,7 @@
     linear-gradient(0deg, rgb(1, 114, 203) 50%, transparent 50%),
     linear-gradient(0deg, rgb(1, 114, 203) 50%, transparent 50%);
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-  background-size: 5px 1.5px, 5px 1.5px, 1.5px 5px, 1.5px 5px;
+  /*background-size: 5px 1.5px, 5px 1.5px, 1.5px 5px, 1.5px 5px;*/
   background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%;
   animation: dash 15s linear infinite;
 }
@@ -265,6 +265,38 @@
   to {
     background-position: 100% 0%, 0% 100%, 0% 0%, 100% 100%;
   }
+}
+
+.left-dash {
+  background-size: 0px 0px, 0px 0px, 1.5px 5px, 0px 0px;
+}
+
+.right-dash {
+  background-size: 0px 0px, 0px 0px, 0px 0px, 1.5px 5px;
+}
+
+.top-dash {
+  background-size: 5px 1.5px, 0px 0px, 0px 0px, 0px 0px;
+}
+
+.bottom-dash {
+  background-size: 0px 0px, 5px 1.5px, 0px 0px, 0px 0px;
+}
+
+.left-top-corner-dash {
+  background-size: 5px 1.5px, 0px 0px, 1.5px 5px, 0px 0px;
+}
+
+.right-top-corner-dash {
+  background-size: 5px 1.5px, 0px 0px, 0px 0px, 1.5px 5px;
+}
+
+.left-bottom-corner-dash {
+  background-size: 0px 0px, 5px 1.5px, 1.5px 5px, 0px 0px;
+}
+
+.right-bottom-corner-dash {
+  background-size: 0px 0px, 5px 1.5px, 0px 0px, 1.5px 5px;
 }
 
 .no-focus-shadow {
@@ -276,21 +308,17 @@
 }
 
 .top-shadow {
-  /*box-shadow: inset 0px 1px 0px 0px rgb(1, 114, 203);*/
   border-top: 1px solid rgb(1, 114, 203) !important;
 }
 
 .bottom-shadow {
-  /*box-shadow: inset 0px -1px 0px 0px rgb(1, 114, 203);*/
   border-bottom: 1px solid rgb(1, 114, 203) !important;
 }
 
 .left-shadow {
-  /*box-shadow: inset 1px 0px 0px 0px rgb(1, 114, 203);*/
   border-left: 1px solid rgb(1, 114, 203) !important;
 }
 
 .right-shadow {
-  /*box-shadow: inset -1px 0px 0px 0px rgb(1, 114, 203);*/
   border-right: 1px solid rgb(1, 114, 203) !important;
 }

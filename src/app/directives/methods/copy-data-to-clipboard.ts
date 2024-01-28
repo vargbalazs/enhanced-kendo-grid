@@ -20,7 +20,8 @@ export function copyDataToClipboard(
     // if multiple cells were selected
     if (config.selectedCells.length > 1) {
       // adding dashed border
-      renderer2.addClass(config.selectedArea, 'dashed-border');
+      // renderer2.addClass(config.selectedArea, 'dashed-border');
+      methods.drawDashedBorders(config);
       // copy content to clipboard
       methods.prepareDataForClipboard(config);
       navigator.clipboard

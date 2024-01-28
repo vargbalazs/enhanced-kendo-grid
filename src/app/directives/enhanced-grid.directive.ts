@@ -144,12 +144,14 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if we just alt+tab, do nothing
     if (e.key === 'Alt' || (e.altKey && e.key === 'Tab')) return;
 
+    // reset copying on esc if any (but keep the selection)
+    if (this.config.dataCopied && e.key === 'Escape') {
+      methods.cancelCopying(this.config, this.renderer2);
+      return;
+    }
+
     // general reset
     methods.resetOnKeydown(e, this.resetState.bind(this), this.config);
-
-    // reset copying if any
-    if (this.config.dataCopied)
-      methods.cancelCopying(this.config, this.renderer2);
 
     // if changing focus with tab is allowed
     if (this.changeCellFocusWithTab)
@@ -189,7 +191,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       );
     }
 
-    // if pasing is allowed
+    // if pasting is allowed
     if (this.enablePasting) {
       methods.pasteFromClipboard(
         e,
@@ -296,6 +298,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   // resets the state of the grid
   resetState() {
+    // if something copied, then remove the dashed borders
+    if (this.config.dataCopied) methods.removeDashedBorder(this.config);
     // reset the selected area div
     methods.resetSelectedArea(this.config.selectedArea, this.config);
     this.config.selectedCells = [];
