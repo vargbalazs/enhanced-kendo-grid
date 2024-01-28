@@ -14,6 +14,11 @@ export function drawDashedBorders(config: EnhancedGridConfig) {
         )
       ) {
         target?.classList.add('dashed-border');
+        // if just only one cell is selected/copied
+        if (config.selectedCells.length === 1) {
+          target?.classList.add('all-side-dash');
+          return;
+        }
         // corners
         if (
           target?.classList.contains('left-shadow') &&

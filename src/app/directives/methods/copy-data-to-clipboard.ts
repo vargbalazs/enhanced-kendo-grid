@@ -30,11 +30,11 @@ export function copyDataToClipboard(
     } else {
       // if just only one cell is copied
       // set the variables for resizing the selected area
-      methods.setRectValues(
-        config.firstSelectedCellRect,
-        <HTMLElement>e.target
-      );
-      methods.setRectValues(config.lastSelectedCellRect, <HTMLElement>e.target);
+      // methods.setRectValues(
+      //   config.firstSelectedCellRect,
+      //   <HTMLElement>e.target
+      // );
+      // methods.setRectValues(config.lastSelectedCellRect, <HTMLElement>e.target);
       config.firstSelectedCell = {
         itemKey: grid.activeCell.dataRowIndex,
         columnKey: grid.activeCell.colIndex,
@@ -44,11 +44,11 @@ export function copyDataToClipboard(
         columnKey: grid.activeCell.colIndex,
       };
       // resize the selected area and adjust style, but only if we aren't in edit mode
-      if (!grid.isEditing()) {
-        methods.resizeSelectedArea(config);
-        config.selectedArea.style.border = config.selectedAreaBorder;
-        renderer2.addClass(config.selectedArea, 'dashed-border');
-      }
+      // if (!grid.isEditing()) {
+      //   methods.resizeSelectedArea(config);
+      //   config.selectedArea.style.border = config.selectedAreaBorder;
+      //   renderer2.addClass(config.selectedArea, 'dashed-border');
+      // }
       // get the data
       let fieldname = config.columns[grid.activeCell.colIndex].field;
       let value: string | number;
@@ -57,9 +57,14 @@ export function copyDataToClipboard(
         const objectKey = fieldname.substring(0, fieldname.indexOf('.'));
         const propertyKey = fieldname.substring(fieldname.indexOf('.') + 1);
         value =
-          config.gridData[grid.activeCell.dataRowIndex][objectKey][propertyKey];
+          config.gridData[
+            grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0)
+          ][objectKey][propertyKey];
       } else {
-        value = config.gridData[grid.activeCell.dataRowIndex][fieldname];
+        value =
+          config.gridData[
+            grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0)
+          ][fieldname];
       }
       config.selectedCellDatas = [
         {
@@ -73,6 +78,11 @@ export function copyDataToClipboard(
           columnKey: grid.activeCell.colIndex,
         },
       ];
+      // draw dashed border, but only if we aren't in edit mode
+      if (!grid.isEditing()) {
+        methods.drawSelectedAreaBorder(config);
+        methods.drawDashedBorders(config);
+      }
       methods.calculateAggregates(config);
       updateFn();
       // copy the data
