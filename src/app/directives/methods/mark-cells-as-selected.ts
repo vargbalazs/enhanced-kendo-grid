@@ -1,4 +1,4 @@
-import { GridComponent } from '@progress/kendo-angular-grid';
+import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 
@@ -55,6 +55,16 @@ export function markCellsAsSelected(
                 (grid.skip ? grid.skip : 0) +
                 j * verticalDirection
             ][objectKey][propertyKey];
+          // if the grid is filtered or sorted, we need the original datarowindex
+          if (grid.filter?.filters || grid.sort!.length > 0) {
+            const filteredGridData = (<GridDataResult>grid.data).data;
+            value =
+              filteredGridData[
+                firstCell.itemKey -
+                  (grid.skip ? grid.skip : 0) +
+                  j * verticalDirection
+              ][objectKey][propertyKey];
+          }
         } else {
           value =
             config.gridData[
@@ -62,6 +72,16 @@ export function markCellsAsSelected(
                 (grid.skip ? grid.skip : 0) +
                 j * verticalDirection
             ][fieldname];
+          // if the grid is filtered or sorted, we need the original datarowindex
+          if (grid.filter?.filters || grid.sort!.length > 0) {
+            const filteredGridData = (<GridDataResult>grid.data).data;
+            value =
+              filteredGridData[
+                firstCell.itemKey -
+                  (grid.skip ? grid.skip : 0) +
+                  j * verticalDirection
+              ][fieldname];
+          }
         }
         config.selectedCellDatas = [
           ...config.selectedCellDatas,
