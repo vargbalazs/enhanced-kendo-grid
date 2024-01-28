@@ -19,6 +19,52 @@ export function drawDashedBorders(config: EnhancedGridConfig) {
           target?.classList.add('all-side-dash');
           return;
         }
+        // if it is just one row
+        const rowIndex = config.selectedCells[0].itemKey;
+        if (config.selectedCells.every((cell) => cell.itemKey === rowIndex)) {
+          if (
+            target?.classList.contains('top-shadow') &&
+            target?.classList.contains('left-shadow') &&
+            target?.classList.contains('bottom-shadow')
+          ) {
+            target?.classList.add('one-row-left-corner-dash');
+          } else if (
+            target?.classList.contains('top-shadow') &&
+            target?.classList.contains('right-shadow') &&
+            target?.classList.contains('bottom-shadow')
+          ) {
+            target?.classList.add('one-row-right-corner-dash');
+          } else if (
+            target?.classList.contains('top-shadow') &&
+            target.classList.contains('bottom-shadow')
+          ) {
+            target.classList.add('top-bottom-dash');
+          }
+          return;
+        }
+        // if it is just one column
+        const colIndex = config.selectedCells[0].columnKey;
+        if (config.selectedCells.every((cell) => cell.columnKey === colIndex)) {
+          if (
+            target?.classList.contains('left-shadow') &&
+            target.classList.contains('top-shadow') &&
+            target.classList.contains('right-shadow')
+          ) {
+            target.classList.add('one-column-top-dash');
+          } else if (
+            target?.classList.contains('left-shadow') &&
+            target.classList.contains('bottom-shadow') &&
+            target.classList.contains('right-shadow')
+          ) {
+            target.classList.add('one-column-bottom-dash');
+          } else if (
+            target?.classList.contains('left-shadow') &&
+            target.classList.contains('right-shadow')
+          ) {
+            target.classList.add('left-right-dash');
+          }
+          return;
+        }
         // corners
         if (
           target?.classList.contains('left-shadow') &&

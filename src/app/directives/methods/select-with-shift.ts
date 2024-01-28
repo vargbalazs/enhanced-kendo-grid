@@ -36,7 +36,8 @@ export function selectWithShift(
   ) {
     // if we copied something to the clipboard, then cancel the copying
     if (config.dataCopied) {
-      renderer2.removeClass(config.selectedArea, 'dashed-border');
+      // renderer2.removeClass(config.selectedArea, 'dashed-border');
+      methods.removeDashedBorder(config);
       renderer2.removeClass(config.firstSelectedCellElement, 'no-focus-shadow');
       config.dataCopied = false;
     }

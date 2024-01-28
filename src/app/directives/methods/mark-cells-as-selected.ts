@@ -55,7 +55,7 @@ export function markCellsAsSelected(
                 (grid.skip ? grid.skip : 0) +
                 j * verticalDirection
             ][objectKey][propertyKey];
-          // if the grid is filtered or sorted, we need the original datarowindex
+          // if the grid is filtered or sorted, we have to work with the filtered data
           if (grid.filter?.filters || grid.sort!.length > 0) {
             const filteredGridData = (<GridDataResult>grid.data).data;
             value =
@@ -72,7 +72,7 @@ export function markCellsAsSelected(
                 (grid.skip ? grid.skip : 0) +
                 j * verticalDirection
             ][fieldname];
-          // if the grid is filtered or sorted, we need the original datarowindex
+          // if the grid is filtered or sorted, we have to work with the filtered data
           if (grid.filter?.filters || grid.sort!.length > 0) {
             const filteredGridData = (<GridDataResult>grid.data).data;
             value =
