@@ -1,4 +1,4 @@
-import { GridComponent } from '@progress/kendo-angular-grid';
+import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 
@@ -64,9 +64,17 @@ export function pasteFromClipboard(
                   //   Object.keys(dataItem)[focusedCell.colIndex + i]
                   // ] = values[j][i];
                   // non-editable cells can't be overridden
-                  if (config.columns[focusedCell.colIndex + i].editable)
-                    config.gridData[focusedCell.dataRowIndex + j][columnField] =
-                      values[j][i];
+                  if (config.columns[focusedCell.colIndex + i].editable) {
+                    // if some filters or sorting are active, we have to write the values in the grid differently
+                    if (grid.filter?.filters || grid.sort!.length > 0) {
+                      const gridData = (<GridDataResult>grid.data).data;
+                      gridData[focusedCell.dataRowIndex + j][columnField] =
+                        values[j][i];
+                    } else
+                      config.gridData[focusedCell.dataRowIndex + j][
+                        columnField
+                      ] = values[j][i];
+                  }
                 }
                 // mark the cells as selected and store it's values
                 config.selectedCells = [
@@ -96,28 +104,33 @@ export function pasteFromClipboard(
         if (!grid.isEditing()) {
           // set the first and last cell rect values
           let target = <HTMLElement>e.target;
-          const gridBody = target.parentElement?.parentElement;
-          methods.setRectValues(config.firstSelectedCellRect, target);
-          target = gridBody!.querySelector(
-            `[ng-reflect-data-row-index="${
-              config.selectedCells[config.selectedCells.length - 1].itemKey
-            }"][ng-reflect-col-index="${
-              config.selectedCells[config.selectedCells.length - 1].columnKey
-            }"]`
-          )!;
-          methods.setRectValues(config.lastSelectedCellRect, target);
+          config.gridBody = target.parentElement?.parentElement!;
+          // methods.setRectValues(config.firstSelectedCellRect, target);
+          // target = gridBody!.querySelector(
+          //   `[ng-reflect-data-row-index="${
+          //     config.selectedCells[config.selectedCells.length - 1].itemKey
+          //   }"][ng-reflect-col-index="${
+          //     config.selectedCells[config.selectedCells.length - 1].columnKey
+          //   }"]`
+          // )!;
+          // methods.setRectValues(config.lastSelectedCellRect, target);
           // draw the area
           config.firstSelectedCell = {
-            itemKey: grid.activeCell.dataRowIndex,
+            itemKey: grid.activeCell.dataRowIndex + (grid.skip ? grid.skip : 0),
             columnKey: grid.activeCell.colIndex,
           };
           // we have to limit the selected area, if the pasted data area is greater than the remaining space in the grid
           config.lastSelectedCell = {
-            itemKey: grid.activeCell.dataRowIndex + values.length - 1,
+            itemKey:
+              grid.activeCell.dataRowIndex +
+              values.length -
+              1 +
+              (grid.skip ? grid.skip : 0),
             columnKey: grid.activeCell.colIndex + copiedColumnCount - 1,
           };
-          methods.resizeSelectedArea(config);
-          config.selectedArea.style.border = config.selectedAreaBorder;
+          // methods.resizeSelectedArea(config);
+          // config.selectedArea.style.border = config.selectedAreaBorder;
+          methods.drawSelectedAreaBorder(config);
         }
       }
     });
