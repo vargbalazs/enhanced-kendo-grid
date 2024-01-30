@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountNumber } from './model/account-number.model';
 import { Aggregate } from './directives/interfaces/aggregate.interface';
 import { Project } from './model/project.model';
+import { GroupDescriptor } from '@progress/kendo-data-query';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
   rows: Row[] = rows;
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
+  groups: GroupDescriptor[] = [{ field: 'category' }];
 
   formGroup = this.formBuilder.group({
     accountNumber: [{ id: 0, accNumber: '', accName: '' }, Validators.required],

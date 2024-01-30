@@ -66,6 +66,7 @@ export function markCellsAsSelected(
               ][objectKey][propertyKey];
           }
         } else {
+          console.log(config.gridData);
           value =
             config.gridData[
               firstCell.itemKey -
