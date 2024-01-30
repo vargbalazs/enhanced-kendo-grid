@@ -1,4 +1,4 @@
-import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
+import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
 // returns true, if the cell can be closed
@@ -9,7 +9,8 @@ export function isActiveCellDifferent(
 ): boolean {
   const sameCell =
     config.editedColIndex === grid.activeCell.colIndex &&
-    config.editedRowIndex === grid.activeCell.dataRowIndex;
+    config.editedRowIndex ===
+      grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0);
 
   return !sameCell;
 }
