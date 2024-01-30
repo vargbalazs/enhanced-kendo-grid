@@ -101,7 +101,8 @@
   <kendo-grid-column field="dec" [class]="'!k-text-right'"></kendo-grid-column> -->
     <kendo-grid-column
       field="total"
-      [class]="'!k-text-right'"
+      [class]="'!k-text-right non-editable'"
+      [editable]="false"
     ></kendo-grid-column>
     <ng-template kendoGridStatusBarTemplate>
       sum: {{ aggregates.sum }}, count: {{ aggregates.count }}, avg:
