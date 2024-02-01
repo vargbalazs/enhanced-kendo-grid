@@ -13,15 +13,21 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+.enhanced.k-grid-md td:has(.enhanced td:nth-child(1)),
+.enhanced.k-grid-md .k-table-td:has(.enhanced td:nth-child(1)) {
+  border-right: 1px solid red;
+}
+
 .enhanced.k-grid-md td,
 .enhanced.k-grid-md .k-table-td {
   padding-block: 0px;
   padding-inline: 2px;
-  position: relative;
+  /* position: relative; */
   color: #4f5e71;
   height: 20px;
   font-size: 12px;
   font-family: "Inter";
+  background-color: white;
 }
 
 .enhanced.k-grid-md .k-table-td .k-grid-ignore-click {
@@ -41,7 +47,7 @@
 .enhanced.k-grid .k-table-row.k-selected > td,
 .enhanced.k-grid .k-table-td.k-selected,
 .enhanced.k-grid .k-table-row.k-selected > .k-table-td {
-  background-color: rgba(232, 244, 253, 0.5);
+  background-color: rgb(232, 244, 253);
 }
 
 .enhanced.k-grid td.k-selected.k-grid-edit-cell,
@@ -331,7 +337,7 @@
 }
 
 .non-editable {
-  background-color: #f9fafb;
+  background-color: #f9fafb !important;
 }
 
 .top-shadow {
@@ -348,4 +354,73 @@
 
 .right-shadow {
   border-right: 1px solid rgb(1, 114, 203) !important;
+}
+
+.enhanced th:nth-child(1),
+.enhanced td:nth-child(1) {
+  position: sticky !important;
+  left: 0;
+  width: 100px;
+  min-width: 100px;
+  z-index: 2;
+}
+
+.enhanced th:nth-child(1) {
+  background-color: #fafafa;
+}
+
+.enhanced th:nth-child(2),
+.enhanced td:nth-child(2) {
+  position: sticky !important;
+  left: 100px;
+  width: 120px;
+  min-width: 120px;
+  z-index: 2;
+}
+
+.enhanced th:nth-child(2) {
+  background-color: #fafafa;
+}
+
+.enhanced th:nth-child(3),
+.enhanced td:nth-child(3) {
+  position: sticky !important;
+  left: 220px;
+  width: 120px;
+  min-width: 120px;
+  z-index: 2;
+}
+
+.enhanced th:nth-child(3) {
+  background-color: #fafafa;
+}
+
+.enhanced th:nth-child(4),
+.enhanced td:nth-child(4) {
+  position: sticky !important;
+  left: 340px;
+  width: 120px;
+  min-width: 120px;
+  z-index: 2;
+}
+
+.enhanced th:nth-child(4) {
+  background-color: #fafafa;
+}
+
+.enhanced th:nth-child(5),
+.enhanced td:nth-child(5) {
+  position: sticky !important;
+  left: 460px;
+  width: 120px;
+  min-width: 120px;
+  z-index: 2;
+}
+
+.enhanced th:nth-child(5) {
+  background-color: #fafafa;
+}
+
+.enhanced td[kendogridfiltercell] {
+  background-color: white;
 }

@@ -1,6 +1,8 @@
 <div style="height: 600px">
   <kendo-grid
     class="enhanced"
+    style="width: 1500px"
+    [style.maxHeight.%]="100"
     [kendoGridBinding]="rows"
     [kendoGridInCellEditing]="createFormGroup"
     [selectable]="selectableSettings"
@@ -21,10 +23,11 @@
   >
     <kendo-grid-column
       field="id"
+      [width]="100"
       [editable]="false"
       [class]="'non-editable'"
     ></kendo-grid-column>
-    <kendo-grid-column field="accountNumber.accNumber">
+    <kendo-grid-column field="accountNumber.accNumber" [width]="120">
       <ng-template kendoGridEditTemplate let-formGroup="formGroup">
         <kendo-combobox
           kendoGridFocusable
@@ -42,10 +45,11 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="accountNumber.accName"
+      [width]="120"
       [editable]="false"
       [class]="'non-editable'"
     ></kendo-grid-column>
-    <kendo-grid-column field="project.projNumber">
+    <kendo-grid-column field="project.projNumber" [width]="120">
       <ng-template kendoGridEditTemplate let-formGroup="formGroup">
         <kendo-multicolumncombobox
           kendoGridFocusable
@@ -69,38 +73,73 @@
     </kendo-grid-column>
     <kendo-grid-column
       field="category"
+      [width]="120"
       [editable]="false"
       [class]="'non-editable'"
     ></kendo-grid-column>
     <kendo-grid-column
       field="jan"
+      [width]="100"
       [class]="'!k-text-right'"
     ></kendo-grid-column>
     <kendo-grid-column
       field="feb"
+      [width]="100"
       [class]="'!k-text-right'"
     ></kendo-grid-column>
     <kendo-grid-column
       field="mar"
+      [width]="100"
       [class]="'!k-text-right'"
     ></kendo-grid-column>
     <kendo-grid-column
       field="apr"
+      [width]="100"
       [class]="'!k-text-right'"
     ></kendo-grid-column>
     <kendo-grid-column
       field="may"
+      [width]="100"
       [class]="'!k-text-right'"
     ></kendo-grid-column>
-    <!-- <kendo-grid-column field="jun" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="jul" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="aug" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="sep" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="oct" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="nov" [class]="'!k-text-right'"></kendo-grid-column>
-  <kendo-grid-column field="dec" [class]="'!k-text-right'"></kendo-grid-column> -->
+    <kendo-grid-column
+      field="jun"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="jul"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="aug"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="sep"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="oct"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="nov"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="dec"
+      [width]="100"
+      [class]="'!k-text-right'"
+    ></kendo-grid-column>
     <kendo-grid-column
       field="total"
+      [width]="100"
       [class]="'!k-text-right non-editable'"
       [editable]="false"
     ></kendo-grid-column>
