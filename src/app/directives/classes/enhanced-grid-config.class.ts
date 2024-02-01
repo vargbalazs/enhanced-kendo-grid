@@ -97,4 +97,7 @@ export class EnhancedGridConfig {
 
   // the grid body html element
   public gridBody: HTMLElement = document.createElement('div');
+
+  // array of field names for the frozen columns
+  public frozenColumns: string[] = [];
 }

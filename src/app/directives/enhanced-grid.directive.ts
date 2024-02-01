@@ -53,6 +53,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // input for the full grid data
   @Input() kendoGridBinding!: any[];
 
+  // input for the frozen columns
+  @Input() frozenColumns: string[] = [];
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -84,6 +87,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.fullGridData.forEach(
       (row, index) => (row.dataRowIndex = index)
     );
+
+    // get the frozen columns, if any
+    this.config.frozenColumns = this.frozenColumns;
 
     // subscribe to the cellClose event
     this.config.cellClose$ = this.grid.cellClose.subscribe((cellCloseEvent) => {
@@ -131,6 +137,10 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.columns = (<ColumnComponent[]>(
       this.grid.columnList.toArray()
     )).filter((c) => !c.hidden);
+
+    // set the frozen columns (if any)
+    if (this.config.frozenColumns.length > 0)
+      methods.handleFrozenColumns(this.config);
   }
 
   ngOnDestroy(): void {

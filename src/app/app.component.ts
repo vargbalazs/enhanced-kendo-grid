@@ -24,6 +24,13 @@ export class AppComponent {
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   groups: GroupDescriptor[] = [{ field: 'category' }];
+  frozenColumns = [
+    'accountNumber.accNumber',
+    'id',
+    'accountNumber.accName',
+    'project.projNumber',
+    'category',
+  ];
 
   formGroup = this.formBuilder.group({
     accountNumber: [{ id: 0, accNumber: '', accName: '' }, Validators.required],
