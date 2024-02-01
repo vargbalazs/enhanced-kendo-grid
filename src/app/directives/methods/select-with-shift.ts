@@ -146,6 +146,9 @@ export function selectWithShift(
 
       // set the border of the selected area
       // config.selectedArea.style.border = config.selectedAreaBorder;
+
+      // override style of non-editable cells
+      methods.setNonEditableCellStyle(config, 'off');
     }
   }
 }

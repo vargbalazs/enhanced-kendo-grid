@@ -89,6 +89,9 @@ export function selectWithMouse(
       // update also the selected area
       // methods.resizeSelectedArea(config);
       methods.drawSelectedAreaBorder(config);
+
+      // override style of non-editable cells
+      methods.setNonEditableCellStyle(config, 'off');
     }
   }
 }

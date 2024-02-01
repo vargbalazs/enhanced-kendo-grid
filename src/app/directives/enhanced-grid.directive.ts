@@ -302,6 +302,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     if (this.config.dataCopied) methods.removeDashedBorder(this.config);
     // reset the selected area div
     methods.resetSelectedArea(this.config.selectedArea, this.config);
+    // reset styling of non-edited cells
+    methods.setNonEditableCellStyle(this.config, 'on');
     this.config.selectedCells = [];
     this.selectedKeysChange.emit(this.config.selectedCells);
     this.config.selectedCellDatas = [];

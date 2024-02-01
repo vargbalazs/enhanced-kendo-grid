@@ -28,3 +28,4 @@ export * from './close-edited-cell';
 export * from './draw-selected-area-border';
 export * from './draw-dashed-border';
 export * from './remove-dashed-border';
+export * from './set-non-editable-cell-style';
