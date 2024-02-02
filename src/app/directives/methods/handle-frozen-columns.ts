@@ -36,4 +36,20 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
     console.error('The frozen columns should follow each other with no gaps!');
     return;
   }
+
+  // get the appr. td-s for the columns and add the frozen style
+  config.gridBody = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+    '[kendogridtablebody]'
+  )!;
+  for (let j = 0; j <= config.gridData.length - 1; j++) {
+    let cumColWidth = 0;
+    for (let i = 0; i <= colIndexes.length - 1; i++) {
+      const target = <HTMLElement>(
+        config.gridBody.querySelector(`[ng-reflect-data-row-index="${j}"]
+        [ng-reflect-col-index="${colIndexes[i]}"]`)
+      );
+      target.style.cssText += `position: sticky !important; z-index: 2; left: ${cumColWidth}px`;
+      cumColWidth += config.columns[colIndexes[i]].width;
+    }
+  }
 }

@@ -1,0 +1,55 @@
+/* ::ng-deep .enhanced.k-grid th:nth-child(1),
+::ng-deep .enhanced.k-grid td:nth-child(1) {
+  position: sticky !important;
+  left: 0;
+  z-index: 2;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(2),
+::ng-deep .enhanced.k-grid td:nth-child(2) {
+  position: sticky !important;
+  left: 100px;
+  z-index: 2;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(3),
+::ng-deep .enhanced.k-grid td:nth-child(3) {
+  position: sticky !important;
+  left: 220px;
+  z-index: 2;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(4),
+::ng-deep .enhanced.k-grid td:nth-child(4) {
+  position: sticky !important;
+  left: 340px;
+  z-index: 2;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(5),
+::ng-deep .enhanced.k-grid td:nth-child(5) {
+  position: sticky !important;
+  left: 460px;
+  z-index: 2;
+  border-right: 1px solid lightgray;
+} */
+
+::ng-deep .enhanced.k-grid th:nth-child(1) {
+  background-color: #fafafa;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(2) {
+  background-color: #fafafa;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(3) {
+  background-color: #fafafa;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(4) {
+  background-color: #fafafa;
+}
+
+::ng-deep .enhanced.k-grid th:nth-child(5) {
+  background-color: #fafafa;
+}

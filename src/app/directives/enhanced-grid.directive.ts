@@ -71,6 +71,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     private element: ElementRef
   ) {
     this.config = new EnhancedGridConfig();
+    // get the element ref of the grid
+    this.config.gridElRef = element;
   }
 
   ngOnInit(): void {
