@@ -140,9 +140,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.grid.columnList.toArray()
     )).filter((c) => !c.hidden);
 
-    // set the frozen columns (if any)
-    if (this.config.frozenColumns.length > 0)
-      methods.handleFrozenColumns(this.config);
+    // setTimeout to avoid expr has changed... error
+    setTimeout(() => {
+      // set the frozen columns (if any)
+      if (this.config.frozenColumns.length > 0)
+        methods.handleFrozenColumns(this.config);
+    });
   }
 
   ngOnDestroy(): void {

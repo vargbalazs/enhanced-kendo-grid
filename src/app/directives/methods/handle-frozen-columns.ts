@@ -37,19 +37,48 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
     return;
   }
 
-  // get the appr. td-s for the columns and add the frozen style
-  config.gridBody = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-    '[kendogridtablebody]'
-  )!;
-  for (let j = 0; j <= config.gridData.length - 1; j++) {
-    let cumColWidth = 0;
-    for (let i = 0; i <= colIndexes.length - 1; i++) {
-      const target = <HTMLElement>(
-        config.gridBody.querySelector(`[ng-reflect-data-row-index="${j}"]
-        [ng-reflect-col-index="${colIndexes[i]}"]`)
-      );
-      target.style.cssText += `position: sticky !important; z-index: 2; left: ${cumColWidth}px`;
-      cumColWidth += config.columns[colIndexes[i]].width;
+  // set the styles to the frozen columns
+  let cumColWidth = 0;
+  for (let i = 0; i <= colIndexes.length - 1; i++) {
+    // headers
+    config.columns[colIndexes[i]].headerStyle = {
+      position: 'sticky',
+      'z-index': '2',
+      left: `${cumColWidth}px`,
+      'background-color': '#fafafa',
+    };
+    // filter row
+    config.columns[colIndexes[i]].filterStyle = {
+      position: 'sticky',
+      'z-index': '2',
+      left: `${cumColWidth}px`,
+    };
+    // cells
+    config.columns[colIndexes[i]].style = {
+      position: 'sticky',
+      'z-index': '2',
+      left: `${cumColWidth}px`,
+    };
+
+    // for the last column we draw a separator
+    if (i === colIndexes.length - 1) {
+      // headers
+      config.columns[colIndexes[i]].headerStyle = {
+        ...config.columns[colIndexes[i]].headerStyle,
+        'border-right': '1px solid lightgray',
+      };
+      // filter row
+      config.columns[colIndexes[i]].filterStyle = {
+        ...config.columns[colIndexes[i]].filterStyle,
+        'border-right': '1px solid lightgray',
+      };
+      // cells
+      config.columns[colIndexes[i]].style = {
+        ...config.columns[colIndexes[i]].style,
+        'border-right': '1px solid lightgray',
+      };
     }
+    // cumulate the width
+    cumColWidth += config.columns[colIndexes[i]].width;
   }
 }
