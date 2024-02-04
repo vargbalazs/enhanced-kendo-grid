@@ -90,9 +90,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       (row, index) => (row.dataRowIndex = index)
     );
 
-    // get the frozen columns, if any
-    this.config.frozenColumns = this.frozenColumns;
-
     // subscribe to the cellClose event
     this.config.cellClose$ = this.grid.cellClose.subscribe((cellCloseEvent) => {
       methods.cellClose(
@@ -139,6 +136,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.columns = (<ColumnComponent[]>(
       this.grid.columnList.toArray()
     )).filter((c) => !c.hidden);
+
+    // get the frozen columns, if any
+    methods.populateFrozenColumns(this.config, this.frozenColumns);
 
     // setTimeout to avoid expr has changed... error
     setTimeout(() => {
@@ -215,6 +215,10 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         this.updateState.bind(this)
       );
     }
+
+    // if there are frozen columns
+    if (this.config.frozenColumns.length > 0)
+      methods.scrollToColumn(this.config, this.grid, e);
   }
 
   @HostListener('click', ['$event'])

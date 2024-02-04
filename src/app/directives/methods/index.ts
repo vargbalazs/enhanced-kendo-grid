@@ -30,3 +30,5 @@ export * from './draw-dashed-border';
 export * from './remove-dashed-border';
 export * from './set-non-editable-cell-style';
 export * from './handle-frozen-columns';
+export * from './scroll-to-column';
+export * from './populate-frozen-columns';

@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { CellData } from '../interfaces/celldata.interface';
 import { Aggregate } from '../interfaces/aggregate.interface';
 import { ElementRef } from '@angular/core';
+import { FrozenColumn } from '../interfaces/frozencolumn.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -99,8 +100,8 @@ export class EnhancedGridConfig {
   // the grid body html element
   public gridBody: HTMLElement = document.createElement('div');
 
-  // array of field names for the frozen columns
-  public frozenColumns: string[] = [];
+  // array of frozen columns
+  public frozenColumns: FrozenColumn[] = [];
 
   // element ref of the grid
   public gridElRef: ElementRef = new ElementRef(null);
