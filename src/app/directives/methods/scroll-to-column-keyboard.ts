@@ -2,7 +2,7 @@ import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { ARROWS } from '../consts/constants';
 
-export function scrollToColumn(
+export function scrollToColumnKeyboard(
   config: EnhancedGridConfig,
   grid: GridComponent,
   e: KeyboardEvent

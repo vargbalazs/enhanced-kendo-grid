@@ -218,7 +218,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // if there are frozen columns
     if (this.config.frozenColumns.length > 0)
-      methods.scrollToColumn(this.config, this.grid, e);
+      methods.scrollToColumnKeyboard(this.config, this.grid, e);
   }
 
   @HostListener('click', ['$event'])

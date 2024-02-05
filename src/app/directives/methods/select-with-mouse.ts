@@ -92,6 +92,11 @@ export function selectWithMouse(
 
       // override style of non-editable cells
       methods.setNonEditableCellStyle(config, 'off');
+
+      // if there are some frozen columns
+      if (config.frozenColumns.length > 0) {
+        methods.scrollToColumnMouse(config);
+      }
     }
   }
 }
