@@ -21,7 +21,6 @@ import { FormGroup } from '@angular/forms';
 import { EnhancedGridConfig } from './classes/enhanced-grid-config.class';
 import { Aggregate } from './interfaces/aggregate.interface';
 import * as methods from './methods';
-import { fromEvent, merge } from 'rxjs';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -153,14 +152,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // add mousedown eventlistener to the header, because if sorting is enabled and if we are editing, we have to prevent sorting
     if (this.config.sortable) {
-      const headerCells = (<HTMLElement>(
-        this.config.gridElRef.nativeElement
-      )).querySelectorAll('.k-grid-header th');
-      this.config.columnClick$ = fromEvent(headerCells, 'mousedown').subscribe(
-        (e) => {
-          if (this.grid.isEditing()) this.grid.sortable = false;
-        }
-      );
+      methods.handleSorting(this.config, this.grid);
     }
   }
 

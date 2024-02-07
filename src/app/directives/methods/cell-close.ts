@@ -19,7 +19,7 @@ export function cellClose(
   if (grid.filter?.filters || grid.sort!.length > 0) {
     const gridData = (<GridDataResult>grid.data).data;
     config.editedRowIndex = gridData.findIndex(
-      (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
+      (item) => item.dataRowIndex === grid.activeCell?.dataItem?.dataRowIndex
     );
   }
   // if cell data is invalid, then put the cell back in edit mode
@@ -63,8 +63,8 @@ export function cellClose(
     config.fullGridData[index] = config.originalDataItem;
     config.noFocusingWithArrowKeys = false;
     resetFn();
-  }
 
-  // if sorting is allowed and cell is closed (no more editing), then put sorting back
-  grid.sortable = config.sortable;
+    // if sorting is allowed and cell is closed (no more editing), then put sorting back
+    grid.sortable = config.sortable;
+  }
 }
