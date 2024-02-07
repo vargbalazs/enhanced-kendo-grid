@@ -21,6 +21,7 @@ import { FormGroup } from '@angular/forms';
 import { EnhancedGridConfig } from './classes/enhanced-grid-config.class';
 import { Aggregate } from './interfaces/aggregate.interface';
 import * as methods from './methods';
+import { fromEvent, merge } from 'rxjs';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -127,6 +128,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // create the selected area div
     methods.createSelectedArea(this.renderer2, this.element, this.config);
 
+    // store whether the grid is sortable
+    this.config.sortable = this.grid.sortable;
+
     // reset the grid
     this.resetState();
   }
@@ -146,12 +150,25 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       if (this.config.frozenColumns.length > 0)
         methods.handleFrozenColumns(this.config);
     });
+
+    // add mousedown eventlistener to the header, because if sorting is enabled and if we are editing, we have to prevent sorting
+    if (this.config.sortable) {
+      const headerCells = (<HTMLElement>(
+        this.config.gridElRef.nativeElement
+      )).querySelectorAll('.k-grid-header th');
+      this.config.columnClick$ = fromEvent(headerCells, 'mousedown').subscribe(
+        (e) => {
+          if (this.grid.isEditing()) this.grid.sortable = false;
+        }
+      );
+    }
   }
 
   ngOnDestroy(): void {
     this.config.cellClose$.unsubscribe();
     this.config.cellClick$.unsubscribe();
     this.config.pageChange$.unsubscribe();
+    this.config.columnClick$.unsubscribe();
   }
 
   @HostListener('keydown', ['$event'])

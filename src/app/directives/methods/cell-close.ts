@@ -64,4 +64,7 @@ export function cellClose(
     config.noFocusingWithArrowKeys = false;
     resetFn();
   }
+
+  // if sorting is allowed and cell is closed (no more editing), then put sorting back
+  grid.sortable = config.sortable;
 }

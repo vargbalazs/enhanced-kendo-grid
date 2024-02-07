@@ -1,6 +1,7 @@
 import {
   CellSelectionItem,
   ColumnComponent,
+  SortSettings,
 } from '@progress/kendo-angular-grid';
 import { Rect } from '../interfaces/rect.interface';
 import { Subscription } from 'rxjs';
@@ -76,6 +77,9 @@ export class EnhancedGridConfig {
   // subscription for the page change event
   public pageChange$: Subscription = new Subscription();
 
+  // subscription for column header click
+  public columnClick$: Subscription = new Subscription();
+
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];
 
@@ -105,4 +109,7 @@ export class EnhancedGridConfig {
 
   // element ref of the grid
   public gridElRef: ElementRef = new ElementRef(null);
+
+  // if the grid is sortable
+  public sortable: SortSettings = false;
 }
