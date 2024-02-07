@@ -34,3 +34,4 @@ export * from './scroll-to-column-keyboard';
 export * from './populate-frozen-columns';
 export * from './scroll-to-column-mouse';
 export * from './handle-sorting';
+export * from './handle-paging';

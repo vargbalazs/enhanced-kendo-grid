@@ -1,6 +1,7 @@
 import {
   CellSelectionItem,
   ColumnComponent,
+  PagerSettings,
   SortSettings,
 } from '@progress/kendo-angular-grid';
 import { Rect } from '../interfaces/rect.interface';
@@ -80,6 +81,9 @@ export class EnhancedGridConfig {
   // subscription for column header click
   public columnClick$: Subscription = new Subscription();
 
+  // subscription for pager button click
+  public pagerButtonClick$: Subscription = new Subscription();
+
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];
 
@@ -112,4 +116,7 @@ export class EnhancedGridConfig {
 
   // if the grid is sortable
   public sortable: SortSettings = false;
+
+  // if the grid is pageable
+  public pageable: boolean | PagerSettings = false;
 }
