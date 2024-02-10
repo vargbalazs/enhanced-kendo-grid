@@ -359,3 +359,10 @@
 .enhanced.k-grid td[kendogridfiltercell] {
   background-color: white;
 }
+
+.enhanced.k-grid .k-pager.disabled {
+  background-color: rgba(235, 235, 228, 0.3);
+  color: rgba(84, 84, 84, 0.5);
+  box-shadow: none;
+  pointer-events: none;
+}

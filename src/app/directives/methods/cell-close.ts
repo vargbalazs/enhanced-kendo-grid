@@ -6,6 +6,7 @@ import {
   GridDataResult,
 } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import * as methods from './index';
 
 // custom function for the cell close logic
 export function cellClose(
@@ -67,4 +68,7 @@ export function cellClose(
     // if sorting is allowed and cell is closed (no more editing), then put sorting back
     grid.sortable = config.sortable;
   }
+  // enable paging, but only if the data is valid
+  if (grid.pageable && (<FormGroup>args.formGroup).valid)
+    methods.handlePaging(config, 'on');
 }

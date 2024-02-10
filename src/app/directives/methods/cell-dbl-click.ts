@@ -23,5 +23,7 @@ export function cellDblClick(
     });
     // step into edit mode
     methods.editCell(grid, cellEditingFormGroupFn);
+    // disable paging
+    if (grid.pageable) methods.handlePaging(config, 'off');
   }
 }

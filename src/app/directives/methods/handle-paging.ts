@@ -1,5 +1,13 @@
-import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
-// add mousedown eventlistener to the paging section, because if paging is enabled and if we are editing, we have to prevent paging
-export function handlePaging(config: EnhancedGridConfig, grid: GridComponent) {}
+// disable paging, if editing, enable, when not
+export function handlePaging(config: EnhancedGridConfig, toggle: 'on' | 'off') {
+  const pager = (<HTMLElement>config.gridElRef.nativeElement).querySelectorAll(
+    '.k-pager'
+  );
+  if (toggle === 'off') {
+    pager.item(0).classList.add('disabled');
+  } else {
+    pager.item(0).classList.remove('disabled');
+  }
+}

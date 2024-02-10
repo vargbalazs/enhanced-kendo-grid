@@ -33,6 +33,8 @@ export function editCellOnKeyDown(
     config.noFocusingWithArrowKeys = !config.noFocusingWithArrowKeys;
     resetFn();
     methods.storeOriginalValues(grid, config);
+    // disable paging, if feature was allowed
+    if (config.pageable) methods.handlePaging(config, 'off');
   }
 
   // if we enter in edit mode via typing any character, except enter or arrow keys or any other not allowed keys
@@ -62,6 +64,8 @@ export function editCellOnKeyDown(
     grid.activeCell.dataItem[config.fieldName] = undefined;
     // step into edit mode
     methods.editCell(grid, cellEditingFormGroupFn);
+    // disable paging
+    if (grid.pageable) methods.handlePaging(config, 'off');
   }
 
   // if we are in edit mode (not via enter key), then if we press the arrow keys, we change the focus

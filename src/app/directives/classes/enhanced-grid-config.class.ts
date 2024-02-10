@@ -81,9 +81,6 @@ export class EnhancedGridConfig {
   // subscription for column header click
   public columnClick$: Subscription = new Subscription();
 
-  // subscription for pager button click
-  public pagerButtonClick$: Subscription = new Subscription();
-
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];
 
