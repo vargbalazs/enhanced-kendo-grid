@@ -113,7 +113,4 @@ export class EnhancedGridConfig {
 
   // if the grid is sortable
   public sortable: SortSettings = false;
-
-  // if the grid is pageable
-  public pageable: boolean | PagerSettings = false;
 }

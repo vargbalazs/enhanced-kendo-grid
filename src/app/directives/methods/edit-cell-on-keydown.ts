@@ -34,7 +34,7 @@ export function editCellOnKeyDown(
     resetFn();
     methods.storeOriginalValues(grid, config);
     // disable paging, if feature was allowed
-    if (config.pageable) methods.handlePaging(config, 'off');
+    if (grid.pageable) methods.handlePaging(config, 'off');
     // disable filtering, if feature was allowed
     if (grid.filterable) methods.handleFiltering(config, 'off');
   }

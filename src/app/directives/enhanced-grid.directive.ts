@@ -130,9 +130,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // store whether the grid is sortable
     this.config.sortable = this.grid.sortable;
 
-    // store whether the grid is pageable
-    this.config.pageable = this.grid.pageable;
-
     // reset the grid
     this.resetState();
   }
