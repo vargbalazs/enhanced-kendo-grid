@@ -35,3 +35,4 @@ export * from './populate-frozen-columns';
 export * from './scroll-to-column-mouse';
 export * from './handle-sorting';
 export * from './handle-paging';
+export * from './handle-filtering';

@@ -2,12 +2,12 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
 // disable paging, if editing, enable, when not
 export function handlePaging(config: EnhancedGridConfig, toggle: 'on' | 'off') {
-  const pager = (<HTMLElement>config.gridElRef.nativeElement).querySelectorAll(
+  const pager = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
     '.k-pager'
-  );
+  )!;
   if (toggle === 'off') {
-    pager.item(0).classList.add('disabled');
+    pager.classList.add('disabled');
   } else {
-    pager.item(0).classList.remove('disabled');
+    pager.classList.remove('disabled');
   }
 }

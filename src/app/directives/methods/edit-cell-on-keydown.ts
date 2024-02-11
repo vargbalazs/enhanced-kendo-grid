@@ -35,6 +35,8 @@ export function editCellOnKeyDown(
     methods.storeOriginalValues(grid, config);
     // disable paging, if feature was allowed
     if (config.pageable) methods.handlePaging(config, 'off');
+    // disable filtering, if feature was allowed
+    if (grid.filterable) methods.handleFiltering(config, 'off');
   }
 
   // if we enter in edit mode via typing any character, except enter or arrow keys or any other not allowed keys
@@ -66,6 +68,8 @@ export function editCellOnKeyDown(
     methods.editCell(grid, cellEditingFormGroupFn);
     // disable paging
     if (grid.pageable) methods.handlePaging(config, 'off');
+    // disable filtering
+    if (grid.filterable) methods.handleFiltering(config, 'off');
   }
 
   // if we are in edit mode (not via enter key), then if we press the arrow keys, we change the focus

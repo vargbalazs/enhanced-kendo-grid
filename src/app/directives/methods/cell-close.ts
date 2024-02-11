@@ -71,4 +71,7 @@ export function cellClose(
   // enable paging, but only if the data is valid
   if (grid.pageable && (<FormGroup>args.formGroup).valid)
     methods.handlePaging(config, 'on');
+  // enable filtering, but only if the data is valid
+  if (grid.filterable && (<FormGroup>args.formGroup).valid)
+    methods.handleFiltering(config, 'on');
 }

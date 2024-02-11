@@ -360,9 +360,18 @@
   background-color: white;
 }
 
-.enhanced.k-grid .k-pager.disabled {
+.enhanced.k-grid .k-pager.disabled,
+.enhanced.k-grid [kendogridfilterrow].disabled {
   background-color: rgba(235, 235, 228, 0.3);
   color: rgba(84, 84, 84, 0.5);
-  box-shadow: none;
   pointer-events: none;
+}
+
+.enhanced.k-grid [kendofilterinput].disabled {
+  background-color: rgba(235, 235, 228, 0.3);
+}
+
+.enhanced.k-grid .k-dropdown-operator.disabled {
+  background-color: rgba(235, 235, 228, 0.3);
+  color: rgba(84, 84, 84, 0.5);
 }
