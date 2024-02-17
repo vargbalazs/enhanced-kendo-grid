@@ -21,6 +21,7 @@ import { FormGroup } from '@angular/forms';
 import { EnhancedGridConfig } from './classes/enhanced-grid-config.class';
 import { Aggregate } from './interfaces/aggregate.interface';
 import * as methods from './methods';
+import { CalculatedRow } from './interfaces/calculated-row.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -55,6 +56,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   // input for the frozen columns
   @Input() frozenColumns: string[] = [];
+
+  // input property for calculated rows
+  @Input() calculatedRows: CalculatedRow[] = [];
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -129,6 +133,14 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // store whether the grid is sortable
     this.config.sortable = this.grid.sortable;
+
+    // if we have calculated rows
+    if (this.calculatedRows.length > 0)
+      methods.insertCalculatedRows(
+        this.calculatedRows,
+        this.config.gridData,
+        this.grid
+      );
 
     // reset the grid
     this.resetState();
@@ -310,9 +322,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         }
 
         // set the border of the selected area, but only if we are not after a double click
-        if (!this.cellDblClicked)
-          this.config.selectedArea.style.border =
-            this.config.selectedAreaBorder;
+        // if (!this.cellDblClicked)
+        //   this.config.selectedArea.style.border =
+        //     this.config.selectedAreaBorder;
 
         methods.selectWithMouse(
           this.config,

@@ -2,13 +2,14 @@ import { AccountNumber } from '../model/account-number.model';
 import { Project } from '../model/project.model';
 import { Row } from '../model/row.model';
 
-export const rows: Row[] = generateData();
+export const rows: Row[] = generateData(200);
+export const calcGridRows: Row[] = generateData(50);
 export const accountNumbers: AccountNumber[] = generateAccountNumbers();
 export const projects: Project[] = generateProjects();
 
-function generateData(): Row[] {
+function generateData(rowNumber: number): Row[] {
   let rows: Row[] = [];
-  for (let i = 1; i <= 200; i++) {
+  for (let i = 1; i <= rowNumber; i++) {
     rows.push({
       id: i,
       accountNumber: {
@@ -33,7 +34,7 @@ function generateData(): Row[] {
       oct: Math.round(Math.random() * 1000),
       nov: Math.round(Math.random() * 1000),
       dec: Math.round(Math.random() * 1000),
-      category: `cat ${i < 5 ? '1' : '2'}`,
+      category: `cat ${Math.ceil(i / 10)}`,
     });
   }
 

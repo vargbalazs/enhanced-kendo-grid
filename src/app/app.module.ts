@@ -2,21 +2,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EnhancedGridDirectiveModule } from './directives/enhanced-grid-directive.module';
-import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NormalGridModule } from './components/normal-grid/normal-grid.module';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+import { CalcGridModule } from './components/calc-grid/calc-grid.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    GridModule,
     BrowserAnimationsModule,
-    EnhancedGridDirectiveModule,
-    ComboBoxModule,
-    ReactiveFormsModule,
+    NormalGridModule,
+    LayoutModule,
+    CalcGridModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
