@@ -134,14 +134,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // store whether the grid is sortable
     this.config.sortable = this.grid.sortable;
 
-    // if we have calculated rows
-    if (this.calculatedRows.length > 0)
-      methods.insertCalculatedRows(
-        this.calculatedRows,
-        this.config.gridData,
-        this.grid
-      );
-
     // reset the grid
     this.resetState();
   }
@@ -166,6 +158,15 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     if (this.config.sortable) {
       methods.handleSorting(this.config, this.grid);
     }
+
+    // if we have calculated rows
+    if (this.calculatedRows.length > 0)
+      methods.insertCalculatedRows(
+        this.calculatedRows,
+        this.config.gridData,
+        this.grid,
+        this.config
+      );
   }
 
   ngOnDestroy(): void {

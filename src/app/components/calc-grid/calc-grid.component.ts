@@ -57,29 +57,34 @@ export class CalcGridComponent {
 
   calculatedRows: CalculatedRow[] = [
     {
-      title: { writeToField: 'category', value: 'cat 1 sum' },
+      title: { writeToField: 'id', value: 'cat 1 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
       calculateFunction: 'sum',
+      calculatedFields: ['jan', 'feb'],
     },
     {
       title: { writeToField: 'id', value: 'cat 2 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
       calculateFunction: 'sum',
+      calculatedFields: ['jan', 'feb'],
     },
     {
       title: { writeToField: 'id', value: 'cat 3 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 3' },
       calculateFunction: 'sum',
+      calculatedFields: ['jan', 'feb'],
     },
     {
       title: { writeToField: 'id', value: 'cat 4 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 4' },
       calculateFunction: 'sum',
+      calculatedFields: ['jan', 'feb'],
     },
     {
       title: { writeToField: 'id', value: 'cat 5 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 5' },
       calculateFunction: 'sum',
+      calculatedFields: ['jan', 'feb'],
     },
   ];
 

@@ -375,3 +375,7 @@
   background-color: rgba(235, 235, 228, 0.3);
   color: rgba(84, 84, 84, 0.5);
 }
+
+.calcrow-unused-cell {
+  color: transparent !important;
+}
