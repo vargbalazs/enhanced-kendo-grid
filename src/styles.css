@@ -376,6 +376,7 @@
   color: rgba(84, 84, 84, 0.5);
 }
 
-.calcrow-unused-cell {
+.calcrow-unused-cell .hide-value {
   color: transparent !important;
+  cursor: default;
 }
