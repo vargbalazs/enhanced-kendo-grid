@@ -6,4 +6,5 @@ export interface CalculatedRow {
   calculateByRows?: number[];
   calculateFunction?: 'sum' | 'avg' | 'min' | 'max' | 'count' | 'custom';
   customFunction?: string;
+  cssClass?: string | string[];
 }

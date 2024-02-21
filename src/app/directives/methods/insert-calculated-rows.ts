@@ -9,6 +9,9 @@ export function insertCalculatedRows(
   grid: GridComponent,
   config: EnhancedGridConfig
 ) {
+  // pass the styling callback to the grid
+  grid.rowClass = rowCallback;
+
   calculatedRows.forEach((calcRow) => {
     // find the index, where the calculated row has to be inserted
     let lastIndex = -1;
@@ -41,35 +44,61 @@ export function insertCalculatedRows(
     rowData.calculated = true;
     // insert the row
     gridData.splice(lastIndex + 1, 0, rowData);
-    // set the style of the unused fields
+    // set the styles for the calc rows
     // we need setTimeout in order to have the data changes reflected in the dom
     setTimeout(() => {
       for (let i = 0; i <= config.columns.length - 1; i++) {
+        // set the style of the unused fields
         if (
           config.columns[i].field !== calcRow.title.writeToField &&
           !calcRow.calculatedFields.includes(config.columns[i].field)
         ) {
           // get the existing cssClass property of the column
-          let cssClass = config.columns[i].cssClass;
+          const colCssClass = config.columns[i].cssClass;
           // add the existing css class or classes to an array
           const cssClasses: string[] = [];
-          if (cssClass && typeof cssClass === 'string')
-            cssClasses.push(cssClass);
-          if (cssClass && Array.isArray(cssClass)) cssClasses.push(...cssClass);
+          // if there is only one css class
+          if (colCssClass && typeof colCssClass === 'string')
+            cssClasses.push(colCssClass);
+          // if there are multiple css classes
+          if (colCssClass && Array.isArray(colCssClass))
+            cssClasses.push(...colCssClass);
           // add the custom class
           cssClasses.push('hide-value');
           // overwrite the cssClass property with the new array
           config.columns[i].cssClass = cssClasses;
+        } else {
+          // if we have some custom classes for the calc row itself
+          if (calcRow.cssClass) {
+            // get the existing cssClass property of the column
+            const colCssClass = config.columns[i].cssClass;
+            // add the existing css class or classes to an array
+            const cssClasses: string[] = [];
+            // if there is only one custom css class
+            if (typeof calcRow.cssClass === 'string') {
+              if (colCssClass && typeof colCssClass === 'string')
+                cssClasses.push(colCssClass, calcRow.cssClass);
+              if (colCssClass && Array.isArray(colCssClass))
+                cssClasses.push(...colCssClass, ...calcRow.cssClass);
+            }
+            // if there are multiple custom css classes
+            if (Array.isArray(calcRow.cssClass)) {
+              if (colCssClass && typeof colCssClass === 'string')
+                cssClasses.push(colCssClass, ...calcRow.cssClass);
+              if (colCssClass && Array.isArray(colCssClass))
+                cssClasses.push(...colCssClass, ...calcRow.cssClass);
+            }
+            // overwrite the cssClass property with the new array
+            config.columns[i].cssClass = cssClasses;
+          }
         }
       }
     });
   });
-  // pass the styling callback to the grid
-  grid.rowClass = rowCallback;
 }
 
 // callback for styling the unused cells in a calculated row
 function rowCallback(context: RowClassArgs) {
-  if (context.dataItem.calculated) return { 'calcrow-unused-cell': true };
+  if (context.dataItem.calculated) return { calcrow: true };
   return '';
 }

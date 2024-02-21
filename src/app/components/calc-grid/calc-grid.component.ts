@@ -61,18 +61,21 @@ export class CalcGridComponent {
       calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
       calculateFunction: 'sum',
       calculatedFields: ['jan', 'feb'],
+      cssClass: 'custom-calcrow-1',
     },
     {
       title: { writeToField: 'id', value: 'cat 2 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
       calculateFunction: 'sum',
       calculatedFields: ['jan', 'feb'],
+      cssClass: 'custom-calcrow-2',
     },
     {
       title: { writeToField: 'id', value: 'cat 3 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 3' },
       calculateFunction: 'sum',
       calculatedFields: ['jan', 'feb'],
+      cssClass: ['custom-calcrow-1', 'custom-calcrow-2'],
     },
     {
       title: { writeToField: 'id', value: 'cat 4 sum' },

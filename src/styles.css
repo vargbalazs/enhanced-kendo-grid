@@ -376,7 +376,15 @@
   color: rgba(84, 84, 84, 0.5);
 }
 
-.calcrow-unused-cell .hide-value {
+.calcrow .hide-value {
   color: transparent !important;
   cursor: default;
+}
+
+.custom-calcrow-1 {
+  font-style: italic !important;
+}
+
+.custom-calcrow-2 {
+  font-weight: bold !important;
 }
