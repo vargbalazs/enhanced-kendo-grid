@@ -1,4 +1,5 @@
 export interface CalculatedRow {
+  name: string;
   position?: number;
   title: { writeToField: string; value: string };
   calculateByField?: { fieldName: string; fieldValue: string };

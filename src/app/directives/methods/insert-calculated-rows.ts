@@ -42,6 +42,8 @@ export function insertCalculatedRows(
     }
     // mark the row as calculated
     rowData.calculated = true;
+    // add the row css classes
+    rowData.cssClasses = calcRow.cssClass;
     // insert the row
     gridData.splice(lastIndex + 1, 0, rowData);
     // set the styles for the calc rows
@@ -68,37 +70,52 @@ export function insertCalculatedRows(
           // overwrite the cssClass property with the new array
           config.columns[i].cssClass = cssClasses;
         } else {
-          // if we have some custom classes for the calc row itself
-          if (calcRow.cssClass) {
-            // get the existing cssClass property of the column
-            const colCssClass = config.columns[i].cssClass;
-            // add the existing css class or classes to an array
-            const cssClasses: string[] = [];
-            // if there is only one custom css class
-            if (typeof calcRow.cssClass === 'string') {
-              if (colCssClass && typeof colCssClass === 'string')
-                cssClasses.push(colCssClass, calcRow.cssClass);
-              if (colCssClass && Array.isArray(colCssClass))
-                cssClasses.push(...colCssClass, ...calcRow.cssClass);
-            }
-            // if there are multiple custom css classes
-            if (Array.isArray(calcRow.cssClass)) {
-              if (colCssClass && typeof colCssClass === 'string')
-                cssClasses.push(colCssClass, ...calcRow.cssClass);
-              if (colCssClass && Array.isArray(colCssClass))
-                cssClasses.push(...colCssClass, ...calcRow.cssClass);
-            }
-            // overwrite the cssClass property with the new array
-            config.columns[i].cssClass = cssClasses;
-          }
+          // // if we have some custom classes for the calc row itself
+          // if (calcRow.cssClass) {
+          //   // get the existing cssClass property of the column
+          //   const colCssClass = config.columns[i].cssClass;
+          //   // add the existing css class or classes to an array
+          //   const cssClasses: string[] = [];
+          //   // if there is only one custom css class
+          //   if (typeof calcRow.cssClass === 'string') {
+          //     if (colCssClass && typeof colCssClass === 'string')
+          //       cssClasses.push(colCssClass, calcRow.cssClass);
+          //     if (colCssClass && Array.isArray(colCssClass))
+          //       cssClasses.push(...colCssClass, ...calcRow.cssClass);
+          //   }
+          //   // if there are multiple custom css classes
+          //   if (Array.isArray(calcRow.cssClass)) {
+          //     if (colCssClass && typeof colCssClass === 'string')
+          //       cssClasses.push(colCssClass, ...calcRow.cssClass);
+          //     if (colCssClass && Array.isArray(colCssClass))
+          //       cssClasses.push(...colCssClass, ...calcRow.cssClass);
+          //   }
+          //   // overwrite the cssClass property with the new array
+          //   config.columns[i].cssClass = cssClasses;
+          // }
         }
       }
     });
   });
 }
 
-// callback for styling the unused cells in a calculated row
+// callback for styling calculated rows
 function rowCallback(context: RowClassArgs) {
-  if (context.dataItem.calculated) return { calcrow: true };
+  // if it is a calculated row
+  if (context.dataItem.calculated) {
+    // if we have only one css class
+    if (typeof context.dataItem.cssClasses === 'string')
+      return { calcrow: true, [context.dataItem.cssClasses]: true };
+    // if we have multiple css classes
+    if (Array.isArray(context.dataItem.cssClasses)) {
+      const calcRowCssClasses = (<string[]>context.dataItem.cssClasses).map(
+        (cssClass) => {
+          return { [cssClass]: true };
+        }
+      );
+      const result = Object.assign({ calcrow: true }, ...calcRowCssClasses);
+      return result;
+    }
+  }
   return '';
 }
