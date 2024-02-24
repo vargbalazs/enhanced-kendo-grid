@@ -57,7 +57,7 @@ export class CalcGridComponent {
 
   calculatedRows: CalculatedRow[] = [
     {
-      name: 'cat1sum',
+      name: 'calcsum1',
       title: { writeToField: 'id', value: 'cat 1 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
       calculateFunction: 'sum',
@@ -65,7 +65,7 @@ export class CalcGridComponent {
       cssClass: 'custom-calcrow-1',
     },
     {
-      name: 'cat2sum',
+      name: 'calcsum2',
       title: { writeToField: 'id', value: 'cat 2 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
       calculateFunction: 'sum',
@@ -73,26 +73,28 @@ export class CalcGridComponent {
       cssClass: 'custom-calcrow-2',
     },
     {
-      name: 'cat3sum',
+      name: 'calcsum3',
       title: { writeToField: 'id', value: 'cat 3 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 3' },
       calculateFunction: 'sum',
       calculatedFields: ['jan', 'feb'],
-      cssClass: ['custom-calcrow-1', 'custom-calcrow-2'],
+      cssClass: 'custom-calcrow-3',
     },
     {
-      name: 'cat4sum',
+      name: 'calcsum4',
       title: { writeToField: 'id', value: 'cat 4 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 4' },
       calculateFunction: 'sum',
       calculatedFields: ['jan', 'feb'],
+      cssClass: 'custom-calcrow-4',
     },
     {
-      name: 'cat5sum',
+      name: 'calcsum5',
       title: { writeToField: 'id', value: 'cat 5 sum' },
       calculateByField: { fieldName: 'category', fieldValue: 'cat 5' },
       calculateFunction: 'sum',
       calculatedFields: ['jan', 'feb'],
+      cssClass: 'custom-calcrow-5',
     },
   ];
 

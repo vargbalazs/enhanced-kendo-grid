@@ -23,11 +23,15 @@
   padding-block: 0px;
   padding-inline: 2px;
   /* position: relative; */
-  color: #4f5e71;
   height: 20px;
   font-size: 12px;
   font-family: "Inter";
   background-color: white;
+}
+
+.enhanced .k-table,
+.enhanced .k-data-table {
+  color: #4f5e71;
 }
 
 .enhanced.k-grid-md .k-table-td .k-grid-ignore-click {
@@ -381,18 +385,24 @@
   cursor: default;
 }
 
-.custom-calcrow-1 {
-  font-style: italic !important;
+.calcrow.calcsum1 .custom-calcrow-1 {
+  font-style: italic;
 }
 
-.custom-calcrow-2 {
+.calcrow.calcsum2 .custom-calcrow-2 {
   font-weight: bold !important;
 }
 
-.cat1sum {
-  font-style: italic !important;
+.calcrow.calcsum3 .custom-calcrow-3 {
+  color: red;
 }
 
-.cat2sum {
-  font-weight: bold !important;
+.calcrow.calcsum4 .custom-calcrow-4 {
+  background-color: lightseagreen !important;
+  color: white;
+}
+
+.calcrow.calcsum5 .custom-calcrow-5 {
+  background-color: deepskyblue !important;
+  color: white;
 }
