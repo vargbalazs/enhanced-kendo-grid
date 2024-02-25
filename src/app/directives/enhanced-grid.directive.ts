@@ -21,7 +21,7 @@ import { FormGroup } from '@angular/forms';
 import { EnhancedGridConfig } from './classes/enhanced-grid-config.class';
 import { Aggregate } from './interfaces/aggregate.interface';
 import * as methods from './methods';
-import { CalculatedRow } from './interfaces/calculated-row.interface';
+import { RowCalculation } from './interfaces/row-calculation.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -57,8 +57,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // input for the frozen columns
   @Input() frozenColumns: string[] = [];
 
-  // input property for calculated rows
-  @Input() calculatedRows: CalculatedRow[] = [];
+  // input property for row calculation
+  @Input() rowCalculation: RowCalculation = {
+    titleField: '',
+    calculatedFields: [],
+    calculatedRows: [],
+  };
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -159,14 +163,10 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       methods.handleSorting(this.config, this.grid);
     }
 
-    // if we have calculated rows
-    if (this.calculatedRows.length > 0)
-      methods.insertCalculatedRows(
-        this.calculatedRows,
-        this.config.gridData,
-        this.grid,
-        this.config
-      );
+    // if we have row calculations
+    if (this.rowCalculation.calculatedRows.length > 0) {
+      methods.insertCalculatedRows(this.rowCalculation, this.config, this.grid);
+    }
   }
 
   ngOnDestroy(): void {

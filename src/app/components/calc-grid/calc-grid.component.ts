@@ -7,7 +7,7 @@ import {
 } from '@progress/kendo-angular-grid';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
-import { CalculatedRow } from 'src/app/directives/interfaces/calculated-row.interface';
+import { RowCalculation } from 'src/app/directives/interfaces/row-calculation.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
@@ -55,48 +55,47 @@ export class CalcGridComponent {
   selectedCells: CellSelectionItem[] = [];
   aggregates: Aggregate = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
 
-  calculatedRows: CalculatedRow[] = [
-    {
-      name: 'calcsum1',
-      title: { writeToField: 'id', value: 'cat 1 sum' },
-      calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
-      calculateFunction: 'sum',
-      calculatedFields: ['jan', 'feb'],
-      cssClass: 'custom-calcrow-1',
-    },
-    {
-      name: 'calcsum2',
-      title: { writeToField: 'id', value: 'cat 2 sum' },
-      calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
-      calculateFunction: 'sum',
-      calculatedFields: ['jan', 'feb'],
-      cssClass: 'custom-calcrow-2',
-    },
-    {
-      name: 'calcsum3',
-      title: { writeToField: 'id', value: 'cat 3 sum' },
-      calculateByField: { fieldName: 'category', fieldValue: 'cat 3' },
-      calculateFunction: 'sum',
-      calculatedFields: ['jan', 'feb'],
-      cssClass: 'custom-calcrow-3',
-    },
-    {
-      name: 'calcsum4',
-      title: { writeToField: 'id', value: 'cat 4 sum' },
-      calculateByField: { fieldName: 'category', fieldValue: 'cat 4' },
-      calculateFunction: 'sum',
-      calculatedFields: ['jan', 'feb'],
-      cssClass: 'custom-calcrow-4',
-    },
-    {
-      name: 'calcsum5',
-      title: { writeToField: 'id', value: 'cat 5 sum' },
-      calculateByField: { fieldName: 'category', fieldValue: 'cat 5' },
-      calculateFunction: 'sum',
-      calculatedFields: ['jan', 'feb'],
-      cssClass: 'custom-calcrow-5',
-    },
-  ];
+  rowCalculation: RowCalculation = {
+    titleField: 'id',
+    calculatedFields: ['jan', 'feb'],
+    calculatedRows: [
+      {
+        name: 'calcsum1',
+        title: 'cat 1 sum',
+        calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-1',
+      },
+      {
+        name: 'calcsum2',
+        title: 'cat 2 sum',
+        calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-2',
+      },
+      {
+        name: 'calcsum3',
+        title: 'cat 3 sum',
+        calculateByField: { fieldName: 'category', fieldValue: 'cat 3' },
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-3',
+      },
+      {
+        name: 'calcsum4',
+        title: 'cat 4 sum',
+        calculateByField: { fieldName: 'category', fieldValue: 'cat 4' },
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-4',
+      },
+      {
+        name: 'calcsum5',
+        title: 'cat 5 sum',
+        calculateByField: { fieldName: 'category', fieldValue: 'cat 5' },
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-5',
+      },
+    ],
+  };
 
   constructor(private formBuilder: FormBuilder) {
     this.calculateTotal(this.rows);

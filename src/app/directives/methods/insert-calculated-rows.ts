@@ -1,27 +1,26 @@
 import { GridComponent, RowClassArgs } from '@progress/kendo-angular-grid';
-import { CalculatedRow } from '../interfaces/calculated-row.interface';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import { RowCalculation } from '../interfaces/row-calculation.interface';
 
 // inserts the calculated rows into the grid data
 export function insertCalculatedRows(
-  calculatedRows: CalculatedRow[],
-  gridData: any[],
-  grid: GridComponent,
-  config: EnhancedGridConfig
+  rowCalculation: RowCalculation,
+  config: EnhancedGridConfig,
+  grid: GridComponent
 ) {
   // pass the styling callback to the grid
   grid.rowClass = rowCallback;
   // store all the custom classes
   const customCssClasses: string[] = [];
-  calculatedRows.forEach((calcRow) => {
+  rowCalculation.calculatedRows.forEach((calcRow) => {
     if (calcRow.cssClass) customCssClasses.push(calcRow.cssClass);
   });
-  calculatedRows.forEach((calcRow) => {
+  rowCalculation.calculatedRows.forEach((calcRow) => {
     // find the index, where the calculated row has to be inserted
     let lastIndex = -1;
-    for (let i = gridData.length - 1; i >= 0; i--) {
+    for (let i = config.gridData.length - 1; i >= 0; i--) {
       if (
-        gridData[i][calcRow.calculateByField?.fieldName!] ===
+        config.gridData[i][calcRow.calculateByField?.fieldName!] ===
         calcRow.calculateByField?.fieldValue
       ) {
         lastIndex = i;
@@ -29,96 +28,68 @@ export function insertCalculatedRows(
       }
     }
     // create a copy of the last row and override the values
-    const rowData = structuredClone(gridData[lastIndex]);
+    const rowData = structuredClone(config.gridData[lastIndex]);
     // write the title of the calculated row
-    // if writeToField is an object
-    if (calcRow.title.writeToField.includes('.')) {
-      const key = calcRow.title.writeToField.substring(
+    // if titleField is an object
+    if (rowCalculation.titleField.includes('.')) {
+      const key = rowCalculation.titleField.substring(
         0,
-        calcRow.title.writeToField.indexOf('.')
+        rowCalculation.titleField.indexOf('.')
       );
-      const fieldName = calcRow.title.writeToField.substring(
-        calcRow.title.writeToField.indexOf('.') + 1
+      const fieldName = rowCalculation.titleField.substring(
+        rowCalculation.titleField.indexOf('.') + 1
       );
-      rowData[key][fieldName] = calcRow.title.value;
+      rowData[key][fieldName] = calcRow.title;
     } else {
-      rowData[calcRow.title.writeToField] = calcRow.title.value;
+      rowData[rowCalculation.titleField] = calcRow.title;
     }
     // mark the row as calculated
     rowData.calculated = true;
-    // add the row css classes
-    //rowData.cssClasses = calcRow.cssClass;
     // add the unique name
     rowData.calcRowName = calcRow.name;
     // insert the row
-    gridData.splice(lastIndex + 1, 0, rowData);
-    // set the styles for the calc rows
-    // we need setTimeout in order to have the data changes reflected in the dom
-    setTimeout(() => {
-      for (let i = 0; i <= config.columns.length - 1; i++) {
-        // set the style of the unused fields
-        if (
-          config.columns[i].field !== calcRow.title.writeToField &&
-          !calcRow.calculatedFields.includes(config.columns[i].field)
-        ) {
-          // get the existing cssClass property of the column
-          const colCssClass = config.columns[i].cssClass;
-          // add the existing css class or classes to an array
-          const cssClasses: string[] = [];
-          // if there is only one css class
-          if (colCssClass && typeof colCssClass === 'string')
-            cssClasses.push(colCssClass);
-          // if there are multiple css classes
-          if (colCssClass && Array.isArray(colCssClass))
-            cssClasses.push(...colCssClass);
-          // add the custom class
-          cssClasses.push('hide-value', ...customCssClasses);
-          // overwrite the cssClass property with the new array
-          config.columns[i].cssClass = cssClasses;
-        } else {
-          // get the existing cssClass property of the column
-          const colCssClass = config.columns[i].cssClass;
-          // add the existing css class or classes to an array
-          const cssClasses: string[] = [];
-          // if there is only one css class
-          if (colCssClass && typeof colCssClass === 'string')
-            cssClasses.push(colCssClass);
-          // if there are multiple css classes
-          if (colCssClass && Array.isArray(colCssClass))
-            cssClasses.push(...colCssClass);
-          // add the custom class
-          cssClasses.push(...customCssClasses);
-          // overwrite the cssClass property with the new array
-          config.columns[i].cssClass = cssClasses;
-        }
+    config.gridData.splice(lastIndex + 1, 0, rowData);
+  });
+  // set the styles for the calc rows
+  // we need setTimeout in order to have the data changes reflected in the dom
+  setTimeout(() => {
+    for (let i = 0; i <= config.columns.length - 1; i++) {
+      // get the existing cssClass property of the column
+      const colCssClass = config.columns[i].cssClass;
+      // add the existing css class or classes to an array
+      const cssClasses: string[] = [];
+      // set the style of the unused fields
+      if (
+        config.columns[i].field !== rowCalculation.titleField &&
+        !rowCalculation.calculatedFields.includes(config.columns[i].field)
+      ) {
+        // if there is only one css class
+        if (colCssClass && typeof colCssClass === 'string')
+          cssClasses.push(colCssClass);
+        // if there are multiple css classes
+        if (colCssClass && Array.isArray(colCssClass))
+          cssClasses.push(...colCssClass);
+        // add the custom class
+        cssClasses.push('hide-value', ...customCssClasses);
+      } else {
+        // if there is only one css class
+        if (colCssClass && typeof colCssClass === 'string')
+          cssClasses.push(colCssClass);
+        // if there are multiple css classes
+        if (colCssClass && Array.isArray(colCssClass))
+          cssClasses.push(...colCssClass);
+        // add the custom class
+        cssClasses.push(...customCssClasses);
       }
-    });
+      // overwrite the cssClass property with the new array
+      config.columns[i].cssClass = cssClasses;
+    }
   });
 }
 
 // callback for styling calculated rows
 function rowCallback(context: RowClassArgs) {
-  // if it is a calculated row
-  // if (context.dataItem.calculated) {
-  //   // if we have only one css class
-  //   if (typeof context.dataItem.cssClasses === 'string')
-  //     return {
-  //       calcrow: true,
-  //       [context.dataItem.cssClasses]: true,
-  //     };
-  //   // if we have multiple css classes
-  //   if (Array.isArray(context.dataItem.cssClasses)) {
-  //     const calcRowCssClasses = (<string[]>context.dataItem.cssClasses).map(
-  //       (cssClass) => {
-  //         return { [cssClass]: true };
-  //       }
-  //     );
-  //     const result = Object.assign({ calcrow: true }, ...calcRowCssClasses);
-  //     return result;
-  //   }
-  // }
-  if (context.dataItem.calculated) {
+  if (context.dataItem.calculated)
     return { calcrow: true, [context.dataItem.calcRowName]: true };
-  }
   return '';
 }
