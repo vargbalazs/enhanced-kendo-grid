@@ -379,6 +379,7 @@
 .calcrow .hide-value {
   color: transparent !important;
   cursor: default;
+  user-select: none;
 }
 
 .calcrow.calcsum1 .custom-calcrow-1 {
