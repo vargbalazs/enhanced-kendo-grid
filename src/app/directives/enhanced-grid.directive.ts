@@ -148,6 +148,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.grid.columnList.toArray()
     )).filter((c) => !c.hidden);
 
+    // get the non-editable columns
+    (<ColumnComponent[]>this.grid.columnList.toArray()).forEach((c, i) => {
+      if (!c.editable)
+        this.config.nonEditableColumns.push({ column: c, index: i });
+    });
+
     // get the frozen columns, if any
     methods.populateFrozenColumns(this.config, this.frozenColumns);
 

@@ -30,6 +30,11 @@ export function editCellOnKeyDown(
       config.columns[grid.activeCell.colIndex].field
     ) // column is editable
   ) {
+    // if we are in a calculated row, then make the column not editable
+    if (grid.activeCell.dataItem.calculated) {
+      methods.disableEditingOnCalculatedRow(grid, config);
+      return;
+    }
     config.noFocusingWithArrowKeys = !config.noFocusingWithArrowKeys;
     resetFn();
     methods.storeOriginalValues(grid, config);
@@ -49,6 +54,11 @@ export function editCellOnKeyDown(
     !NOT_ALLOWED_KEYS_FOR_EDITING.includes(e.key) && // the pressed key is a 'regular' one
     !grid.isEditingCell() // we are not in edit mode elsewhere in the grid
   ) {
+    // if we are in a calculated row, then make the column not editable
+    if (grid.activeCell.dataItem.calculated) {
+      methods.disableEditingOnCalculatedRow(grid, config);
+      return;
+    }
     // get the column field name (key)
     config.fieldName = config.columns[grid.activeCell.colIndex].field;
     // if the given field is an object, then we are in a list, so we need the arrow keys to navigate through it

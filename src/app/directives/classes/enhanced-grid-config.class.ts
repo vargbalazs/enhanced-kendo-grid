@@ -10,6 +10,7 @@ import { CellData } from '../interfaces/celldata.interface';
 import { Aggregate } from '../interfaces/aggregate.interface';
 import { ElementRef } from '@angular/core';
 import { FrozenColumn } from '../interfaces/frozencolumn.interface';
+import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -20,6 +21,9 @@ export class EnhancedGridConfig {
 
   // the columns of the grid
   public columns: ColumnComponent[] = [];
+
+  // non-editable columns
+  public nonEditableColumns: NonEditableColumn[] = [];
 
   // the first selected cell in a selection
   public firstSelectedCell: CellSelectionItem = {};
