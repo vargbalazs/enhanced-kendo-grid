@@ -11,6 +11,7 @@ import { Aggregate } from '../interfaces/aggregate.interface';
 import { ElementRef } from '@angular/core';
 import { FrozenColumn } from '../interfaces/frozencolumn.interface';
 import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
+import { RowCalculation } from '../interfaces/row-calculation.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -117,4 +118,17 @@ export class EnhancedGridConfig {
 
   // if the grid is sortable
   public sortable: SortSettings = false;
+
+  // if the grid is a calc grid
+  public calculatedGrid: boolean = false;
+
+  // if the grid should be recalculated
+  public shouldRecalculate: boolean = false;
+
+  // store the row calculation settings
+  public rowCalculation: RowCalculation = {
+    titleField: '',
+    calculatedFields: [],
+    calculatedRows: [],
+  };
 }

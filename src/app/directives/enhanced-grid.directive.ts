@@ -138,6 +138,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // store whether the grid is sortable
     this.config.sortable = this.grid.sortable;
 
+    // store, if the grid is a calc grid
+    this.config.calculatedGrid = this.rowCalculation.calculatedRows.length > 0;
+
+    // store row calc settings
+    this.config.rowCalculation = this.rowCalculation;
+
     // reset the grid
     this.resetState();
   }
@@ -172,6 +178,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if we have row calculations
     if (this.rowCalculation.calculatedRows.length > 0) {
       methods.insertCalculatedRows(this.rowCalculation, this.config, this.grid);
+      methods.updateCalculatedRows(this.config);
     }
   }
 

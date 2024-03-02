@@ -57,7 +57,7 @@ export class CalcGridComponent {
 
   rowCalculation: RowCalculation = {
     titleField: 'id',
-    calculatedFields: ['jan', 'feb'],
+    calculatedFields: ['jan', 'feb', 'mar', 'apr', 'may'],
     calculatedRows: [
       {
         name: 'calcsum1',
@@ -68,30 +68,30 @@ export class CalcGridComponent {
       },
       {
         name: 'calcsum2',
-        title: 'cat 2 sum',
+        title: 'cat 2 avg',
         calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
-        calculateFunction: 'sum',
+        calculateFunction: 'avg',
         cssClass: 'custom-calcrow-2',
       },
       {
         name: 'calcsum3',
-        title: 'cat 3 sum',
+        title: 'cat 3 min',
         calculateByField: { fieldName: 'category', fieldValue: 'cat 3' },
-        calculateFunction: 'sum',
+        calculateFunction: 'min',
         cssClass: 'custom-calcrow-3',
       },
       {
         name: 'calcsum4',
-        title: 'cat 4 sum',
+        title: 'cat 4 max',
         calculateByField: { fieldName: 'category', fieldValue: 'cat 4' },
-        calculateFunction: 'sum',
+        calculateFunction: 'max',
         cssClass: 'custom-calcrow-4',
       },
       {
         name: 'calcsum5',
-        title: 'cat 5 sum',
+        title: 'cat 5 count',
         calculateByField: { fieldName: 'category', fieldValue: 'cat 5' },
-        calculateFunction: 'sum',
+        calculateFunction: 'count',
         cssClass: 'custom-calcrow-5',
       },
     ],

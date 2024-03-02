@@ -37,5 +37,7 @@ export function cellDblClick(
     if (grid.pageable) methods.handlePaging(config, 'off');
     // disable filtering
     if (grid.filterable) methods.handleFiltering(config, 'off');
+    // if grid is a calc grid, then mark it for recalculating
+    if (config.calculatedGrid) config.shouldRecalculate = true;
   }
 }

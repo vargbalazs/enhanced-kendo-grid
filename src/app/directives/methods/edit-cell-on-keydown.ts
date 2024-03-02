@@ -42,6 +42,8 @@ export function editCellOnKeyDown(
     if (grid.pageable) methods.handlePaging(config, 'off');
     // disable filtering, if feature was allowed
     if (grid.filterable) methods.handleFiltering(config, 'off');
+    // if grid is a calc grid, then mark it for recalculating
+    if (config.calculatedGrid) config.shouldRecalculate = true;
   }
 
   // if we enter in edit mode via typing any character, except enter or arrow keys or any other not allowed keys
@@ -80,6 +82,8 @@ export function editCellOnKeyDown(
     if (grid.pageable) methods.handlePaging(config, 'off');
     // disable filtering
     if (grid.filterable) methods.handleFiltering(config, 'off');
+    // if grid is a calc grid, then mark it for recalculating
+    if (config.calculatedGrid) config.shouldRecalculate = true;
   }
 
   // if we are in edit mode (not via enter key), then if we press the arrow keys, we change the focus

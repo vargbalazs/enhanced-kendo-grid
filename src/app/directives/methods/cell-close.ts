@@ -74,4 +74,13 @@ export function cellClose(
   // enable filtering, but only if the data is valid
   if (grid.filterable && (<FormGroup>args.formGroup).valid)
     methods.handleFiltering(config, 'on');
+  // recalculate the grid if needed and if the data is valid
+  if (
+    config.calculatedGrid &&
+    config.shouldRecalculate &&
+    (<FormGroup>args.formGroup).valid
+  ) {
+    methods.updateCalculatedRows(config);
+    config.shouldRecalculate = false;
+  }
 }
