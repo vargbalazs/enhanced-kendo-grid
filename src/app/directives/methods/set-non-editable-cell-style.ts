@@ -7,26 +7,44 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
 export function setNonEditableCellStyle(
   config: EnhancedGridConfig,
-  toggle: 'on' | 'off'
+  toggle?: 'on' | 'off'
 ) {
-  if (toggle === 'off') {
-    for (let i = 0; i <= config.selectedCells.length - 1; i++) {
-      if (!config.columns[config.selectedCells[i].columnKey].editable) {
-        const target = config.gridBody.querySelector(
-          `[ng-reflect-data-row-index="${config.selectedCells[i].itemKey}"][ng-reflect-col-index="${config.selectedCells[i].columnKey}"]`
-        );
-        target?.classList.remove('non-editable');
-      }
+  for (let i = 0; i <= config.columns.length - 1; i++) {
+    if (!config.columns[i].editable) {
+      const target = config.gridBody.querySelectorAll(
+        `[ng-reflect-col-index="${i}"]`
+      );
+      target.forEach((item) => {
+        item.classList.add('non-editable');
+      });
     }
   }
-  if (toggle === 'on') {
-    for (let i = 0; i <= config.selectedCells.length - 1; i++) {
-      if (!config.columns[config.selectedCells[i].columnKey].editable) {
-        const target = config.gridBody.querySelector(
-          `[ng-reflect-data-row-index="${config.selectedCells[i].itemKey}"][ng-reflect-col-index="${config.selectedCells[i].columnKey}"]`
-        );
-        target?.classList.add('non-editable');
-      }
+  for (let i = 0; i <= config.selectedCells.length - 1; i++) {
+    if (!config.columns[config.selectedCells[i].columnKey].editable) {
+      const target = config.gridBody.querySelector(
+        `[ng-reflect-data-row-index="${config.selectedCells[i].itemKey}"][ng-reflect-col-index="${config.selectedCells[i].columnKey}"]`
+      );
+      target?.classList.remove('non-editable');
     }
   }
+  // if (toggle === 'off') {
+  //   for (let i = 0; i <= config.selectedCells.length - 1; i++) {
+  //     if (!config.columns[config.selectedCells[i].columnKey].editable) {
+  //       const target = config.gridBody.querySelector(
+  //         `[ng-reflect-data-row-index="${config.selectedCells[i].itemKey}"][ng-reflect-col-index="${config.selectedCells[i].columnKey}"]`
+  //       );
+  //       target?.classList.remove('non-editable');
+  //     }
+  //   }
+  // }
+  // if (toggle === 'on') {
+  //   for (let i = 0; i <= config.selectedCells.length - 1; i++) {
+  //     if (!config.columns[config.selectedCells[i].columnKey].editable) {
+  //       const target = config.gridBody.querySelector(
+  //         `[ng-reflect-data-row-index="${config.selectedCells[i].itemKey}"][ng-reflect-col-index="${config.selectedCells[i].columnKey}"]`
+  //       );
+  //       target?.classList.add('non-editable');
+  //     }
+  //   }
+  // }
 }
