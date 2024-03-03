@@ -83,6 +83,7 @@ export function insertCalculatedRows(
       }
       // overwrite the cssClass property with the new array
       config.columns[i].cssClass = cssClasses;
+      config.columnStyles.push({ cssClasses: cssClasses, columnIndex: i });
     }
   });
 }

@@ -12,6 +12,7 @@ import { ElementRef } from '@angular/core';
 import { FrozenColumn } from '../interfaces/frozencolumn.interface';
 import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
 import { RowCalculation } from '../interfaces/row-calculation.interface';
+import { ColumnStyle } from '../interfaces/column-style.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -131,4 +132,7 @@ export class EnhancedGridConfig {
     calculatedFields: [],
     calculatedRows: [],
   };
+
+  // store the css classes of all columns
+  public columnStyles: ColumnStyle[] = [];
 }
