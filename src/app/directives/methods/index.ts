@@ -39,3 +39,4 @@ export * from './handle-filtering';
 export * from './insert-calculated-rows';
 export * from './disable-editing-on-calc-row';
 export * from './update-calculated-rows';
+export * from './override-calculated-cell-style';

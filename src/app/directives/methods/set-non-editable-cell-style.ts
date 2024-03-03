@@ -1,10 +1,10 @@
 // adds or removes the style for an editable cell for the selected cells
 // this is needed, because we have to set the background for an editable cell as !important, because all other cells have to have a
 // default white background because of the frozen columns feature (in order to hide the non-frozen columns when scrolling)
+// and so if we select a non-editable cell, the background won't change, unless we remove the non-editable class
 
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
-// and so if we select a non-editable cell, the background won't change, unless we remove the non-editable class
 export function setNonEditableCellStyle(
   config: EnhancedGridConfig,
   toggle: 'on' | 'off'

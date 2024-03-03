@@ -97,6 +97,9 @@ export function selectWithMouse(
       if (config.frozenColumns.length > 0) {
         methods.scrollToColumnMouse(config);
       }
+
+      // override style of calculated cells, if we are in a calc grid
+      if (config.calculatedGrid) methods.overrideCalculatedCellStyle(config);
     }
   }
 }

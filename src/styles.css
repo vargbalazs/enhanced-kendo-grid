@@ -384,6 +384,8 @@
 
 .calcrow.calcsum1 .custom-calcrow-1 {
   font-style: italic;
+  background-color: lightcoral !important;
+  color: white;
 }
 
 .calcrow.calcsum2 .custom-calcrow-2 {

@@ -149,6 +149,9 @@ export function selectWithShift(
 
       // override style of non-editable cells
       methods.setNonEditableCellStyle(config, 'off');
+
+      // override style of calculated cells, if we are in a calc grid
+      if (config.calculatedGrid) methods.overrideCalculatedCellStyle(config);
     }
   }
 }
