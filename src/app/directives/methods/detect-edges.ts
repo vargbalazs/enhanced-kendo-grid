@@ -17,5 +17,7 @@ export function topEndReached(grid: GridComponent): boolean {
 
 // indicates, if we reached the bottom end of the data table
 export function bottomEndReached(grid: GridComponent): boolean {
-  return grid.activeCell.dataRowIndex + 1 === (<GridDataResult>grid.data).total;
+  return (
+    grid.activeCell.dataRowIndex + 1 === (<GridDataResult>grid.data).data.length
+  );
 }
