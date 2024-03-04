@@ -254,10 +254,13 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if there are frozen columns
     if (this.config.frozenColumns.length > 0)
       methods.scrollToColumnKeyboard(this.config, this.grid, e);
+
+    // store the grid body if we click on a cell (grid body can't be undefined, if we want to copy just one cell)
+    methods.storeGridBody(this.config, e);
   }
 
   @HostListener('click', ['$event'])
-  onClick() {
+  onClick(e: PointerEvent) {
     this.cellDblClicked = false;
     // if editing is allowed and we aren't selecting with the mouse
     if (!!this.kendoGridInCellEditing && !this.config.selectingWithMouse) {
@@ -268,6 +271,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         this.resetState.bind(this)
       );
     }
+    // store the grid body if we click on a cell (grid body can't be undefined, if we want to copy just one cell)
+    methods.storeGridBody(this.config, e);
   }
 
   @HostListener('dblclick', ['$event'])
