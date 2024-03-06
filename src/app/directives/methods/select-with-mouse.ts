@@ -59,6 +59,13 @@ export function selectWithMouse(
         config.selectedCellDatas.push({
           value: grid.activeCell.dataItem[config.fieldName],
         });
+      // don't consider values from cells in case of calcualted rows, which aren't calculated fields (which are 'hidden')
+      if (
+        grid.activeCell.dataItem.calculated &&
+        !config.rowCalculation.calculatedFields.includes(config.fieldName)
+      ) {
+        config.selectedCellDatas[0].value = '';
+      }
     }
 
     // store the last selected cell and it's position

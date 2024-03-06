@@ -83,6 +83,7 @@ export function markCellsAsSelected(
               ][fieldname];
           }
         }
+        // don't consider values from cells in case of calcualted rows, which aren't calculated fields (which are 'hidden')
         config.selectedCellDatas = [
           ...config.selectedCellDatas,
           {
