@@ -88,6 +88,8 @@ export function copyDataToClipboard(
           columnKey: grid.activeCell.colIndex,
         },
       ];
+      // override the cell style, if it is a calculated cell
+      if (config.calculatedGrid) methods.overrideCalculatedCellStyle(config);
       // draw dashed border, but only if we aren't in edit mode
       if (!grid.isEditing()) {
         methods.drawSelectedAreaBorder(config);
