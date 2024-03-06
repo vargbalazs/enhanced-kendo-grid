@@ -66,6 +66,16 @@ export function copyDataToClipboard(
             grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0)
           ][fieldname];
       }
+      // don't consider values from cells in case of calcualted rows, which aren't calculated fields (which are 'hidden')
+      if (
+        config.gridData[
+          grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0)
+        ].calculated &&
+        !config.rowCalculation.calculatedFields.includes(fieldname) &&
+        config.rowCalculation.titleField !== fieldname
+      ) {
+        value = '';
+      }
       config.selectedCellDatas = [
         {
           value: value,

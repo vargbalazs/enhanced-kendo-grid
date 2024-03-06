@@ -23,7 +23,7 @@ export function markCellsAsSelected(
   // we always start with the first selected cell, because we can not only add, but remove too
   config.selectedCells = [firstCell];
   config.selectedCellDatas = [config.selectedCellDatas[0]];
-  // if the next cell isn't selected, then add it to the selecte cells and it's value to the selected cell datas
+  // if the next cell isn't selected, then add it to the selected cells and it's value to the selected cell datas
   for (let i = 0; i <= columnOffset; i++) {
     for (let j = 0; j <= rowOffset; j++) {
       if (
@@ -56,6 +56,7 @@ export function markCellsAsSelected(
                 j * verticalDirection
             ][objectKey][propertyKey];
           // if the grid is filtered or sorted, we have to work with the filtered data
+          // we don't have to care about calculated rows, because filtering and sorting isn't allowed on calculated grids
           if (grid.filter?.filters || grid.sort!.length > 0) {
             const filteredGridData = (<GridDataResult>grid.data).data;
             value =
@@ -73,6 +74,7 @@ export function markCellsAsSelected(
                 j * verticalDirection
             ][fieldname];
           // if the grid is filtered or sorted, we have to work with the filtered data
+          // we don't have to care about calculated rows, because filtering and sorting isn't allowed on calculated grids
           if (grid.filter?.filters || grid.sort!.length > 0) {
             const filteredGridData = (<GridDataResult>grid.data).data;
             value =
@@ -84,6 +86,17 @@ export function markCellsAsSelected(
           }
         }
         // don't consider values from cells in case of calcualted rows, which aren't calculated fields (which are 'hidden')
+        if (
+          config.gridData[
+            firstCell.itemKey -
+              (grid.skip ? grid.skip : 0) +
+              j * verticalDirection
+          ].calculated &&
+          !config.rowCalculation.calculatedFields.includes(fieldname) &&
+          config.rowCalculation.titleField !== fieldname
+        ) {
+          value = '';
+        }
         config.selectedCellDatas = [
           ...config.selectedCellDatas,
           {

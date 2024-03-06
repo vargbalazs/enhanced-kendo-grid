@@ -62,7 +62,8 @@ export function selectWithMouse(
       // don't consider values from cells in case of calcualted rows, which aren't calculated fields (which are 'hidden')
       if (
         grid.activeCell.dataItem.calculated &&
-        !config.rowCalculation.calculatedFields.includes(config.fieldName)
+        !config.rowCalculation.calculatedFields.includes(config.fieldName) &&
+        config.rowCalculation.titleField !== config.fieldName
       ) {
         config.selectedCellDatas[0].value = '';
       }

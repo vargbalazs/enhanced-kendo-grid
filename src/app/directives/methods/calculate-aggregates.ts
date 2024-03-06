@@ -11,17 +11,20 @@ export function calculateAggregates(config: EnhancedGridConfig) {
   // avg
   let countOfNumberValues = 0;
   config.selectedCellDatas.map((cellData) => {
-    if (isFinite(+cellData.value)) countOfNumberValues++;
+    if (isFinite(+cellData.value) && cellData.value != '')
+      countOfNumberValues++;
   });
   config.aggregates.avg =
     countOfNumberValues > 0 ? config.aggregates.sum / countOfNumberValues : 0;
 
   // count
-  config.aggregates.count = config.selectedCellDatas.length;
+  config.aggregates.count = config.selectedCellDatas.filter(
+    (cellData) => cellData.value != ''
+  ).length;
 
   // min
-  let filtered = config.selectedCellDatas.filter((data) =>
-    isFinite(+data.value)
+  let filtered = config.selectedCellDatas.filter(
+    (data) => isFinite(+data.value) && data.value != ''
   );
   config.aggregates.min =
     filtered.length == 0
