@@ -135,4 +135,7 @@ export class EnhancedGridConfig {
 
   // store the css classes of all columns
   public columnStyles: ColumnStyle[] = [];
+
+  // indicates, whether we have a wrong setup for calculated rows
+  public wrongCalcRowSettings: boolean = false;
 }

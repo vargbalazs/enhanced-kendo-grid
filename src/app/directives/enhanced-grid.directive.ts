@@ -144,6 +144,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // store row calc settings
     this.config.rowCalculation = this.rowCalculation;
 
+    // check the settings
+    methods.checkCalcRowSettings(this.config);
+
     // reset the grid
     this.resetState();
   }
@@ -175,8 +178,11 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       methods.handleSorting(this.config, this.grid);
     }
 
-    // if we have row calculations
-    if (this.rowCalculation.calculatedRows.length > 0) {
+    // if we have row calculations and these are valid
+    if (
+      this.rowCalculation.calculatedRows.length > 0 &&
+      !this.config.wrongCalcRowSettings
+    ) {
       methods.insertCalculatedRows(this.rowCalculation, this.config, this.grid);
       methods.updateCalculatedRows(this.config);
     }

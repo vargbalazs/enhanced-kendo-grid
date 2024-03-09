@@ -2,6 +2,8 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
 // changes the style for a cell in a calculated row to selected if it is selected
 export function overrideCalculatedCellStyle(config: EnhancedGridConfig) {
+  // if the setup is wrong, return
+  if (config.wrongCalcRowSettings) return;
   // reassign the custom classes on each and every changes of selection
   // this is needed, because if we select a calculated cell, the style is gone,
   // but if we deselect it, we need the style back
