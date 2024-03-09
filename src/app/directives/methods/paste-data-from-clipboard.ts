@@ -63,8 +63,11 @@ export function pasteFromClipboard(
                   // config.gridData[focusedCell.dataRowIndex + j][
                   //   Object.keys(dataItem)[focusedCell.colIndex + i]
                   // ] = values[j][i];
-                  // non-editable cells can't be overridden
-                  if (config.columns[focusedCell.colIndex + i].editable) {
+                  // non-editable cells and cells in a calculated row can't be overridden
+                  if (
+                    config.columns[focusedCell.colIndex + i].editable &&
+                    !config.gridData[focusedCell.dataRowIndex + j].calculated
+                  ) {
                     // if some filters or sorting are active, we have to write the values in the grid differently
                     if (grid.filter?.filters || grid.sort!.length > 0) {
                       const gridData = (<GridDataResult>grid.data).data;
@@ -87,9 +90,27 @@ export function pasteFromClipboard(
                     columnKey: focusedCell.colIndex + i,
                   },
                 ];
+                // if in the pasted area there are some calculated cells, then store these values instead
+                let value = '';
+                if (!config.gridData[focusedCell.dataRowIndex + j].calculated) {
+                  value = values[j][i];
+                } else {
+                  const columnField =
+                    config.columns[focusedCell.colIndex + i].field;
+                  value =
+                    config.gridData[focusedCell.dataRowIndex + j][columnField];
+                  // don't consider values from cells in case of calcualted rows, which aren't calculated fields (which are 'hidden')
+                  if (
+                    !config.rowCalculation.calculatedFields.includes(
+                      columnField
+                    ) &&
+                    config.rowCalculation.titleField !== columnField
+                  )
+                    value = '';
+                }
                 config.selectedCellDatas = [
                   ...config.selectedCellDatas,
-                  { value: values[j][i] },
+                  { value: value },
                 ];
               }
             }
@@ -131,6 +152,9 @@ export function pasteFromClipboard(
           // methods.resizeSelectedArea(config);
           // config.selectedArea.style.border = config.selectedAreaBorder;
           methods.drawSelectedAreaBorder(config);
+          // if the grid is a calc one, then override the calc row style, if the pasted area contains some calc cells
+          if (config.calculatedGrid)
+            methods.overrideCalculatedCellStyle(config);
         }
       }
     });
