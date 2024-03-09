@@ -42,3 +42,5 @@ export * from './update-calculated-rows';
 export * from './override-calculated-cell-style';
 export * from './store-grid-body';
 export * from './check-calcrow-settings';
+export * from './style-calculated-rows';
+export * from './insert-calcrows-by-field';
