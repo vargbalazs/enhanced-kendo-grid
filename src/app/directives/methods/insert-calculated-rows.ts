@@ -16,10 +16,20 @@ export function insertCalculatedRows(
   rowCalculation.calculatedRows.forEach((calcRow) => {
     if (calcRow.cssClass) customCssClasses.push(calcRow.cssClass);
   });
-  rowCalculation.calculatedRows.forEach((calcRow) => {
-    // if a field was defined
-    if (calcRow.calculateByField)
-      methods.insertCalcRowsByField(config, calcRow);
+  // insert the calc rows
+  // first insert the rows, where a field was defined
+  const calcRowsWithFields = rowCalculation.calculatedRows.filter(
+    (calcRow) => calcRow.calculateByField
+  );
+  calcRowsWithFields.forEach((calcRow) => {
+    methods.insertCalcRowsByField(config, calcRow);
+  });
+  // then insert the rows, where a position was defined
+  const calcRowsWithPositions = rowCalculation.calculatedRows.filter(
+    (calcRow) => calcRow.position
+  );
+  calcRowsWithPositions.forEach((calcRow) => {
+    methods.insertCalcRowByPosition(config, calcRow);
   });
   // set the styles for the calc rows
   // we need setTimeout in order to have the data changes reflected in the dom

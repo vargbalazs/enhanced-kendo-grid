@@ -44,3 +44,5 @@ export * from './store-grid-body';
 export * from './check-calcrow-settings';
 export * from './style-calculated-rows';
 export * from './insert-calcrows-by-field';
+export * from './insert-calcrow-by-position';
+export * from './insert-row-at-position';

@@ -21,11 +21,19 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
         key = calcField;
       }
       // filter the data
-      const filteredData = config.gridData.filter(
-        (dataRow) =>
-          dataRow[calcRow.calculateByField!.fieldName] ===
-            calcRow.calculateByField!.fieldValue && !dataRow.calculated
-      );
+      let filteredData: any[] = [];
+      // if the row is calculated by a field
+      if (calcRow.calculateByField) {
+        filteredData = config.gridData.filter(
+          (dataRow) =>
+            dataRow[calcRow.calculateByField!.fieldName] ===
+              calcRow.calculateByField!.fieldValue && !dataRow.calculated
+        );
+      }
+      // if the row is inserted by defining it's position
+      if (calcRow.position) {
+        filteredData = config.gridData.slice(0, calcRow.position);
+      }
       // do the calculations
       let result = 0;
       switch (calcRow.calculateFunction) {
@@ -81,10 +89,14 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
           break;
       }
       // write the calculated value back
-      if (fieldName) {
-        config.gridData[calcRowIndex][key][fieldName] = result;
-      } else {
-        config.gridData[calcRowIndex][key] = result;
+      // if calcRowIndex = -1, then we have one or more rows, which we want to insert by it's position, but the
+      // position is greater than the total count of the rows; in this case we would get here an error
+      if (calcRowIndex != -1) {
+        if (fieldName) {
+          config.gridData[calcRowIndex][key][fieldName] = result;
+        } else {
+          config.gridData[calcRowIndex][key] = result;
+        }
       }
     });
   });

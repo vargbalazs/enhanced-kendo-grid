@@ -66,6 +66,7 @@ export class CalcGridComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1',
       },
+
       {
         name: 'calcsum2',
         title: 'cat 2 avg',
@@ -93,6 +94,13 @@ export class CalcGridComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 5' },
         calculateFunction: 'count',
         cssClass: 'custom-calcrow-5',
+      },
+      {
+        name: 'calcsum6',
+        title: 'sum 6',
+        position: 55,
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-6',
       },
     ],
   };
