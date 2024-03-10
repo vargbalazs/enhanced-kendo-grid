@@ -28,4 +28,28 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
     );
     config.wrongCalcRowSettings = true;
   }
+
+  // if we have calc rows inserted by pos and inserted by field, then the rows inserted by pos
+  // have to be after the ones inserted by field
+  if (
+    config.rowCalculation.calculatedRows.findIndex((row) => row.position) >=
+      0 &&
+    config.rowCalculation.calculatedRows.findIndex(
+      (row) => row.calculateByField
+    ) >= 0
+  ) {
+    const lastIndexCalcByField = config.rowCalculation.calculatedRows.reduce(
+      (prev, curr, index) => (curr.calculateByField ? index : prev),
+      -1
+    );
+    const firstIndexByPos = config.rowCalculation.calculatedRows.findIndex(
+      (row) => row.position
+    );
+    if (firstIndexByPos < lastIndexCalcByField) {
+      console.error(
+        'If you have rows calculated by a field and rows inserted at a specific position, then you have to declare first the rows calculated by a field.'
+      );
+      config.wrongCalcRowSettings = true;
+    }
+  }
 }

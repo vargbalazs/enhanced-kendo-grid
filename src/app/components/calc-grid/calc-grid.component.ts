@@ -66,7 +66,6 @@ export class CalcGridComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1',
       },
-
       {
         name: 'calcsum2',
         title: 'cat 2 avg',
