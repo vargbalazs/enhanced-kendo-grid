@@ -3,7 +3,7 @@ export interface CalculatedRow {
   position?: number;
   title: string;
   calculateByField?: { fieldName: string; fieldValue: string };
-  calculateByRows?: number[];
+  calculateByRows?: string[] | { from: number; to: number };
   calculateFunction?: 'sum' | 'avg' | 'min' | 'max' | 'count' | 'custom';
   customFunction?: string;
   cssClass?: string;

@@ -32,7 +32,33 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
       }
       // if the row is inserted by defining it's position
       if (calcRow.position) {
+        // by default we do the given calculation for all the rows above this position
         filteredData = config.gridData.slice(0, calcRow.position);
+        // if calculateByRows has a value, then do the calcs based on this
+        if (calcRow.calculateByRows) {
+          filteredData = [];
+          // if we have row names as string array
+          if (Array.isArray(calcRow.calculateByRows)) {
+            // loop through the array and get the row indexes and data for the calculations
+            for (let i = 0; i <= calcRow.calculateByRows.length - 1; i++) {
+              const rowIndex = config.gridData.findIndex(
+                (dataRow) =>
+                  dataRow.calcRowName === (<string[]>calcRow.calculateByRows)[i]
+              );
+              filteredData.push(config.gridData[rowIndex]);
+            }
+          }
+          // otherwise we defined a range
+          else {
+            for (
+              let i = calcRow.calculateByRows.from;
+              i <= calcRow.calculateByRows.to;
+              i++
+            ) {
+              filteredData.push(config.gridData[i]);
+            }
+          }
+        }
       }
       // do the calculations
       let result = 0;
