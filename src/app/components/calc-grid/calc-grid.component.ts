@@ -89,6 +89,17 @@ export class CalcGridComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-4',
       },
+      {
+        name: 'calcsum5',
+        title: 'cat 4 sum',
+        position: 44,
+        calculateByRows: {
+          from: { field: 'id', value: 31 },
+          to: { field: 'id', value: 40 },
+        },
+        calculateFunction: 'sum',
+        cssClass: 'custom-calcrow-5',
+      },
       // {
       //   name: 'calcsum1',
       //   title: 'cat 1 sum',

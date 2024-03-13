@@ -1,4 +1,8 @@
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import {
+  ConditionalRowRange,
+  SimpleRowRange,
+} from '../interfaces/calculated-row.interface';
 
 // updates the values of the calculated rows
 export function updateCalculatedRows(config: EnhancedGridConfig) {
@@ -47,14 +51,26 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
               );
               filteredData.push(config.gridData[rowIndex]);
             }
-          }
-          // otherwise we defined a range
-          else {
-            for (
-              let i = calcRow.calculateByRows.from;
-              i <= calcRow.calculateByRows.to;
-              i++
-            ) {
+          } else {
+            let from = 0;
+            let to = 0;
+            // if we have a SimpleRowRange
+            if (isSimpleRowRange(calcRow.calculateByRows)) {
+              from = calcRow.calculateByRows.from;
+              to = calcRow.calculateByRows.to;
+            } else {
+              // we have a ConditionalRowRange
+              let condRowRange = calcRow.calculateByRows;
+              from = config.gridData.findIndex(
+                (row) =>
+                  row[condRowRange.from.field] === condRowRange.from.value
+              );
+              to = config.gridData.findIndex(
+                (row) => row[condRowRange.to.field] === condRowRange.to.value
+              );
+            }
+            // collect the data
+            for (let i = from; i <= to; i++) {
               filteredData.push(config.gridData[i]);
             }
           }
@@ -126,4 +142,10 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
       }
     });
   });
+}
+
+function isSimpleRowRange(
+  range: SimpleRowRange | ConditionalRowRange
+): range is SimpleRowRange {
+  return typeof range.from == 'number';
 }
