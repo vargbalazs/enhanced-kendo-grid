@@ -3,6 +3,7 @@ import {
   ConditionalRowRange,
   SimpleRowRange,
 } from '../interfaces/calculated-row.interface';
+import * as methods from './index';
 
 // updates the values of the calculated rows
 export function updateCalculatedRows(config: EnhancedGridConfig) {
@@ -61,13 +62,34 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
             } else {
               // we have a ConditionalRowRange
               let condRowRange = calcRow.calculateByRows;
-              from = config.gridData.findIndex(
-                (row) =>
-                  row[condRowRange.from.field] === condRowRange.from.value
+              const fromKeyAndField = methods.extractKeyAndField(
+                condRowRange.from.field
               );
-              to = config.gridData.findIndex(
-                (row) => row[condRowRange.to.field] === condRowRange.to.value
+              if (fromKeyAndField.fieldName) {
+                from = config.gridData.findIndex(
+                  (row) =>
+                    row[fromKeyAndField.key][fromKeyAndField.fieldName!] ===
+                    condRowRange.from.value
+                );
+              } else {
+                from = config.gridData.findIndex(
+                  (row) => row[fromKeyAndField.key] === condRowRange.from.value
+                );
+              }
+              const toKeyAndField = methods.extractKeyAndField(
+                condRowRange.to.field
               );
+              if (toKeyAndField.fieldName) {
+                to = config.gridData.findIndex(
+                  (row) =>
+                    row[toKeyAndField.key][toKeyAndField.fieldName!] ===
+                    condRowRange.to.value
+                );
+              } else {
+                to = config.gridData.findIndex(
+                  (row) => row[toKeyAndField.key] === condRowRange.to.value
+                );
+              }
             }
             // collect the data
             for (let i = from; i <= to; i++) {
