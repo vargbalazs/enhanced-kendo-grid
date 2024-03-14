@@ -46,3 +46,4 @@ export * from './style-calculated-rows';
 export * from './insert-calcrows-by-field';
 export * from './insert-calcrow-by-position';
 export * from './insert-row-at-position';
+export * from './extract-key-and-field';
