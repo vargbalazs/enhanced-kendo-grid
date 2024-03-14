@@ -1,5 +1,8 @@
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
-import { CalculatedRow } from '../interfaces/calculated-row.interface';
+import {
+  CalculatedRow,
+  SimpleRowRange,
+} from '../interfaces/calculated-row.interface';
 
 // checks the setup of the calcrow settings
 export function checkCalcRowSettings(config: EnhancedGridConfig) {
@@ -51,5 +54,19 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
       );
       config.wrongCalcRowSettings = true;
     }
+  }
+
+  // if we have any calc rows inserted by pos and calculated by rows, where the from value is greater than the to value
+  wrongConfig = config.rowCalculation.calculatedRows.find(
+    (row) =>
+      row.position &&
+      (<SimpleRowRange>row.calculateByRows)?.from >
+        (<SimpleRowRange>row.calculateByRows)?.to
+  );
+  if (wrongConfig) {
+    console.error(
+      `For the calculated row ${wrongConfig.name} the from value is greater than the to value.`
+    );
+    config.wrongCalcRowSettings = true;
   }
 }
