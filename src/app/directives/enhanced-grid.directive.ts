@@ -118,6 +118,15 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       if (this.cellDblClicked && !!this.kendoGridInCellEditing) {
         this.onDblClick();
         this.cellDblClicked = false;
+        // if it is a calculated row and the column is editable, don't allow editing
+        if (
+          this.grid.activeCell.dataItem.calculated &&
+          !this.config.nonEditableColumns.some(
+            (nec) => nec.index === this.grid.activeCell.colIndex
+          )
+        ) {
+          this.grid.closeCell();
+        }
         return;
       }
       this.grid.closeCell();
