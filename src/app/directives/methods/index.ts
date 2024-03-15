@@ -47,3 +47,5 @@ export * from './insert-calcrows-by-field';
 export * from './insert-calcrow-by-position';
 export * from './insert-row-at-position';
 export * from './extract-key-and-field';
+export * from './filter-data-for-calc';
+export * from './calculate-result-for-calc-row';
