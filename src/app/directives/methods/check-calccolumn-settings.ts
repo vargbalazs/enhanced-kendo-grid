@@ -19,5 +19,35 @@ export function checkCalcColSettings(config: EnhancedGridConfig) {
         config.wrongCalcColSettings = true;
       }
     });
+    // a calc column, which references an other column should be composed
+    calcCol.calculateByColumns.forEach((calcByCol) => {
+      if (
+        config.colCalculation.calculatedColumns.find(
+          (col) => col.field === calcByCol && !calcCol.composed
+        )
+      ) {
+        console.error(`The column '${calcCol.name}' should be composed.`);
+        config.wrongCalcColSettings = true;
+      }
+    });
+    // in case of composed calc columns all calculateByColumns should be defined before the composed column
+    // otherwise we get no calc values for this column
+    if (calcCol.composed) {
+      const calcColIndex = config.colCalculation.calculatedColumns.findIndex(
+        (col) => col.name === calcCol.name
+      );
+      calcCol.calculateByColumns.forEach((calcByCol) => {
+        const calcByColIndex =
+          config.colCalculation.calculatedColumns.findIndex(
+            (col) => col.field === calcByCol
+          );
+        if (calcColIndex < calcByColIndex) {
+          console.error(
+            `The composed column '${calcCol.name}' should follow all it's referenced columns.`
+          );
+          config.wrongCalcColSettings = true;
+        }
+      });
+    }
   });
 }

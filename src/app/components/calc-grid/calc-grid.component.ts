@@ -45,7 +45,6 @@ export class CalcGridComponent {
     oct: [0, Validators.required],
     nov: [0, Validators.required],
     dec: [0, Validators.required],
-    total: [0],
     category: ['', Validators.required],
   });
 
@@ -59,17 +58,40 @@ export class CalcGridComponent {
   colCalculation: ColumnCalculation = {
     calculatedColumns: [
       {
-        name: 'total-months',
-        field: 'total',
+        name: 'total-q1',
+        field: 'totalq1',
         calculateByColumns: ['jan', 'feb', 'mar'],
         calculateFunction: 'sum',
+      },
+      {
+        name: 'total-q2',
+        field: 'totalq2',
+        calculateByColumns: ['apr', 'may', 'jun'],
+        calculateFunction: 'sum',
+      },
+      {
+        name: 'total-1hy',
+        field: 'total1hy',
+        calculateByColumns: ['totalq1', 'totalq2'],
+        calculateFunction: 'sum',
+        composed: true,
       },
     ],
   };
 
   rowCalculation: RowCalculation = {
     titleField: 'id',
-    calculatedFields: ['jan', 'feb', 'mar', 'apr', 'may', 'total'],
+    calculatedFields: [
+      'jan',
+      'feb',
+      'mar',
+      'apr',
+      'may',
+      'jun',
+      'totalq1',
+      'totalq2',
+      'total1hy',
+    ],
     calculatedRows: [
       {
         name: 'calcsum1',

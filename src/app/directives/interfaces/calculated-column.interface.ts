@@ -3,4 +3,5 @@ export interface CalculatedColumn {
   field: string;
   calculateByColumns: string[];
   calculateFunction: 'sum' | 'avg' | 'min' | 'max' | 'count' | 'custom';
+  composed?: boolean;
 }
