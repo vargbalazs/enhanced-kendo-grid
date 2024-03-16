@@ -80,6 +80,7 @@ export function cellClose(
     config.shouldRecalculate &&
     (<FormGroup>args.formGroup).valid
   ) {
+    methods.updateCalculatedColumns(config);
     methods.updateCalculatedRows(config);
     config.shouldRecalculate = false;
   }

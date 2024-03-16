@@ -45,7 +45,6 @@ export class NormalGridComponent {
     oct: [0, Validators.required],
     nov: [0, Validators.required],
     dec: [0, Validators.required],
-    total: [0],
     category: ['', Validators.required],
   });
 
@@ -57,11 +56,7 @@ export class NormalGridComponent {
   aggregates: Aggregate = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
 
   constructor(private formBuilder: FormBuilder) {
-    this.calculateTotal(this.rows);
     this.createFormGroup = this.createFormGroup.bind(this);
-    this.formGroup.valueChanges.subscribe((value) => {
-      this.calculateTotalFromFormGroup(this.formGroup);
-    });
   }
 
   createFormGroup(args: CreateFormGroupArgs): FormGroup {
@@ -80,47 +75,5 @@ export class NormalGridComponent {
         ) === index
     );
     return unique.length === this.selectedCells.length;
-  }
-
-  calculateTotal(rows: Row[]) {
-    rows.forEach(
-      (row) =>
-        (row.total =
-          row.jan! +
-          row.feb! +
-          row.mar! +
-          row.apr! +
-          row.may! +
-          row.jun! +
-          row.jul! +
-          row.aug! +
-          row.sep! +
-          row.oct! +
-          row.nov! +
-          row.dec!)
-    );
-  }
-
-  calculateTotalFromFormGroup(formGroup: typeof this.formGroup) {
-    formGroup.controls.total.setValue(
-      this.anyToNumber(formGroup.controls.jan.value) +
-        this.anyToNumber(formGroup.controls.feb.value) +
-        this.anyToNumber(formGroup.controls.mar.value) +
-        this.anyToNumber(formGroup.controls.apr.value) +
-        this.anyToNumber(formGroup.controls.may.value) +
-        this.anyToNumber(formGroup.controls.jun.value) +
-        this.anyToNumber(formGroup.controls.jul.value) +
-        this.anyToNumber(formGroup.controls.aug.value) +
-        this.anyToNumber(formGroup.controls.sep.value) +
-        this.anyToNumber(formGroup.controls.oct.value) +
-        this.anyToNumber(formGroup.controls.nov.value) +
-        this.anyToNumber(formGroup.controls.dec.value),
-      { emitEvent: false }
-    );
-  }
-
-  anyToNumber(value: any): number {
-    if (!isFinite(+value)) return 0;
-    return +value;
   }
 }

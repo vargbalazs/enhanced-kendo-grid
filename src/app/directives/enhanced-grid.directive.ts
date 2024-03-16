@@ -22,6 +22,7 @@ import { EnhancedGridConfig } from './classes/enhanced-grid-config.class';
 import { Aggregate } from './interfaces/aggregate.interface';
 import * as methods from './methods';
 import { RowCalculation } from './interfaces/row-calculation.interface';
+import { ColumnCalculation } from './interfaces/column-calculation.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -63,6 +64,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     calculatedFields: [],
     calculatedRows: [],
   };
+
+  // input property for column calculation
+  @Input() colCalculation: ColumnCalculation = { calculatedColumns: [] };
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -156,6 +160,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // check the settings
     methods.checkCalcRowSettings(this.config);
 
+    // store column calc settings
+    this.config.colCalculation = this.colCalculation;
+
     // reset the grid
     this.resetState();
   }
@@ -187,13 +194,32 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       methods.handleSorting(this.config, this.grid);
     }
 
+    // check the settings for calculated columns
+    methods.checkCalcColSettings(this.config);
+
+    // if we have column calculations and these are valid
+    if (
+      this.colCalculation.calculatedColumns.length > 0 &&
+      !this.config.wrongCalcColSettings
+    ) {
+      setTimeout(() => {
+        methods.updateCalculatedColumns(this.config);
+      });
+    }
+
     // if we have row calculations and these are valid
     if (
       this.rowCalculation.calculatedRows.length > 0 &&
       !this.config.wrongCalcRowSettings
     ) {
-      methods.insertCalculatedRows(this.rowCalculation, this.config, this.grid);
-      methods.updateCalculatedRows(this.config);
+      setTimeout(() => {
+        methods.insertCalculatedRows(
+          this.rowCalculation,
+          this.config,
+          this.grid
+        );
+        methods.updateCalculatedRows(this.config);
+      });
     }
   }
 

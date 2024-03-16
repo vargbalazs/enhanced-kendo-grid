@@ -49,3 +49,5 @@ export * from './insert-row-at-position';
 export * from './extract-key-and-field';
 export * from './filter-data-for-calc';
 export * from './calculate-result-for-calc-row';
+export * from './check-calccolumn-settings';
+export * from './update-calculated-columns';

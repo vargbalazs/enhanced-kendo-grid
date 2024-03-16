@@ -13,6 +13,7 @@ import { FrozenColumn } from '../interfaces/frozencolumn.interface';
 import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
 import { RowCalculation } from '../interfaces/row-calculation.interface';
 import { ColumnStyle } from '../interfaces/column-style.interface';
+import { ColumnCalculation } from '../interfaces/column-calculation.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -138,4 +139,10 @@ export class EnhancedGridConfig {
 
   // indicates, whether we have a wrong setup for calculated rows
   public wrongCalcRowSettings: boolean = false;
+
+  // store the column calculation settings
+  public colCalculation: ColumnCalculation = { calculatedColumns: [] };
+
+  // indicates, whether we have a wrong setup for calculated columns
+  public wrongCalcColSettings: boolean = false;
 }

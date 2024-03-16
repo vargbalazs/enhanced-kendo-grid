@@ -18,6 +18,7 @@
     [(aggregates)]="aggregates"
     [frozenColumns]="frozenColumns"
     [rowCalculation]="rowCalculation"
+    [colCalculation]="colCalculation"
   >
     <kendo-grid-column
       field="id"
@@ -91,6 +92,12 @@
       [class]="'!k-text-right'"
     ></kendo-grid-column>
     <kendo-grid-column
+      field="total"
+      [width]="100"
+      [class]="'!k-text-right non-editable'"
+      [editable]="false"
+    ></kendo-grid-column>
+    <kendo-grid-column
       field="apr"
       [width]="100"
       [class]="'!k-text-right'"
@@ -134,12 +141,6 @@
       field="dec"
       [width]="100"
       [class]="'!k-text-right'"
-    ></kendo-grid-column>
-    <kendo-grid-column
-      field="total"
-      [width]="100"
-      [class]="'!k-text-right non-editable'"
-      [editable]="false"
     ></kendo-grid-column>
     <ng-template kendoGridStatusBarTemplate>
       sum: {{ aggregates.sum }}, count: {{ aggregates.count }}, avg:
