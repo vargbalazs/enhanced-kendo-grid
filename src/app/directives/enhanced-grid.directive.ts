@@ -243,6 +243,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // general reset
     methods.resetOnKeydown(e, this.resetState.bind(this), this.config);
+    // reset styling of non-edited cells - this is also part of the general reset, but we need it one more time
+    methods.setNonEditableCellStyle(this.config, 'on');
 
     // if changing focus with tab is allowed
     if (this.changeCellFocusWithTab)
