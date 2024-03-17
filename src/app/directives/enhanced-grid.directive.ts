@@ -157,7 +157,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.sortable = this.grid.sortable;
 
     // store, if the grid is a calc grid
-    this.config.calculatedGrid = this.rowCalculation.calculatedRows.length > 0;
+    this.config.calculatedGrid =
+      this.rowCalculation.calculatedRows.length > 0 ||
+      this.colCalculation.calculatedColumns.length > 0;
 
     // store row calc settings
     this.config.rowCalculation = this.rowCalculation;
@@ -167,6 +169,24 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // store column calc settings
     this.config.colCalculation = this.colCalculation;
+
+    // if the grid is a calculated grid, then sorting, filtering, paging, grouping shouldn't be enabled
+    if (
+      this.config.calculatedGrid &&
+      (this.grid.sortable ||
+        this.grid.filterable ||
+        this.grid.pageable ||
+        this.grid.groupable)
+    ) {
+      console.error(
+        `A calculated grid can't be sorted, filtered, paged or grouped.`
+      );
+      this.grid.sortable = false;
+      this.config.sortable = false;
+      this.grid.filterable = false;
+      this.grid.pageable = false;
+      this.grid.groupable = false;
+    }
 
     // reset the grid
     this.resetState();
