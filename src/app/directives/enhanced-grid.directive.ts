@@ -463,8 +463,11 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         this.config.firstSelectedCellElement,
         'no-focus-shadow'
       );
-    // if the grid is a calc grid, then reset the stlye of the calc rows
-    if (this.config.calculatedGrid)
+    // if the grid is a calc grid and we have calc rows, then reset the stlye of the calc rows
+    if (
+      this.config.calculatedGrid &&
+      this.config.rowCalculation.calculatedRows.length > 0
+    )
       methods.overrideCalculatedCellStyle(this.config);
   }
 

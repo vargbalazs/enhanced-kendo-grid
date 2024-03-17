@@ -153,7 +153,10 @@ export function pasteFromClipboard(
           // config.selectedArea.style.border = config.selectedAreaBorder;
           methods.drawSelectedAreaBorder(config);
           // if the grid is a calc one, then override the calc row style, if the pasted area contains some calc cells
-          if (config.calculatedGrid)
+          if (
+            config.calculatedGrid &&
+            config.rowCalculation.calculatedRows.length > 0
+          )
             methods.overrideCalculatedCellStyle(config);
         }
       }
