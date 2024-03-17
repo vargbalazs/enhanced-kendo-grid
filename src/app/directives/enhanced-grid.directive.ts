@@ -77,6 +77,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // cell was double clicked
   private cellDblClicked: boolean = false;
 
+  // listener for filter row
+  private filterButtonListener: () => void = () => {};
+
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
@@ -142,6 +145,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       (pageChangeEvent) => {
         // refresh the page data
         this.config.gridData = (<GridDataResult>this.grid.data).data;
+        // reset styling for non-edited cells
+        methods.setNonEditableCellStyle(this.config, 'on');
       }
     );
 
@@ -221,6 +226,19 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         methods.updateCalculatedRows(this.config);
       });
     }
+
+    // if filtering is enabled then add event listener to the filter row in order to
+    // set the non-editable cell styles
+    if (this.grid.filterable) {
+      const filterButtons = (<HTMLElement>(
+        this.config.gridElRef.nativeElement
+      )).querySelectorAll('kendo-grid-filter-cell-operators button');
+      filterButtons.forEach((el) => {
+        this.filterButtonListener = this.renderer2.listen(el, 'click', (e) => {
+          methods.setNonEditableCellStyle(this.config, 'on');
+        });
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -228,6 +246,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.cellClick$.unsubscribe();
     this.config.pageChange$.unsubscribe();
     this.config.columnClick$.unsubscribe();
+    this.filterButtonListener();
   }
 
   @HostListener('keydown', ['$event'])
@@ -304,6 +323,11 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('click', ['$event'])
   onClick(e: PointerEvent) {
+    // if we clicked the header, the filter row, or any other part of the grid except a data cell
+    // then reset styling for non-edited cells
+    if (!this.grid.activeCell || !this.grid.activeCell?.dataItem) {
+      methods.setNonEditableCellStyle(this.config, 'on');
+    }
     this.cellDblClicked = false;
     // if editing is allowed and we aren't selecting with the mouse
     if (!!this.kendoGridInCellEditing && !this.config.selectingWithMouse) {
