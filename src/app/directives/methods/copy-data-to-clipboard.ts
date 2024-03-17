@@ -94,6 +94,8 @@ export function copyDataToClipboard(
         config.rowCalculation.calculatedRows.length > 0
       )
         methods.overrideCalculatedCellStyle(config);
+      // override also if it is a non-editable cell
+      methods.setNonEditableCellStyle(config, 'off');
       // draw dashed border, but only if we aren't in edit mode
       if (!grid.isEditing()) {
         methods.drawSelectedAreaBorder(config);
