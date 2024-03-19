@@ -84,4 +84,7 @@ export function cellClose(
     methods.updateCalculatedRows(config);
     config.shouldRecalculate = false;
   }
+  // reset the form group, if the data is valid
+  if ((<FormGroup>args.formGroup).valid)
+    config.cellEditingFormGroup = new FormGroup({});
 }

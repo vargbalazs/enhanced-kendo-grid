@@ -94,4 +94,41 @@ export function editCellOnKeyDown(
       grid.focusCell(grid.activeCell.rowIndex, grid.activeCell.colIndex);
     }
   }
+
+  // handling cell errors
+  if (grid.isEditingCell()) {
+    // store the form group for the edited cell the first time
+    if (Object.keys(config.cellEditingFormGroup.controls).length == 0) {
+      const args: CreateFormGroupArgs = {
+        dataItem: grid.activeCell.dataItem,
+        isNew: false,
+        sender: grid,
+        rowIndex: grid.activeCell.rowIndex,
+      };
+      config.cellEditingFormGroup = cellEditingFormGroupFn(args);
+      // subscribe for value changing
+      // config.cellEditingFormGroup.valueChanges.subscribe((value) => {
+      //   if (grid.isEditingCell())
+      //     console.log(config.cellEditingFormGroup.valid);
+      // });
+    }
+    setTimeout(() => {
+      console.log(config.cellEditingFormGroup.valid);
+      Object.keys(config.cellEditingFormGroup.controls).forEach((control) => {
+        if (config.cellEditingFormGroup.controls[control].errors)
+          console.log(config.cellEditingFormGroup.controls[control].errors);
+      });
+
+      // add click event listener to the clear button
+      let target = config.gridBody.querySelector(
+        `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"] kendo-svg-icon`
+      );
+      console.log(target);
+      if (target) {
+        target.addEventListener('click', (e) => {
+          console.log('clear value');
+        });
+      }
+    });
+  }
 }

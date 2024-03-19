@@ -14,6 +14,7 @@ import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
 import { RowCalculation } from '../interfaces/row-calculation.interface';
 import { ColumnStyle } from '../interfaces/column-style.interface';
 import { ColumnCalculation } from '../interfaces/column-calculation.interface';
+import { FormGroup } from '@angular/forms';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -145,4 +146,7 @@ export class EnhancedGridConfig {
 
   // indicates, whether we have a wrong setup for calculated columns
   public wrongCalcColSettings: boolean = false;
+
+  // the form group, which belongs to an edited cell
+  public cellEditingFormGroup: FormGroup = new FormGroup({});
 }
