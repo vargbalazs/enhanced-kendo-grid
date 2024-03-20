@@ -149,4 +149,6 @@ export class EnhancedGridConfig {
 
   // the form group, which belongs to an edited cell
   public cellEditingFormGroup: FormGroup = new FormGroup({});
+
+  public test: Subscription = new Subscription();
 }
