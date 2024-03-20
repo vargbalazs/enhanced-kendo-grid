@@ -150,5 +150,6 @@ export class EnhancedGridConfig {
   // the form group, which belongs to an edited cell
   public cellEditingFormGroup: FormGroup = new FormGroup({});
 
-  public test: Subscription = new Subscription();
+  // subscription for status changing of an edited form group
+  public statusChanges$: Subscription = new Subscription();
 }

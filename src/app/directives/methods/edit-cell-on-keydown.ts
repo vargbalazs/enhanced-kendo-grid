@@ -6,15 +6,7 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 import { ARROW_KEYS, NOT_ALLOWED_KEYS_FOR_EDITING } from '../consts/constants';
 import { FormGroup } from '@angular/forms';
-import {
-  debounce,
-  debounceTime,
-  distinctUntilChanged,
-  first,
-  last,
-  map,
-  takeLast,
-} from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 // edits the cell on keydown
 export function editCellOnKeyDown(
@@ -53,25 +45,10 @@ export function editCellOnKeyDown(
     if (grid.filterable) methods.handleFiltering(config, 'off');
     // if grid is a calc grid, then mark it for recalculating
     if (config.calculatedGrid) config.shouldRecalculate = true;
-
-    // store the form group for the edited cell
+    // store the form group for the edited cell, but only if there is no stored form group already
     if (Object.keys(config.cellEditingFormGroup.controls).length == 0) {
-      const args: CreateFormGroupArgs = {
-        dataItem: grid.activeCell.dataItem,
-        isNew: false,
-        sender: grid,
-        rowIndex: grid.activeCell.rowIndex,
-      };
-      config.cellEditingFormGroup = cellEditingFormGroupFn(args);
-      // subscribe for status changing
-      config.test = config.cellEditingFormGroup.statusChanges
-        .pipe(debounceTime(1))
-        .subscribe((value) => {
-          console.log(value);
-        });
+      methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     }
-    // unsubscribe
-    //if (config.test) config.test.unsubscribe();
   }
 
   // if we enter in edit mode via typing any character, except enter or arrow keys or any other not allowed keys
@@ -85,20 +62,7 @@ export function editCellOnKeyDown(
     !grid.isEditingCell() // we are not in edit mode elsewhere in the grid
   ) {
     // store the form group for the edited cell
-    const args: CreateFormGroupArgs = {
-      dataItem: grid.activeCell.dataItem,
-      isNew: false,
-      sender: grid,
-      rowIndex: grid.activeCell.rowIndex,
-    };
-    config.cellEditingFormGroup = cellEditingFormGroupFn(args);
-    // subscribe for status changing
-    config.test = config.cellEditingFormGroup.statusChanges
-      .pipe(debounceTime(1))
-      .subscribe((value) => {
-        console.log(value);
-      });
-
+    methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     // if we are in a calculated row, then make the column not editable
     if (grid.activeCell.dataItem.calculated) {
       methods.disableEditingOnCalculatedRow(grid, config);

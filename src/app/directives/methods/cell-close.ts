@@ -87,6 +87,6 @@ export function cellClose(
   // reset the form group, if the data is valid
   if ((<FormGroup>args.formGroup).valid) {
     config.cellEditingFormGroup = new FormGroup({});
-    config.test.unsubscribe();
+    config.statusChanges$.unsubscribe();
   }
 }

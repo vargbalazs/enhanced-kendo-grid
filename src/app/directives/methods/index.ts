@@ -51,3 +51,4 @@ export * from './filter-data-for-calc';
 export * from './calculate-result-for-calc-row';
 export * from './check-calccolumn-settings';
 export * from './update-calculated-columns';
+export * from './store-editing-formgroup';
