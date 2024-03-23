@@ -5,6 +5,7 @@ import {
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
+import * as methods from './index';
 
 // store the form group for the edited cell
 export function storeEditingFormGroup(
@@ -22,11 +23,21 @@ export function storeEditingFormGroup(
   // subscribe for status changing
   config.statusChanges$ = config.cellEditingFormGroup.statusChanges
     .pipe(debounceTime(1))
-    .subscribe((value) => {
-      console.log(value);
+    .subscribe((status) => {
       Object.keys(config.cellEditingFormGroup.controls).forEach((control) => {
-        if (config.cellEditingFormGroup.controls[control].errors)
-          console.log(config.cellEditingFormGroup.controls[control].errors);
+        // if (config.cellEditingFormGroup.controls[control].errors)
+        //   console.log(config.cellEditingFormGroup.controls[control].errors);
       });
+      // get the pos of the edited cell
+      let activeCell = config.gridBody.querySelector(
+        `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
+      );
+      const rect = activeCell!.getBoundingClientRect();
+      // toggle the tooltip
+      methods.toggleErrorTooltip(
+        config,
+        rect,
+        status === 'INVALID' ? 'on' : 'off'
+      );
     });
 }

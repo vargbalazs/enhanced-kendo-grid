@@ -152,4 +152,7 @@ export class EnhancedGridConfig {
 
   // subscription for status changing of an edited form group
   public statusChanges$: Subscription = new Subscription();
+
+  // div element for the error tooltip
+  public errorToolTip: HTMLDivElement = document.createElement('div');
 }

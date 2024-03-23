@@ -88,5 +88,11 @@ export function cellClose(
   if ((<FormGroup>args.formGroup).valid) {
     config.cellEditingFormGroup = new FormGroup({});
     config.statusChanges$.unsubscribe();
+    // hide the error tooltip
+    let activeCell = config.gridBody.querySelector(
+      `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
+    );
+    const rect = activeCell!.getBoundingClientRect();
+    methods.toggleErrorTooltip(config, rect, 'off');
   }
 }

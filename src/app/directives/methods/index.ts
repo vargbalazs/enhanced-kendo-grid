@@ -52,3 +52,5 @@ export * from './calculate-result-for-calc-row';
 export * from './check-calccolumn-settings';
 export * from './update-calculated-columns';
 export * from './store-editing-formgroup';
+export * from './toggle-error-tooltip';
+export * from './set-position-error-tooltip';
