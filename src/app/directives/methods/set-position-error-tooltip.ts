@@ -18,6 +18,14 @@ export function setPositionErrorTooltip(
   const gridContent = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content')!;
+  // store scrollLeft
+  config.gridScrollLeft = gridContent.scrollLeft;
+  // get the total width of the frozen columns, if any
+  let totalWidthFrozenCol = 0;
+  for (let i = 0; i <= config.frozenColumns.length - 1; i++) {
+    totalWidthFrozenCol +=
+      config.columns[config.frozenColumns[i].columnIndex!].width;
+  }
   // if the pos should be left
   if (
     config.errorToolTip.getBoundingClientRect().right >
@@ -36,7 +44,9 @@ export function setPositionErrorTooltip(
   // if the pos should be right
   if (
     config.errorToolTip.getBoundingClientRect().left <
-    gridContent.getBoundingClientRect().left
+      gridContent.getBoundingClientRect().left ||
+    (config.errorToolTip.getBoundingClientRect().left < totalWidthFrozenCol &&
+      config.editedColIndex > config.frozenColumns.length - 1)
   ) {
     config.errorToolTip.style.left = `${rect.right + 8}px`;
     config.errorToolTip.style.top = `${

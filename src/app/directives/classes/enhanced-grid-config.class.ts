@@ -155,4 +155,10 @@ export class EnhancedGridConfig {
 
   // div element for the error tooltip
   public errorToolTip: HTMLDivElement = document.createElement('div');
+
+  // left pos of the error tooltip
+  public errorTooltipLeft: number = 0;
+
+  // store scrollLeft used for scrolling of the error tooltip
+  public gridScrollLeft: number = 0;
 }

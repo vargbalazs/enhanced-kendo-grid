@@ -15,12 +15,16 @@ export function toggleErrorTooltip(
     </div>
     <i></i>`;
   config.errorToolTip.setAttribute('id', 'error-tooltip');
+  // setting z-index is always needed
+  config.errorToolTip.style.zIndex = '99';
   // if form is invalid
   if (toggle === 'on') {
     // append to the body
     document.body.appendChild(config.errorToolTip);
     // set position
     methods.setPositionErrorTooltip(config, rect);
+    // store the initial left pos for scrolling
+    config.errorTooltipLeft = config.errorToolTip.getBoundingClientRect().left;
   } else {
     if (document.body.contains(config.errorToolTip))
       document.body.removeChild(config.errorToolTip);
