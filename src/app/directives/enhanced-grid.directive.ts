@@ -80,6 +80,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // listener for filter row
   private filterButtonListener: () => void = () => {};
 
+  // listener for grid scrolling
+  private gridScrollListener: () => void = () => {};
+
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
@@ -261,36 +264,11 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // reposition the error tooltip, if scrolling
-    const gridContent = (<HTMLElement>(
-      this.config.gridElRef.nativeElement
-    )).querySelector('.k-grid-content');
-    // get the total width of the frozen columns
-    let totalWidthFrozenCol = 0;
-    for (let i = 0; i <= this.config.frozenColumns.length - 1; i++) {
-      totalWidthFrozenCol +=
-        this.config.columns[this.config.frozenColumns[i].columnIndex!].width;
-    }
-    gridContent?.addEventListener('scroll', (e) => {
-      // scroll only, if we are in a non-frozed column
-      if (this.config.editedColIndex > this.frozenColumns.length - 1) {
-        this.config.errorToolTip.style.left = `${
-          this.config.errorTooltipLeft +
-          this.config.gridScrollLeft -
-          gridContent.scrollLeft
-        }px`;
-        // if we are beneath a frozen column (left side) or beyond the right side, then remove z-index
-        if (
-          this.config.errorToolTip.getBoundingClientRect().left <
-            totalWidthFrozenCol ||
-          this.config.errorToolTip.getBoundingClientRect().right >
-            gridContent.getBoundingClientRect().right
-        ) {
-          this.config.errorToolTip.style.zIndex = '-1';
-        } else {
-          this.config.errorToolTip.style.zIndex = '99';
-        }
-      }
-    });
+    methods.scrollErrorTooltip(
+      this.config,
+      this.renderer2,
+      this.gridScrollListener
+    );
   }
 
   ngOnDestroy(): void {
@@ -299,6 +277,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.pageChange$.unsubscribe();
     this.config.columnClick$.unsubscribe();
     this.filterButtonListener();
+    this.gridScrollListener();
   }
 
   @HostListener('keydown', ['$event'])

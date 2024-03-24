@@ -54,3 +54,4 @@ export * from './update-calculated-columns';
 export * from './store-editing-formgroup';
 export * from './toggle-error-tooltip';
 export * from './set-position-error-tooltip';
+export * from './scroll-error-tooltip';
