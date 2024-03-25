@@ -29,7 +29,8 @@ export function scrollErrorTooltip(
         config.errorToolTip.getBoundingClientRect().right >
           gridContent.getBoundingClientRect().right
       ) {
-        config.errorToolTip.style.zIndex = '0';
+        config.errorToolTip.style.zIndex =
+          config.errorTooltipPos === 'top' ? '0' : '-1';
       } else {
         config.errorToolTip.style.zIndex = '99';
       }

@@ -6,8 +6,8 @@ export function setPositionErrorTooltip(
 ) {
   resetPos(config.errorToolTip);
   // default pos is top
-  let pos = 'top';
-  config.errorToolTip.classList.add(pos);
+  config.errorTooltipPos = 'top';
+  config.errorToolTip.classList.add(config.errorTooltipPos);
   config.errorToolTip.style.left = `${
     rect.left - (config.errorToolTip.offsetWidth - rect.width) / 2
   }px`;
@@ -37,9 +37,9 @@ export function setPositionErrorTooltip(
     config.errorToolTip.style.top = `${
       rect.top - (config.errorToolTip.offsetHeight - rect.height) / 2
     }px`;
-    config.errorToolTip.classList.remove(pos);
-    pos = 'left';
-    config.errorToolTip.classList.add(pos);
+    config.errorToolTip.classList.remove(config.errorTooltipPos);
+    config.errorTooltipPos = 'left';
+    config.errorToolTip.classList.add(config.errorTooltipPos);
   }
   // if the pos should be right
   if (
@@ -52,9 +52,9 @@ export function setPositionErrorTooltip(
     config.errorToolTip.style.top = `${
       rect.top - (config.errorToolTip.offsetHeight - rect.height) / 2
     }px`;
-    config.errorToolTip.classList.remove(pos);
-    pos = 'right';
-    config.errorToolTip.classList.add(pos);
+    config.errorToolTip.classList.remove(config.errorTooltipPos);
+    config.errorTooltipPos = 'right';
+    config.errorToolTip.classList.add(config.errorTooltipPos);
   }
 }
 
