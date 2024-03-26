@@ -1,6 +1,7 @@
 import {
   CellSelectionItem,
   ColumnComponent,
+  NavigationCell,
   PagerSettings,
   SortSettings,
 } from '@progress/kendo-angular-grid';
@@ -164,4 +165,16 @@ export class EnhancedGridConfig {
 
   // pos of the error tooltip
   public errorTooltipPos: string = '';
+
+  // DOMRect of an edited cell
+  public domRectEditedCell: DOMRect = new DOMRect();
+
+  // store the edited cell
+  public editedCell: NavigationCell = {
+    uid: 0,
+    colIndex: 0,
+    rowIndex: 0,
+    dataRowIndex: 0,
+    dataItem: undefined,
+  };
 }

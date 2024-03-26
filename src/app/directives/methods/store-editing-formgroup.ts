@@ -32,11 +32,12 @@ export function storeEditingFormGroup(
       let activeCell = config.gridBody.querySelector(
         `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
       );
-      const rect = activeCell!.getBoundingClientRect();
+      config.editedCell = grid.activeCell;
+      config.domRectEditedCell = activeCell!.getBoundingClientRect();
       // toggle the tooltip
       methods.toggleErrorTooltip(
         config,
-        rect,
+        config.domRectEditedCell,
         status === 'INVALID' ? 'on' : 'off'
       );
     });
