@@ -464,6 +464,16 @@
   overflow: hidden;
 }
 
+.tooltip.bottom i {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -12px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
 .tooltip.common i::after {
   content: "";
   position: absolute;
@@ -490,4 +500,10 @@
   left: 0;
   top: 50%;
   transform: translate(50%, -50%) rotate(-45deg);
+}
+
+.tooltip.bottom i::after {
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, 50%) rotate(45deg);
 }

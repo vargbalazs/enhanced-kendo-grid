@@ -160,8 +160,14 @@ export class EnhancedGridConfig {
   // left pos of the error tooltip
   public errorTooltipLeft: number = 0;
 
+  // top pos of the error tooltip
+  public errorTooltipTop: number = 0;
+
   // store scrollLeft used for scrolling of the error tooltip
   public gridScrollLeft: number = 0;
+
+  // store scrollTop used for scrolling of the error tooltip
+  public gridScrollTop: number = 0;
 
   // pos of the error tooltip
   public errorTooltipPos: string = '';

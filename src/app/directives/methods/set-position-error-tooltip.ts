@@ -13,14 +13,15 @@ export function setPositionErrorTooltip(
     rect.left - (config.errorToolTip.offsetWidth - rect.width) / 2
   }px`;
   config.errorToolTip.style.top = `${
-    rect.top - config.errorToolTip.offsetHeight - 10
+    rect.top + window.scrollY - config.errorToolTip.offsetHeight - 10
   }px`;
   // query the grid content
   const gridContent = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content')!;
-  // store scrollLeft
+  // store scrollLeft, scrollTop
   config.gridScrollLeft = gridContent.scrollLeft;
+  config.gridScrollTop = gridContent.scrollTop;
   // get the total width of the frozen columns, if any
   let totalWidthFrozenCol = 0;
   for (let i = 0; i <= config.frozenColumns.length - 1; i++) {
@@ -43,10 +44,23 @@ export function setPositionErrorTooltip(
   ) {
     methods.changeErrorTooltipPos(config, 'right', rect);
   }
+  // if the pos should be bottom
+  // query for the header
+  let gridHeader = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+    '[kendogridheader]'
+  )!;
+  if (
+    config.errorToolTip.getBoundingClientRect().top <
+    gridContent.getBoundingClientRect().top -
+      gridHeader?.getBoundingClientRect().height
+  ) {
+    methods.changeErrorTooltipPos(config, 'bottom', rect);
+  }
 }
 
 function resetPos(el: HTMLDivElement) {
   el.classList.remove('top');
   el.classList.remove('left');
   el.classList.remove('right');
+  el.classList.remove('bottom');
 }

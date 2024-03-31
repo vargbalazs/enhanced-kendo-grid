@@ -14,8 +14,9 @@ export function toggleErrorTooltip(
     document.body.appendChild(config.errorToolTip);
     // set position
     methods.setPositionErrorTooltip(config, rect);
-    // store the initial left pos for scrolling
+    // store the initial left and top pos for scrolling
     config.errorTooltipLeft = config.errorToolTip.getBoundingClientRect().left;
+    config.errorTooltipTop = config.errorToolTip.getBoundingClientRect().top;
   } else {
     if (document.body.contains(config.errorToolTip))
       document.body.removeChild(config.errorToolTip);
