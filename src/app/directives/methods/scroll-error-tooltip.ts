@@ -23,9 +23,9 @@ export function scrollErrorTooltip(
       config.editedColIndex > config.frozenColumns.length - 1 &&
       document.body.contains(config.errorToolTip)
     ) {
-      config.errorToolTip.style.left = `${
-        config.errorTooltipLeft + config.gridScrollLeft - gridContent.scrollLeft
-      }px`;
+      // config.errorToolTip.style.left = `${
+      //   config.errorTooltipLeft + config.gridScrollLeft - gridContent.scrollLeft
+      // }px`;
       config.errorToolTip.style.zIndex = '99';
       // handle z-index
       // if we are beneath a frozen column (left side), then hide it
@@ -68,9 +68,9 @@ export function scrollErrorTooltip(
     }
     // scroll top/down always, if the error tooltip is shown
     if (document.body.contains(config.errorToolTip)) {
-      config.errorToolTip.style.top = `${
-        config.errorTooltipTop + config.gridScrollTop - gridContent.scrollTop
-      }px`;
+      // config.errorToolTip.style.top = `${
+      //   config.errorTooltipTop + config.gridScrollTop - gridContent.scrollTop
+      // }px`;
       // if we are beyond the top or bottom side, hide it
       // we need also the header height
       let gridHeader = (<HTMLElement>(
