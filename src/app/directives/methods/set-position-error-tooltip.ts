@@ -52,14 +52,9 @@ export function setPositionErrorTooltip(
     methods.changeErrorTooltipPos(config, 'right', rect, gridContent);
   }
   // if the pos should be bottom
-  // query for the header
-  let gridHeader = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-    '[kendogridheader]'
-  )!;
   if (
     config.errorToolTip.getBoundingClientRect().top <
-    gridContent.getBoundingClientRect().top -
-      gridHeader?.getBoundingClientRect().height
+    gridContent.getBoundingClientRect().top
   ) {
     methods.changeErrorTooltipPos(config, 'bottom', rect, gridContent);
   }

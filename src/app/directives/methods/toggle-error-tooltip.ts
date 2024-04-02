@@ -13,8 +13,7 @@ export function toggleErrorTooltip(
   )).querySelector('.k-grid-content')!;
   // if form is invalid
   if (toggle === 'on') {
-    // append to the body
-    // document.body.appendChild(config.errorToolTip);
+    // append to the grid content
     gridContent.appendChild(config.errorToolTip);
     // set position
     methods.setPositionErrorTooltip(config, rect);
@@ -22,8 +21,6 @@ export function toggleErrorTooltip(
     config.errorTooltipLeft = config.errorToolTip.getBoundingClientRect().left;
     config.errorTooltipTop = config.errorToolTip.getBoundingClientRect().top;
   } else {
-    // if (document.body.contains(config.errorToolTip))
-    //   document.body.removeChild(config.errorToolTip);
     if (gridContent.contains(config.errorToolTip))
       gridContent.removeChild(config.errorToolTip);
   }
