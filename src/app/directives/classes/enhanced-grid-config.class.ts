@@ -16,6 +16,7 @@ import { RowCalculation } from '../interfaces/row-calculation.interface';
 import { ColumnStyle } from '../interfaces/column-style.interface';
 import { ColumnCalculation } from '../interfaces/column-calculation.interface';
 import { FormGroup } from '@angular/forms';
+import { FormErrorMessage } from '../interfaces/form-error-message.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -192,4 +193,7 @@ export class EnhancedGridConfig {
 
   // whether cell error messages are showing
   public showCellErrorMessages: boolean = false;
+
+  // error messages
+  public errorMessages: FormErrorMessage[] = [];
 }

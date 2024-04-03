@@ -23,6 +23,7 @@ import { Aggregate } from './interfaces/aggregate.interface';
 import * as methods from './methods';
 import { RowCalculation } from './interfaces/row-calculation.interface';
 import { ColumnCalculation } from './interfaces/column-calculation.interface';
+import { FormErrorMessage } from './interfaces/form-error-message.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -70,6 +71,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   // input property for showing th cell error messages
   @Input() showCellErrorMessages: boolean = false;
+
+  // input property for the error messages
+  @Input() errorMessages: FormErrorMessage[] = [];
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -196,6 +200,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // store the showCellErrorMessages input property
     this.config.showCellErrorMessages = this.showCellErrorMessages;
+
+    // store the error messages
+    this.config.errorMessages = this.errorMessages;
 
     // reset the grid
     this.resetState();

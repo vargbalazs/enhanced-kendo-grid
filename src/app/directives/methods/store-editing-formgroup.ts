@@ -3,7 +3,7 @@ import {
   GridComponent,
 } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import * as methods from './index';
 
@@ -24,10 +24,16 @@ export function storeEditingFormGroup(
   config.statusChanges$ = config.cellEditingFormGroup.statusChanges
     .pipe(debounceTime(1))
     .subscribe((status) => {
-      Object.keys(config.cellEditingFormGroup.controls).forEach((control) => {
-        // if (config.cellEditingFormGroup.controls[control].errors)
-        //   console.log(config.cellEditingFormGroup.controls[control].errors);
-      });
+      // if showing error messages is allowed, then assign the error messages to the form errors
+      if (config.showCellErrorMessages) {
+        Object.keys(config.cellEditingFormGroup.controls).forEach((control) => {
+          if (config.cellEditingFormGroup.controls[control].errors) {
+            const controlErrors =
+              config.cellEditingFormGroup.controls[control].errors;
+            console.log(typeof controlErrors);
+          }
+        });
+      }
       // get the pos of the edited cell
       let activeCell = config.gridBody.querySelector(
         `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`

@@ -8,6 +8,7 @@ import {
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
+import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
 import { RowCalculation } from 'src/app/directives/interfaces/row-calculation.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
@@ -34,7 +35,7 @@ export class CalcGridComponent {
     accountNumber: [{ id: 0, accNumber: '', accName: '' }, Validators.required],
     project: [{ id: 0, projNumber: '', projName: '' }, Validators.required],
     jan: [0, Validators.required],
-    feb: [0, Validators.required],
+    feb: [0, { validators: [Validators.required, Validators.minLength(2)] }],
     mar: [0, Validators.required],
     apr: [0, Validators.required],
     may: [0, Validators.required],
@@ -51,6 +52,13 @@ export class CalcGridComponent {
   selectableSettings: SelectableSettings = {
     cell: true,
   };
+
+  errorMessages: FormErrorMessage[] = [
+    {
+      error: Validators.required,
+      message: 'field is required',
+    },
+  ];
 
   selectedCells: CellSelectionItem[] = [];
   aggregates: Aggregate = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
