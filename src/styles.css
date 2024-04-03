@@ -474,6 +474,26 @@
   overflow: hidden;
 }
 
+.tooltip.bottom-left i {
+  position: absolute;
+  top: 20%;
+  left: 100%;
+  margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.bottom-right i {
+  position: absolute;
+  top: 15%;
+  right: 100%;
+  margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
 .tooltip.common i::after {
   content: "";
   position: absolute;
@@ -506,4 +526,16 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.tooltip.bottom-left i::after {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.tooltip.bottom-right i::after {
+  left: -25%;
+  top: 50%;
+  transform: translate(50%, -50%) rotate(-45deg);
 }

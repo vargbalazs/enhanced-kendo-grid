@@ -48,5 +48,41 @@ export function scrollErrorTooltip(
         );
       }
     }
+    // if we are in a frozen column and scroll left/right, we have to fix the error tooltip
+    if (config.errorTooltipInFrozenColumn) {
+      if (config.gridScrollLeft != gridContent.scrollLeft) {
+        config.errorToolTip.style.position = 'fixed';
+        config.errorToolTip.style.top = `${
+          config.domRectEditedCell.top -
+          config.errorToolTip.getBoundingClientRect().height -
+          10
+        }px`;
+        config.errorToolTip.style.left = `${
+          config.domRectEditedCell.left -
+          (config.errorToolTip.offsetWidth - config.domRectEditedCell.width) / 2
+        }px`;
+        config.errorTooltipShouldRepositioned = true;
+      } else {
+        if (config.errorTooltipShouldRepositioned) {
+          config.errorToolTip.style.position = 'absolute';
+          config.errorToolTip.style.left = `${
+            config.domRectEditedCell.left -
+            gridContent.getBoundingClientRect().left -
+            (config.errorToolTip.getBoundingClientRect().width -
+              config.domRectEditedCell.width) /
+              2 +
+            gridContent.scrollLeft
+          }px`;
+          config.errorToolTip.style.top = `${
+            config.domRectEditedCell.top -
+            gridContent.getBoundingClientRect().top -
+            config.errorToolTip.getBoundingClientRect().height -
+            10 +
+            gridContent.scrollTop
+          }px`;
+          config.errorTooltipShouldRepositioned = false;
+        }
+      }
+    }
   });
 }

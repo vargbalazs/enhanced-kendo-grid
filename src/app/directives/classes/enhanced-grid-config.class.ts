@@ -183,4 +183,10 @@ export class EnhancedGridConfig {
     dataRowIndex: 0,
     dataItem: undefined,
   };
+
+  // indicates, whether the error tooltip is in a frozen column
+  public errorTooltipInFrozenColumn: boolean = false;
+
+  // whether a repositioning of an error tooltip is needed
+  public errorTooltipShouldRepositioned: boolean = false;
 }

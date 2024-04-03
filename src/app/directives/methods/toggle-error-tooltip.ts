@@ -20,8 +20,12 @@ export function toggleErrorTooltip(
     // store the initial left and top pos for scrolling
     config.errorTooltipLeft = config.errorToolTip.getBoundingClientRect().left;
     config.errorTooltipTop = config.errorToolTip.getBoundingClientRect().top;
+    // whether we are in a frozen column
+    config.errorTooltipInFrozenColumn =
+      config.editedColIndex <= config.frozenColumns.length - 1;
   } else {
     if (gridContent.contains(config.errorToolTip))
       gridContent.removeChild(config.errorToolTip);
+    config.errorTooltipInFrozenColumn = false;
   }
 }

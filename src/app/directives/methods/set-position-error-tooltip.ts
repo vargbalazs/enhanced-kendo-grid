@@ -41,6 +41,14 @@ export function setPositionErrorTooltip(
     gridContent.getBoundingClientRect().right
   ) {
     methods.changeErrorTooltipPos(config, 'left', rect, gridContent);
+    // right corner
+    if (
+      config.errorToolTip.getBoundingClientRect().top <
+      gridContent.getBoundingClientRect().top
+    ) {
+      methods.changeErrorTooltipPos(config, 'bottom-left', rect, gridContent);
+    }
+    return;
   }
   // if the pos should be right
   if (
@@ -50,6 +58,14 @@ export function setPositionErrorTooltip(
       config.editedColIndex > config.frozenColumns.length - 1)
   ) {
     methods.changeErrorTooltipPos(config, 'right', rect, gridContent);
+    // left corner
+    if (
+      config.errorToolTip.getBoundingClientRect().top <
+      gridContent.getBoundingClientRect().top
+    ) {
+      methods.changeErrorTooltipPos(config, 'bottom-right', rect, gridContent);
+    }
+    return;
   }
   // if the pos should be bottom
   if (
@@ -57,6 +73,7 @@ export function setPositionErrorTooltip(
     gridContent.getBoundingClientRect().top
   ) {
     methods.changeErrorTooltipPos(config, 'bottom', rect, gridContent);
+    return;
   }
 }
 
@@ -65,4 +82,6 @@ function resetPos(el: HTMLDivElement) {
   el.classList.remove('left');
   el.classList.remove('right');
   el.classList.remove('bottom');
+  el.classList.remove('bottom-left');
+  el.classList.remove('bottom-right');
 }
