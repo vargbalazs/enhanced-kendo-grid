@@ -189,4 +189,7 @@ export class EnhancedGridConfig {
 
   // whether a repositioning of an error tooltip is needed
   public errorTooltipShouldRepositioned: boolean = false;
+
+  // whether cell error messages are showing
+  public showCellErrorMessages: boolean = false;
 }

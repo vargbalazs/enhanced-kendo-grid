@@ -35,10 +35,11 @@ export function storeEditingFormGroup(
       config.editedCell = grid.activeCell;
       config.domRectEditedCell = activeCell!.getBoundingClientRect();
       // toggle the tooltip
-      methods.toggleErrorTooltip(
-        config,
-        config.domRectEditedCell,
-        status === 'INVALID' ? 'on' : 'off'
-      );
+      if (config.showCellErrorMessages)
+        methods.toggleErrorTooltip(
+          config,
+          config.domRectEditedCell,
+          status === 'INVALID' ? 'on' : 'off'
+        );
     });
 }

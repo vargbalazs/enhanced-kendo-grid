@@ -68,6 +68,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // input property for column calculation
   @Input() colCalculation: ColumnCalculation = { calculatedColumns: [] };
 
+  // input property for showing th cell error messages
+  @Input() showCellErrorMessages: boolean = false;
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -190,6 +193,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.grid.pageable = false;
       this.grid.groupable = false;
     }
+
+    // store the showCellErrorMessages input property
+    this.config.showCellErrorMessages = this.showCellErrorMessages;
 
     // reset the grid
     this.resetState();
