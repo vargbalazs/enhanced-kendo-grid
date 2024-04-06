@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import {
   CellSelectionItem,
   CreateFormGroupArgs,
@@ -35,12 +42,12 @@ export class CalcGridComponent {
     accountNumber: [{ id: 0, accNumber: '', accName: '' }, Validators.required],
     project: [{ id: 0, projNumber: '', projName: '' }, Validators.required],
     jan: [0, Validators.required],
-    feb: [0, { validators: [Validators.required, Validators.minLength(2)] }],
+    feb: [0, { validators: [Validators.required, this.customReq()] }],
     mar: [0, Validators.required],
     apr: [0, Validators.required],
     may: [0, Validators.required],
     jun: [0, Validators.required],
-    jul: [0, Validators.required],
+    jul: [0, { validators: [Validators.required, this.customReq()] }],
     aug: [0, Validators.required],
     sep: [0, Validators.required],
     oct: [0, Validators.required],
@@ -55,8 +62,12 @@ export class CalcGridComponent {
 
   errorMessages: FormErrorMessage[] = [
     {
-      error: Validators.required,
+      error: 'required',
       message: 'field is required',
+    },
+    {
+      error: 'customReq',
+      message: 'custom field is required',
     },
   ];
 
@@ -207,5 +218,11 @@ export class CalcGridComponent {
         ) === index
     );
     return unique.length === this.selectedCells.length;
+  }
+
+  customReq(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return !control.value ? { customReq: true } : null;
+    };
   }
 }

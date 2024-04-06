@@ -7,12 +7,12 @@ export function toggleErrorTooltip(
   rect: DOMRect,
   toggle: 'on' | 'off'
 ) {
-  methods.initErrorTooltip(config);
   const gridContent = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content')!;
   // if form is invalid
   if (toggle === 'on') {
+    methods.initErrorTooltip(config);
     // append to the grid content
     gridContent.appendChild(config.errorToolTip);
     // set position

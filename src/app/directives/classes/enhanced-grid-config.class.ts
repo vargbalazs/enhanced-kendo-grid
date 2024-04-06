@@ -196,4 +196,7 @@ export class EnhancedGridConfig {
 
   // error messages
   public errorMessages: FormErrorMessage[] = [];
+
+  // array for internal storing of error messages
+  public errors: string[] = [];
 }

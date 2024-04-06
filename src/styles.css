@@ -434,6 +434,11 @@
   min-width: 0;
 }
 
+.tooltip .error-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
 .tooltip.top i {
   position: absolute;
   top: 100%;
@@ -486,7 +491,7 @@
 
 .tooltip.bottom-right i {
   position: absolute;
-  top: 15%;
+  top: 20%;
   right: 100%;
   margin-top: -12px;
   width: 12px;
@@ -529,13 +534,13 @@
 }
 
 .tooltip.bottom-left i::after {
-  left: 0;
+  left: -30%;
   top: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .tooltip.bottom-right i::after {
-  left: -25%;
+  left: 10%;
   top: 50%;
   transform: translate(50%, -50%) rotate(-45deg);
 }

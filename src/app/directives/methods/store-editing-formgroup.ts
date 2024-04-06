@@ -3,7 +3,7 @@ import {
   GridComponent,
 } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
-import { FormGroup, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import * as methods from './index';
 
@@ -28,9 +28,17 @@ export function storeEditingFormGroup(
       if (config.showCellErrorMessages) {
         Object.keys(config.cellEditingFormGroup.controls).forEach((control) => {
           if (config.cellEditingFormGroup.controls[control].errors) {
-            const controlErrors =
-              config.cellEditingFormGroup.controls[control].errors;
-            console.log(typeof controlErrors);
+            const controlErrors = <Map<string, any>>(
+              config.cellEditingFormGroup.controls[control].errors
+            );
+            config.errors = [];
+            for (let i = 0; i <= Object.keys(controlErrors).length - 1; i++) {
+              const errorMessage = config.errorMessages.find(
+                (errorMessage) =>
+                  errorMessage.error === Object.keys(controlErrors)[i]
+              )?.message;
+              config.errors.push(errorMessage ? errorMessage : '');
+            }
           }
         });
       }

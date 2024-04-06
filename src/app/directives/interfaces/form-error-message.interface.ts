@@ -1,6 +1,6 @@
 import { ValidationErrors } from '@angular/forms';
 
 export interface FormErrorMessage {
-  error: ValidationErrors;
+  error: string;
   message: string;
 }
