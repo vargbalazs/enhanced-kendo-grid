@@ -109,6 +109,9 @@ export class EnhancedGridConfig {
   // store the initial border of the selected area
   public selectedAreaBorder: string = '';
 
+  // store the initial box shadow of the selected area
+  public selectedAreaBoxShadow: string = '';
+
   // the copied data to the clipboard
   public copiedDataToClipboard: string = '';
 

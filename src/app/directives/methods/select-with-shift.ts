@@ -36,8 +36,8 @@ export function selectWithShift(
   ) {
     // if we copied something to the clipboard, then cancel the copying
     if (config.dataCopied) {
-      // renderer2.removeClass(config.selectedArea, 'dashed-border');
-      methods.removeDashedBorder(config);
+      renderer2.removeClass(config.selectedArea, 'dashed-border');
+      // methods.removeDashedBorder(config);
       renderer2.removeClass(config.firstSelectedCellElement, 'no-focus-shadow');
       config.dataCopied = false;
     }
@@ -58,7 +58,7 @@ export function selectWithShift(
       Object.assign(config.firstSelectedCell, config.selectedCells[0]);
 
       // it's position
-      methods.setRectValues(config.firstSelectedCellRect, target);
+      methods.setRectValues(config.firstSelectedCellRect, target, config);
 
       // it's value
       // get the column field name
@@ -130,7 +130,7 @@ export function selectWithShift(
       `[ng-reflect-data-row-index="${config.lastSelectedCell.itemKey}"][ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
     )!;
     // store the position of the last selected cell
-    methods.setRectValues(config.lastSelectedCellRect, target);
+    methods.setRectValues(config.lastSelectedCellRect, target, config);
 
     // mark the cells as selected and update the state only if we move to another cell
     if (
@@ -138,7 +138,7 @@ export function selectWithShift(
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
       // reset the selected area - with this we also remove the borders from previous selected cells
-      methods.resetSelectedArea(document.createElement('div'), config);
+      // methods.resetSelectedArea(document.createElement('div'), config);
 
       methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
@@ -149,21 +149,22 @@ export function selectWithShift(
       config.colIndex = config.lastSelectedCell.columnKey;
 
       // update also the selected area
-      // methods.resizeSelectedArea(config);
-      methods.drawSelectedAreaBorder(config);
+      methods.resizeSelectedArea(config);
+      // methods.drawSelectedAreaBorder(config);
 
-      // set the border of the selected area
-      // config.selectedArea.style.border = config.selectedAreaBorder;
+      // set the border and shadow of the selected area
+      config.selectedArea.style.border = config.selectedAreaBorder;
+      config.selectedArea.style.boxShadow = config.selectedAreaBoxShadow;
 
       // override style of non-editable cells
-      methods.setNonEditableCellStyle(config, 'off');
+      // methods.setNonEditableCellStyle(config, 'off');
 
       // override style of calculated cells, if we are in a calc grid and we have some calc rows
-      if (
-        config.calculatedGrid &&
-        config.rowCalculation.calculatedRows.length > 0
-      )
-        methods.overrideCalculatedCellStyle(config);
+      // if (
+      //   config.calculatedGrid &&
+      //   config.rowCalculation.calculatedRows.length > 0
+      // )
+      //   methods.overrideCalculatedCellStyle(config);
     }
   }
 }

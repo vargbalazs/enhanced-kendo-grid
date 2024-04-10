@@ -90,6 +90,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // listener for grid scrolling
   private gridScrollListener: () => void = () => {};
 
+  // listener for scrollend event
+  private gridScrollEndListener: () => void = () => {};
+
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
@@ -156,12 +159,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         // refresh the page data
         this.config.gridData = (<GridDataResult>this.grid.data).data;
         // reset styling for non-edited cells
-        methods.setNonEditableCellStyle(this.config, 'on');
+        // methods.setNonEditableCellStyle(this.config, 'on');
       }
     );
-
-    // create the selected area div
-    methods.createSelectedArea(this.renderer2, this.element, this.config);
 
     // store whether the grid is sortable
     this.config.sortable = this.grid.sortable;
@@ -271,7 +271,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       )).querySelectorAll('kendo-grid-filter-cell-operators button');
       filterButtons.forEach((el) => {
         this.filterButtonListener = this.renderer2.listen(el, 'click', (e) => {
-          methods.setNonEditableCellStyle(this.config, 'on');
+          // methods.setNonEditableCellStyle(this.config, 'on');
         });
       });
     }
@@ -282,6 +282,16 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.renderer2,
       this.gridScrollListener
     );
+
+    // create the selected area div
+    methods.createSelectedArea(this.renderer2, this.config);
+
+    // handle selected area if scrolling from a frozen column
+    methods.registerScrollEndListener(
+      this.config,
+      this.renderer2,
+      this.gridScrollEndListener
+    );
   }
 
   ngOnDestroy(): void {
@@ -291,6 +301,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.columnClick$.unsubscribe();
     this.filterButtonListener();
     this.gridScrollListener();
+    this.gridScrollEndListener();
   }
 
   @HostListener('keydown', ['$event'])
@@ -307,7 +318,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // general reset
     methods.resetOnKeydown(e, this.resetState.bind(this), this.config);
     // reset styling of non-edited cells - this is also part of the general reset, but we need it one more time
-    methods.setNonEditableCellStyle(this.config, 'on');
+    // methods.setNonEditableCellStyle(this.config, 'on');
 
     // if changing focus with tab is allowed
     if (this.changeCellFocusWithTab)
@@ -359,7 +370,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // if there are frozen columns
     if (this.config.frozenColumns.length > 0)
-      methods.scrollToColumnKeyboard(this.config, this.grid, e);
+      methods.scrollToColumnKeyboard(this.config, this.grid, e, this.renderer2);
 
     // store the grid body if we click on a cell (grid body can't be undefined, if we want to copy just one cell)
     methods.storeGridBody(this.config, e);
@@ -370,7 +381,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if we clicked the header, the filter row, or any other part of the grid except a data cell
     // then reset styling for non-edited cells
     if (!this.grid.activeCell || !this.grid.activeCell?.dataItem) {
-      methods.setNonEditableCellStyle(this.config, 'on');
+      // methods.setNonEditableCellStyle(this.config, 'on');
     }
     this.cellDblClicked = false;
     // if editing is allowed and we aren't selecting with the mouse
@@ -451,10 +462,13 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
           }
         }
 
-        // set the border of the selected area, but only if we are not after a double click
-        // if (!this.cellDblClicked)
-        //   this.config.selectedArea.style.border =
-        //     this.config.selectedAreaBorder;
+        // set the border and shadow of the selected area, but only if we are not after a double click
+        if (!this.cellDblClicked) {
+          this.config.selectedArea.style.border =
+            this.config.selectedAreaBorder;
+          this.config.selectedArea.style.boxShadow =
+            this.config.selectedAreaBoxShadow;
+        }
 
         methods.selectWithMouse(
           this.config,
@@ -473,7 +487,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // reset the selected area div
     methods.resetSelectedArea(this.config.selectedArea, this.config);
     // reset styling of non-edited cells
-    methods.setNonEditableCellStyle(this.config, 'on');
+    // methods.setNonEditableCellStyle(this.config, 'on');
     this.config.selectedCells = [];
     this.selectedKeysChange.emit(this.config.selectedCells);
     this.config.selectedCellDatas = [];

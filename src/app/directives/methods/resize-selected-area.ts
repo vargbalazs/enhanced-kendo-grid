@@ -13,20 +13,20 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
     firstSelectedCell.itemKey <= lastSelectedCell.itemKey
   ) {
     // set position
-    selectedArea.style.left = `${firstSelectedCellRect.left}px`;
-    selectedArea.style.top = `${firstSelectedCellRect.top - 1}px`;
+    selectedArea.style.left = `${firstSelectedCellRect.left + 1}px`;
+    selectedArea.style.top = `${firstSelectedCellRect.top}px`;
     // resize
     selectedArea.style.width = `${
       lastSelectedCellRect.left +
       lastSelectedCellRect.width -
       firstSelectedCellRect.left -
-      1
+      2
     }px`;
     selectedArea.style.height = `${
       lastSelectedCellRect.top +
       lastSelectedCellRect.height -
       firstSelectedCellRect.top -
-      1
+      2
     }px`;
   }
   // right up quarter
@@ -35,20 +35,20 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
     firstSelectedCell.itemKey > lastSelectedCell.itemKey
   ) {
     // set position
-    selectedArea.style.left = `${firstSelectedCellRect.left}px`;
-    selectedArea.style.top = `${lastSelectedCellRect.top - 1}px`;
+    selectedArea.style.left = `${firstSelectedCellRect.left + 1}px`;
+    selectedArea.style.top = `${lastSelectedCellRect.top}px`;
     // resize
     selectedArea.style.width = `${
       lastSelectedCellRect.left +
       lastSelectedCellRect.width -
       firstSelectedCellRect.left -
-      1
+      2
     }px`;
     selectedArea.style.height = `${
       firstSelectedCellRect.top +
       firstSelectedCellRect.height -
       lastSelectedCellRect.top -
-      1
+      2
     }px`;
   }
   // left up quarter
@@ -57,20 +57,20 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
     firstSelectedCell.itemKey >= lastSelectedCell.itemKey
   ) {
     // set position
-    selectedArea.style.left = `${lastSelectedCellRect.left}px`;
-    selectedArea.style.top = `${lastSelectedCellRect.top - 1}px`;
+    selectedArea.style.left = `${lastSelectedCellRect.left + 1}px`;
+    selectedArea.style.top = `${lastSelectedCellRect.top}px`;
     // resize
     selectedArea.style.width = `${
       firstSelectedCellRect.left +
       firstSelectedCellRect.width -
       lastSelectedCellRect.left -
-      1
+      2
     }px`;
     selectedArea.style.height = `${
       firstSelectedCellRect.top +
       firstSelectedCellRect.height -
       lastSelectedCellRect.top -
-      1
+      2
     }px`;
   }
   // left down quarter
@@ -79,20 +79,20 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
     firstSelectedCell.itemKey < lastSelectedCell.itemKey
   ) {
     // set position
-    selectedArea.style.left = `${lastSelectedCellRect.left}px`;
-    selectedArea.style.top = `${firstSelectedCellRect.top - 1}px`;
+    selectedArea.style.left = `${lastSelectedCellRect.left + 1}px`;
+    selectedArea.style.top = `${firstSelectedCellRect.top}px`;
     // resize
     selectedArea.style.width = `${
       firstSelectedCellRect.left +
       firstSelectedCellRect.width -
       lastSelectedCellRect.left -
-      1
+      2
     }px`;
     selectedArea.style.height = `${
       lastSelectedCellRect.top +
       lastSelectedCellRect.height -
       firstSelectedCellRect.top -
-      1
+      2
     }px`;
   }
 }

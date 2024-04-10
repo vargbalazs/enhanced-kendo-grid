@@ -57,3 +57,4 @@ export * from './set-position-error-tooltip';
 export * from './scroll-error-tooltip';
 export * from './change-error-tooltip-pos';
 export * from './init-error-tooltip';
+export * from './register-scrollend-listener';

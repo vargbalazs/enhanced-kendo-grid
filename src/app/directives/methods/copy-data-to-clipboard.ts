@@ -19,9 +19,10 @@ export function copyDataToClipboard(
 
     // if multiple cells were selected
     if (config.selectedCells.length > 1) {
-      // adding dashed border
-      // renderer2.addClass(config.selectedArea, 'dashed-border');
-      methods.drawDashedBorders(config);
+      // adding dashed border and remove shadow
+      renderer2.addClass(config.selectedArea.firstChild, 'dashed-border');
+      renderer2.setStyle(config.selectedArea, 'boxShadow', 'none');
+      // methods.drawDashedBorders(config);
       // copy content to clipboard
       methods.prepareDataForClipboard(config);
       navigator.clipboard
@@ -30,11 +31,16 @@ export function copyDataToClipboard(
     } else {
       // if just only one cell is copied
       // set the variables for resizing the selected area
-      // methods.setRectValues(
-      //   config.firstSelectedCellRect,
-      //   <HTMLElement>e.target
-      // );
-      // methods.setRectValues(config.lastSelectedCellRect, <HTMLElement>e.target);
+      methods.setRectValues(
+        config.firstSelectedCellRect,
+        <HTMLElement>e.target,
+        config
+      );
+      methods.setRectValues(
+        config.lastSelectedCellRect,
+        <HTMLElement>e.target,
+        config
+      );
       config.firstSelectedCell = {
         itemKey: grid.activeCell.dataRowIndex,
         columnKey: grid.activeCell.colIndex,
@@ -44,11 +50,12 @@ export function copyDataToClipboard(
         columnKey: grid.activeCell.colIndex,
       };
       // resize the selected area and adjust style, but only if we aren't in edit mode
-      // if (!grid.isEditing()) {
-      //   methods.resizeSelectedArea(config);
-      //   config.selectedArea.style.border = config.selectedAreaBorder;
-      //   renderer2.addClass(config.selectedArea, 'dashed-border');
-      // }
+      if (!grid.isEditing()) {
+        methods.resizeSelectedArea(config);
+        config.selectedArea.style.border = config.selectedAreaBorder;
+        renderer2.addClass(config.selectedArea.firstChild, 'dashed-border');
+        renderer2.setStyle(config.selectedArea, 'boxShadow', 'none');
+      }
       // get the data
       let fieldname = config.columns[grid.activeCell.colIndex].field;
       let value: string | number;
@@ -89,18 +96,18 @@ export function copyDataToClipboard(
         },
       ];
       // override the cell style, if it is a calculated cell and we have some calc rows
-      if (
-        config.calculatedGrid &&
-        config.rowCalculation.calculatedRows.length > 0
-      )
-        methods.overrideCalculatedCellStyle(config);
+      // if (
+      //   config.calculatedGrid &&
+      //   config.rowCalculation.calculatedRows.length > 0
+      // )
+      //   methods.overrideCalculatedCellStyle(config);
       // override also if it is a non-editable cell
-      methods.setNonEditableCellStyle(config, 'off');
+      // methods.setNonEditableCellStyle(config, 'off');
       // draw dashed border, but only if we aren't in edit mode
-      if (!grid.isEditing()) {
-        methods.drawSelectedAreaBorder(config);
-        methods.drawDashedBorders(config);
-      }
+      // if (!grid.isEditing()) {
+      //   methods.drawSelectedAreaBorder(config);
+      //   methods.drawDashedBorders(config);
+      // }
       methods.calculateAggregates(config);
       updateFn();
       // copy the data

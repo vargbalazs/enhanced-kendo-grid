@@ -1,4 +1,5 @@
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import * as methods from './index';
 
 // scrolls the grid, if we are selecting with the mouse and there are frozen columns
 export function scrollToColumnMouse(config: EnhancedGridConfig) {
@@ -18,6 +19,12 @@ export function scrollToColumnMouse(config: EnhancedGridConfig) {
       left: -gridContent.scrollLeft,
       behavior: 'smooth',
     });
+    // handle the selected area
+    if (config.selectedCells.length > 0) {
+      // gridContent?.removeChild(config.selectedArea);
+      // methods.resetSelectedArea(config.selectedArea, config);
+      // gridContent?.appendChild(config.selectedArea);
+    }
   }
   // if we select to the right at the end
   if (

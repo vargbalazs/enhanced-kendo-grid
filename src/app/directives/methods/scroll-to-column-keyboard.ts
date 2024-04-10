@@ -1,11 +1,14 @@
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { ARROWS } from '../consts/constants';
+import * as methods from './index';
+import { Renderer2 } from '@angular/core';
 
 export function scrollToColumnKeyboard(
   config: EnhancedGridConfig,
   grid: GridComponent,
-  e: KeyboardEvent
+  e: KeyboardEvent,
+  renderer2: Renderer2
 ) {
   // get the total width of the frozen columns
   let totalWidthFrozenCol = 0;
@@ -41,6 +44,10 @@ export function scrollToColumnKeyboard(
         left: -gridContent.scrollLeft,
         behavior: 'smooth',
       });
+      // handle selecting with shift
+      if (config.selectedCells.length > 0) {
+        config.selectedArea.style.visibility = 'hidden';
+      }
     }
     // if the focused cell isn't fully visible at the right end
     if (
@@ -51,6 +58,14 @@ export function scrollToColumnKeyboard(
         left: focusedCell?.getBoundingClientRect().width,
         behavior: 'smooth',
       });
+      // if we are selecting and the selected area is below the frozen columns, then set z-index accordingly
+      if (
+        config.firstSelectedCellRect.left - gridContent!.scrollLeft <=
+          totalWidthFrozenCol &&
+        config.selectedCells.length > 0
+      ) {
+        config.selectedArea.style.zIndex = '0';
+      }
     }
   }
 
@@ -92,12 +107,19 @@ export function scrollToColumnKeyboard(
       focusedCell?.getBoundingClientRect().left! <= totalWidthFrozenCol &&
       grid.activeCell.colIndex - 1 > config.frozenColumns.length - 1
     ) {
+      // gridContent?.scrollBy({
+      //   left:
+      //     focusedCell?.getBoundingClientRect().left! -
+      //     totalWidthFrozenCol -
+      //     absoluteLeft -
+      //     gridBorderWidth,
+      //   behavior: 'smooth',
+      // });
       gridContent?.scrollBy({
         left:
           focusedCell?.getBoundingClientRect().left! -
           totalWidthFrozenCol -
-          absoluteLeft -
-          gridBorderWidth,
+          config.columns[grid.activeCell.colIndex - 1].width,
         behavior: 'smooth',
       });
     }

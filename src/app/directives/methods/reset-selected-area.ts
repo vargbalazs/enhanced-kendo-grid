@@ -8,7 +8,8 @@ export function resetSelectedArea(
   selectedArea.style.width = '0px';
   selectedArea.style.height = '0px';
   selectedArea.style.border = 'none';
-  selectedArea.classList.remove('dashed-border');
+  selectedArea.style.zIndex = '99';
+  (<HTMLElement>selectedArea.firstChild)?.classList.remove('dashed-border');
   // removes the border classes from the selected cells
   for (let i = 0; i <= config.selectedCells.length - 1; i++) {
     config.gridBody

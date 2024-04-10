@@ -38,7 +38,7 @@ export function selectWithMouse(
       Object.assign(config.firstSelectedCell, config.selectedCells[0]);
 
       // it's position
-      methods.setRectValues(config.firstSelectedCellRect, target);
+      methods.setRectValues(config.firstSelectedCellRect, target, config);
 
       // it's value
       // get the column field name
@@ -74,7 +74,7 @@ export function selectWithMouse(
       itemKey: dataRowIndex,
       columnKey: columnIndex,
     };
-    methods.setRectValues(config.lastSelectedCellRect, target);
+    methods.setRectValues(config.lastSelectedCellRect, target, config);
 
     // mark the cells as selected and update the state only if we move to another cell
     if (
@@ -82,7 +82,7 @@ export function selectWithMouse(
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
       // reset the selected area - with this we also remove the borders from previous selected cells
-      methods.resetSelectedArea(document.createElement('div'), config);
+      // methods.resetSelectedArea(document.createElement('div'), config);
 
       methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
@@ -95,11 +95,11 @@ export function selectWithMouse(
       config.colIndex = config.lastSelectedCell.columnKey;
 
       // update also the selected area
-      // methods.resizeSelectedArea(config);
-      methods.drawSelectedAreaBorder(config);
+      methods.resizeSelectedArea(config);
+      //methods.drawSelectedAreaBorder(config);
 
       // override style of non-editable cells
-      methods.setNonEditableCellStyle(config, 'off');
+      // methods.setNonEditableCellStyle(config, 'off');
 
       // if there are some frozen columns
       if (config.frozenColumns.length > 0) {
@@ -107,11 +107,11 @@ export function selectWithMouse(
       }
 
       // override style of calculated cells, if we are in a calc grid and there are some calc rows
-      if (
-        config.calculatedGrid &&
-        config.rowCalculation.calculatedRows.length > 0
-      )
-        methods.overrideCalculatedCellStyle(config);
+      // if (
+      //   config.calculatedGrid &&
+      //   config.rowCalculation.calculatedRows.length > 0
+      // )
+      //   methods.overrideCalculatedCellStyle(config);
     }
   }
 }
