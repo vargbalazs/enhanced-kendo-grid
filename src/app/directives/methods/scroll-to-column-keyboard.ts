@@ -58,11 +58,12 @@ export function scrollToColumnKeyboard(
         left: focusedCell?.getBoundingClientRect().width,
         behavior: 'smooth',
       });
-      // if we are selecting and the selected area is below the frozen columns, then set z-index accordingly
+      // if we are selecting from a non-frozen column and the selected area is below the frozen columns, then set z-index accordingly
       if (
         config.firstSelectedCellRect.left - gridContent!.scrollLeft <=
           totalWidthFrozenCol &&
-        config.selectedCells.length > 0
+        config.selectedCells.length > 0 &&
+        config.firstSelectedCell.columnKey > config.frozenColumns.length - 1
       ) {
         config.selectedArea.style.zIndex = '0';
       }
