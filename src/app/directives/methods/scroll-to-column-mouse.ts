@@ -52,10 +52,12 @@ export function scrollToColumnMouse(config: EnhancedGridConfig) {
     });
   }
   // if we select to the left, but we aren't over a frozen column yet, then scroll only one column
+  // the check for z-index is needed, becase all other conditions are also met, if we scroll to the right
   if (
     config.lastSelectedCell.columnKey > config.frozenColumns.length - 1 &&
     gridContent!.scrollLeft > 0 &&
-    config.selectedArea.getBoundingClientRect().left < totalWidthFrozenCol
+    config.selectedArea.getBoundingClientRect().left < totalWidthFrozenCol &&
+    config.selectedArea.style.zIndex != '0'
   ) {
     gridContent?.scrollBy({
       left: -config.columns[config.lastSelectedCell.columnKey].width,
