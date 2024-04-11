@@ -126,15 +126,15 @@ export function pasteFromClipboard(
           // set the first and last cell rect values
           let target = <HTMLElement>e.target;
           config.gridBody = target.parentElement?.parentElement!;
-          // methods.setRectValues(config.firstSelectedCellRect, target);
-          // target = gridBody!.querySelector(
-          //   `[ng-reflect-data-row-index="${
-          //     config.selectedCells[config.selectedCells.length - 1].itemKey
-          //   }"][ng-reflect-col-index="${
-          //     config.selectedCells[config.selectedCells.length - 1].columnKey
-          //   }"]`
-          // )!;
-          // methods.setRectValues(config.lastSelectedCellRect, target);
+          methods.setRectValues(config.firstSelectedCellRect, target, config);
+          target = config.gridBody!.querySelector(
+            `[ng-reflect-data-row-index="${
+              config.selectedCells[config.selectedCells.length - 1].itemKey
+            }"][ng-reflect-col-index="${
+              config.selectedCells[config.selectedCells.length - 1].columnKey
+            }"]`
+          )!;
+          methods.setRectValues(config.lastSelectedCellRect, target, config);
           // draw the area
           config.firstSelectedCell = {
             itemKey: grid.activeCell.dataRowIndex + (grid.skip ? grid.skip : 0),
@@ -149,15 +149,15 @@ export function pasteFromClipboard(
               (grid.skip ? grid.skip : 0),
             columnKey: grid.activeCell.colIndex + copiedColumnCount - 1,
           };
-          // methods.resizeSelectedArea(config);
-          // config.selectedArea.style.border = config.selectedAreaBorder;
-          methods.drawSelectedAreaBorder(config);
+          methods.resizeSelectedArea(config);
+          config.selectedArea.style.border = config.selectedAreaBorder;
+          // methods.drawSelectedAreaBorder(config);
           // if the grid is a calc one, then override the calc row style, if the pasted area contains some calc cells
-          if (
-            config.calculatedGrid &&
-            config.rowCalculation.calculatedRows.length > 0
-          )
-            methods.overrideCalculatedCellStyle(config);
+          // if (
+          //   config.calculatedGrid &&
+          //   config.rowCalculation.calculatedRows.length > 0
+          // )
+          //   methods.overrideCalculatedCellStyle(config);
         }
       }
     });
