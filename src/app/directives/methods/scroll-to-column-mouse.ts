@@ -39,44 +39,27 @@ export function scrollToColumnMouse(config: EnhancedGridConfig) {
       left: nextCell?.getBoundingClientRect().width,
       behavior: 'smooth',
     });
-    // if we are selecting from a non-frozen column and the selected area is below the frozen columns, then set z-index accordingly
-    if (
-      config.firstSelectedCellRect.left - gridContent!.scrollLeft <=
-        totalWidthFrozenCol &&
-      config.selectedCells.length > 0 &&
-      config.firstSelectedCell.columnKey > config.frozenColumns.length - 1
-    ) {
-      config.selectedArea.style.zIndex = '0';
-    }
   }
-  // if we select to the left and the content is scrolled
-  // if (
-  //   config.lastSelectedCell.columnKey <= config.frozenColumns.length - 1 &&
-  //   gridContent!.scrollLeft > 0 &&
-  //   config.firstSelectedCell.columnKey > config.frozenColumns.length - 1
-  // ) {
-  //   gridContent?.scrollBy({
-  //     left: -gridContent.scrollLeft,
-  //     behavior: 'smooth',
-  //   });
-  // }
+  // if we select to the left over a frozen column
   if (
-    config.selectedArea.getBoundingClientRect().left < totalWidthFrozenCol &&
+    config.lastSelectedCell.columnKey <= config.frozenColumns.length - 1 &&
     gridContent!.scrollLeft > 0 &&
     config.firstSelectedCell.columnKey > config.frozenColumns.length - 1
   ) {
-    for (
-      let i = config.firstSelectedCell.columnKey;
-      i > config.frozenColumns.length;
-      i--
-    ) {
-      console.log(config.columns[i].width);
-      gridContent?.scrollBy({
-        left: -i * 100,
-        behavior: 'smooth',
-      });
-    }
-
-    config.selectedArea.style.zIndex = '0';
+    gridContent?.scrollBy({
+      left: -gridContent.scrollLeft,
+      behavior: 'smooth',
+    });
+  }
+  // if we select to the left, but we aren't over a frozen column yet, then scroll only one column
+  if (
+    config.lastSelectedCell.columnKey > config.frozenColumns.length - 1 &&
+    gridContent!.scrollLeft > 0 &&
+    config.selectedArea.getBoundingClientRect().left < totalWidthFrozenCol
+  ) {
+    gridContent?.scrollBy({
+      left: -config.columns[config.lastSelectedCell.columnKey].width,
+      behavior: 'smooth',
+    });
   }
 }
