@@ -6,12 +6,31 @@ export function mouseLeaveOnSelecting(
   config: EnhancedGridConfig,
   resetFn: () => void
 ) {
-  const target = <HTMLElement>e.target;
+  const gridContent = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelector('.k-grid-content')!;
+
+  console.log(e.pageX, gridContent.getBoundingClientRect().right);
+
+  // if we are selecting and we left the grid on the right side, then repeatedly select the next column of cells and scroll the grid
   if (
     config.isMouseDown &&
-    !target?.hasAttribute('ng-reflect-data-row-index')
+    e.pageX > gridContent.getBoundingClientRect().right
   ) {
-    config.isMouseDown = false;
-    resetFn();
+    const intervalId = setInterval(() => {
+      if (config.lastSelectedCell.columnKey < config.columns.length - 1) {
+        if (!config.isMouseDown) clearInterval(intervalId);
+        console.log('belép');
+      }
+    }, 500);
   }
+
+  // const target = <HTMLElement>e.target;
+  // if (
+  //   config.isMouseDown &&
+  //   !target?.hasAttribute('ng-reflect-data-row-index')
+  // ) {
+  //   config.isMouseDown = false;
+  //   resetFn();
+  // }
 }

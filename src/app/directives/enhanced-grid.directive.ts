@@ -93,6 +93,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
   // listener for scrollend event
   private gridScrollEndListener: () => void = () => {};
 
+  // listener for mouseup for the whole document
+  private docMouseUpListener: () => void = () => {};
+
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
@@ -292,6 +295,14 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.renderer2,
       this.gridScrollEndListener
     );
+
+    // listen for the mouseup event and handle it, if selecting with mouse is allowed and we are actually selecting
+    this.docMouseUpListener = this.renderer2.listen(document, 'mouseup', () => {
+      if (this.selectingWithMouse && this.config.isMouseDown) {
+        this.config.isMouseDown = false;
+        console.log('doc mouseup');
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -302,6 +313,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.filterButtonListener();
     this.gridScrollListener();
     this.gridScrollEndListener();
+    this.docMouseUpListener();
   }
 
   @HostListener('keydown', ['$event'])
