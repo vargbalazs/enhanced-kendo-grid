@@ -17,9 +17,8 @@ export function mouseLeaveOnSelecting(
     config.isMouseDown &&
     e.pageX > gridContent.getBoundingClientRect().right
   ) {
-    const intervalId = setInterval(() => {
+    config.intervalId = window.setInterval(() => {
       if (config.lastSelectedCell.columnKey < config.columns.length - 1) {
-        if (!config.isMouseDown) clearInterval(intervalId);
         console.log('belép');
       }
     }, 500);

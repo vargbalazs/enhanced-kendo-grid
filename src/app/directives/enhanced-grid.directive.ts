@@ -300,6 +300,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.docMouseUpListener = this.renderer2.listen(document, 'mouseup', () => {
       if (this.selectingWithMouse && this.config.isMouseDown) {
         this.config.isMouseDown = false;
+        window.clearInterval(this.config.intervalId);
         console.log('doc mouseup');
       }
     });
