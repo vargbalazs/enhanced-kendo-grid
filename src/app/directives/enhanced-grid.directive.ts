@@ -451,7 +451,13 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if selecting with mouse is allowed
     if (this.selectingWithMouse) {
       // if we move out of the table we set everything to default
-      methods.mouseLeaveOnSelecting(e, this.config, this.resetState.bind(this));
+      methods.mouseLeaveOnSelecting(
+        e,
+        this.config,
+        this.resetState.bind(this),
+        this.grid,
+        this.updateState.bind(this)
+      );
     }
   }
 

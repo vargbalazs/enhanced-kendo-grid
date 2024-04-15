@@ -203,5 +203,6 @@ export class EnhancedGridConfig {
   // array for internal storing of error messages
   public errors: string[] = [];
 
+  // variable for storing setintervals
   public intervalId: number = 0;
 }
