@@ -16,6 +16,7 @@ import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
 import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
+import { ListSource } from 'src/app/directives/interfaces/list-source.interface';
 import { RowCalculation } from 'src/app/directives/interfaces/row-calculation.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
@@ -59,6 +60,15 @@ export class CalcGridComponent {
   selectableSettings: SelectableSettings = {
     cell: true,
   };
+
+  listSources: ListSource[] = [
+    {
+      field: 'project.projNumber',
+      data: projects,
+      valueField: 'id',
+      textField: 'projNumber',
+    },
+  ];
 
   errorMessages: FormErrorMessage[] = [
     {

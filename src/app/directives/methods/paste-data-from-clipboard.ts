@@ -43,19 +43,36 @@ export function pasteFromClipboard(
               // for datas copied from multiple cells); else we write the cell datas in the appr. cell
               if (!grid.isEditing()) {
                 // write the values into the grid
-                const field = Object.keys(dataItem)[focusedCell.colIndex + i];
-                // if the field is an object, we have to modify the appr. property
+                const field = config.columns[focusedCell.colIndex + i].field;
+                // if the field is a property of an object, we have to modify the appr. property
                 // in case of object fields we do nothing, because they have they own data sources
                 // and we had to modify this datasource with the new pasted value
-                if (typeof dataItem[field] == 'object') {
-                  // const columnField =
-                  //   config.columns[focusedCell.colIndex + i].field;
-                  // const property = columnField.substring(
-                  //   columnField.indexOf('.') + 1
-                  // );
+                if (field.includes('.')) {
+                  const keyAndField = methods.extractKeyAndField(field);
                   // config.gridData[focusedCell.dataRowIndex + j][
-                  //   Object.keys(dataItem)[focusedCell.colIndex + i]
-                  // ][property] = values[j][i];
+                  //   keyAndField.key
+                  // ][keyAndField.fieldName!] = values[j][i];
+                  // config.gridData[focusedCell.dataRowIndex + j][
+                  //   keyAndField.key
+                  // ] = {
+                  //   id: 1,
+                  //   projNumber: `proj numb 1`,
+                  //   projName: `proj name 1`,
+                  // };
+                  // get the right list source
+                  const listSource = config.listSources.find(
+                    (listSource) => listSource.field === field
+                  )!;
+                  // get the original object, which we want to override
+                  const originalObject =
+                    config.gridData[focusedCell.dataRowIndex + j][
+                      keyAndField.key
+                    ];
+                  // create a clone
+                  const clonedObject = structuredClone(originalObject);
+                  // override the textfield
+                  clonedObject[listSource.textField] = values[j][i];
+                  console.log(clonedObject);
                 } else {
                   const columnField =
                     config.columns[focusedCell.colIndex + i].field;

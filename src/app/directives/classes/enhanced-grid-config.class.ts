@@ -17,6 +17,7 @@ import { ColumnStyle } from '../interfaces/column-style.interface';
 import { ColumnCalculation } from '../interfaces/column-calculation.interface';
 import { FormGroup } from '@angular/forms';
 import { FormErrorMessage } from '../interfaces/form-error-message.interface';
+import { ListSource } from '../interfaces/list-source.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -205,4 +206,7 @@ export class EnhancedGridConfig {
 
   // variable for storing setintervals
   public intervalId: number = 0;
+
+  // variable for storing the list sources
+  public listSources: ListSource[] = [];
 }

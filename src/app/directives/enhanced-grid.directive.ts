@@ -24,6 +24,7 @@ import * as methods from './methods';
 import { RowCalculation } from './interfaces/row-calculation.interface';
 import { ColumnCalculation } from './interfaces/column-calculation.interface';
 import { FormErrorMessage } from './interfaces/form-error-message.interface';
+import { ListSource } from './interfaces/list-source.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -74,6 +75,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   // input property for the error messages
   @Input() errorMessages: FormErrorMessage[] = [];
+
+  // input property for list sources
+  @Input() listSources: ListSource[] = [];
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -214,6 +218,9 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         'userSelect',
         'none'
       );
+
+    // store the list sources
+    this.config.listSources = this.listSources;
 
     // reset the grid
     this.resetState();
