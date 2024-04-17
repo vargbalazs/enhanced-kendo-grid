@@ -207,6 +207,14 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // store the error messages
     this.config.errorMessages = this.errorMessages;
 
+    // if selecting with mouse is enabled, then disable selecting on the grid
+    if (this.selectingWithMouse)
+      this.renderer2.setStyle(
+        this.config.gridElRef.nativeElement,
+        'userSelect',
+        'none'
+      );
+
     // reset the grid
     this.resetState();
   }
@@ -301,7 +309,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       if (this.selectingWithMouse && this.config.isMouseDown) {
         this.config.isMouseDown = false;
         window.clearInterval(this.config.intervalId);
-        console.log('doc mouseup');
       }
     });
   }
