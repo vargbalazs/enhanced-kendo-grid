@@ -54,3 +54,4 @@ export * from './scroll-error-tooltip';
 export * from './change-error-tooltip-pos';
 export * from './init-error-tooltip';
 export * from './register-scrollend-listener';
+export * from './flatten-grouped-data';

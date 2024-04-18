@@ -115,6 +115,13 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     // if paging is enabled, this gets only the first page data
     this.config.gridData = (<GridDataResult>this.grid.data).data;
 
+    // if the grid data is grouped
+    if (this.config.gridData[0].aggregates) {
+      this.config.gridData = methods.flattenGroupedData(
+        (<GridDataResult>this.grid.data).data
+      );
+    }
+
     // get the full grid data
     this.config.fullGridData = this.kendoGridBinding;
 
@@ -165,6 +172,12 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       (pageChangeEvent) => {
         // refresh the page data
         this.config.gridData = (<GridDataResult>this.grid.data).data;
+        // if the grid data is grouped
+        if (this.config.gridData[0].aggregates) {
+          this.config.gridData = methods.flattenGroupedData(
+            (<GridDataResult>this.grid.data).data
+          );
+        }
       }
     );
 
