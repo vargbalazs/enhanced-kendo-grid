@@ -68,6 +68,12 @@ export class CalcGridComponent {
       valueField: 'id',
       textField: 'projNumber',
     },
+    {
+      field: 'accountNumber.accNumber',
+      data: accountNumbers,
+      valueField: 'id',
+      textField: 'accNumber',
+    },
   ];
 
   errorMessages: FormErrorMessage[] = [
