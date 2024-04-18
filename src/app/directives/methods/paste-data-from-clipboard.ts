@@ -49,30 +49,26 @@ export function pasteFromClipboard(
                 // and we had to modify this datasource with the new pasted value
                 if (field.includes('.')) {
                   const keyAndField = methods.extractKeyAndField(field);
-                  // config.gridData[focusedCell.dataRowIndex + j][
-                  //   keyAndField.key
-                  // ][keyAndField.fieldName!] = values[j][i];
-                  // config.gridData[focusedCell.dataRowIndex + j][
-                  //   keyAndField.key
-                  // ] = {
-                  //   id: 1,
-                  //   projNumber: `proj numb 1`,
-                  //   projName: `proj name 1`,
-                  // };
                   // get the right list source
                   const listSource = config.listSources.find(
                     (listSource) => listSource.field === field
                   )!;
-                  // get the original object, which we want to override
-                  const originalObject =
+                  // if there is no list source
+                  if (!listSource) {
+                    console.error(
+                      `For the field ${keyAndField.key} there is no list source defined.`
+                    );
+                    return;
+                  }
+                  // search the item based on the textfield
+                  const item = listSource.data.find(
+                    (item) => item[keyAndField.fieldName!] === values[j][i]
+                  );
+                  // override the field with this item, but only if there is an existing item
+                  if (item)
                     config.gridData[focusedCell.dataRowIndex + j][
                       keyAndField.key
-                    ];
-                  // create a clone
-                  const clonedObject = structuredClone(originalObject);
-                  // override the textfield
-                  clonedObject[listSource.textField] = values[j][i];
-                  console.log(clonedObject);
+                    ] = item;
                 } else {
                   const columnField =
                     config.columns[focusedCell.colIndex + i].field;
