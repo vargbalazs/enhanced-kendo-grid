@@ -4,9 +4,14 @@
       <normal-grid></normal-grid>
     </ng-template>
   </kendo-tabstrip-tab>
-  <kendo-tabstrip-tab title="calculation grid" [selected]="true">
+  <kendo-tabstrip-tab title="calculation grid">
     <ng-template kendoTabContent>
       <calc-grid></calc-grid>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab title="grouped grid" [selected]="true">
+    <ng-template kendoTabContent>
+      <grouped-grid></grouped-grid>
     </ng-template>
   </kendo-tabstrip-tab>
 </kendo-tabstrip>

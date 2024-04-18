@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NormalGridModule } from './components/normal-grid/normal-grid.module';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { CalcGridModule } from './components/calc-grid/calc-grid.module';
+import { GroupedGridModule } from './components/grouped-grid/grouped-grid.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { CalcGridModule } from './components/calc-grid/calc-grid.module';
     NormalGridModule,
     LayoutModule,
     CalcGridModule,
+    GroupedGridModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
