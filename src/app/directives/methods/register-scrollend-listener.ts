@@ -20,7 +20,6 @@ export function registerScrollEndListener(
   listener = renderer2.listen(gridContent, 'scrollend', (e) => {
     // if we are selecting from left to right from a frozen column
     if (
-      //gridContent?.scrollLeft === 0 &&
       config.firstSelectedCell.columnKey <= config.frozenColumns.length - 1 &&
       config.selectedCells.length > 0
     ) {

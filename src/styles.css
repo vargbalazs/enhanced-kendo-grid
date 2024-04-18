@@ -43,13 +43,6 @@
   box-shadow: rgb(1, 114, 203) 0px 0px 0px 1.5px inset;
 }
 
-.enhanced.k-grid td.k-selected,
-.enhanced.k-grid .k-table-row.k-selected > td,
-.enhanced.k-grid .k-table-td.k-selected,
-.enhanced.k-grid .k-table-row.k-selected > .k-table-td {
-  /* background-color: rgb(232, 244, 253); */
-}
-
 .enhanced.k-grid td.k-selected.k-grid-edit-cell,
 .enhanced.k-grid .k-table-td.k-selected.k-grid-edit-cell,
 .enhanced.k-grid td.k-grid-edit-cell,
@@ -275,88 +268,12 @@
   }
 }
 
-.left-dash {
-  background-size: 0px 0px, 0px 0px, 1.5px 5px, 0px 0px;
-}
-
-.right-dash {
-  background-size: 0px 0px, 0px 0px, 0px 0px, 1.5px 5px;
-}
-
-.top-dash {
-  background-size: 5px 1.5px, 0px 0px, 0px 0px, 0px 0px;
-}
-
-.bottom-dash {
-  background-size: 0px 0px, 5px 1.5px, 0px 0px, 0px 0px;
-}
-
-.left-top-corner-dash {
-  background-size: 5px 1.5px, 0px 0px, 1.5px 5px, 0px 0px;
-}
-
-.right-top-corner-dash {
-  background-size: 5px 1.5px, 0px 0px, 0px 0px, 1.5px 5px;
-}
-
-.left-bottom-corner-dash {
-  background-size: 0px 0px, 5px 1.5px, 1.5px 5px, 0px 0px;
-}
-
-.right-bottom-corner-dash {
-  background-size: 0px 0px, 5px 1.5px, 0px 0px, 1.5px 5px;
-}
-
-.all-side-dash {
-  background-size: 5px 1.5px, 5px 1.5px, 1.5px 5px, 1.5px 5px;
-}
-
-.one-row-left-corner-dash {
-  background-size: 5px 1.5px, 5px 1.5px, 1.5px 5px, 0px 0px;
-}
-
-.one-row-right-corner-dash {
-  background-size: 5px 1.5px, 5px 1.5px, 0px 0px, 1.5px 5px;
-}
-
-.top-bottom-dash {
-  background-size: 5px 1.5px, 5px 1.5px, 0px 0px, 0px 0px;
-}
-
-.left-right-dash {
-  background-size: 0px 0px, 0px 0px, 1.5px 5px, 1.5px 5px;
-}
-
-.one-column-top-dash {
-  background-size: 5px 1.5px, 0px 0px, 1.5px 5px, 1.5px 5px;
-}
-
-.one-column-bottom-dash {
-  background-size: 0px 0px, 5px 1.5px, 1.5px 5px, 1.5px 5px;
-}
-
 .no-focus-shadow {
   box-shadow: none !important;
 }
 
 .non-editable {
   background-color: #f9fafb !important;
-}
-
-.top-shadow {
-  border-top: 1px solid rgb(1, 114, 203) !important;
-}
-
-.bottom-shadow {
-  border-bottom: 1px solid rgb(1, 114, 203) !important;
-}
-
-.left-shadow {
-  border-left: 1px solid rgb(1, 114, 203) !important;
-}
-
-.right-shadow {
-  border-right: 1px solid rgb(1, 114, 203) !important;
 }
 
 .enhanced.k-grid td[kendogridfiltercell] {

@@ -22,7 +22,6 @@ export function copyDataToClipboard(
       // adding dashed border and remove shadow
       renderer2.addClass(config.selectedArea.firstChild, 'dashed-border');
       renderer2.setStyle(config.selectedArea, 'boxShadow', 'none');
-      // methods.drawDashedBorders(config);
       // copy content to clipboard
       methods.prepareDataForClipboard(config);
       navigator.clipboard
@@ -95,19 +94,6 @@ export function copyDataToClipboard(
           columnKey: grid.activeCell.colIndex,
         },
       ];
-      // override the cell style, if it is a calculated cell and we have some calc rows
-      // if (
-      //   config.calculatedGrid &&
-      //   config.rowCalculation.calculatedRows.length > 0
-      // )
-      //   methods.overrideCalculatedCellStyle(config);
-      // override also if it is a non-editable cell
-      // methods.setNonEditableCellStyle(config, 'off');
-      // draw dashed border, but only if we aren't in edit mode
-      // if (!grid.isEditing()) {
-      //   methods.drawSelectedAreaBorder(config);
-      //   methods.drawDashedBorders(config);
-      // }
       methods.calculateAggregates(config);
       updateFn();
       // copy the data

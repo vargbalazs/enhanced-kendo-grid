@@ -72,10 +72,6 @@ export function pasteFromClipboard(
                 } else {
                   const columnField =
                     config.columns[focusedCell.colIndex + i].field;
-                  // Object.keys doesn't contain columns derived from objects, that's why we can't use this approach
-                  // config.gridData[focusedCell.dataRowIndex + j][
-                  //   Object.keys(dataItem)[focusedCell.colIndex + i]
-                  // ] = values[j][i];
                   // non-editable cells and cells in a calculated row can't be overridden
                   if (
                     config.columns[focusedCell.colIndex + i].editable &&
@@ -164,13 +160,6 @@ export function pasteFromClipboard(
           };
           methods.resizeSelectedArea(config);
           config.selectedArea.style.border = config.selectedAreaBorder;
-          // methods.drawSelectedAreaBorder(config);
-          // if the grid is a calc one, then override the calc row style, if the pasted area contains some calc cells
-          // if (
-          //   config.calculatedGrid &&
-          //   config.rowCalculation.calculatedRows.length > 0
-          // )
-          //   methods.overrideCalculatedCellStyle(config);
         }
       }
     });

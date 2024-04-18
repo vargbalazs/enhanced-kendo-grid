@@ -7,11 +7,6 @@ export function setRectValues(
   target: HTMLElement,
   config: EnhancedGridConfig
 ) {
-  // cellRect.left = target?.getClientRects().item(0)!.left;
-  // cellRect.top = target?.getClientRects().item(0)!.top;
-  // cellRect.width = target?.getClientRects().item(0)!.width;
-  // cellRect.height = target?.getClientRects().item(0)!.height;
-
   // query for the content
   const gridContent = (<HTMLElement>(
     config.gridElRef.nativeElement

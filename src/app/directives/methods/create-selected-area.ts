@@ -21,13 +21,6 @@ export function createSelectedArea(
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content')!;
 
-  // insert
-  // renderer2.insertBefore(
-  //   element.nativeElement.parentNode,
-  //   selectedArea,
-  //   element.nativeElement.nextSibling
-  // );
-
   gridContent.appendChild(selectedArea);
 
   config.selectedArea = selectedArea;

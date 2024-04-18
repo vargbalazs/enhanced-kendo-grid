@@ -165,8 +165,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       (pageChangeEvent) => {
         // refresh the page data
         this.config.gridData = (<GridDataResult>this.grid.data).data;
-        // reset styling for non-edited cells
-        // methods.setNonEditableCellStyle(this.config, 'on');
       }
     );
 
@@ -344,8 +342,6 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
     // general reset
     methods.resetOnKeydown(e, this.resetState.bind(this), this.config);
-    // reset styling of non-edited cells - this is also part of the general reset, but we need it one more time
-    // methods.setNonEditableCellStyle(this.config, 'on');
 
     // if changing focus with tab is allowed
     if (this.changeCellFocusWithTab)
@@ -515,12 +511,8 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
 
   // resets the state of the grid
   resetState() {
-    // if something copied, then remove the dashed borders
-    if (this.config.dataCopied) methods.removeDashedBorder(this.config);
     // reset the selected area div
     methods.resetSelectedArea(this.config.selectedArea, this.config);
-    // reset styling of non-edited cells
-    // methods.setNonEditableCellStyle(this.config, 'on');
     this.config.selectedCells = [];
     this.selectedKeysChange.emit(this.config.selectedCells);
     this.config.selectedCellDatas = [];

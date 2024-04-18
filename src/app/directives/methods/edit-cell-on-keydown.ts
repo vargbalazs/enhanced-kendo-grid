@@ -6,7 +6,6 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 import { ARROW_KEYS, NOT_ALLOWED_KEYS_FOR_EDITING } from '../consts/constants';
 import { FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs';
 
 // edits the cell on keydown
 export function editCellOnKeyDown(

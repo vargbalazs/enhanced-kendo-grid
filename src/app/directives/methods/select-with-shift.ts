@@ -37,7 +37,6 @@ export function selectWithShift(
     // if we copied something to the clipboard, then cancel the copying
     if (config.dataCopied) {
       renderer2.removeClass(config.selectedArea, 'dashed-border');
-      // methods.removeDashedBorder(config);
       renderer2.removeClass(config.firstSelectedCellElement, 'no-focus-shadow');
       config.dataCopied = false;
     }
@@ -137,9 +136,6 @@ export function selectWithShift(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
-      // reset the selected area - with this we also remove the borders from previous selected cells
-      // methods.resetSelectedArea(document.createElement('div'), config);
-
       methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
       updateFn();
@@ -150,21 +146,10 @@ export function selectWithShift(
 
       // update also the selected area
       methods.resizeSelectedArea(config);
-      // methods.drawSelectedAreaBorder(config);
 
       // set the border and shadow of the selected area
       config.selectedArea.style.border = config.selectedAreaBorder;
       config.selectedArea.style.boxShadow = config.selectedAreaBoxShadow;
-
-      // override style of non-editable cells
-      // methods.setNonEditableCellStyle(config, 'off');
-
-      // override style of calculated cells, if we are in a calc grid and we have some calc rows
-      // if (
-      //   config.calculatedGrid &&
-      //   config.rowCalculation.calculatedRows.length > 0
-      // )
-      //   methods.overrideCalculatedCellStyle(config);
     }
   }
 }

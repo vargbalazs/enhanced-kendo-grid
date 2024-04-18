@@ -6,7 +6,6 @@ export function storeOriginalValues(
   grid: GridComponent,
   config: EnhancedGridConfig
 ) {
-  // config.editedRowIndex = grid.activeCell.dataRowIndex;
   // if paging is enabled, we can't rely on the build in dataRowIndex, because it starts in this case always from 0 for each page
   // so we need to find the correct index ourselves
   config.editedRowIndex = config.gridData.findIndex(

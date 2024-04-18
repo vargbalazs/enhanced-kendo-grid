@@ -81,9 +81,6 @@ export function selectWithMouse(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
-      // reset the selected area - with this we also remove the borders from previous selected cells
-      // methods.resetSelectedArea(document.createElement('div'), config);
-
       methods.markCellsAsSelected(config, grid);
       methods.calculateAggregates(config);
 
@@ -96,22 +93,11 @@ export function selectWithMouse(
 
       // update also the selected area
       methods.resizeSelectedArea(config);
-      //methods.drawSelectedAreaBorder(config);
-
-      // override style of non-editable cells
-      // methods.setNonEditableCellStyle(config, 'off');
 
       // if there are some frozen columns
       if (config.frozenColumns.length > 0) {
         methods.scrollToColumnMouse(config);
       }
-
-      // override style of calculated cells, if we are in a calc grid and there are some calc rows
-      // if (
-      //   config.calculatedGrid &&
-      //   config.rowCalculation.calculatedRows.length > 0
-      // )
-      //   methods.overrideCalculatedCellStyle(config);
     }
   }
 }

@@ -1,7 +1,6 @@
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { ARROWS } from '../consts/constants';
-import * as methods from './index';
 import { Renderer2 } from '@angular/core';
 
 export function scrollToColumnKeyboard(
@@ -17,10 +16,6 @@ export function scrollToColumnKeyboard(
       config.columns[config.frozenColumns[i].columnIndex!].width;
   }
 
-  const absoluteLeft = (<HTMLElement>config.gridElRef.nativeElement).offsetLeft;
-  const gridBorderWidth = parseFloat(
-    getComputedStyle(config.gridElRef.nativeElement).borderLeftWidth
-  );
   const gridBody = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
     '[kendogridtablebody]'
   );
@@ -108,14 +103,6 @@ export function scrollToColumnKeyboard(
       focusedCell?.getBoundingClientRect().left! <= totalWidthFrozenCol &&
       grid.activeCell.colIndex - 1 > config.frozenColumns.length - 1
     ) {
-      // gridContent?.scrollBy({
-      //   left:
-      //     focusedCell?.getBoundingClientRect().left! -
-      //     totalWidthFrozenCol -
-      //     absoluteLeft -
-      //     gridBorderWidth,
-      //   behavior: 'smooth',
-      // });
       gridContent?.scrollBy({
         left:
           focusedCell?.getBoundingClientRect().left! -
