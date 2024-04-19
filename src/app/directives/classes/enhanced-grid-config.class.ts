@@ -18,10 +18,14 @@ import { ColumnCalculation } from '../interfaces/column-calculation.interface';
 import { FormGroup } from '@angular/forms';
 import { FormErrorMessage } from '../interfaces/form-error-message.interface';
 import { ListSource } from '../interfaces/list-source.interface';
+import { GroupedData } from '../interfaces/grouped-data.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
   public gridData: any[] = [];
+
+  // the data of a grouped grid - just one page, if paging is enabled
+  public groupedGridData: GroupedData[] = [];
 
   // the full grid data
   public fullGridData: any[] = [];
@@ -91,6 +95,9 @@ export class EnhancedGridConfig {
 
   // subscription for column header click
   public columnClick$: Subscription = new Subscription();
+
+  // subscription for filtering
+  public filterChange$: Subscription = new Subscription();
 
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];

@@ -58,7 +58,15 @@ export function markCellsAsSelected(
           // if the grid is filtered or sorted, we have to work with the filtered data
           // we don't have to care about calculated rows, because filtering and sorting isn't allowed on calculated grids
           if (grid.filter?.filters || grid.sort!.length > 0) {
-            const filteredGridData = (<GridDataResult>grid.data).data;
+            // if the grid is grouped
+            let filteredGridData = [];
+            if (config.groupedGridData.length > 0) {
+              filteredGridData = methods.flattenGroupedData(
+                (<GridDataResult>grid.data).data
+              );
+            } else {
+              filteredGridData = (<GridDataResult>grid.data).data;
+            }
             value =
               filteredGridData[
                 firstCell.itemKey -
@@ -76,7 +84,15 @@ export function markCellsAsSelected(
           // if the grid is filtered or sorted, we have to work with the filtered data
           // we don't have to care about calculated rows, because filtering and sorting isn't allowed on calculated grids
           if (grid.filter?.filters || grid.sort!.length > 0) {
-            const filteredGridData = (<GridDataResult>grid.data).data;
+            // if the grid is grouped
+            let filteredGridData = [];
+            if (config.groupedGridData.length > 0) {
+              filteredGridData = methods.flattenGroupedData(
+                (<GridDataResult>grid.data).data
+              );
+            } else {
+              filteredGridData = (<GridDataResult>grid.data).data;
+            }
             value =
               filteredGridData[
                 firstCell.itemKey -

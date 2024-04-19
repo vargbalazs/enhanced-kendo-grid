@@ -120,6 +120,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
       this.config.gridData = methods.flattenGroupedData(
         (<GridDataResult>this.grid.data).data
       );
+      this.config.groupedGridData = (<GridDataResult>this.grid.data).data;
     }
 
     // get the full grid data
@@ -174,6 +175,19 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
         this.config.gridData = (<GridDataResult>this.grid.data).data;
         // if the grid data is grouped
         if (this.config.gridData[0].aggregates) {
+          this.config.gridData = methods.flattenGroupedData(
+            (<GridDataResult>this.grid.data).data
+          );
+          this.config.groupedGridData = (<GridDataResult>this.grid.data).data;
+        }
+      }
+    );
+
+    // subscribe to the filter change event
+    this.config.filterChange$ = this.grid.filterChange.subscribe(
+      (filterChangeEvent) => {
+        // if the grid is grouped, then in case of filtering, we have to update the flattened grid data
+        if (this.config.groupedGridData.length > 1) {
           this.config.gridData = methods.flattenGroupedData(
             (<GridDataResult>this.grid.data).data
           );
@@ -336,6 +350,7 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.cellClick$.unsubscribe();
     this.config.pageChange$.unsubscribe();
     this.config.columnClick$.unsubscribe();
+    this.config.filterChange$.unsubscribe();
     this.filterButtonListener();
     this.gridScrollListener();
     this.gridScrollEndListener();

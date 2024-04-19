@@ -18,10 +18,20 @@ export function cellClose(
 ) {
   // if some filters or sorting are active, we have to override the edited row index
   if (grid.filter?.filters || grid.sort!.length > 0) {
-    const gridData = (<GridDataResult>grid.data).data;
-    config.editedRowIndex = gridData.findIndex(
-      (item) => item.dataRowIndex === grid.activeCell?.dataItem?.dataRowIndex
-    );
+    // if the grid is grouped
+    if (config.groupedGridData.length > 0) {
+      const flattenedData = methods.flattenGroupedData(
+        (<GridDataResult>grid.data).data
+      );
+      config.editedRowIndex = flattenedData.findIndex(
+        (item) => item.dataRowIndex === grid.activeCell?.dataItem?.dataRowIndex
+      );
+    } else {
+      const gridData = (<GridDataResult>grid.data).data;
+      config.editedRowIndex = gridData.findIndex(
+        (item) => item.dataRowIndex === grid.activeCell?.dataItem?.dataRowIndex
+      );
+    }
   }
   // if cell data is invalid, then put the cell back in edit mode
   // with this, we are preventing to focus out (except if we entered in edit mode with Enter)
@@ -49,13 +59,31 @@ export function cellClose(
     // if some filters or sorting are active
     if (grid.filter?.filters || grid.sort!.length > 0) {
       // gridData will have only the filtered rows, so we have to determine the right edited row index
-      const gridData = (<GridDataResult>grid.data).data;
-      config.editedRowIndex = gridData.findIndex(
-        (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
-      );
-      gridData[config.editedRowIndex] = config.originalDataItem;
+      // if the grid is grouped
+      if (config.groupedGridData.length > 0) {
+        methods.setGroupedItem(
+          (<GridDataResult>grid.data).data,
+          grid.activeCell.dataItem.dataRowIndex,
+          config.originalDataItem
+        );
+      } else {
+        const gridData = (<GridDataResult>grid.data).data;
+        config.editedRowIndex = gridData.findIndex(
+          (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
+        );
+        gridData[config.editedRowIndex] = config.originalDataItem;
+      }
     } else {
-      config.gridData[config.editedRowIndex] = config.originalDataItem;
+      // if the grid is grouped
+      if (config.groupedGridData.length > 0) {
+        methods.setGroupedItem(
+          config.groupedGridData,
+          config.originalDataItem.dataRowIndex,
+          config.originalDataItem
+        );
+      } else {
+        config.gridData[config.editedRowIndex] = config.originalDataItem;
+      }
     }
     // we have to restore the original values also in the full grid data
     const index = config.fullGridData.findIndex(
