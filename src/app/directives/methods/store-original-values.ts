@@ -1,5 +1,6 @@
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import * as methods from './index';
 
 // before editing, we store all the relevant original values
 export function storeOriginalValues(
@@ -13,10 +14,17 @@ export function storeOriginalValues(
   );
   // if some filters or sorting are active, we store the edited row index in a separate variable
   if (grid.filter?.filters || grid.sort!.length > 0) {
-    const gridData = (<GridDataResult>grid.data).data;
+    let gridData = [];
+    // if grid is grouped
+    if (config.groupedGridData.length > 0) {
+      gridData = methods.flattenGroupedData((<GridDataResult>grid.data).data);
+    } else {
+      gridData = (<GridDataResult>grid.data).data;
+    }
     config.editedRowIndexFilterOrSort = gridData.findIndex(
       (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
     );
+    console.log(config.editedRowIndexFilterOrSort);
   }
   config.editedColIndex = grid.activeCell.colIndex;
   config.originalDataItem = {};

@@ -79,7 +79,15 @@ export function pasteFromClipboard(
                   ) {
                     // if some filters or sorting are active, we have to write the values in the grid differently
                     if (grid.filter?.filters || grid.sort!.length > 0) {
-                      const gridData = (<GridDataResult>grid.data).data;
+                      let gridData = [];
+                      // if the grid is grouped
+                      if (config.groupedGridData.length > 0) {
+                        gridData = methods.flattenGroupedData(
+                          (<GridDataResult>grid.data).data
+                        );
+                      } else {
+                        gridData = (<GridDataResult>grid.data).data;
+                      }
                       gridData[focusedCell.dataRowIndex + j][columnField] =
                         values[j][i];
                     } else
