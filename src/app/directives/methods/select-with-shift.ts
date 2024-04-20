@@ -23,6 +23,8 @@ export function selectWithShift(
     if (
       grid.activeCell.colIndex != methods.getLastSelectedCell(config).columnKey
     ) {
+      // if the grid is grouped, then return
+      if (config.groupedGridData.length > 0) return;
       resetFn();
     }
   }
@@ -32,7 +34,7 @@ export function selectWithShift(
     !grid.isEditingCell() &&
     e.shiftKey &&
     ARROW_KEYS.includes(e.key) &&
-    grid.activeCell.dataRowIndex != -1 // not header
+    grid.activeCell.dataRowIndex != -1 // not header or group row
   ) {
     // if we copied something to the clipboard, then cancel the copying
     if (config.dataCopied) {

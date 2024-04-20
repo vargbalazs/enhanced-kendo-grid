@@ -24,7 +24,6 @@ export function storeOriginalValues(
     config.editedRowIndexFilterOrSort = gridData.findIndex(
       (item) => item.dataRowIndex === grid.activeCell.dataItem.dataRowIndex
     );
-    console.log(config.editedRowIndexFilterOrSort);
   }
   config.editedColIndex = grid.activeCell.colIndex;
   config.originalDataItem = {};
