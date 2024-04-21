@@ -21,7 +21,7 @@ export function selectWithShift(
     grid.activeCell.dataRowIndex === -1
   ) {
     if (
-      grid.activeCell.colIndex != methods.getLastSelectedCell(config).columnKey
+      grid.activeCell.colIndex != methods.getLastSelectedCell(config)?.columnKey
     ) {
       // if the grid is grouped, then return
       if (config.groupedGridData.length > 0) return;
