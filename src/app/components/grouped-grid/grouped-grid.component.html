@@ -80,11 +80,14 @@
       [editable]="false"
       [class]="'non-editable'"
     ></kendo-grid-column>
-    <kendo-grid-column
-      field="jan"
-      [width]="100"
-      [class]="'!k-text-right'"
-    ></kendo-grid-column>
+    <kendo-grid-column field="jan" [width]="100" [class]="'!k-text-right'">
+      <ng-template
+        kendoGridGroupHeaderColumnTemplate
+        let-aggregates="aggregates"
+      >
+        {{ aggregates["jan"].sum }}
+      </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column
       field="feb"
       [width]="100"

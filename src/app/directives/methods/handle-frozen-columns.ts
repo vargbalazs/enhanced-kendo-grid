@@ -30,8 +30,36 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
     return;
   }
 
-  // set the styles to the frozen columns
   let cumColWidth = 0;
+  let groupColWidth = 0;
+
+  // get the grid content
+  const gridContent = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelector('.k-grid-content')!;
+  // if the grid is grouped, then freeze the first column, which is showing the arrows
+  if (config.groupedGridData.length > 0) {
+    const groupCells = <NodeList>gridContent.querySelectorAll('.k-group-cell');
+    groupCells.forEach((node) => {
+      (<HTMLElement>node).style.position = 'sticky';
+      (<HTMLElement>node).style.zIndex = '2';
+      (<HTMLElement>node).style.left = `0px`;
+    });
+    // adjust the cumColWidth
+    groupColWidth = (<HTMLElement>groupCells.item(0)).getBoundingClientRect()
+      .width;
+    cumColWidth += groupColWidth;
+    // freeze also the first cells in the header
+    const headerCells = (<HTMLElement>(
+      config.gridElRef.nativeElement
+    )).querySelectorAll('[kendogridheader] .k-group-cell');
+    headerCells.forEach((node) => {
+      (<HTMLElement>node).style.position = 'sticky';
+      (<HTMLElement>node).style.zIndex = '2';
+      (<HTMLElement>node).style.left = `0px`;
+    });
+  }
+  // set the styles to the frozen columns
   for (let i = 0; i <= config.frozenColumns.length - 1; i++) {
     // headers
     config.columns[config.frozenColumns[i].columnIndex!].headerStyle = {
@@ -52,7 +80,20 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
       'z-index': '2',
       left: `${cumColWidth}px`,
     };
-
+    // cells of a grouped row
+    let groupCells = <NodeList>(
+      gridContent.querySelectorAll(
+        `[ng-reflect-group-item][ng-reflect-logical-col-index="${config
+          .frozenColumns[i].columnIndex!}"]`
+      )
+    );
+    groupCells.forEach((node) => {
+      (<HTMLElement>node).style.position = 'sticky';
+      (<HTMLElement>node).style.zIndex = '2';
+      // cumColWidth has to be adjusted with the groupColWidth, but only for the cells in the first column
+      (<HTMLElement>node).style.left =
+        i === 0 ? `${cumColWidth - groupColWidth}px` : `${cumColWidth}px`;
+    });
     // for the last column we draw a separator
     if (i === config.frozenColumns.length - 1) {
       // headers
@@ -70,6 +111,18 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
         ...config.columns[config.frozenColumns[i].columnIndex!].style,
         'border-right': '1px solid lightgray',
       };
+      // if it is a grouped grid
+      if (config.groupedGridData.length > 0) {
+        let groupCells = <NodeList>(
+          gridContent.querySelectorAll(
+            `[ng-reflect-group-item][ng-reflect-logical-col-index="${config
+              .frozenColumns[i].columnIndex!}"]`
+          )
+        );
+        groupCells.forEach((node) => {
+          (<HTMLElement>node).style.borderRight = '1px solid lightgray';
+        });
+      }
     }
     // cumulate the width
     cumColWidth += config.columns[config.frozenColumns[i].columnIndex!].width;

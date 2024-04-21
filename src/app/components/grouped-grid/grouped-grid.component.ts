@@ -3,9 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CellSelectionItem,
   CreateFormGroupArgs,
+  DataStateChangeEvent,
   SelectableSettings,
 } from '@progress/kendo-angular-grid';
-import { GroupDescriptor } from '@progress/kendo-data-query';
+import {
+  AggregateDescriptor,
+  GroupDescriptor,
+  State,
+  process,
+} from '@progress/kendo-data-query';
 import { accountNumbers, projects, rows } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
@@ -21,7 +27,14 @@ export class GroupedGridComponent {
   rows: Row[] = rows;
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
-  groups: GroupDescriptor[] = [{ field: 'category' }];
+  groupAggregates: AggregateDescriptor[] = [{ field: 'jan', aggregate: 'sum' }];
+  groups: GroupDescriptor[] = [
+    { field: 'category', aggregates: this.groupAggregates },
+  ];
+  state: State = {
+    group: [{ field: 'category', aggregates: this.groupAggregates }],
+  };
+
   frozenColumns = [
     'accountNumber.accNumber',
     'id',
@@ -75,5 +88,13 @@ export class GroupedGridComponent {
         ) === index
     );
     return unique.length === this.selectedCells.length;
+  }
+
+  dataStateChange(state: DataStateChangeEvent): void {
+    if (state && state.group) {
+      state.group.map((group) => (group.aggregates = this.groupAggregates));
+    }
+    this.state = state;
+    this.rows = process(rows, this.state).data;
   }
 }
