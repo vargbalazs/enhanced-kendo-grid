@@ -18,13 +18,13 @@ export function selectWithShift(
   if (
     e.shiftKey &&
     e.key === ARROWS.DOWN &&
-    grid.activeCell.dataRowIndex === -1
+    isHeaderCell(e.target) //grid.activeCell.dataRowIndex === -1
   ) {
     if (
       grid.activeCell.colIndex != methods.getLastSelectedCell(config)?.columnKey
     ) {
       // if the grid is grouped, then return
-      if (config.groupedGridData.length > 0) return;
+      //if (config.groupedGridData.length > 0) return;
       resetFn();
     }
   }
@@ -34,7 +34,9 @@ export function selectWithShift(
     !grid.isEditingCell() &&
     e.shiftKey &&
     ARROW_KEYS.includes(e.key) &&
-    grid.activeCell.dataRowIndex != -1 // not header or group row
+    !isHeaderCell(e.target) &&
+    !isFilterCell(e.target) &&
+    !isGroupCell(e.target) //grid.activeCell.dataRowIndex != -1 // not header or group row
   ) {
     // if we copied something to the clipboard, then cancel the copying
     if (config.dataCopied) {
@@ -154,4 +156,16 @@ export function selectWithShift(
       config.selectedArea.style.boxShadow = config.selectedAreaBoxShadow;
     }
   }
+}
+
+function isGroupCell(target: any) {
+  return (<HTMLElement>target).hasAttribute('ng-reflect-group-item');
+}
+
+function isFilterCell(target: any) {
+  return (<HTMLElement>target).hasAttribute('kendogridfiltercell');
+}
+
+function isHeaderCell(target: any) {
+  return (<HTMLElement>target).role === 'columnheader';
 }
