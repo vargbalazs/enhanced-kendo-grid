@@ -137,6 +137,10 @@ export function pasteFromClipboard(
         if (!grid.isEditing()) {
           methods.calculateAggregates(config);
           updateFn();
+          if (config.calculatedGrid) {
+            methods.updateCalculatedColumns(config);
+            methods.updateCalculatedRows(config);
+          }
         }
         // draw the border for the selected area, but only if we are not editing
         if (!grid.isEditing()) {
