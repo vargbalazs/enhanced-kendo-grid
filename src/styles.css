@@ -4,6 +4,11 @@
   font-size: 62.5%;
 } */
 
+[kendowatermarkoverlay],
+div[style*="background-color: rgb(255, 192, 0);"] {
+  display: none !important;
+}
+
 .enhanced.k-grid .k-table-row.k-table-alt-row {
   background-color: white;
 }
