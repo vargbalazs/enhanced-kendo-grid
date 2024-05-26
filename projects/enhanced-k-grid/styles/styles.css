@@ -1,0 +1,328 @@
+.enhanced.k-grid .k-table-row.k-table-alt-row {
+  background-color: white;
+}
+
+.enhanced.k-grid td,
+.enhanced.k-grid .k-table-td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* .enhanced.k-grid-md td:has(.enhanced td:nth-child(1)),
+.enhanced.k-grid-md .k-table-td:has(.enhanced td:nth-child(1)) {
+  border-right: 1px solid red;
+} */
+
+.enhanced.k-grid-md td,
+.enhanced.k-grid-md .k-table-td {
+  padding-block: 0px;
+  padding-inline: 2px;
+  /* position: relative; */
+  height: 20px;
+  font-size: 12px;
+  font-family: "Inter";
+  background-color: white;
+  color: #4f5e71;
+}
+
+/* .enhanced.k-grid-md .k-table-td .k-grid-ignore-click {
+  position: absolute;
+  left: -10px;
+  top: -5px;
+  width: 130%;
+  height: 150%;
+} */
+
+.enhanced.k-grid td:not([kendogridfiltercell]):focus,
+.enhanced.k-grid .k-table-td:not([kendogridfiltercell]):focus {
+  box-shadow: rgb(1, 114, 203) 0px 0px 0px 1.5px inset;
+}
+
+.enhanced.k-grid td.k-selected.k-grid-edit-cell,
+.enhanced.k-grid .k-table-td.k-selected.k-grid-edit-cell,
+.enhanced.k-grid td.k-grid-edit-cell,
+.enhanced.k-grid .k-table-td.k-grid-edit-cell {
+  background-color: rgb(232, 244, 253);
+  box-shadow: rgb(1, 114, 203) 0px 0px 0px 1.5px inset;
+}
+
+.enhanced.k-grid-md .k-grid-edit-row td,
+.enhanced.k-grid-md .k-grid-edit-row .k-table-td {
+  padding-block: 0px;
+  padding-inline: 2px;
+}
+
+.enhanced.k-grid-md .k-grid-edit-row td input.k-input,
+.enhanced.k-grid-md .k-grid-edit-row .k-table-td input.k-input,
+.enhanced.k-grid-md .k-grid-edit-row td .k-input-sm .k-input-inner {
+  padding-block: 0px;
+  padding-inline: 0px;
+}
+
+.enhanced.k-grid
+  .k-grid-edit-row
+  td
+  > input:not([type="checkbox"]):not([type="radio"]),
+.enhanced.k-grid
+  .k-grid-edit-row
+  .k-table-td
+  > input:not([type="checkbox"]):not([type="radio"]) {
+  border: none;
+  border-radius: 0px;
+  line-height: 1;
+  margin-top: -3px;
+  font-size: 12px;
+}
+
+.enhanced .k-grid-edit-cell .k-input-solid,
+.enhanced .k-grid-edit-cell .k-input-solid:focus {
+  box-shadow: none;
+  background-color: rgb(232, 244, 253);
+  border: none;
+  color: #4f5e71;
+  height: 15px;
+}
+
+.enhanced .k-grid-edit-cell .k-input-sm {
+  font-size: 12px;
+  margin-top: -3px;
+}
+
+.enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-touched,
+.enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-dirty {
+  background-color: #fef3f2;
+  color: #f04438;
+}
+
+.enhanced .k-grid-edit-cell:has(.k-input-solid.ng-invalid.ng-touched),
+.enhanced .k-grid-edit-cell:has(.k-input-solid.ng-invalid.ng-dirty) {
+  background-color: #fef3f2;
+  box-shadow: #f04438 0px 0px 0px 1.5px inset;
+}
+
+.enhanced .k-grid-edit-cell .k-combobox .k-button-solid-base {
+  color: #4f5e71;
+  border: none;
+  background: transparent;
+  padding: 0px;
+  width: 17px;
+}
+
+.enhanced .k-grid-edit-cell .k-combobox .k-button-solid-base:hover {
+  background: transparent;
+}
+
+.enhanced .k-grid-edit-cell .k-input-sm .k-clear-value {
+  padding: 0px;
+}
+
+.enhanced .k-grid-edit-cell .k-button-sm.k-icon-button .k-button-icon {
+  min-width: 17px;
+  min-height: 14px;
+}
+
+.enhanced .k-grid-edit-cell .k-svg-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
+.enhanced.k-grid .k-table-tbody > .k-table-row:not(.k-detail-row).k-hover {
+  background-color: transparent;
+}
+
+.selected-area {
+  position: absolute;
+  z-index: 99;
+  pointer-events: none;
+  border: 1px solid rgb(1, 114, 203);
+  background-color: rgba(1, 114, 203, 0.2);
+  box-shadow: inset 0 0 0 1px rgb(1, 114, 203);
+}
+
+.dashed-border {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, rgb(1, 114, 203) 50%, transparent 50%),
+    linear-gradient(90deg, rgb(1, 114, 203) 50%, transparent 50%),
+    linear-gradient(0deg, rgb(1, 114, 203) 50%, transparent 50%),
+    linear-gradient(0deg, rgb(1, 114, 203) 50%, transparent 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%;
+  background-size: 5px 1.5px, 5px 1.5px, 1.5px 5px, 1.5px 5px;
+  animation: dash 15s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    background-position: 100% 0%, 0% 100%, 0% 0%, 100% 100%;
+  }
+}
+
+.no-focus-shadow {
+  box-shadow: none !important;
+}
+
+.enhanced.k-grid td[kendogridfiltercell] {
+  background-color: white;
+}
+
+.enhanced.k-grid .k-pager.disabled,
+.enhanced.k-grid [kendogridfilterrow].disabled {
+  background-color: rgba(235, 235, 228, 0.3);
+  color: rgba(84, 84, 84, 0.5);
+  pointer-events: none;
+}
+
+.enhanced.k-grid [kendofilterinput].disabled {
+  background-color: rgba(235, 235, 228, 0.3);
+}
+
+.enhanced.k-grid .k-dropdown-operator.disabled {
+  background-color: rgba(235, 235, 228, 0.3);
+  color: rgba(84, 84, 84, 0.5);
+}
+
+.calcrow .hide-value {
+  color: transparent !important;
+  cursor: default;
+  user-select: none;
+}
+
+.tooltip {
+  position: absolute;
+  width: 250px;
+  padding-inline: 5px;
+  height: auto;
+  padding-block: 5px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: #fef3f2;
+  border-radius: 4px;
+  border: 2px solid #f04438;
+  z-index: 99;
+}
+
+.tooltip .content {
+  color: #f04438;
+  font-size: 12px;
+  font-family: "Inter";
+  word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip .error {
+  min-width: 0;
+}
+
+.tooltip .error-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.tooltip.top i {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -12px;
+  width: 24px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.tooltip.left i {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.right i {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.bottom i {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -12px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.bottom-left i {
+  position: absolute;
+  top: 20%;
+  left: 100%;
+  margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.bottom-right i {
+  position: absolute;
+  top: 20%;
+  right: 100%;
+  margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.common i::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fef3f2;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 2px solid #f04438;
+}
+
+.tooltip.top i::after {
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.tooltip.left i::after {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.tooltip.right i::after {
+  left: 0;
+  top: 50%;
+  transform: translate(50%, -50%) rotate(-45deg);
+}
+
+.tooltip.bottom i::after {
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.tooltip.bottom-left i::after {
+  left: -30%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.tooltip.bottom-right i::after {
+  left: 10%;
+  top: 50%;
+  transform: translate(50%, -50%) rotate(-45deg);
+}

@@ -1,0 +1,47 @@
+export const ARROW_KEYS: string[] = [
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+];
+
+export enum ARROWS {
+  UP = 'ArrowUp',
+  DOWN = 'ArrowDown',
+  LEFT = 'ArrowLeft',
+  RIGHT = 'ArrowRight',
+}
+
+export const NOT_ALLOWED_KEYS_FOR_EDITING: string[] = [
+  ...ARROW_KEYS,
+  'Enter',
+  'Escape',
+  'Alt',
+  'AltGraph',
+  'Shift',
+  'Control',
+  'Backspace',
+  'F1',
+  'F2',
+  'F3',
+  'F4',
+  'F5',
+  'F6',
+  'F7',
+  'F8',
+  'F9',
+  'F10',
+  'F11',
+  'F12',
+  'ScrollLock',
+  'CapsLock',
+  'NumLock',
+  'Pause',
+  'Meta',
+  'ContextMenu',
+  'Insert',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+];
