@@ -5,10 +5,12 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
   Renderer2,
+  SimpleChanges,
 } from '@angular/core';
 import {
   CellSelectionItem,
@@ -29,7 +31,9 @@ import { ListSource } from './interfaces/list-source.interface';
 @Directive({
   selector: '[enhancedGrid]',
 })
-export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
+export class EnhancedGridDirective
+  implements OnInit, OnDestroy, AfterViewInit, OnChanges
+{
   // config object for all the related data for the directive to work
   private config: EnhancedGridConfig;
 
@@ -110,29 +114,33 @@ export class EnhancedGridDirective implements OnInit, OnDestroy, AfterViewInit {
     this.config.gridElRef = element;
   }
 
-  ngOnInit(): void {
-    // get the data of the grid
-    // if paging is enabled, this gets only the first page data
-    this.config.gridData = (<GridDataResult>this.grid.data).data;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['kendoGridBinding']?.currentValue) {
+      // get the data of the grid
+      // if paging is enabled, this gets only the first page data
+      this.config.gridData = (<GridDataResult>this.grid.data).data;
 
-    // if the grid data is grouped
-    if (this.config.gridData[0].aggregates) {
-      this.config.gridData = methods.flattenGroupedData(
-        (<GridDataResult>this.grid.data).data
+      // if the grid data is grouped
+      if (this.config.gridData[0].aggregates) {
+        this.config.gridData = methods.flattenGroupedData(
+          (<GridDataResult>this.grid.data).data
+        );
+        this.config.groupedGridData = (<GridDataResult>this.grid.data).data;
+      }
+
+      // get the full grid data
+      this.config.fullGridData = this.kendoGridBinding;
+
+      // add a field 'dataRowIndex' to the grid data - this is needed, because if we are filtering, we have to store the 'dataRowIndex'
+      // of the data item before filtering
+      this.config.gridData.forEach((row, index) => (row.dataRowIndex = index));
+      this.config.fullGridData.forEach(
+        (row, index) => (row.dataRowIndex = index)
       );
-      this.config.groupedGridData = (<GridDataResult>this.grid.data).data;
     }
+  }
 
-    // get the full grid data
-    this.config.fullGridData = this.kendoGridBinding;
-
-    // add a field 'dataRowIndex' to the grid data - this is needed, because if we are filtering, we have to store the 'dataRowIndex'
-    // of the data item before filtering
-    this.config.gridData.forEach((row, index) => (row.dataRowIndex = index));
-    this.config.fullGridData.forEach(
-      (row, index) => (row.dataRowIndex = index)
-    );
-
+  ngOnInit(): void {
     // subscribe to the cellClose event
     this.config.cellClose$ = this.grid.cellClose.subscribe((cellCloseEvent) => {
       methods.cellClose(

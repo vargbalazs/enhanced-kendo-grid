@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CellSelectionItem,
@@ -6,6 +6,7 @@ import {
   SelectableSettings,
 } from '@progress/kendo-angular-grid';
 import { GroupDescriptor } from '@progress/kendo-data-query';
+import { delay, from, toArray } from 'rxjs';
 import { accountNumbers, projects, rows } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
@@ -17,8 +18,9 @@ import { Row } from 'src/app/model/row.model';
   templateUrl: './normal-grid.component.html',
   styleUrls: ['./normal-grid.component.css'],
 })
-export class NormalGridComponent {
+export class NormalGridComponent implements OnInit {
   rows: Row[] = rows;
+  gridData$ = from(this.rows).pipe(delay(3000), toArray());
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   groups: GroupDescriptor[] = [{ field: 'category' }];
@@ -57,6 +59,12 @@ export class NormalGridComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.createFormGroup = this.createFormGroup.bind(this);
+  }
+
+  ngOnInit(): void {
+    // from(this.rows)
+    //   .pipe(delay(3000), toArray())
+    //   .subscribe(() => (this.rows = rows));
   }
 
   createFormGroup(args: CreateFormGroupArgs): FormGroup {
