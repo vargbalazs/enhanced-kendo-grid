@@ -352,6 +352,13 @@ export class EnhancedGridDirective
         window.clearInterval(this.config.intervalId);
       }
     });
+
+    // subscribe to the sort change event
+    this.config.sortChange$ = this.grid.sortChange.subscribe(
+      (sortChangeEvent) => {
+        methods.toggleSortedColumnClass(sortChangeEvent, this.config);
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -360,6 +367,7 @@ export class EnhancedGridDirective
     this.config.pageChange$.unsubscribe();
     this.config.columnClick$.unsubscribe();
     this.config.filterChange$.unsubscribe();
+    this.config.sortChange$.unsubscribe();
     this.filterButtonListener();
     this.gridScrollListener();
     this.gridScrollEndListener();

@@ -326,3 +326,8 @@
   top: 50%;
   transform: translate(50%, -50%) rotate(-45deg);
 }
+
+.enhanced.k-grid-md td.col-sorted,
+.enhanced.k-grid-md .k-table-td.col-sorted {
+  background-color: lightgray !important;
+}

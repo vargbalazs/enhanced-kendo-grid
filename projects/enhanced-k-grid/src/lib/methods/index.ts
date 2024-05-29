@@ -56,3 +56,4 @@ export * from './init-error-tooltip';
 export * from './register-scrollend-listener';
 export * from './flatten-grouped-data';
 export * from './set-grouped-item';
+export * from './toggle-sorted-column-class';

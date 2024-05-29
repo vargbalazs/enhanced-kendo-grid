@@ -99,6 +99,9 @@ export class EnhancedGridConfig {
   // subscription for filtering
   public filterChange$: Subscription = new Subscription();
 
+  // subscription for sorting
+  public sortChange$: Subscription = new Subscription();
+
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];
 
