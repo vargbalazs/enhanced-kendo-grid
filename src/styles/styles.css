@@ -331,3 +331,7 @@
 .enhanced.k-grid-md .k-table-td.col-sorted {
   background-color: lightgray !important;
 }
+
+.enhanced.k-grid {
+  --frozen-column-right-border-style: 1px solid lightgray;
+}

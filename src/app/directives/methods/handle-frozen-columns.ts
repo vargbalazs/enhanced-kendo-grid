@@ -99,17 +99,17 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
       // headers
       config.columns[config.frozenColumns[i].columnIndex!].headerStyle = {
         ...config.columns[config.frozenColumns[i].columnIndex!].headerStyle,
-        'border-right': '1px solid lightgray',
+        'border-right': 'var(--frozen-column-right-border-style)',
       };
       // filter row
       config.columns[config.frozenColumns[i].columnIndex!].filterStyle = {
         ...config.columns[config.frozenColumns[i].columnIndex!].filterStyle,
-        'border-right': '1px solid lightgray',
+        'border-right': 'var(--frozen-column-right-border-style)',
       };
       // cells
       config.columns[config.frozenColumns[i].columnIndex!].style = {
         ...config.columns[config.frozenColumns[i].columnIndex!].style,
-        'border-right': '1px solid lightgray',
+        'border-right': 'var(--frozen-column-right-border-style)',
       };
       // if it is a grouped grid
       if (config.groupedGridData.length > 0) {
