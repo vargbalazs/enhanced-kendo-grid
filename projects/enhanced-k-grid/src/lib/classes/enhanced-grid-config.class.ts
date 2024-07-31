@@ -219,4 +219,7 @@ export class EnhancedGridConfig {
 
   // variable for storing the list sources
   public listSources: ListSource[] = [];
+
+  // store the last sorted column index
+  public lastSortedColIndex = -1;
 }
