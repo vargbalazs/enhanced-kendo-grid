@@ -20,13 +20,13 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
       lastSelectedCellRect.left +
       lastSelectedCellRect.width -
       firstSelectedCellRect.left -
-      2
+      config.selectedAreaBorderOffset
     }px`;
     selectedArea.style.height = `${
       lastSelectedCellRect.top +
       lastSelectedCellRect.height -
       firstSelectedCellRect.top -
-      2
+      config.selectedAreaBorderOffset
     }px`;
   }
   // right up quarter
@@ -42,13 +42,13 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
       lastSelectedCellRect.left +
       lastSelectedCellRect.width -
       firstSelectedCellRect.left -
-      2
+      config.selectedAreaBorderOffset
     }px`;
     selectedArea.style.height = `${
       firstSelectedCellRect.top +
       firstSelectedCellRect.height -
       lastSelectedCellRect.top -
-      2
+      config.selectedAreaBorderOffset
     }px`;
   }
   // left up quarter
@@ -64,13 +64,13 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
       firstSelectedCellRect.left +
       firstSelectedCellRect.width -
       lastSelectedCellRect.left -
-      2
+      config.selectedAreaBorderOffset
     }px`;
     selectedArea.style.height = `${
       firstSelectedCellRect.top +
       firstSelectedCellRect.height -
       lastSelectedCellRect.top -
-      2
+      config.selectedAreaBorderOffset
     }px`;
   }
   // left down quarter
@@ -86,13 +86,13 @@ export function resizeSelectedArea(config: EnhancedGridConfig) {
       firstSelectedCellRect.left +
       firstSelectedCellRect.width -
       lastSelectedCellRect.left -
-      2
+      config.selectedAreaBorderOffset
     }px`;
     selectedArea.style.height = `${
       lastSelectedCellRect.top +
       lastSelectedCellRect.height -
       firstSelectedCellRect.top -
-      2
+      config.selectedAreaBorderOffset
     }px`;
   }
 }

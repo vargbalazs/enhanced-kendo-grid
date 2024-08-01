@@ -83,6 +83,9 @@ export class EnhancedGridDirective
   // input property for list sources
   @Input() listSources: ListSource[] = [];
 
+  // input for storing the selected area border offset
+  @Input() selectedAreaBorderOffset: number = 2;
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -254,6 +257,10 @@ export class EnhancedGridDirective
 
     // store the list sources
     this.config.listSources = this.listSources;
+
+    // store the selected area border offset, if specified
+    if (this.selectedAreaBorderOffset)
+      this.config.selectedAreaBorderOffset = this.selectedAreaBorderOffset;
 
     // reset the grid
     this.resetState();

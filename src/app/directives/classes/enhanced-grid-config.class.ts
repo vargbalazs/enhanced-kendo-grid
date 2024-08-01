@@ -221,5 +221,8 @@ export class EnhancedGridConfig {
   public listSources: ListSource[] = [];
 
   // store the last sorted column index
-  public lastSortedColIndex = -1;
+  public lastSortedColIndex: number = -1;
+
+  // store the offset of the selected area border
+  public selectedAreaBorderOffset: number = 2;
 }
