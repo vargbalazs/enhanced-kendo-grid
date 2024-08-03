@@ -52,7 +52,8 @@ export function registerScrollEndListener(
       config.firstSelectedCellRect.left - gridContent!.scrollLeft <=
         totalWidthFrozenCol &&
       config.selectedCells.length > 0 &&
-      config.firstSelectedCell.columnKey > config.frozenColumns.length - 1
+      config.firstSelectedCell.columnKey > config.frozenColumns.length - 1 &&
+      gridContent!.scrollLeft > 0
     ) {
       config.selectedArea.style.zIndex = '0';
     }

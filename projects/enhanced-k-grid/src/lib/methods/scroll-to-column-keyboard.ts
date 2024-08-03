@@ -93,15 +93,17 @@ export function scrollToColumnKeyboard(
   }
 
   // moving left
-  if (e.key === ARROWS.LEFT) {
+  if (e.key === ARROWS.LEFT || e.key === ARROWS.UP || e.key === ARROWS.DOWN) {
     const focusedCell = gridBody?.querySelector(
       `[ng-reflect-data-row-index="${
         grid.activeCell.dataRowIndex
       }"][ng-reflect-col-index="${grid.activeCell.colIndex - 1}"]`
     );
     if (
-      focusedCell?.getBoundingClientRect().left! <= totalWidthFrozenCol &&
-      grid.activeCell.colIndex - 1 > config.frozenColumns.length - 1
+      focusedCell?.getBoundingClientRect().left! -
+        gridContent!.getBoundingClientRect().left <=
+        totalWidthFrozenCol &&
+      grid.activeCell.colIndex > config.frozenColumns.length - 1
     ) {
       gridContent?.scrollBy({
         left:
