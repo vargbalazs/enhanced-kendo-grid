@@ -80,10 +80,16 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
     rowNames.push(calcRow.name);
   });
   // all 'usedRowNames' elements should be in the 'rowNames' array
-  usedRowNames.every((usedRowName) => {
-    if (!rowNames.includes(usedRowName)) {
-      console.error('');
-      config.wrongCalcColSettings = true;
-    }
+  let notFound: string[] = [];
+  usedRowNames.forEach((usedRowName) => {
+    if (!rowNames.includes(usedRowName)) notFound.push(usedRowName);
   });
+  if (notFound.length > 0) {
+    notFound.forEach((notFoundName) => {
+      console.error(
+        `The row name '${notFoundName}' was not defined as a calculated row.`
+      );
+    });
+    config.wrongCalcRowSettings = true;
+  }
 }
