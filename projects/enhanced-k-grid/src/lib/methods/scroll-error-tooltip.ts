@@ -26,7 +26,9 @@ export function scrollErrorTooltip(
       // handle z-index
       // if we are beneath a frozen column (left side), then hide it
       if (
-        config.errorToolTip.getBoundingClientRect().left < totalWidthFrozenCol
+        config.errorToolTip.getBoundingClientRect().left -
+          gridContent.getBoundingClientRect().left <
+        totalWidthFrozenCol
       ) {
         config.errorToolTip.style.zIndex = '0';
       }
