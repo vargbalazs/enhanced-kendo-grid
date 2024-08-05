@@ -69,4 +69,21 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
     );
     config.wrongCalcRowSettings = true;
   }
+
+  // if we use row names in the object 'calculateByRows', then this row names should also exist
+  // first collect all the row names and the used row names in the 'calculateByRows' objects
+  let rowNames: string[] = [];
+  let usedRowNames: string[] = [];
+  config.rowCalculation.calculatedRows.forEach((calcRow) => {
+    if (Array.isArray(calcRow.calculateByRows))
+      usedRowNames.push(...calcRow.calculateByRows);
+    rowNames.push(calcRow.name);
+  });
+  // all 'usedRowNames' elements should be in the 'rowNames' array
+  usedRowNames.every((usedRowName) => {
+    if (!rowNames.includes(usedRowName)) {
+      console.error('');
+      config.wrongCalcColSettings = true;
+    }
+  });
 }
