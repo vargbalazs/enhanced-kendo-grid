@@ -135,6 +135,7 @@ export class CalcGridComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1',
+        align: 'top',
       },
       {
         name: 'calcsum2',
@@ -142,6 +143,7 @@ export class CalcGridComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-2',
+        align: 'top',
       },
       {
         name: 'calcsum3',

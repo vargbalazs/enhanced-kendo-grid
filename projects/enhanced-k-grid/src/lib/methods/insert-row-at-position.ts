@@ -28,5 +28,9 @@ export function insertRowAtPosition(
   // add the unique name
   rowData.calcRowName = calcRow.name;
   // insert the row
-  config.gridData.splice(index + 1, 0, rowData);
+  if (calcRow.align === 'top') {
+    config.gridData.splice(index, 0, rowData);
+  } else {
+    config.gridData.splice(index + 1, 0, rowData);
+  }
 }

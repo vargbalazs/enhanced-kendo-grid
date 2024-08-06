@@ -1,6 +1,7 @@
 export interface CalculatedRow {
   name: string;
   position?: number;
+  align?: 'top' | 'bottom';
   title: string;
   calculateByField?: { fieldName: string; fieldValue: string };
   calculateByRows?: string[] | SimpleRowRange | ConditionalRowRange;

@@ -8,15 +8,28 @@ export function insertCalcRowsByField(
   calcRow: CalculatedRow
 ) {
   // find the index, where the calculated row has to be inserted
-  let lastIndex = -1;
-  for (let i = config.gridData.length - 1; i >= 0; i--) {
-    if (
-      config.gridData[i][calcRow.calculateByField?.fieldName!] ===
-      calcRow.calculateByField?.fieldValue
-    ) {
-      lastIndex = i;
-      break;
+  // per default we insert the calculated row at the bottom
+  let findIndex = -1;
+  if (calcRow.align === 'top') {
+    for (let i = 0; i <= config.gridData.length - 1; i++) {
+      if (
+        config.gridData[i][calcRow.calculateByField?.fieldName!] ===
+        calcRow.calculateByField?.fieldValue
+      ) {
+        findIndex = i;
+        break;
+      }
+    }
+  } else {
+    for (let i = config.gridData.length - 1; i >= 0; i--) {
+      if (
+        config.gridData[i][calcRow.calculateByField?.fieldName!] ===
+        calcRow.calculateByField?.fieldValue
+      ) {
+        findIndex = i;
+        break;
+      }
     }
   }
-  methods.insertRowAtPosition(config, lastIndex, calcRow);
+  methods.insertRowAtPosition(config, findIndex, calcRow);
 }
