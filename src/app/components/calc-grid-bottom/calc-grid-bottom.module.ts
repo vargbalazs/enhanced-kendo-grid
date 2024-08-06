@@ -4,11 +4,11 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { EnhancedGridDirectiveModule } from '../../directives/enhanced-grid-directive.module';
 import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CalcGridComponent } from './calc-grid.component';
+import { CalcGridBottomComponent } from './calc-grid-bottom.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [CalcGridComponent],
+  declarations: [CalcGridBottomComponent],
   imports: [
     CommonModule,
     GridModule,
@@ -17,6 +17,6 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
   ],
   providers: [],
-  exports: [CalcGridComponent],
+  exports: [CalcGridBottomComponent],
 })
-export class CalcGridModule {}
+export class CalcGridBottomModule {}

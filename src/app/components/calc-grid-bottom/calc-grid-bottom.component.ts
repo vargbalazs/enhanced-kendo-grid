@@ -24,11 +24,11 @@ import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
 
 @Component({
-  selector: 'calc-grid',
-  templateUrl: './calc-grid.component.html',
-  styleUrls: ['./calc-grid.component.css'],
+  selector: 'calc-grid-bottom',
+  templateUrl: './calc-grid-bottom.component.html',
+  styleUrls: ['./calc-grid-bottom.component.css'],
 })
-export class CalcGridComponent {
+export class CalcGridBottomComponent {
   rows: Row[] = inject(DataService).generateData(50);
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
@@ -135,7 +135,6 @@ export class CalcGridComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1',
-        align: 'top',
       },
       {
         name: 'calcsum2',
@@ -143,12 +142,11 @@ export class CalcGridComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-2',
-        align: 'top',
       },
       {
         name: 'calcsum3',
         title: 'cat 1+ cat 2 sum',
-        position: 0,
+        position: 22,
         calculateByRows: ['calcsum1', 'calcsum2'],
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-3',
@@ -156,15 +154,15 @@ export class CalcGridComponent {
       {
         name: 'calcsum4',
         title: 'cat 3 sum',
-        position: 23,
-        calculateByRows: { from: 24, to: 33 },
+        position: 33,
+        calculateByRows: { from: 23, to: 32 },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-4',
       },
       {
         name: 'calcsum5',
         title: 'cat 4 sum',
-        position: 34,
+        position: 44,
         calculateByRows: {
           from: { field: 'id', value: 31 },
           to: { field: 'id', value: 40 },
@@ -175,8 +173,8 @@ export class CalcGridComponent {
       {
         name: 'calcsum6',
         title: 'cat 5 sum',
-        position: 45,
-        calculateByRows: { from: 46, to: 55 },
+        position: 55,
+        calculateByRows: { from: 45, to: 54 },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-6',
       },

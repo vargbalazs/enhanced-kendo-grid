@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NormalGridModule } from './components/normal-grid/normal-grid.module';
 import { LayoutModule } from '@progress/kendo-angular-layout';
-import { CalcGridModule } from './components/calc-grid/calc-grid.module';
+import { CalcGridBottomModule } from './components/calc-grid-bottom/calc-grid-bottom.module';
 import { GroupedGridModule } from './components/grouped-grid/grouped-grid.module';
 import { CalcGridTopModule } from './components/calc-grid-top/calc-grid-top.module';
 
@@ -16,7 +16,7 @@ import { CalcGridTopModule } from './components/calc-grid-top/calc-grid-top.modu
     BrowserAnimationsModule,
     NormalGridModule,
     LayoutModule,
-    CalcGridModule,
+    CalcGridBottomModule,
     CalcGridTopModule,
     GroupedGridModule,
   ],
