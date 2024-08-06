@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,7 @@ import {
   SelectableSettings,
 } from '@progress/kendo-angular-grid';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
+import { DataService } from 'src/app/data/data.service';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
 import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
@@ -28,7 +29,7 @@ import { Row } from 'src/app/model/row.model';
   styleUrls: ['./calc-grid.component.css'],
 })
 export class CalcGridComponent {
-  rows: Row[] = calcGridRows;
+  rows: Row[] = inject(DataService).generateData(50);
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   frozenColumns = [
