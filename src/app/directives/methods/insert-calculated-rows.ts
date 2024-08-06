@@ -26,7 +26,7 @@ export function insertCalculatedRows(
   });
   // then insert the rows, where a position was defined
   const calcRowsWithPositions = rowCalculation.calculatedRows.filter(
-    (calcRow) => calcRow.position
+    (calcRow) => Object.hasOwn(calcRow, 'position')
   );
   calcRowsWithPositions.forEach((calcRow) => {
     methods.insertCalcRowByPosition(config, calcRow);

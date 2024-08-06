@@ -8,7 +8,11 @@ export function insertRowAtPosition(
   calcRow: CalculatedRow
 ) {
   // create a copy of the last row and override the values
-  const rowData = structuredClone(config.gridData[index]);
+  let rowData = structuredClone(config.gridData[index]);
+  // if we want to insert a row at position 0
+  if (index === -1) {
+    rowData = structuredClone(config.gridData[0]);
+  }
   // write the title of the calculated row
   // if titleField is an object
   if (config.rowCalculation.titleField.includes('.')) {

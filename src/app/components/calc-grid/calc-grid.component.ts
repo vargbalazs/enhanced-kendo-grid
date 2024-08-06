@@ -148,7 +148,7 @@ export class CalcGridComponent {
       {
         name: 'calcsum3',
         title: 'cat 1+ cat 2 sum',
-        position: 22,
+        position: 0,
         calculateByRows: ['calcsum1', 'calcsum2'],
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-3',
