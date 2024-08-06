@@ -136,3 +136,8 @@ div[style*="background-color: rgb(255, 192, 0);"] {
   background-color: deepskyblue !important;
   color: white;
 }
+
+.calcrow.calcsum6 .custom-calcrow-6 {
+  background-color: blue !important;
+  color: white;
+}

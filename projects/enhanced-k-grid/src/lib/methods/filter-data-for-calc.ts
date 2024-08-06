@@ -21,7 +21,7 @@ export function filterDataForCalculation(
     );
   }
   // if the row is inserted by defining it's position
-  if (calcRow.position) {
+  if (Object.hasOwn(calcRow, 'position')) {
     // by default we do the given calculation for all the rows above this position
     filteredData = config.gridData.slice(0, calcRow.position);
     // if calculateByRows has a value, then do the calcs based on this
