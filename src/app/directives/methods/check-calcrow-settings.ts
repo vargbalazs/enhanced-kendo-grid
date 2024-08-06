@@ -92,4 +92,15 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
     });
     config.wrongCalcRowSettings = true;
   }
+
+  // calc rows with a defined position can't have also an 'align' property
+  wrongConfig = config.rowCalculation.calculatedRows.find(
+    (row) => Object.hasOwn(row, 'position') && Object.hasOwn(row, 'align')
+  );
+  if (wrongConfig) {
+    console.error(
+      `The row '${wrongConfig.name}' has both position and align property. Either define a position or set an align and determine the position in an other way.`
+    );
+    config.wrongCalcRowSettings = true;
+  }
 }
