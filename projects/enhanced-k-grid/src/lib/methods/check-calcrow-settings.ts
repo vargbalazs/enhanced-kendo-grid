@@ -12,7 +12,7 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
   // generate error and return, if row positon and also fields are provided
   let wrongConfig: CalculatedRow | undefined;
   wrongConfig = config.rowCalculation.calculatedRows.find(
-    (calcRow) => calcRow.position && calcRow.calculateByField
+    (calcRow) => Object.hasOwn(calcRow, 'position') && calcRow.calculateByField
   );
   if (wrongConfig) {
     console.error(
