@@ -8,6 +8,7 @@ export interface CalculatedRow {
   calculateFunction?: 'sum' | 'avg' | 'min' | 'max' | 'count' | 'custom';
   customFunction?: string;
   cssClass?: string;
+  state?: 'expanded' | 'collapsed';
 }
 
 export interface SimpleRowRange {

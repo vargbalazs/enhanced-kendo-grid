@@ -33,6 +33,7 @@ export class CalcGridTopGroupedComponent {
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   frozenColumns = [
+    'grouplevel1',
     'accountNumber.accNumber',
     'id',
     'accountNumber.accName',
@@ -136,6 +137,7 @@ export class CalcGridTopGroupedComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1',
         align: 'top',
+        state: 'expanded',
       },
       {
         name: 'calcsum2',
@@ -144,6 +146,7 @@ export class CalcGridTopGroupedComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-2',
         align: 'top',
+        state: 'collapsed',
       },
       {
         name: 'calcsum4',
@@ -152,6 +155,7 @@ export class CalcGridTopGroupedComponent {
         calculateByRows: { from: 23, to: 32 },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-4',
+        state: 'expanded',
       },
       {
         name: 'calcsum5',
@@ -163,6 +167,7 @@ export class CalcGridTopGroupedComponent {
         },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-5',
+        state: 'collapsed',
       },
       {
         name: 'calcsum6',
@@ -171,6 +176,7 @@ export class CalcGridTopGroupedComponent {
         calculateByRows: { from: 45, to: 54 },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-6',
+        state: 'expanded',
       },
     ],
   };
