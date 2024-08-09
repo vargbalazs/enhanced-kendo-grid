@@ -60,7 +60,9 @@ export function scrollToColumnMouse(config: EnhancedGridConfig) {
       gridContent!.getBoundingClientRect().left <
       totalWidthFrozenCol &&
     config.selectedArea.style.zIndex != '0' &&
-    config.firstSelectedCell.columnKey > config.frozenColumns.length - 1
+    config.firstSelectedCell.columnKey > config.frozenColumns.length - 1 &&
+    nextCell?.getBoundingClientRect().right! <=
+      gridContent?.getBoundingClientRect().right!
   ) {
     gridContent?.scrollBy({
       left: -config.columns[config.lastSelectedCell.columnKey].width,
