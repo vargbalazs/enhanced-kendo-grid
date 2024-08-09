@@ -8,6 +8,7 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { CalcGridBottomModule } from './components/calc-grid-bottom/calc-grid-bottom.module';
 import { GroupedGridModule } from './components/grouped-grid/grouped-grid.module';
 import { CalcGridTopModule } from './components/calc-grid-top/calc-grid-top.module';
+import { CalcGridTopGroupedModule } from './components/calc-grid-top-grouped/calc-grid-top-grouped.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { CalcGridTopModule } from './components/calc-grid-top/calc-grid-top.modu
     CalcGridBottomModule,
     CalcGridTopModule,
     GroupedGridModule,
+    CalcGridTopGroupedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
