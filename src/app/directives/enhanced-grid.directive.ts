@@ -172,6 +172,7 @@ export class EnhancedGridDirective
             (nec) => nec.index === this.grid.activeCell.colIndex
           )
         ) {
+          methods.initGroupColumns(this.config, this.renderer2);
           this.grid.closeCell();
         }
         return;
@@ -381,7 +382,7 @@ export class EnhancedGridDirective
     this.gridScrollListener();
     this.gridScrollEndListener();
     this.docMouseUpListener();
-    this.config.ExpandCollapseListener.forEach((listener) => listener());
+    this.config.expandCollapseListener.forEach((listener) => listener());
   }
 
   @HostListener('keydown', ['$event'])
@@ -473,6 +474,13 @@ export class EnhancedGridDirective
     }
     // store the grid body if we click on a cell (grid body can't be undefined, if we want to copy just one cell)
     methods.storeGridBody(this.config, e);
+    // if the cell is a calculated one, then call 'onDblClick' in order to init the group columns again
+    // this is needed because otherwise the +/- icons are cleared from the group cells
+    if (
+      this.grid.activeCell.dataItem.calculated &&
+      this.config.selectedCells.length == 0
+    )
+      this.onDblClick();
   }
 
   @HostListener('dblclick', ['$event'])

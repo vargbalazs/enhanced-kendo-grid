@@ -9,6 +9,7 @@ export interface CalculatedRow {
   customFunction?: string;
   cssClass?: string;
   state?: 'expanded' | 'collapsed';
+  rowIndexes?: number[];
 }
 
 export interface SimpleRowRange {

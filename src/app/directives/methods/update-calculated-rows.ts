@@ -9,6 +9,7 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
     const calcRowIndex = config.gridData.findIndex(
       (dataRow) => dataRow.calcRowName === calcRow.name
     );
+    let filteredData: any[] = [];
     // loop through the calculated fields
     config.rowCalculation.calculatedFields.forEach((calcField) => {
       // get key and field name
@@ -16,7 +17,7 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
       let key = keyAndField.key;
       let fieldName = keyAndField.fieldName ? keyAndField.fieldName : '';
       // filter the data
-      let filteredData = methods.filterDataForCalculation(config, calcRow);
+      filteredData = methods.filterDataForCalculation(config, calcRow);
       // do the calculations
       let result = methods.calculateResultForCalcRow(
         calcRow,
@@ -35,5 +36,15 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
         }
       }
     });
+    // store the row indexes, which are part of the calculation, but only the first time we calculate the values
+    if (calcRow.rowIndexes?.length == 0) {
+      filteredData.forEach((row) => {
+        const rowIndex = config.gridData.findIndex(
+          (dataRow) =>
+            dataRow.dataRowIndex === row.dataRowIndex && !dataRow.calculated
+        );
+        calcRow.rowIndexes?.push(rowIndex);
+      });
+    }
   });
 }

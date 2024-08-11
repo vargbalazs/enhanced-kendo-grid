@@ -146,7 +146,7 @@ export class CalcGridTopGroupedComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-2',
         align: 'top',
-        state: 'collapsed',
+        state: 'expanded',
       },
       {
         name: 'calcsum4',
@@ -167,7 +167,7 @@ export class CalcGridTopGroupedComponent {
         },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-5',
-        state: 'collapsed',
+        state: 'expanded',
       },
       {
         name: 'calcsum6',

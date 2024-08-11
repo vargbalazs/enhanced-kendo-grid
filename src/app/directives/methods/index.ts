@@ -58,3 +58,7 @@ export * from './flatten-grouped-data';
 export * from './set-grouped-item';
 export * from './toggle-sorted-column-class';
 export * from './init-group-columns';
+export * from './get-state-for-calc-row';
+export * from './set-state-for-calculated-row';
+export * from './toggle-calculated-row-state';
+export * from './animate-table-rows';
