@@ -356,6 +356,5 @@
 .enhanced.k-grid .expanded-row {
 }
 
-.enhanced.k-grid tr {
-  transition: transform 1s linear;
+.enhanced.k-grid td {
 }
