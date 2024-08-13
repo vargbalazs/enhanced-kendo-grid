@@ -65,15 +65,28 @@ export function animateTableRows(
       //     $(this).closest('tr').hide();
       //   });
 
-      // const rows = $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
-      //   .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
-      //   .wrapInner('<div />')
-      //   .children();
+      const rows = $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
+        .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
+        .wrapAll(`<div />`)
+        .parent()
+        .height('208px');
 
       // rows.each(function (i, row) {
-      //   $(this).slideUp(500, function () {
-      //     $(this).closest('tr').hide();
-      //   });
+      //   console.log(row);
+      // });
+
+      rows.slideUp(500);
+
+      // rows.slideUp(500, function () {
+      //   $(this).closest('tr').hide();
+      // });
+
+      // $(rows.get().reverse()).each(function (i, row) {
+      //   $(this)
+      //     .delay(100)
+      //     .slideUp(500, function () {
+      //       $(this).closest('tr').hide();
+      //     });
       // });
 
       break;
