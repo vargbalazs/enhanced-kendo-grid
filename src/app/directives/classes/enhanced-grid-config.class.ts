@@ -232,5 +232,6 @@ export class EnhancedGridConfig {
   // store a boolean variable for indicating, whether the group columns were initialized
   public groupColumnsInitialized: boolean = false;
 
+  // store the column widths (not the full width, but the width without padding, border, etc)
   public columnWidths: string[] = [];
 }
