@@ -13,10 +13,13 @@ export function animateTableRows(
     `[kendogridlogicalrow].${calcRowName}`
   );
   const dataRowIndex = +calcRow!.getAttribute('ng-reflect-data-row-index')!;
-  // get the corresponging row counts
+  // get the corresponging row count and row indexes
   const rowIndexesCount = config.rowCalculation.calculatedRows.find(
     (calcRow) => calcRow.name === calcRowName
   )?.rowIndexes?.length;
+  const rowIndexes = config.rowCalculation.calculatedRows.find(
+    (calcRow) => calcRow.name === calcRowName
+  )?.rowIndexes;
   // calculate the total height of the corresponding rows
   let totalHeight = 0;
   for (let i = dataRowIndex + 1; i <= dataRowIndex + rowIndexesCount!; i++) {
@@ -39,6 +42,14 @@ export function animateTableRows(
     //behavior: 'smooth',
   });
   // handle the state change
+  // first get the detail rows
+  let detailRows = null;
+  for (let i = 0; i <= rowIndexes!.length - 1; i++) {
+    const row = `[kendogridlogicalrow][ng-reflect-data-row-index='${
+      rowIndexes![i]
+    }'`;
+    detailRows = (detailRows || $(row)).add(row);
+  }
   switch (state) {
     case 'expanded':
       // get the group div
@@ -47,22 +58,28 @@ export function animateTableRows(
       );
       // do the animation
       expandingGroup.slideDown(700);
-      // remove the group div
+      // remove the group div and show the detail rows
       setTimeout(() => {
-        $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`).unwrap();
+        expandingGroup.remove();
+        detailRows!.show();
       }, 700);
       break;
     case 'collapsed':
-      // wrap the corresponding rows in a div with a total width of all the columns and the total height of the corresponding rows
-      const collapsingGroup = $(
-        `[kendogridlogicalrow][calcrowname=${calcRowName}]`
-      )
+      // clone the detail rows and wrap the rows in a div with a total width of all the columns and the total height of the corresponding rows
+      const collapsingGroup = detailRows!
+        .clone()
         .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
-        .wrapAll(`<div />`)
+        .wrapAll(`<div style='pointer-events: none' />`)
         .parent()
         .height(totalHeight)
         .width(totalWidth)
         .attr('calcrowname', calcRowName);
+      // hide the detail rows
+      detailRows!.hide();
+      // get the calcrow element
+      const calcRow = $(`[kendogridlogicalrow].${calcRowName}`);
+      // insert the cloned detail rows after it
+      collapsingGroup.insertAfter(calcRow);
       // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
       // width of the columns (without padding and border)
       for (let i = 0; i <= config.columnWidths.length - 1; i++) {
