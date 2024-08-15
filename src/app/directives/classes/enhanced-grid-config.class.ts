@@ -234,4 +234,7 @@ export class EnhancedGridConfig {
 
   // store the column widths (not the full width, but the width without padding, border, etc)
   public columnWidths: string[] = [];
+
+  // whether the grid is a grouped grid
+  public grouped: boolean = false;
 }

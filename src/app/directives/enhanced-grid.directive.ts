@@ -87,6 +87,9 @@ export class EnhancedGridDirective
   // input for storing the selected area border offset
   @Input() selectedAreaBorderOffset: number = 2;
 
+  // input for indicating, whether the grid is a grouped one
+  @Input() grouped: boolean = false;
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -263,6 +266,12 @@ export class EnhancedGridDirective
     // store the selected area border offset, if specified
     if (this.selectedAreaBorderOffset)
       this.config.selectedAreaBorderOffset = this.selectedAreaBorderOffset;
+
+    // store the grouped setting
+    this.config.grouped = this.grouped;
+
+    // if the grid is a grouped one, then check the settings
+    if (this.config.grouped) methods.checkGroupedGridSettings(this.config);
 
     // reset the grid
     this.resetState();
