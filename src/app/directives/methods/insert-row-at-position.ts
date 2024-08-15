@@ -31,6 +31,8 @@ export function insertRowAtPosition(
   rowData.calculated = true;
   // add the unique name
   rowData.calcRowName = calcRow.name;
+  // remove the field 'dataRowIndex' from the row - this is needed, because otherwise if we delete the cell content and then hit escape or click away, also the calc row and corresponding cell goes into edit mode and the cell value gets written back also in this cell in the calc row
+  delete rowData.dataRowIndex;
   // insert the row
   if (calcRow.align === 'top') {
     config.gridData.splice(index, 0, rowData);
