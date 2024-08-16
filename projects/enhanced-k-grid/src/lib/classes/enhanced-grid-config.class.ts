@@ -225,4 +225,7 @@ export class EnhancedGridConfig {
 
   // store the offset of the selected area border
   public selectedAreaBorderOffset: number = 2;
+
+  // store the click listeners for the expand/collapse buttons
+  public ExpandCollapseListener: (() => void)[] = [];
 }

@@ -318,6 +318,8 @@ export class EnhancedGridDirective
           this.grid
         );
         methods.updateCalculatedRows(this.config);
+        // init the group columns
+        methods.initGroupColumns(this.config, this.renderer2);
       });
     }
 
@@ -378,6 +380,7 @@ export class EnhancedGridDirective
     this.gridScrollListener();
     this.gridScrollEndListener();
     this.docMouseUpListener();
+    this.config.ExpandCollapseListener.forEach((listener) => listener());
   }
 
   @HostListener('keydown', ['$event'])
