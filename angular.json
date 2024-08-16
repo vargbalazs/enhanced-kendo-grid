@@ -26,6 +26,7 @@
               "src/styles/styles.css",
               "src/styles/additional-styles.css"
             ],
+            "allowedCommonJsDependencies": ["jquery"],
             "scripts": []
           },
           "configurations": {
@@ -116,10 +117,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/enhanced-k-grid/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
