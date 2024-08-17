@@ -526,6 +526,8 @@ export class EnhancedGridDirective
     if (this.selectingWithMouse) {
       // end of selecting
       this.config.isMouseDown = false;
+      // clear the interval
+      window.clearInterval(this.config.intervalId);
     }
   }
 
