@@ -36,6 +36,8 @@ export function insertCalculatedRows(
   setTimeout(() => {
     methods.styleCalculatedRows(config, customCssClasses);
   });
+  // initialize the rowIndexes array
+  rowCalculation.calculatedRows.forEach((calcRow) => (calcRow.rowIndexes = []));
 }
 
 // callback for styling calculated rows

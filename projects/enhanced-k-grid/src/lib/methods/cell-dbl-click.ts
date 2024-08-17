@@ -40,7 +40,11 @@ export function cellDblClick(
     // if grid is a calc grid, then mark it for recalculating
     if (config.calculatedGrid) config.shouldRecalculate = true;
     // store the form group for the edited cell, but only if there is no stored form group already
-    if (Object.keys(config.cellEditingFormGroup.controls).length == 0) {
+    // and the cell isn't a calculated one
+    if (
+      Object.keys(config.cellEditingFormGroup.controls).length == 0 &&
+      !grid.activeCell.dataItem.calculated
+    ) {
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     }
   }

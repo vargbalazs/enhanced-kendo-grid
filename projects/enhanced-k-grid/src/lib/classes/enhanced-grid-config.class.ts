@@ -227,5 +227,8 @@ export class EnhancedGridConfig {
   public selectedAreaBorderOffset: number = 2;
 
   // store the click listeners for the expand/collapse buttons
-  public ExpandCollapseListener: (() => void)[] = [];
+  public expandCollapseListener: (() => void)[] = [];
+
+  // store a boolean variable for indicating, whether the group columns were initialized
+  public groupColumnsInitialized: boolean = false;
 }

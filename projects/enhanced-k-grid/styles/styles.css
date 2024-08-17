@@ -349,3 +349,13 @@
 .enhanced.k-grid .group-indicator .material-symbols-outlined {
   font-size: 15px;
 }
+
+.enhanced.k-grid .collapsed-row {
+}
+
+.enhanced.k-grid .expanded-row {
+}
+
+.enhanced.k-grid tr {
+  transition: transform 1s linear;
+}
