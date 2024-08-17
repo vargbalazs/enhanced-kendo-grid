@@ -62,3 +62,4 @@ export * from './get-state-for-calc-row';
 export * from './set-state-for-calculated-row';
 export * from './toggle-calculated-row-state';
 export * from './animate-table-rows';
+export * from './check-grouped-grid-settings';
