@@ -269,9 +269,6 @@ export class EnhancedGridDirective
     // store the grouped setting
     this.config.grouped = this.grouped;
 
-    // if the grid is a grouped one, then check the settings
-    if (this.config.grouped) methods.checkGroupedGridSettings(this.config);
-
     // reset the grid
     this.resetState();
   }
@@ -328,8 +325,13 @@ export class EnhancedGridDirective
           this.grid
         );
         methods.updateCalculatedRows(this.config);
-        // init the group columns
-        methods.initGroupColumns(this.config, this.renderer2);
+        // if the grid is a grouped one and the settings are ok, then add the groupp column(s)
+        if (
+          this.config.grouped &&
+          methods.checkGroupedGridSettings(this.config)
+        )
+          // init the group columns, but only if the grouped settings are valid
+          methods.initGroupColumns(this.config, this.renderer2);
       });
     }
 
