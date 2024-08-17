@@ -57,13 +57,24 @@ export function animateTableRows(
         });
       break;
     case 'collapsed':
-      $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
-        .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
-        .wrapInner('<div />')
-        .children()
-        .slideUp(500, function () {
-          $(this).closest('tr').hide();
-        });
+      // $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
+      //   .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
+      //   .wrapInner('<div />')
+      //   .children()
+      //   .slideUp(500, function () {
+      //     $(this).closest('tr').hide();
+      //   });
+
+      // const rows = $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
+      //   .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
+      //   .wrapInner('<div />')
+      //   .children();
+
+      // rows.each(function (i, row) {
+      //   $(this).slideUp(500, function () {
+      //     $(this).closest('tr').hide();
+      //   });
+      // });
 
       break;
   }
