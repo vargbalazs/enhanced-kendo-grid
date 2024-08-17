@@ -6,7 +6,8 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": ["jquery"]
+    "types": [],
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["**/*.spec.ts"]
 }

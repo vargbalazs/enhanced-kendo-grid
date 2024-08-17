@@ -1,6 +1,6 @@
 import { Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
-import * as $ from 'jquery';
+import jquery from 'jquery';
 
 // animates the other table rows, if one calculated row was expanded or collapsed
 export function animateTableRows(
@@ -49,12 +49,12 @@ export function animateTableRows(
     const row = `[kendogridlogicalrow][ng-reflect-data-row-index='${
       rowIndexes![i]
     }'`;
-    detailRows = (detailRows || $(row)).add(row);
+    detailRows = (detailRows || jquery(row)).add(row);
   }
   switch (state) {
     case 'expanded':
       // get the group div
-      const expandingGroup = $(
+      const expandingGroup = jquery(
         `div[calcrowname=${calcRowName}]:not(.group-indicator)`
       );
       // do the animation
@@ -78,13 +78,13 @@ export function animateTableRows(
       // hide the detail rows
       detailRows!.hide();
       // get the calcrow element
-      const calcRow = $(`[kendogridlogicalrow].${calcRowName}`);
+      const calcRow = jquery(`[kendogridlogicalrow].${calcRowName}`);
       // insert the cloned detail rows after it
       collapsingGroup.insertAfter(calcRow);
       // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
       // width of the columns (without padding and border)
       for (let i = 0; i <= config.columnWidths.length - 1; i++) {
-        $(
+        jquery(
           `div[calcrowname=${calcRowName}] td[ng-reflect-col-index=${i}]`
         ).width(config.columnWidths[i]);
       }

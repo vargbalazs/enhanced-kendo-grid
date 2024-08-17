@@ -6,9 +6,7 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "enhanced-k-grid": [
-        "dist/enhanced-k-grid"
-      ]
+      "enhanced-k-grid": ["dist/enhanced-k-grid"]
     },
     "strict": true,
     "noImplicitOverride": true,
@@ -24,10 +22,8 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"],
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
