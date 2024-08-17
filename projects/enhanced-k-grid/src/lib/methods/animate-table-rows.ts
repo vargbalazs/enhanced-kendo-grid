@@ -19,68 +19,59 @@ export function animateTableRows(
   )?.rowIndexes?.length;
   // calculate the total height of the corresponding rows
   let totalHeight = 0;
-  for (let i = dataRowIndex + 1; i <= rowIndexesCount!; i++) {
+  for (let i = dataRowIndex + 1; i <= dataRowIndex + rowIndexesCount!; i++) {
     const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
       `[ng-reflect-data-row-index='${i}']`
     );
     totalHeight += row!.getBoundingClientRect().height;
   }
+  // caclulate the total widht of the columns
+  let totalWidth = 0;
+  config.columns.forEach((col) => {
+    totalWidth += col.width;
+  });
+  // before expanding/collapsing scroll the grid back
+  const gridContent = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelector('.k-grid-content')!;
+  gridContent?.scrollBy({
+    left: -gridContent.scrollLeft,
+    //behavior: 'smooth',
+  });
   // handle the state change
   switch (state) {
     case 'expanded':
-      $(`[kendogridlogicalrow][calcrowname=${calcRowName}] td`)
-        .animate({ padding: 0 })
-        .wrapInner('<div />')
-        .children()
-        .slideDown(function () {
-          $(this).closest('tr').show();
-        });
+      // get the group div
+      const expandingGroup = $(
+        `div[calcrowname=${calcRowName}]:not(.group-indicator)`
+      );
+      // do the animation
+      expandingGroup.slideDown(700);
+      // remove the group div
+      setTimeout(() => {
+        $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`).unwrap();
+      }, 700);
       break;
     case 'collapsed':
-      // $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
-      //   .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
-      //   .wrapInner('<div />')
-      //   .children()
-      //   .slideUp(500, function () {
-      //     $(this).closest('tr').hide();
-      //   });
-
-      // wrap the corresponding rows in a div with a width of 100vw and the total height of the corresponding rows
-      const rows = $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
+      // wrap the corresponding rows in a div with a total width of all the columns and the total height of the corresponding rows
+      const collapsingGroup = $(
+        `[kendogridlogicalrow][calcrowname=${calcRowName}]`
+      )
         .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
-        .wrapAll(`<div class='inner' />`)
+        .wrapAll(`<div />`)
         .parent()
-        .height(totalHeight);
-
-      // because a table shouldn't contain a div, this messes up the layout, so we have to set the original
-      // width of the columns back
-      // for (let i = 0; i <= config.columnWidths.length - 1; i++) {
-      //   $(`.inner td[ng-reflect-col-index=${i}]`).width(config.columnWidths[i]);
-      // }
-
-      $(`.inner td[ng-reflect-col-index=${0}]`).width(16);
-      $(`.inner td[ng-reflect-col-index=${1}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${2}]`).width(115.2);
-      $(`.inner td[ng-reflect-col-index=${3}]`).width(115.2);
-      $(`.inner td[ng-reflect-col-index=${4}]`).width(115.2);
-      $(`.inner td[ng-reflect-col-index=${5}]`).width(114.4);
-      $(`.inner td[ng-reflect-col-index=${6}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${7}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${8}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${9}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${10}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${11}]`).width(95.2);
-      $(`.inner td[ng-reflect-col-index=${12}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${13}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${14}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${15}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${16}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${17}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${18}]`).width(95.2);
-      // $(`.inner td[ng-reflect-col-index=${19}]`).width(95.2);
-
-      rows.slideUp(5000);
-
+        .height(totalHeight)
+        .width(totalWidth)
+        .attr('calcrowname', calcRowName);
+      // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
+      // width of the columns (without padding and border)
+      for (let i = 0; i <= config.columnWidths.length - 1; i++) {
+        $(
+          `div[calcrowname=${calcRowName}] td[ng-reflect-col-index=${i}]`
+        ).width(config.columnWidths[i]);
+      }
+      // do the animation
+      collapsingGroup.slideUp(700);
       break;
   }
 }
