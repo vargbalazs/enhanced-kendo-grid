@@ -1,5 +1,6 @@
 import { Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import * as $ from 'jquery';
 
 // animates the other table rows, if one calculated row was expanded or collapsed
 export function animateTableRows(

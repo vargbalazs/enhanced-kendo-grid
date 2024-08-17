@@ -26,7 +26,8 @@
     "@progress/kendo-drawing": ">=1.19.0",
     "@progress/kendo-licensing": ">=1.0.2",
     "@progress/kendo-svg-icons": ">=2.0.0",
-    "@progress/kendo-theme-default": ">=7.2.1"
+    "@progress/kendo-theme-default": ">=7.2.1",
+    "jquery": "^3.7.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"
