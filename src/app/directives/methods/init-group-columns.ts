@@ -47,7 +47,7 @@ export function initGroupColumns(
   const listeners: (() => void)[] = [];
   let listener!: () => void;
 
-  // we have as many grou cells as calc rows, that's why we can use a simple index for accessing the calcRowStates
+  // we have as many group cells as calc rows, that's why we can use a simple index for accessing the calcRowStates
   let calcRowIndex = 0;
   groupColCells.forEach((groupCell) => {
     // build the div with the group indicator in it
