@@ -92,4 +92,12 @@ export function initGroupColumns(
   config.expandCollapseListener = listeners;
   // initialize done
   config.groupColumnsInitialized = true;
+
+  config.columnWidths = [];
+  config.columns.forEach((col) => {
+    const cell = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+      `[ng-reflect-col-index='${col.leafIndex}']`
+    );
+    config.columnWidths.push(getComputedStyle(cell!).width);
+  });
 }

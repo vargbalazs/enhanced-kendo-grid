@@ -12,40 +12,20 @@ export function animateTableRows(
   const calcRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
     `[kendogridlogicalrow].${calcRowName}`
   );
-  // const dataRowIndex = +calcRow!.getAttribute('ng-reflect-data-row-index')!;
-  // // calculate the index, from wich we want to slide up/slide down the table rows
-  // const rowIndexesCount = config.rowCalculation.calculatedRows.find(
-  //   (calcRow) => calcRow.name === calcRowName
-  // )?.rowIndexes?.length;
-  // const fromRowIndex = dataRowIndex + rowIndexesCount! + 1;
-  // // calculate the y value for translateY (theoretically it is always the same, but who knows)
-  // let totalHeight = 0;
-  // for (let i = dataRowIndex + 1; i <= rowIndexesCount!; i++) {
-  //   const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-  //     `[ng-reflect-data-row-index='${i}']`
-  //   );
-  //   totalHeight += row!.getBoundingClientRect().height;
-  // }
-  // // query for all rows below this index (inclusive)
-  // for (let i = fromRowIndex; i <= config.gridData.length - 1; i++) {
-  //   const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-  //     `[ng-reflect-data-row-index='${i}']`
-  //   );
-  //   // slide up or down the rows
-  //   switch (state) {
-  //     case 'expanded':
-  //       renderer2.setStyle(row, 'transform', 'translateY(0px)', 2);
-  //       break;
-  //     case 'collapsed':
-  //       renderer2.setStyle(
-  //         row,
-  //         'transform',
-  //         `translateY(-${totalHeight}px)`,
-  //         2
-  //       );
-  //       break;
-  //   }
-  // }
+  const dataRowIndex = +calcRow!.getAttribute('ng-reflect-data-row-index')!;
+  // get the corresponging row counts
+  const rowIndexesCount = config.rowCalculation.calculatedRows.find(
+    (calcRow) => calcRow.name === calcRowName
+  )?.rowIndexes?.length;
+  // calculate the total height of the corresponding rows
+  let totalHeight = 0;
+  for (let i = dataRowIndex + 1; i <= rowIndexesCount!; i++) {
+    const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+      `[ng-reflect-data-row-index='${i}']`
+    );
+    totalHeight += row!.getBoundingClientRect().height;
+  }
+  // handle the state change
   switch (state) {
     case 'expanded':
       $(`[kendogridlogicalrow][calcrowname=${calcRowName}] td`)
@@ -65,29 +45,41 @@ export function animateTableRows(
       //     $(this).closest('tr').hide();
       //   });
 
+      // wrap the corresponding rows in a div with a width of 100vw and the total height of the corresponding rows
       const rows = $(`[kendogridlogicalrow][calcrowname=${calcRowName}]`)
         .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
-        .wrapAll(`<div />`)
+        .wrapAll(`<div class='inner' />`)
         .parent()
-        .height('208px');
+        .height(totalHeight);
 
-      // rows.each(function (i, row) {
-      //   console.log(row);
-      // });
+      // because a table shouldn't contain a div, this messes up the layout, so we have to set the original
+      // width of the columns back
+      // for (let i = 0; i <= config.columnWidths.length - 1; i++) {
+      //   $(`.inner td[ng-reflect-col-index=${i}]`).width(config.columnWidths[i]);
+      // }
 
-      rows.slideUp(500);
+      $(`.inner td[ng-reflect-col-index=${0}]`).width(16);
+      $(`.inner td[ng-reflect-col-index=${1}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${2}]`).width(115.2);
+      $(`.inner td[ng-reflect-col-index=${3}]`).width(115.2);
+      $(`.inner td[ng-reflect-col-index=${4}]`).width(115.2);
+      $(`.inner td[ng-reflect-col-index=${5}]`).width(114.4);
+      $(`.inner td[ng-reflect-col-index=${6}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${7}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${8}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${9}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${10}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${11}]`).width(95.2);
+      $(`.inner td[ng-reflect-col-index=${12}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${13}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${14}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${15}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${16}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${17}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${18}]`).width(95.2);
+      // $(`.inner td[ng-reflect-col-index=${19}]`).width(95.2);
 
-      // rows.slideUp(500, function () {
-      //   $(this).closest('tr').hide();
-      // });
-
-      // $(rows.get().reverse()).each(function (i, row) {
-      //   $(this)
-      //     .delay(100)
-      //     .slideUp(500, function () {
-      //       $(this).closest('tr').hide();
-      //     });
-      // });
+      rows.slideUp(5000);
 
       break;
   }
