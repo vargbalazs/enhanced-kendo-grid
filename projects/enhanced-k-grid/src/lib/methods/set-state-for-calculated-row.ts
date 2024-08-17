@@ -23,10 +23,10 @@ export function setStateForCalcRow(
           const dataRow = (<HTMLElement>(
             config.gridElRef.nativeElement
           )).querySelector(`[ng-reflect-data-row-index="${rowIndex}"]`);
-          renderer2.removeClass(dataRow, 'collapsed-row');
-          renderer2.addClass(dataRow, 'expanded-row');
+          // renderer2.removeClass(dataRow, 'collapsed-row');
+          // renderer2.addClass(dataRow, 'expanded-row');
           // set also the calcrow name on each row
-          renderer2.setAttribute(dataRow, 'calcrowname', calcRowName);
+          // renderer2.setAttribute(dataRow, 'calcrowname', calcRowName);
         });
       });
       break;
@@ -40,10 +40,10 @@ export function setStateForCalcRow(
           const dataRow = (<HTMLElement>(
             config.gridElRef.nativeElement
           )).querySelector(`[ng-reflect-data-row-index="${rowIndex}"]`);
-          renderer2.removeClass(dataRow, 'expanded-row');
-          renderer2.addClass(dataRow, 'collapsed-row');
+          // renderer2.removeClass(dataRow, 'expanded-row');
+          // renderer2.addClass(dataRow, 'collapsed-row');
           // set also the calcrow name on each row
-          renderer2.setAttribute(dataRow, 'calcrowname', calcRowName);
+          // renderer2.setAttribute(dataRow, 'calcrowname', calcRowName);
         });
       });
       break;
