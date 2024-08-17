@@ -27,7 +27,6 @@ import { RowCalculation } from './interfaces/row-calculation.interface';
 import { ColumnCalculation } from './interfaces/column-calculation.interface';
 import { FormErrorMessage } from './interfaces/form-error-message.interface';
 import { ListSource } from './interfaces/list-source.interface';
-import { from } from 'rxjs';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -121,7 +120,7 @@ export class EnhancedGridDirective
     this.config.gridElRef = element;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['kendoGridBinding']?.currentValue) {
       // get the data of the grid
       // if paging is enabled, this gets only the first page data

@@ -1,5 +1,5 @@
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
-import { CalcRowWithState } from '../interfaces/calculated-row-with-state';
+import { CalcRowWithState } from '../interfaces/calculated-row-with-state.interface';
 
 // get the state for a calculated row
 export function getStateForCalcRow(

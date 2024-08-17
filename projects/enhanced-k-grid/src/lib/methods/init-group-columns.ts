@@ -1,7 +1,7 @@
 import { Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
-import { CalcRowWithState } from '../interfaces/calculated-row-with-state';
+import { CalcRowWithState } from '../interfaces/calculated-row-with-state.interface';
 
 // initializes the columns used for grouping
 export function initGroupColumns(
