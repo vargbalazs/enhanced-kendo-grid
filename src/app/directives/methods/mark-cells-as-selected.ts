@@ -23,6 +23,7 @@ export function markCellsAsSelected(
   // we always start with the first selected cell, because we can not only add, but remove too
   config.selectedCells = [firstCell];
   config.selectedCellDatas = [config.selectedCellDatas[0]];
+  config.visibleSelectedCellDatas = [config.selectedCellDatas[0]];
   // if the next cell isn't selected, then add it to the selected cells and it's value to the selected cell datas
   for (let i = 0; i <= columnOffset; i++) {
     for (let j = 0; j <= rowOffset; j++) {
@@ -112,6 +113,29 @@ export function markCellsAsSelected(
           config.rowCalculation.titleField !== fieldname
         ) {
           value = '';
+        }
+        // if we have a grouped grid and select over hidden rows, then we have to store this values separately
+        // such cells have a 'tr' parent element with an attribute 'collapsed'
+        const cell = (<HTMLElement>(
+          config.gridElRef.nativeElement
+        )).querySelector(
+          `td[ng-reflect-data-row-index='${
+            firstCell.itemKey + j * verticalDirection
+          }'][ng-reflect-col-index='${
+            firstCell.columnKey + i * horizontalDirection
+          }']`
+        );
+        if (cell?.parentElement?.attributes.getNamedItem('collapsed')) {
+          config.hiddenSelectedCellDatas = [
+            ...config.hiddenSelectedCellDatas,
+            { value: value },
+          ];
+        } else {
+          // store also only the visible ones
+          config.visibleSelectedCellDatas = [
+            ...config.visibleSelectedCellDatas,
+            { value: value },
+          ];
         }
         config.selectedCellDatas = [
           ...config.selectedCellDatas,

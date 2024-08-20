@@ -591,6 +591,8 @@ export class EnhancedGridDirective
     this.config.selectedCells = [];
     this.selectedKeysChange.emit(this.config.selectedCells);
     this.config.selectedCellDatas = [];
+    this.config.hiddenSelectedCellDatas = [];
+    this.config.visibleSelectedCellDatas = [];
     this.aggregates = { sum: 0, avg: 0, count: 0, min: 0, max: 0 };
     this.aggregatesChange.emit(this.aggregates);
     this.config.selectingWithMouse = false;

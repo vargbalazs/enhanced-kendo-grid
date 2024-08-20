@@ -132,6 +132,18 @@ export function selectWithShift(
     target = gridBody!.querySelector(
       `[ng-reflect-data-row-index="${config.lastSelectedCell.itemKey}"][ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
     )!;
+    // if the grid is grouped, we have to handle selecting differently
+    if (config.grouped) {
+      if (
+        // if the last selected cell is a hidden (collapsed) one
+        // such cells have a 'tr' parent element with an attribute 'collapsed'
+        target.parentElement?.attributes.getNamedItem('collapsed') &&
+        (e.key === ARROWS.DOWN || e.key === ARROWS.UP)
+      ) {
+        target = methods.selectWithShiftOverGroupRows(config, target, grid, e);
+      }
+    }
+
     // store the position of the last selected cell
     methods.setRectValues(config.lastSelectedCellRect, target, config);
 
