@@ -411,7 +411,7 @@ export class EnhancedGridDirective
 
     // if changing focus with tab is allowed
     if (this.changeCellFocusWithTab)
-      methods.changeCellFocusWithTab(this.grid, e);
+      methods.changeCellFocusWithTab(this.grid, e, this.config);
 
     // if editing is allowed
     if (this.kendoGridInCellEditing) {
