@@ -12,7 +12,7 @@ export function cellDblClick(
   config: EnhancedGridConfig,
   cellEditingFormGroupFn: (args: CreateFormGroupArgs) => FormGroup
 ) {
-  if (grid.activeCell.dataItem) {
+  if (grid.activeCell?.dataItem) {
     // if we are in a calculated row (and not in a non-editable column), then make the column not editable
     if (
       grid.activeCell.dataItem.calculated &&
