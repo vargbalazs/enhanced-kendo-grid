@@ -55,11 +55,14 @@ export function selectWithShiftOverGroupRows(
   target = nextCalcRow?.querySelector(
     `td[ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
   )!;
-  // set the last selected cell accordingly
-  config.lastSelectedCell = {
-    itemKey: rowIndex,
-    columnKey: grid.activeCell.colIndex,
-  };
+  // if we are selecting with shift, then we have to change also the last selected cell
+  if (e.shiftKey) {
+    // set the last selected cell accordingly
+    config.lastSelectedCell = {
+      itemKey: rowIndex,
+      columnKey: grid.activeCell.colIndex,
+    };
+  }
   // set also the focused cell
   const logicalRowIndex = +nextCalcRow?.getAttribute(
     'ng-reflect-logical-row-index'
