@@ -15,9 +15,9 @@ export function navigateOnGroupedRows(
   if (
     !grid.isEditingCell() &&
     (e.key === ARROWS.DOWN || e.key === ARROWS.UP) &&
-    !isHeaderCell(e.target) &&
-    !isFilterCell(e.target) &&
-    !isGroupCell(e.target)
+    !methods.isHeaderCell(e.target) &&
+    !methods.isFilterCell(e.target) &&
+    !methods.isGroupCell(e.target)
   ) {
     // store the td element
     let target = <HTMLElement>e.target;
@@ -28,6 +28,8 @@ export function navigateOnGroupedRows(
         grid.activeCell.dataRowIndex + direction
       }"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
     )!;
+    // if the target isn't a data cell, then return
+    if (!target) return;
     if (
       // if the target cell is a hidden (collapsed) one - such cells have a 'tr' parent element with an attribute 'collapsed'
       target.parentElement?.attributes.getNamedItem('collapsed')
@@ -35,16 +37,4 @@ export function navigateOnGroupedRows(
       methods.selectWithShiftOverGroupRows(config, target, grid, e);
     }
   }
-}
-
-function isGroupCell(target: any) {
-  return (<HTMLElement>target).hasAttribute('ng-reflect-group-item');
-}
-
-function isFilterCell(target: any) {
-  return (<HTMLElement>target).hasAttribute('kendogridfiltercell');
-}
-
-function isHeaderCell(target: any) {
-  return (<HTMLElement>target).role === 'columnheader';
 }

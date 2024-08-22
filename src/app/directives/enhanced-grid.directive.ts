@@ -492,7 +492,7 @@ export class EnhancedGridDirective
     // if the cell is a calculated one, then call 'onDblClick' in order to init the group columns again
     // this is needed because otherwise the +/- icons are cleared from the group cells
     if (
-      this.grid.activeCell.dataItem.calculated &&
+      this.grid.activeCell.dataItem?.calculated &&
       this.config.selectedCells.length <= 1
     )
       this.onDblClick();
