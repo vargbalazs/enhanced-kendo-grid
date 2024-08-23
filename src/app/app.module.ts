@@ -9,6 +9,7 @@ import { CalcGridBottomModule } from './components/calc-grid-bottom/calc-grid-bo
 import { GroupedGridModule } from './components/grouped-grid/grouped-grid.module';
 import { CalcGridTopModule } from './components/calc-grid-top/calc-grid-top.module';
 import { CalcGridTopGroupedModule } from './components/calc-grid-top-grouped/calc-grid-top-grouped.module';
+import { CalcGridBottomGroupedModule } from './components/calc-grid-bottom-grouped/calc-grid-bottom-grouped.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { CalcGridTopGroupedModule } from './components/calc-grid-top-grouped/cal
     CalcGridTopModule,
     GroupedGridModule,
     CalcGridTopGroupedModule,
+    CalcGridBottomGroupedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
