@@ -69,6 +69,7 @@ export function animateTableRows(
       // clone the detail rows and wrap the rows in a div with a total width of all the columns and the total height of the corresponding rows
       const collapsingGroup = detailRows!
         .clone()
+        .attr('collapsed', '')
         .animate({ paddingTop: 0, paddingBottom: 0 }, 500)
         .wrapAll(`<div style='pointer-events: none' />`)
         .parent()

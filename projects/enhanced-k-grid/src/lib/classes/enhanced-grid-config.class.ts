@@ -237,4 +237,10 @@ export class EnhancedGridConfig {
 
   // whether the grid is a grouped grid
   public grouped: boolean = false;
+
+  // array for the selected datas in the hidden selected cells
+  public hiddenSelectedCellDatas: CellData[] = [];
+
+  // array for the selected datas in the visible selected cells
+  public visibleSelectedCellDatas: CellData[] = [];
 }
