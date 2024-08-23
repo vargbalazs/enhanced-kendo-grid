@@ -463,6 +463,10 @@ export class EnhancedGridDirective
 
     // store the grid body if we click on a cell (grid body can't be undefined, if we want to copy just one cell)
     methods.storeGridBody(this.config, e);
+
+    // if the grid is grouped, then we need special handling for arrow keys
+    // if we are selecting with shift, this is already handled in that method
+    if (this.config.grouped) methods.navigateOnGroupedRows(e, this.config);
   }
 
   @HostListener('click', ['$event'])
