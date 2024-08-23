@@ -466,7 +466,8 @@ export class EnhancedGridDirective
 
     // if the grid is grouped, then we need special handling for arrow keys
     // if we are selecting with shift, this is already handled in that method
-    if (this.config.grouped) methods.navigateOnGroupedRows(e, this.config);
+    if (this.config.grouped)
+      methods.navigateOnGroupedRows(e, this.config, this.grid);
   }
 
   @HostListener('click', ['$event'])
