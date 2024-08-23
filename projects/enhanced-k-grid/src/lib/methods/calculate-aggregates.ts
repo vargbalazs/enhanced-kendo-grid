@@ -16,12 +16,12 @@ export function calculateAggregates(config: EnhancedGridConfig) {
   // avg
   let countOfNumberValues = 0;
   config.selectedCellDatas.map((cellData) => {
-    if (isFinite(+cellData.value) && cellData.value != '')
+    if (isFinite(+cellData.value) && cellData.value !== '')
       countOfNumberValues++;
   });
   let hiddenCountOfNumberValues = 0;
   config.hiddenSelectedCellDatas.map((cellData) => {
-    if (isFinite(+cellData.value) && cellData.value != '')
+    if (isFinite(+cellData.value) && cellData.value !== '')
       hiddenCountOfNumberValues++;
   });
   countOfNumberValues -= hiddenCountOfNumberValues;
@@ -30,22 +30,22 @@ export function calculateAggregates(config: EnhancedGridConfig) {
 
   // count
   config.aggregates.count = config.selectedCellDatas.filter(
-    (cellData) => cellData.value != ''
+    (cellData) => cellData.value !== ''
   ).length;
   let hiddenCount = config.hiddenSelectedCellDatas.filter(
-    (cellData) => cellData.value != ''
+    (cellData) => cellData.value !== ''
   ).length;
   config.aggregates.count -= hiddenCount;
 
   // min - max
   let filtered = config.selectedCellDatas.filter(
-    (data) => isFinite(+data.value) && data.value != ''
+    (data) => isFinite(+data.value) && data.value !== ''
   );
   let hiddenFiltered = config.hiddenSelectedCellDatas.filter(
-    (data) => isFinite(+data.value) && data.value != ''
+    (data) => isFinite(+data.value) && data.value !== ''
   );
   let visibleFiltered = config.visibleSelectedCellDatas.filter(
-    (data) => isFinite(+data.value) && data.value != ''
+    (data) => isFinite(+data.value) && data.value !== ''
   );
   // if we have hidden values, then eliminate the elements with the same value (calculate the difference of the 2 sets)
   if (hiddenFiltered.length > 0) {
