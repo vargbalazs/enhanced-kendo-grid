@@ -136,7 +136,7 @@ export class CalcGridBottomGroupedComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1',
-        align: 'top',
+        align: 'bottom',
         state: 'expanded',
       },
       {
@@ -145,14 +145,14 @@ export class CalcGridBottomGroupedComponent {
         calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-2',
-        align: 'top',
+        align: 'bottom',
         state: 'expanded',
       },
       {
         name: 'calcsum4',
         title: 'cat 3 sum',
-        position: 22,
-        calculateByRows: { from: 23, to: 32 },
+        position: 32,
+        calculateByRows: { from: 22, to: 31 },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-4',
         state: 'expanded',
@@ -160,7 +160,7 @@ export class CalcGridBottomGroupedComponent {
       {
         name: 'calcsum5',
         title: 'cat 4 sum',
-        position: 33,
+        position: 43,
         calculateByRows: {
           from: { field: 'id', value: 31 },
           to: { field: 'id', value: 40 },
@@ -172,8 +172,8 @@ export class CalcGridBottomGroupedComponent {
       {
         name: 'calcsum6',
         title: 'cat 5 sum',
-        position: 44,
-        calculateByRows: { from: 45, to: 54 },
+        position: 54,
+        calculateByRows: { from: 44, to: 53 },
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-6',
         state: 'expanded',
