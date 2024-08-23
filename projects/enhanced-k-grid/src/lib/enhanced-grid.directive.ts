@@ -488,7 +488,7 @@ export class EnhancedGridDirective
     // this is needed because otherwise the +/- icons are cleared from the group cells
     if (
       this.grid.activeCell.dataItem.calculated &&
-      this.config.selectedCells.length == 0
+      this.config.selectedCells.length <= 1
     )
       this.onDblClick();
   }
