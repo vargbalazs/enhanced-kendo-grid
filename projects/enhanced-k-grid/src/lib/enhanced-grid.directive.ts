@@ -330,8 +330,10 @@ export class EnhancedGridDirective
           this.config.grouped &&
           methods.checkGroupedGridSettings(this.config)
         )
-          // init the group columns, but only if the grouped settings are valid
-          methods.initGroupColumns(this.config, this.renderer2);
+          setTimeout(() => {
+            // init the group columns, but only if the grouped settings are valid
+            methods.initGroupColumns(this.config, this.renderer2);
+          });
       });
     }
 

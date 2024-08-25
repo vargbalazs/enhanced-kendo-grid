@@ -14,20 +14,31 @@ export function animateTableRows(
     `[kendogridlogicalrow].${calcRowName}`
   );
   const dataRowIndex = +calcRow!.getAttribute('ng-reflect-data-row-index')!;
-  // get the corresponging row count and row indexes
-  const rowIndexesCount = config.rowCalculation.calculatedRows.find(
+  // get the corresponging calc row and some properties of it
+  const row = config.rowCalculation.calculatedRows.find(
     (calcRow) => calcRow.name === calcRowName
-  )?.rowIndexes?.length;
-  const rowIndexes = config.rowCalculation.calculatedRows.find(
-    (calcRow) => calcRow.name === calcRowName
-  )?.rowIndexes;
+  );
+  const rowIndexesCount = row?.rowIndexes?.length;
+  const rowIndexes = row?.rowIndexes;
+  // determine the row align (we can't use the existing property, because this isn't always present, f. e.
+  // if we declare a calc row with its position)
+  const rowAlign = dataRowIndex < rowIndexes![0] ? 'top' : 'bottom';
   // calculate the total height of the corresponding rows
   let totalHeight = 0;
-  for (let i = dataRowIndex + 1; i <= dataRowIndex + rowIndexesCount!; i++) {
-    const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[ng-reflect-data-row-index='${i}']`
-    );
-    totalHeight += row!.getBoundingClientRect().height;
+  if (rowAlign === 'top') {
+    for (let i = dataRowIndex + 1; i <= dataRowIndex + rowIndexesCount!; i++) {
+      const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+        `[ng-reflect-data-row-index='${i}']`
+      );
+      totalHeight += row!.getBoundingClientRect().height;
+    }
+  } else {
+    for (let i = dataRowIndex - rowIndexesCount!; i <= dataRowIndex - 1; i++) {
+      const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+        `[ng-reflect-data-row-index='${i}']`
+      );
+      totalHeight += row!.getBoundingClientRect().height;
+    }
   }
   // caclulate the total widht of the columns
   let totalWidth = 0;
@@ -80,8 +91,12 @@ export function animateTableRows(
       detailRows!.hide();
       // get the calcrow element
       const calcRow = jquery(`[kendogridlogicalrow].${calcRowName}`);
-      // insert the cloned detail rows after it
-      collapsingGroup.insertAfter(calcRow);
+      // insert the cloned detail rows before or after it, depending on the align property
+      if (rowAlign === 'top') {
+        collapsingGroup.insertAfter(calcRow);
+      } else {
+        collapsingGroup.insertBefore(calcRow);
+      }
       // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
       // width of the columns (without padding and border)
       for (let i = 0; i <= config.columnWidths.length - 1; i++) {
