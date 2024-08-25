@@ -43,10 +43,27 @@ export function changeCellFocusWithTab(
     const calcRowIndex = config.rowCalculation.calculatedRows.findIndex(
       (calcRow) => calcRow.name === calcRowName
     );
-    const nextCalcRowName =
-      config.rowCalculation.calculatedRows[
-        e.shiftKey ? calcRowIndex : calcRowIndex + 1
-      ]?.name;
+    // get the row indexes of the focused cell and of the calc row
+    const cellDataRowIndex = focusedCell!.getAttribute(
+      'ng-reflect-data-row-index'
+    )!;
+    const calcRowDataRowIndex = (<HTMLElement>config.gridElRef.nativeElement)
+      .querySelector(`[kendogridlogicalrow].${calcRowName}`)!
+      .getAttribute('ng-reflect-data-row-index')!;
+    // if the cell row index is less than the calc row index, then the calc row is bottom aligned, else top aligned
+    const rowAlign = cellDataRowIndex < calcRowDataRowIndex ? 'bottom' : 'top';
+    let nextCalcRowName = '';
+    if (rowAlign === 'top') {
+      nextCalcRowName =
+        config.rowCalculation.calculatedRows[
+          e.shiftKey ? calcRowIndex : calcRowIndex + 1
+        ]?.name;
+    } else {
+      nextCalcRowName =
+        config.rowCalculation.calculatedRows[
+          e.shiftKey ? calcRowIndex - 1 : calcRowIndex
+        ]?.name;
+    }
     // if there are a next calc row, then focus the first cell of it
     if (nextCalcRowName) {
       const nextCalcRow = (<HTMLElement>(

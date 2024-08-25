@@ -119,7 +119,7 @@ export function markCellsAsSelected(
         const cell = (<HTMLElement>(
           config.gridElRef.nativeElement
         )).querySelector(
-          `td[ng-reflect-data-row-index='${
+          `div > tr > td[ng-reflect-data-row-index='${
             firstCell.itemKey + j * verticalDirection
           }'][ng-reflect-col-index='${
             firstCell.columnKey + i * horizontalDirection

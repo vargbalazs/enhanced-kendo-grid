@@ -95,7 +95,14 @@ export function animateTableRows(
       if (rowAlign === 'top') {
         collapsingGroup.insertAfter(calcRow);
       } else {
-        collapsingGroup.insertBefore(calcRow);
+        // if we have bottom group rows, then we have to insert the div before the first child row
+        // with this we assure, that selecting with the keyboard works proper
+        // get the first child row
+        const firstChildRow = `[kendogridlogicalrow][ng-reflect-data-row-index='${
+          rowIndexes![0]
+        }'`;
+        // insert before this first child row
+        collapsingGroup.insertBefore(firstChildRow);
       }
       // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
       // width of the columns (without padding and border)
