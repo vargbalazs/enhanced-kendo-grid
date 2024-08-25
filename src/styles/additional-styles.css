@@ -141,3 +141,14 @@ div[style*="background-color: rgb(255, 192, 0);"] {
   background-color: lightyellow !important;
   color: black;
 }
+
+.calcrow.calcsum1-2 .custom-calcrow-1-2,
+.calcrow.calcsum3-4-5 .custom-calcrow-3-4-5 {
+  background-color: darkgray !important;
+  color: black;
+}
+
+.calcrow.calcsum-total .custom-calcrow-total {
+  background-color: gray !important;
+  color: white;
+}

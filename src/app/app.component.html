@@ -24,9 +24,17 @@
       <calc-grid-top-grouped></calc-grid-top-grouped>
     </ng-template>
   </kendo-tabstrip-tab>
-  <kendo-tabstrip-tab title="calc grid bottom grouped" [selected]="true">
+  <kendo-tabstrip-tab title="calc grid bottom grouped">
     <ng-template kendoTabContent>
       <calc-grid-bottom-grouped></calc-grid-bottom-grouped>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab
+    title="calc grid top grouped multiple level"
+    [selected]="true"
+  >
+    <ng-template kendoTabContent>
+      <calc-grid-top-grouped-multiple-lvl></calc-grid-top-grouped-multiple-lvl>
     </ng-template>
   </kendo-tabstrip-tab>
 </kendo-tabstrip>
