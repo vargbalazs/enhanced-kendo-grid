@@ -78,5 +78,28 @@ export function checkGroupedGridSettings(config: EnhancedGridConfig): boolean {
     console.error(levelsMessage);
     return false;
   }
+  // we should define as many group columns as many levels we have in the calc row config
+  const calcRowLevels: Set<string> = new Set();
+  config.rowCalculation.calculatedRows.forEach((calcRow) => {
+    if (!calcRowLevels.has(calcRow.groupLevel!.toString()))
+      calcRowLevels.add(calcRow.groupLevel!.toString());
+  });
+  if (levels.length != calcRowLevels.size) {
+    console.error(
+      'The number of the group columns in the template should be the same as many different group levels were definded in the row calculation config.'
+    );
+    return false;
+  }
+  // the group level numbers in the template should match to the unique group level numbers in the calc row config
+  // f. e. in the template we have lvl 1 and 2 and in the config lvl 2 and 3
+  const configLvls = [...calcRowLevels].sort();
+  for (let i = 0; i <= levels.length - 1; i++) {
+    if (+levels[i] - +configLvls[i] != 0) {
+      console.error(
+        'The group level numbers in the template should match to the unique group level numbers in the calc row config.'
+      );
+      return false;
+    }
+  }
   return true;
 }

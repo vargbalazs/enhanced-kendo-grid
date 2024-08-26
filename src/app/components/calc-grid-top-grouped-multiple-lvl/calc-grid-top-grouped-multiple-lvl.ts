@@ -34,6 +34,8 @@ export class CalcGridTopGroupedMultipleLevelComponent {
   projects: Project[] = projects;
   frozenColumns = [
     'grouplevel1',
+    'grouplevel2',
+    'grouplevel3',
     'accountNumber.accNumber',
     'id',
     'accountNumber.accName',
@@ -138,7 +140,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-1',
         align: 'top',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 3,
       },
       {
         name: 'calcsum2',
@@ -148,7 +150,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-2',
         align: 'top',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 3,
       },
       {
         name: 'calcsum5',
@@ -158,7 +160,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-5',
         align: 'top',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 3,
       },
       {
         name: 'calcsum1-2',
@@ -168,7 +170,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-1-2',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 2,
       },
       {
         name: 'calcsum3',
@@ -178,7 +180,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-3',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 3,
       },
       {
         name: 'calcsum4',
@@ -191,7 +193,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-4',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 3,
       },
       {
         name: 'calcsum3-4-5',
@@ -201,7 +203,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-3-4-5',
         state: 'expanded',
-        groupLevel: 1,
+        groupLevel: 2,
       },
       {
         name: 'calcsum-total',
