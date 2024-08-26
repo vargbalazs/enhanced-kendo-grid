@@ -11,6 +11,7 @@ export interface CalculatedRow {
   state?: 'expanded' | 'collapsed';
   rowIndexes?: number[];
   groupLevel?: number;
+  parentRowName?: string;
 }
 
 export interface SimpleRowRange {

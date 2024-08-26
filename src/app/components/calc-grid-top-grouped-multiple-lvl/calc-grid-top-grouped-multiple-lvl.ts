@@ -141,6 +141,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         align: 'top',
         state: 'expanded',
         groupLevel: 3,
+        parentRowName: 'calcsum1-2',
       },
       {
         name: 'calcsum2',
@@ -151,6 +152,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         align: 'top',
         state: 'expanded',
         groupLevel: 3,
+        parentRowName: 'calcsum1-2',
       },
       {
         name: 'calcsum5',
@@ -161,6 +163,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         align: 'top',
         state: 'expanded',
         groupLevel: 3,
+        parentRowName: 'calcsum3-4-5',
       },
       {
         name: 'calcsum1-2',
@@ -171,6 +174,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-1-2',
         state: 'expanded',
         groupLevel: 2,
+        parentRowName: 'calcsum-total',
       },
       {
         name: 'calcsum3',
@@ -181,6 +185,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-3',
         state: 'expanded',
         groupLevel: 3,
+        parentRowName: 'calcsum3-4-5',
       },
       {
         name: 'calcsum4',
@@ -194,6 +199,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-4',
         state: 'expanded',
         groupLevel: 3,
+        parentRowName: 'calcsum3-4-5',
       },
       {
         name: 'calcsum3-4-5',
@@ -204,6 +210,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
         cssClass: 'custom-calcrow-3-4-5',
         state: 'expanded',
         groupLevel: 2,
+        parentRowName: 'calcsum-total',
       },
       {
         name: 'calcsum-total',
