@@ -19,11 +19,14 @@ export function initGroupColumns(
     });
 
   // get the calcrow indexes
-  const calcRowIndexes: number[] = [];
+  const calcRowIndexes: groupRow[] = [];
   config.rowCalculation.calculatedRows.forEach((calcRow) => {
-    calcRowIndexes.push(
-      config.gridData.findIndex((row) => row.calcRowName === calcRow.name)
-    );
+    calcRowIndexes.push({
+      index: config.gridData.findIndex(
+        (row) => row.calcRowName === calcRow.name
+      ),
+      groupLevel: calcRow.groupLevel!,
+    });
   });
 
   // get the cells in the grouped columns and in the calc rows
@@ -32,13 +35,18 @@ export function initGroupColumns(
   const calcRowStates: CalcRowWithState[] = [];
   for (let i = 0; i <= groupColIndexes.length - 1; i++) {
     for (let j = 0; j <= calcRowIndexes.length - 1; j++) {
-      let groupCell = (<HTMLElement>(
-        config.gridElRef.nativeElement
-      )).querySelector(
-        `[ng-reflect-data-row-index="${calcRowIndexes[j]}"][ng-reflect-col-index="${groupColIndexes[i]}"]`
-      );
-      calcRowStates.push(methods.getStateForCalcRow(config, calcRowIndexes[j]));
-      groupColCells.push(groupCell!);
+      // query only for the group cells, which are corresponding to the appr. group level
+      if (i + 1 === calcRowIndexes[j].groupLevel) {
+        let groupCell = (<HTMLElement>(
+          config.gridElRef.nativeElement
+        )).querySelector(
+          `[ng-reflect-data-row-index="${calcRowIndexes[j].index}"][ng-reflect-col-index="${groupColIndexes[i]}"]`
+        );
+        calcRowStates.push(
+          methods.getStateForCalcRow(config, calcRowIndexes[j].index)
+        );
+        groupColCells.push(groupCell!);
+      }
     }
   }
 
@@ -101,3 +109,5 @@ export function initGroupColumns(
     config.columnWidths.push(getComputedStyle(cell!).width);
   });
 }
+
+type groupRow = { index: number; groupLevel: number };
