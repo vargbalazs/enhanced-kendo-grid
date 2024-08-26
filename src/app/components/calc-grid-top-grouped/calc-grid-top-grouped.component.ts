@@ -138,6 +138,7 @@ export class CalcGridTopGroupedComponent {
         cssClass: 'custom-calcrow-1',
         align: 'top',
         state: 'expanded',
+        groupLevel: 1,
       },
       {
         name: 'calcsum2',
@@ -147,6 +148,7 @@ export class CalcGridTopGroupedComponent {
         cssClass: 'custom-calcrow-2',
         align: 'top',
         state: 'expanded',
+        groupLevel: 1,
       },
       {
         name: 'calcsum4',
@@ -156,6 +158,7 @@ export class CalcGridTopGroupedComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-4',
         state: 'expanded',
+        groupLevel: 1,
       },
       {
         name: 'calcsum5',
@@ -168,6 +171,7 @@ export class CalcGridTopGroupedComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-5',
         state: 'expanded',
+        groupLevel: 1,
       },
       {
         name: 'calcsum6',
@@ -177,6 +181,7 @@ export class CalcGridTopGroupedComponent {
         calculateFunction: 'sum',
         cssClass: 'custom-calcrow-6',
         state: 'expanded',
+        groupLevel: 1,
       },
     ],
   };

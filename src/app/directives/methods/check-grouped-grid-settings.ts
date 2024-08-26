@@ -56,5 +56,27 @@ export function checkGroupedGridSettings(config: EnhancedGridConfig): boolean {
     console.error(levelsMessage);
     return false;
   }
+  // all calculated rows should have a grouplevel property with a valid value
+  if (
+    !config.rowCalculation.calculatedRows.every((calcRow) => calcRow.groupLevel)
+  ) {
+    console.error(
+      `In a grouped grid all calculated rows should have a 'groupLevel' property.`
+    );
+    return false;
+  }
+  // the groupLevel value should be between 1 and 3
+  levelsMessage = '';
+  for (let i = 0; i <= config.rowCalculation.calculatedRows.length - 1; i++) {
+    const row = config.rowCalculation.calculatedRows[i];
+    if (row.groupLevel! < 1 || row.groupLevel! > 3) {
+      levelsMessage = `The 'groupLevel' poperty should be between 1 and 3 for each calculated row.`;
+      break;
+    }
+  }
+  if (levelsMessage.length > 0) {
+    console.error(levelsMessage);
+    return false;
+  }
   return true;
 }

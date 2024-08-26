@@ -10,6 +10,7 @@ export interface CalculatedRow {
   cssClass?: string;
   state?: 'expanded' | 'collapsed';
   rowIndexes?: number[];
+  groupLevel?: number;
 }
 
 export interface SimpleRowRange {
