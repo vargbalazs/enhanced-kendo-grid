@@ -38,20 +38,13 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
     });
     // store the row indexes, which are part of the calculation, but only the first time we calculate the values
     if (calcRow.rowIndexes?.length == 0) {
-      // filteredData.forEach((row) => {
-      //   const rowIndex = config.gridData.findIndex(
-      //     (dataRow) =>
-      //       dataRow.dataRowIndex === row.dataRowIndex && !dataRow.calculated
-      //   );
-      //   calcRow.rowIndexes?.push(rowIndex);
-      // });
-      //console.log(calcRow.title, filteredData);
       setTimeout(() => {
         calcRow.rowIndexes = methods.getChildRowIndexes(
           config,
           calcRow,
           filteredData
         );
+        //console.log(calcRow.title, calcRow.rowIndexes);
       });
     }
   });

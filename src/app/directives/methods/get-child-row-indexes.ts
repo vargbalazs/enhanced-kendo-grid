@@ -12,6 +12,20 @@ export function getChildRowIndexes(
   const rowIndexes: number[] = [];
   // process 'filteredData'
   // the 'filteredData' array contains already the 2. level group rows
+  // first we take care of the not calculated rows, because later we have to add the row indexes of this rows to the appr. row indexes of the appr. parent row
+  for (let i = 0; i <= filteredData.length - 1; i++) {
+    const row = filteredData[i];
+    if (!row.calculated) {
+      // loop through the grid data to get the row index
+      const rowIndex = config.gridData.findIndex(
+        (dataRow) => dataRow.dataRowIndex === row.dataRowIndex
+      );
+      rowIndexes.push(rowIndex);
+    }
+  }
+  config.rowCalculation.calculatedRows.find(
+    (row) => row.name === calcRow.name
+  )!.rowIndexes = rowIndexes;
   for (let i = 0; i <= filteredData.length - 1; i++) {
     const row = filteredData[i];
     // if the filteredData row is a calculated one, then search for the row index differently
@@ -27,26 +41,27 @@ export function getChildRowIndexes(
         (r) => r.parentRowName === row.calcRowName
       );
       if (childCalcRows.length > 0) {
+        // if we have some, then add this indexes too
         childCalcRows.forEach((childCalcRow) => {
           const gridRow = (<HTMLElement>(
             config.gridElRef.nativeElement
           )).querySelector(`[kendogridlogicalrow].${childCalcRow.name}`);
           const rowIndex = +gridRow?.getAttribute('ng-reflect-data-row-index')!;
           rowIndexes.push(rowIndex);
+          // get the already stored row indexes for each child row and add to the existing ones
+          const calcRow = config.rowCalculation.calculatedRows.find(
+            (calcRow) => calcRow.name === childCalcRow.name
+          );
+          rowIndexes.push(...calcRow?.rowIndexes!);
         });
       } else {
-        console.log(row);
+        // get the already stored row indexes for the processed row and add to the existing ones
+        const calcRow = config.rowCalculation.calculatedRows.find(
+          (calcRow) => calcRow.name === row.calcRowName
+        );
+        rowIndexes.push(...calcRow?.rowIndexes!);
       }
-    } else {
-      // if not, then loop through the grid data to get the row index
-      const rowIndex = config.gridData.findIndex(
-        (dataRow) => dataRow.dataRowIndex === row.dataRowIndex
-      );
-      rowIndexes.push(rowIndex);
     }
-  }
-  if (calcRow.name === 'calcsum-total') {
-    console.log(rowIndexes);
   }
 
   return rowIndexes;
