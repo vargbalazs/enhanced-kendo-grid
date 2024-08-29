@@ -64,5 +64,7 @@ export function getChildRowIndexes(
     }
   }
 
-  return rowIndexes;
+  return rowIndexes.sort((a, b) => {
+    return a - b;
+  });
 }
