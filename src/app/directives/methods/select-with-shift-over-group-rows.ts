@@ -1,6 +1,7 @@
 import { GridComponent } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { ARROWS } from '../consts/constants';
+import * as methods from './index';
 
 // handles the cases where we are selecting with shift over group rows and presses up or down keys
 export function selectWithShiftOverGroupRows(
@@ -17,51 +18,20 @@ export function selectWithShiftOverGroupRows(
   const calcRowName =
     target.parentElement!.parentElement?.getAttribute('calcrowname');
   // get the row indexes of the actual cell and of the calc row
-  const cellDataRowIndex = target.getAttribute('ng-reflect-data-row-index')!;
-  const calcRowDataRowIndex = (<HTMLElement>config.gridElRef.nativeElement)
+  const cellDataRowIndex = +target.getAttribute('ng-reflect-data-row-index')!;
+  const calcRowDataRowIndex = +(<HTMLElement>config.gridElRef.nativeElement)
     .querySelector(`[kendogridlogicalrow].${calcRowName}`)!
     .getAttribute('ng-reflect-data-row-index')!;
   // if the cell row index is less than the calc row index, then the calc row is bottom aligned, else top aligned
   const rowAlign = cellDataRowIndex < calcRowDataRowIndex ? 'bottom' : 'top';
-  // get the calcrow index
-  const calcRowIndex = config.rowCalculation.calculatedRows.findIndex(
-    (calcRow) => calcRow.name === calcRowName
-  );
-  let nextCalcRowName = '';
   let nextCalcRow: Element = document.createElement('div');
   let rowIndex = 0;
-  switch (e.key) {
-    case ARROWS.DOWN:
-      // if we have at least one calcrow left
-      if (calcRowIndex < config.rowCalculation.calculatedRows.length - 1) {
-        nextCalcRowName =
-          config.rowCalculation.calculatedRows[
-            rowAlign === 'top' ? calcRowIndex + 1 : calcRowIndex
-          ].name;
-      } else {
-        // take the last one
-        nextCalcRowName = config.rowCalculation.calculatedRows.at(-1)!.name;
-      }
-      break;
-    case ARROWS.UP:
-      // if we have at least one calcrow left
-      if (calcRowIndex > 0) {
-        nextCalcRowName =
-          config.rowCalculation.calculatedRows[
-            rowAlign === 'top' ? calcRowIndex : calcRowIndex - 1
-          ].name;
-      } else {
-        // take the first one
-        nextCalcRowName = config.rowCalculation.calculatedRows[0].name;
-      }
-      break;
-  }
   // get the next calcrow
-  nextCalcRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-    `[kendogridlogicalrow].${nextCalcRowName}`
-  )!;
+  nextCalcRow = <HTMLElement>(
+    methods.getNextVisibleCalcRow(calcRowDataRowIndex, config, e, rowAlign)
+  );
   // get the row index of this next calc row
-  rowIndex = +nextCalcRow?.getAttribute('ng-reflect-data-row-index')!;
+  rowIndex = +nextCalcRow.getAttribute('ng-reflect-data-row-index')!;
   // the new target will be from this row
   target = nextCalcRow?.querySelector(
     `td[ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
