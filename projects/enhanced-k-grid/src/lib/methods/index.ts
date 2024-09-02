@@ -66,3 +66,4 @@ export * from './check-grouped-grid-settings';
 export * from './select-with-shift-over-group-rows';
 export * from './navigate-on-grouped-rows';
 export * from './check-cell-types';
+export * from './get-child-row-indexes';
