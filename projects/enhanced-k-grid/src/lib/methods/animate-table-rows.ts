@@ -24,6 +24,7 @@ export function animateTableRows(
   // if we declare a calc row with its position)
   const rowAlign = dataRowIndex < rowIndexes![0] ? 'top' : 'bottom';
   // calculate the total height of the corresponding rows
+  // for hidden rows the height is obviously 0, that's why we don't need to handle the special case of multiple levels
   let totalHeight = 0;
   if (rowAlign === 'top') {
     for (let i = dataRowIndex + 1; i <= dataRowIndex + rowIndexesCount!; i++) {
@@ -55,12 +56,41 @@ export function animateTableRows(
   });
   // handle the state change
   // first get the detail rows
+  // if any of the rows has the 'collapsed' attribute, this means, that previously we already collapsed at least one group - in this case we should collect the html elements differently
+  let alreadyCollapsed = false;
   let detailRows = null;
   for (let i = 0; i <= rowIndexes!.length - 1; i++) {
     const row = `[kendogridlogicalrow][ng-reflect-data-row-index='${
       rowIndexes![i]
-    }'`;
+    }']`;
+    if (!alreadyCollapsed)
+      alreadyCollapsed = (<HTMLElement>config.gridElRef.nativeElement)
+        .querySelector(
+          `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes![i]}']`
+        )
+        ?.hasAttribute('collapsed')!;
     detailRows = (detailRows || jquery(row)).add(row);
+  }
+  // collect the elements differently, but only if we want to expand the group row
+  if (alreadyCollapsed && state === 'collapsed') {
+    const startRow = (<HTMLElement>(
+      config.gridElRef.nativeElement
+    )).querySelector(
+      `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes![0]}']`
+    )!;
+    let stopRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+      `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes!.at(-1)}']`
+    )!;
+    // if the 'stopRow' has the attr. 'collapsed', it means, that this isn't the last row, because there is also the hidden row with the same index, and we need this
+    if (stopRow.hasAttribute('collapsed')) {
+      stopRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+        `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes!.at(
+          -1
+        )}']:not([collapsed])`
+      )!;
+    }
+    const range = jquery(startRow).nextUntil(stopRow).addBack().add(stopRow);
+    detailRows = range;
   }
   switch (state) {
     case 'expanded':
@@ -69,12 +99,30 @@ export function animateTableRows(
         `div[calcrowname=${calcRowName}]:not(.group-indicator)`
       );
       // do the animation
-      expandingGroup.slideDown(700);
+      expandingGroup.slideDown(2700);
       // remove the group div and show the detail rows
       setTimeout(() => {
-        expandingGroup.remove();
-        detailRows!.show();
-      }, 700);
+        // if we expand a group row, which has at least one collapsed group, then do it differently
+        // otherwise just remove the group div and simply show the detail rows
+        const div = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+          `div[calcrowname=${calcRowName}]:not(.group-indicator)`
+        );
+        if (alreadyCollapsed) {
+          // remove only the wrapper div element, but keep the inner elements
+          const startRow = (<HTMLElement>(
+            config.gridElRef.nativeElement
+          )).querySelector(
+            `[kendogridlogicalrow][ng-reflect-data-row-index='${
+              rowIndexes![0]
+            }']`
+          )!;
+          jquery(startRow).unwrap();
+          alreadyCollapsed = false;
+        } else {
+          expandingGroup.remove();
+          detailRows!.show();
+        }
+      }, 2700);
       break;
     case 'collapsed':
       // clone the detail rows and wrap the rows in a div with a total width of all the columns and the total height of the corresponding rows
@@ -100,7 +148,7 @@ export function animateTableRows(
         // get the first child row
         const firstChildRow = `[kendogridlogicalrow][ng-reflect-data-row-index='${
           rowIndexes![0]
-        }'`;
+        }']`;
         // insert before this first child row
         collapsingGroup.insertBefore(firstChildRow);
       }
