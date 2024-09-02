@@ -98,7 +98,7 @@ export function animateTableRows(
     detailRows = (detailRows || jquery(row)).add(row);
   }
   // if we have at least one collapsed sub group, we have to collect the html elements differently
-  if (collapsedSubGroupExists && state === 'collapsed') {
+  if (collapsedSubGroupExists) {
     const startRow = (<HTMLElement>(
       config.gridElRef.nativeElement
     )).querySelector(
