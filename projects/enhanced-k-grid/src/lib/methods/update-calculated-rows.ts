@@ -45,6 +45,7 @@ export function updateCalculatedRows(config: EnhancedGridConfig) {
         );
         calcRow.rowIndexes?.push(rowIndex);
       });
+      console.log(calcRow.title, filteredData);
     }
   });
 }
