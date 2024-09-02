@@ -101,5 +101,32 @@ export function checkGroupedGridSettings(config: EnhancedGridConfig): boolean {
       return false;
     }
   }
+  // calc rows with group level 1 shouldn't have a parent row
+  for (let i = 0; i <= config.rowCalculation.calculatedRows.length - 1; i++) {
+    const calcRow = config.rowCalculation.calculatedRows[i];
+    if (calcRow.groupLevel === 1 && Object.hasOwn(calcRow, 'parentRowName')) {
+      console.error(
+        `The calculated row '${calcRow.name}' is on the topmost level, but a 'parentRowName' property was defined.`
+      );
+      return false;
+    }
+  }
+  // if there is a parentRowName defined, then this row should exist on one level above the child row
+  for (let i = 0; i <= config.rowCalculation.calculatedRows.length - 1; i++) {
+    const calcRow = config.rowCalculation.calculatedRows[i];
+    if (calcRow.parentRowName) {
+      const parentRows = [
+        ...config.rowCalculation.calculatedRows
+          .filter((row) => calcRow.groupLevel! - row.groupLevel! === 1)
+          .map((row) => row.name),
+      ];
+      if (!parentRows.includes(calcRow.parentRowName)) {
+        console.error(
+          `For the calc row '${calcRow.name}' the parent row '${calcRow.parentRowName}' was definded, but this parent row isn't present one level above the level of the calc row.`
+        );
+        return false;
+      }
+    }
+  }
   return true;
 }
