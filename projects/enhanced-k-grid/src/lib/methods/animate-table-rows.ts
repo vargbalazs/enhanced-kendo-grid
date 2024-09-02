@@ -41,7 +41,7 @@ export function animateTableRows(
       totalHeight += row!.getBoundingClientRect().height;
     }
   }
-  // caclulate the total widht of the columns
+  // caclulate the total width of the columns
   let totalWidth = 0;
   config.columns.forEach((col) => {
     totalWidth += col.width;
@@ -55,24 +55,50 @@ export function animateTableRows(
     //behavior: 'smooth',
   });
   // handle the state change
-  // first get the detail rows
-  // if any of the rows has the 'collapsed' attribute, this means, that previously we already collapsed at least one group - in this case we should collect the html elements differently
-  let alreadyCollapsed = false;
+  // we have to check, if there is already a collapsed sub-group (child) of the clicked calc row
+  // first collect the corresponging child rows
+  // check for the 2. level
+  const childRows: string[] = [];
+  config.rowCalculation.calculatedRows.forEach((row) => {
+    if (row.parentRowName === calcRowName) {
+      childRows.push(row.name);
+    }
+  });
+  // check for the 3. level
+  const childRows3Level: string[] = [];
+  for (let i = 0; i <= childRows.length - 1; i++) {
+    const rows = config.rowCalculation.calculatedRows.filter(
+      (row) => row.parentRowName === childRows[i]
+    );
+    if (rows.length > 0) {
+      rows.forEach((row) => childRows3Level.push(row.name));
+    }
+  }
+  childRows.push(...childRows3Level);
+  // check for collapsed sub-groups - if we find one, we can break the iteration
+  let collapsedSubGroupExists = false;
+  for (let i = 0; i <= rowIndexes!.length - 1; i++) {
+    const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
+      `[kendogridlogicalrow][ng-reflect-data-row-index='${
+        rowIndexes![i]
+      }'][collapsed]`
+    );
+    if (row) {
+      const calcRowName = row.parentElement?.getAttribute('calcrowname');
+      collapsedSubGroupExists = childRows.includes(calcRowName!);
+      if (collapsedSubGroupExists) break;
+    }
+  }
+  // get the detail rows
   let detailRows = null;
   for (let i = 0; i <= rowIndexes!.length - 1; i++) {
     const row = `[kendogridlogicalrow][ng-reflect-data-row-index='${
       rowIndexes![i]
     }']`;
-    if (!alreadyCollapsed)
-      alreadyCollapsed = (<HTMLElement>config.gridElRef.nativeElement)
-        .querySelector(
-          `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes![i]}']`
-        )
-        ?.hasAttribute('collapsed')!;
     detailRows = (detailRows || jquery(row)).add(row);
   }
-  // collect the elements differently, but only if we want to expand the group row
-  if (alreadyCollapsed && state === 'collapsed') {
+  // if we have at least one collapsed sub group, we have to collect the html elements differently
+  if (collapsedSubGroupExists && state === 'collapsed') {
     const startRow = (<HTMLElement>(
       config.gridElRef.nativeElement
     )).querySelector(
@@ -99,30 +125,36 @@ export function animateTableRows(
         `div[calcrowname=${calcRowName}]:not(.group-indicator)`
       );
       // do the animation
-      expandingGroup.slideDown(2700);
+      expandingGroup.slideDown(700);
       // remove the group div and show the detail rows
       setTimeout(() => {
-        // if we expand a group row, which has at least one collapsed group, then do it differently
+        expandingGroup.remove();
+        // if we expand a group row, which has at least one collapsed group, then do the showing differently
         // otherwise just remove the group div and simply show the detail rows
-        const div = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-          `div[calcrowname=${calcRowName}]:not(.group-indicator)`
-        );
-        if (alreadyCollapsed) {
-          // remove only the wrapper div element, but keep the inner elements
-          const startRow = (<HTMLElement>(
-            config.gridElRef.nativeElement
-          )).querySelector(
-            `[kendogridlogicalrow][ng-reflect-data-row-index='${
-              rowIndexes![0]
-            }']`
-          )!;
-          jquery(startRow).unwrap();
-          alreadyCollapsed = false;
+        if (collapsedSubGroupExists) {
+          // don't show the rows, for which there is a row with the 'collapsed' attribute
+          // this rows are still part of a collapsed group
+          // all other rows can be shown
+          for (let i = 0; i <= rowIndexes!.length - 1; i++) {
+            const row = (<HTMLElement>(
+              config.gridElRef.nativeElement
+            )).querySelector(
+              `[kendogridlogicalrow][ng-reflect-data-row-index='${
+                rowIndexes![i]
+              }']`
+            );
+            if (!row?.hasAttribute('collapsed')) {
+              jquery(
+                `[kendogridlogicalrow][ng-reflect-data-row-index='${
+                  rowIndexes![i]
+                }']`
+              ).show();
+            }
+          }
         } else {
-          expandingGroup.remove();
           detailRows!.show();
         }
-      }, 2700);
+      }, 700);
       break;
     case 'collapsed':
       // clone the detail rows and wrap the rows in a div with a total width of all the columns and the total height of the corresponding rows
