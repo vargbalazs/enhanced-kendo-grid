@@ -11,6 +11,7 @@ import { CalcGridTopModule } from './components/calc-grid-top/calc-grid-top.modu
 import { CalcGridTopGroupedModule } from './components/calc-grid-top-grouped/calc-grid-top-grouped.module';
 import { CalcGridBottomGroupedModule } from './components/calc-grid-bottom-grouped/calc-grid-bottom-grouped.module';
 import { CalcGridTopGroupedMultipleLevelModule } from './components/calc-grid-top-grouped-multiple-lvl/calc-grid-top-grouped.module';
+import { CalcGridBottomGroupedMultipleLevelModule } from './components/calc-grid-bottom-grouped-multiple-lvl/calc-grid-bottom-grouped.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { CalcGridTopGroupedMultipleLevelModule } from './components/calc-grid-to
     CalcGridTopGroupedModule,
     CalcGridBottomGroupedModule,
     CalcGridTopGroupedMultipleLevelModule,
+    CalcGridBottomGroupedMultipleLevelModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
