@@ -9,7 +9,6 @@ export function animateTableRows(
   state: 'expanded' | 'collapsed',
   renderer2: Renderer2
 ) {
-  console.time('get calcrow');
   // get the dataRowIndex of the calculated row
   const calcRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
     `[kendogridlogicalrow].${calcRowName}`
@@ -21,8 +20,6 @@ export function animateTableRows(
   );
   const rowIndexesCount = row?.rowIndexes?.length;
   const rowIndexes = row?.rowIndexes;
-  console.timeEnd('get calcrow');
-  console.time('calculate height and width');
   // determine the row align (we can't use the existing property, because this isn't always present, f. e.
   // if we declare a calc row with its position)
   const rowAlign = dataRowIndex < rowIndexes![0] ? 'top' : 'bottom';
@@ -57,8 +54,6 @@ export function animateTableRows(
     left: -gridContent.scrollLeft,
     //behavior: 'smooth',
   });
-  console.timeEnd('calculate height and width');
-  console.time('check for collapsed subgroup');
   // handle the state change
   // we have to check, if there is already a collapsed sub-group (child) of the clicked calc row
   // first collect the corresponging child rows
@@ -94,8 +89,6 @@ export function animateTableRows(
       if (collapsedSubGroupExists) break;
     }
   }
-  console.timeEnd('check for collapsed subgroup');
-  console.time('get the detail rows');
   // get the detail rows
   let detailRows = null;
   for (let i = 0; i <= rowIndexes!.length - 1; i++) {
@@ -125,8 +118,6 @@ export function animateTableRows(
     const range = jquery(startRow).nextUntil(stopRow).addBack().add(stopRow);
     detailRows = range;
   }
-  console.timeEnd('get the detail rows');
-  console.time('do the animation');
   switch (state) {
     case 'expanded':
       // get the group div
@@ -167,6 +158,7 @@ export function animateTableRows(
       break;
     case 'collapsed':
       // clone the detail rows and wrap the rows in a div with a total width of all the columns and the total height of the corresponding rows
+      console.time('cloning');
       const collapsingGroup = detailRows!
         .clone()
         .attr('collapsed', '')
@@ -176,8 +168,12 @@ export function animateTableRows(
         .height(totalHeight)
         .width(totalWidth)
         .attr('calcrowname', calcRowName);
+      console.timeEnd('cloning');
       // hide the detail rows
+      console.time('hiding');
       detailRows!.hide();
+      console.timeEnd('hiding');
+      console.time('inserting');
       // get the calcrow element
       const calcRow = jquery(`[kendogridlogicalrow].${calcRowName}`);
       // insert the cloned detail rows before or after it, depending on the align property
@@ -193,6 +189,8 @@ export function animateTableRows(
         // insert before this first child row
         collapsingGroup.insertBefore(firstChildRow);
       }
+      console.timeEnd('inserting');
+      console.time('set width');
       // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
       // width of the columns (without padding and border)
       for (let i = 0; i <= config.columnWidths.length - 1; i++) {
@@ -200,9 +198,11 @@ export function animateTableRows(
           `div[calcrowname=${calcRowName}] td[ng-reflect-col-index=${i}]`
         ).width(config.columnWidths[i]);
       }
+      console.timeEnd('set width');
+      console.time('do animation');
       // do the animation
       collapsingGroup.slideUp(700);
+      console.timeEnd('do animation');
       break;
   }
-  console.timeEnd('do the animation');
 }
