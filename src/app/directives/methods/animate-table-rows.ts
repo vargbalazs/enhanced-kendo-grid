@@ -158,7 +158,6 @@ export function animateTableRows(
       break;
     case 'collapsed':
       // clone the detail rows and wrap the rows in a div with a total width of all the columns and the total height of the corresponding rows
-      console.time('cloning');
       const collapsingGroup = detailRows!
         .clone()
         .attr('collapsed', '')
@@ -168,12 +167,8 @@ export function animateTableRows(
         .height(totalHeight)
         .width(totalWidth)
         .attr('calcrowname', calcRowName);
-      console.timeEnd('cloning');
       // hide the detail rows
-      console.time('hiding');
       detailRows!.hide();
-      console.timeEnd('hiding');
-      console.time('inserting');
       // get the calcrow element
       const calcRow = jquery(`[kendogridlogicalrow].${calcRowName}`);
       // insert the cloned detail rows before or after it, depending on the align property
@@ -189,20 +184,15 @@ export function animateTableRows(
         // insert before this first child row
         collapsingGroup.insertBefore(firstChildRow);
       }
-      console.timeEnd('inserting');
-      console.time('set width');
       // because a table shouldn't contain a div, this messes up the layout, so we have to set back the original
       // width of the columns (without padding and border)
       for (let i = 0; i <= config.columnWidths.length - 1; i++) {
         jquery(
           `div[calcrowname=${calcRowName}] td[ng-reflect-col-index=${i}]`
-        ).width(config.columnWidths[i]);
+        ).css('width', config.columnWidths[i]);
       }
-      console.timeEnd('set width');
-      console.time('do animation');
       // do the animation
       collapsingGroup.slideUp(700);
-      console.timeEnd('do animation');
       break;
   }
 }
