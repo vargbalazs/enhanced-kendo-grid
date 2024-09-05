@@ -99,11 +99,14 @@ export function animateTableRows(
   }
   // if we have at least one collapsed sub group, we have to collect the html elements differently
   if (collapsedSubGroupExists) {
-    const startRow = (<HTMLElement>(
-      config.gridElRef.nativeElement
-    )).querySelector(
+    let startRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
       `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes![0]}']`
     )!;
+    // if the rowAlign is bottom and the startrow is collapsed, then this means, that the first sub-group is collapsed
+    // in this case the startrow should be the div element, which holds the collapsed rows
+    if (rowAlign === 'bottom' && startRow.hasAttribute('collapsed')) {
+      startRow = startRow.parentElement!;
+    }
     let stopRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
       `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes!.at(-1)}']`
     )!;
@@ -117,6 +120,9 @@ export function animateTableRows(
     }
     const range = jquery(startRow).nextUntil(stopRow).addBack().add(stopRow);
     detailRows = range;
+    //detailRows.each((i, row) => console.log(row));
+    console.log(startRow);
+    console.log(stopRow);
   }
   switch (state) {
     case 'expanded':
@@ -178,9 +184,14 @@ export function animateTableRows(
         // if we have bottom group rows, then we have to insert the div before the first child row
         // with this we assure, that selecting with the keyboard works proper
         // get the first child row
-        const firstChildRow = `[kendogridlogicalrow][ng-reflect-data-row-index='${
+        let firstChildRow = `[kendogridlogicalrow][ng-reflect-data-row-index='${
           rowIndexes![0]
         }']`;
+        // if the first child row is collapsed, this means, we will need the div group and have to insert
+        // the collapsingGroup before this div group
+        if (jquery(firstChildRow)[0].hasAttribute('collapsed')) {
+          //firstChildRow=jquery(firstChildRow).parent().get();
+        }
         // insert before this first child row
         collapsingGroup.insertBefore(firstChildRow);
       }
