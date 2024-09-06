@@ -17,7 +17,6 @@ export function selectWithShiftOverGroupRows(
   // the parent of the parent of the target will be the div with the attribute calclrow=calcrowname
   const calcRowName =
     target.parentElement!.parentElement?.getAttribute('calcrowname');
-  console.log(calcRowName);
   // get the row indexes of the actual cell and of the calc row
   const cellDataRowIndex = +target.getAttribute('ng-reflect-data-row-index')!;
   const calcRowDataRowIndex = +(<HTMLElement>config.gridElRef.nativeElement)
