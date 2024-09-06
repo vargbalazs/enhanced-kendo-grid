@@ -120,9 +120,6 @@ export function animateTableRows(
     }
     const range = jquery(startRow).nextUntil(stopRow).addBack().add(stopRow);
     detailRows = range;
-    //detailRows.each((i, row) => console.log(row));
-    console.log(startRow);
-    console.log(stopRow);
   }
   switch (state) {
     case 'expanded':
@@ -183,15 +180,12 @@ export function animateTableRows(
       } else {
         // if we have bottom group rows, then we have to insert the div before the first child row
         // with this we assure, that selecting with the keyboard works proper
+        // the first child row shouldn't have also the collapsed attribute, because if we wouldn't filter it out,
+        // the collapsingGroup would be inserted twice and this would lead to not desired results
         // get the first child row
         let firstChildRow = `[kendogridlogicalrow][ng-reflect-data-row-index='${
           rowIndexes![0]
-        }']`;
-        // if the first child row is collapsed, this means, we will need the div group and have to insert
-        // the collapsingGroup before this div group
-        if (jquery(firstChildRow)[0].hasAttribute('collapsed')) {
-          //firstChildRow=jquery(firstChildRow).parent().get();
-        }
+        }']:not([collapsed])`;
         // insert before this first child row
         collapsingGroup.insertBefore(firstChildRow);
       }
