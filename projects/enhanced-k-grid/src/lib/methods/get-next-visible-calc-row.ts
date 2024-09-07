@@ -29,12 +29,11 @@ export function getNextVisibleCalcRow(
     const index = calcRowsDataRowIndexes.findIndex(
       (ind) => ind === actCalcRowDataRowIndex
     );
-    console.log(actCalcRowDataRowIndex, index);
     let ind = index < calcRowsDataRowIndexes.length - 1 ? index + 1 : index;
     // if the calc rows are bottom aligned, then overwrite 'ind'
     if (rowAlign === 'bottom') ind = index;
     // if bottom and ind/index is -1, then this means, that the next calc row would be a collapsed/hidden one
-    // in this case ind should be the simply the next visible calc row
+    // in this case return the next visible calc row
     if (rowAlign === 'bottom' && ind === -1) {
       // get the calcrowname based on the row index
       const calcRowName = config.rowCalculation.calculatedRows.filter((row) =>
@@ -42,9 +41,9 @@ export function getNextVisibleCalcRow(
       )[0].name;
       // get the appr. row
       const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-        `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"]).${calcRowName}]`
+        `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"]).${calcRowName}`
       )!;
-      console.log(row);
+      return row;
     }
     const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
       `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[ng-reflect-data-row-index="${calcRowsDataRowIndexes[ind]}"]`
