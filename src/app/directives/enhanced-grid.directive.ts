@@ -333,6 +333,8 @@ export class EnhancedGridDirective
           setTimeout(() => {
             // init the group columns, but only if the grouped settings are valid
             methods.initGroupColumns(this.config, this.renderer2);
+            // draw the group level btns
+            methods.drawGroupLevelBtns(this.config, this.renderer2);
           });
       });
     }
@@ -395,6 +397,7 @@ export class EnhancedGridDirective
     this.gridScrollEndListener();
     this.docMouseUpListener();
     this.config.expandCollapseListener.forEach((listener) => listener());
+    this.config.groupLevelListener.forEach((listener) => listener());
   }
 
   @HostListener('keydown', ['$event'])

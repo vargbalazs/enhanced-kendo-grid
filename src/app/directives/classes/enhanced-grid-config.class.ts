@@ -243,4 +243,7 @@ export class EnhancedGridConfig {
 
   // array for the selected datas in the visible selected cells
   public visibleSelectedCellDatas: CellData[] = [];
+
+  // store the click listeners for the group level buttons
+  public groupLevelListener: (() => void)[] = [];
 }
