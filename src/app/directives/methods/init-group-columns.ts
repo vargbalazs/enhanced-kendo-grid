@@ -68,13 +68,17 @@ export function initGroupColumns(
       'innerHTML',
       `<span class="material-symbols-outlined">${icon}</span>`
     );
-    // add calc row state and calc row name as attributes
+    // add calc row state, calc row name and group level as attributes
     renderer2.setAttribute(div, 'state', calcRowStates[calcRowIndex].state);
     renderer2.setAttribute(
       div,
       'calcRowName',
       calcRowStates[calcRowIndex].calcRowName
     );
+    const groupLevel = config.rowCalculation.calculatedRows.find(
+      (row) => row.name === calcRowStates[calcRowIndex].calcRowName
+    )?.groupLevel;
+    renderer2.setAttribute(div, 'level', groupLevel?.toString()!);
     // add click listener
     listener = renderer2.listen(div, 'click', () =>
       methods.toggleCalcRowState(div, renderer2, config)
