@@ -26,13 +26,14 @@ export function drawGroupLevelBtns(
     const btn = renderer2.createElement('button') as HTMLButtonElement;
     renderer2.addClass(btn, 'group-level-btn');
     renderer2.setAttribute(btn, 'level', colName.at(-1)!);
+    renderer2.setAttribute(btn, 'state', 'expanded');
     renderer2.setProperty(btn, 'innerHTML', colName.at(-1));
     // add the group lvl btn
     header.appendChild(btn);
     // attach click event listeners
     // add click listener
     listener = renderer2.listen(btn, 'click', () => {
-      methods.groupLevelBtnClick(btn, config);
+      methods.groupLevelBtnClick(btn, config, renderer2);
     });
     listeners.push(listener);
   });
