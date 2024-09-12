@@ -21,56 +21,28 @@ export function groupLevelBtnClick(
   const maxLevel = config.groupLevelButtons.at(-1)?.level!;
 
   // expanding/collapsing logic
-  switch (newGroupBtnState) {
-    case 'collapsed':
-      if (groupBtnLevel === 3) {
+  switch (groupBtnLevel) {
+    case 3:
+      if (
+        getGroupBtnState(2, config) === 'expanded' &&
+        getGroupBtnState(1, config) === 'expanded'
+      ) {
         toggleLevel(config, 3, newGroupBtnState, renderer2);
-        console.log('col belép3');
+        console.log('case 1');
         break;
       }
-      if (groupBtnLevel === 2 && getGroupBtnState(3, config) === 'expanded') {
-        toggleLevel(config, 3, newGroupBtnState, renderer2);
-        setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
-        }, 700);
-        console.log('col belép2');
-        break;
-      }
-      if (groupBtnLevel === 1 && getGroupBtnState(3, config) === 'expanded') {
-        toggleLevel(config, 3, newGroupBtnState, renderer2);
-        setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
-          setTimeout(() => {
-            toggleLevel(config, 1, newGroupBtnState, renderer2);
-          }, 700);
-        }, 700);
-        console.log('col belép1');
-        break;
-      }
-      if (groupBtnLevel === 1 && getGroupBtnState(2, config) === 'expanded') {
-        toggleLevel(config, 2, newGroupBtnState, renderer2);
-        setTimeout(() => {
-          toggleLevel(config, 1, newGroupBtnState, renderer2);
-        }, 700);
-        console.log('col belép0');
-        break;
-      }
-      break;
-    case 'expanded':
-      if (groupBtnLevel === 3) {
-        toggleLevel(config, 3, newGroupBtnState, renderer2);
-        console.log('exp belép3');
-        break;
-      }
-      if (groupBtnLevel === 2 && getGroupBtnState(3, config) === 'collapsed') {
+      if (
+        getGroupBtnState(2, config) === 'collapsed' &&
+        getGroupBtnState(1, config) === 'expanded'
+      ) {
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 3, newGroupBtnState, renderer2);
         }, 700);
-        console.log('exp belép2');
+        console.log('case 2');
         break;
       }
-      if (groupBtnLevel === 1 && getGroupBtnState(3, config) === 'collapsed') {
+      if (getGroupBtnState(1, config) === 'collapsed') {
         toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
@@ -78,15 +50,7 @@ export function groupLevelBtnClick(
             toggleLevel(config, 3, newGroupBtnState, renderer2);
           }, 700);
         }, 700);
-        console.log('exp belép1');
-        break;
-      }
-      if (groupBtnLevel === 1 && getGroupBtnState(2, config) === 'collapsed') {
-        toggleLevel(config, 1, newGroupBtnState, renderer2);
-        setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
-        }, 700);
-        console.log('exp belép0');
+        console.log('case 3');
         break;
       }
       break;
