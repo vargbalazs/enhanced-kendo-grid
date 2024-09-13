@@ -27,8 +27,8 @@ export function groupLevelBtnClick(
         getGroupBtnState(1, config) === 'expanded'
       ) {
         toggleLevel(config, 3, newGroupBtnState, renderer2);
-        console.log('case 1');
-        checkStatesViaConsol(config);
+        // console.log('case 1');
+        // checkStatesViaConsol(config);
         break;
       }
       if (
@@ -38,9 +38,9 @@ export function groupLevelBtnClick(
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 3, newGroupBtnState, renderer2);
-          checkStatesViaConsol(config);
+          // checkStatesViaConsol(config);
         }, 700);
-        console.log('case 2');
+        // console.log('case 2');
         break;
       }
       if (getGroupBtnState(1, config) === 'collapsed') {
@@ -49,10 +49,10 @@ export function groupLevelBtnClick(
           toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
             toggleLevel(config, 3, newGroupBtnState, renderer2);
-            checkStatesViaConsol(config);
+            // checkStatesViaConsol(config);
           }, 700);
         }, 700);
-        console.log('case 3');
+        // console.log('case 3');
         break;
       }
       break;
@@ -64,9 +64,9 @@ export function groupLevelBtnClick(
         toggleLevel(config, 3, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
-          checkStatesViaConsol(config);
+          // checkStatesViaConsol(config);
         }, 700);
-        console.log('case 9');
+        // console.log('case 9');
         break;
       }
       if (
@@ -74,23 +74,23 @@ export function groupLevelBtnClick(
         getGroupBtnState(3, config) === 'collapsed'
       ) {
         toggleLevel(config, 2, newGroupBtnState, renderer2);
-        console.log('case 10');
-        checkStatesViaConsol(config);
+        // console.log('case 10');
+        // checkStatesViaConsol(config);
         break;
       }
       if (getGroupBtnState(1, config) === 'collapsed') {
         toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
-          checkStatesViaConsol(config);
+          // checkStatesViaConsol(config);
         }, 700);
-        console.log('case 4');
+        // console.log('case 4');
         break;
       }
       if (getGroupBtnState(1, config) === 'expanded') {
         toggleLevel(config, 2, newGroupBtnState, renderer2);
-        console.log('case 5 ');
-        checkStatesViaConsol(config);
+        // console.log('case 5 ');
+        // checkStatesViaConsol(config);
         break;
       }
       break;
@@ -104,10 +104,10 @@ export function groupLevelBtnClick(
           toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
             toggleLevel(config, 1, newGroupBtnState, renderer2);
-            checkStatesViaConsol(config);
+            // checkStatesViaConsol(config);
           }, 700);
         }, 700);
-        console.log('case 6');
+        // console.log('case 6');
         break;
       }
       if (
@@ -117,14 +117,14 @@ export function groupLevelBtnClick(
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 1, newGroupBtnState, renderer2);
-          checkStatesViaConsol(config);
+          // checkStatesViaConsol(config);
         }, 700);
-        console.log('case 7');
+        // console.log('case 7');
         break;
       }
       toggleLevel(config, 1, newGroupBtnState, renderer2);
-      console.log('case 8');
-      checkStatesViaConsol(config);
+      // console.log('case 8');
+      // checkStatesViaConsol(config);
       break;
   }
 }

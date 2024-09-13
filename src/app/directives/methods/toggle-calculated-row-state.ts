@@ -53,7 +53,7 @@ export function toggleCalcRowState(
     // update the state for the corresponding group lvl btn
     groupBtn.collIndicators -= 1;
     groupBtn.expIndicators += 1;
-    // if the number of the collapsed indicators are equal to the number of total indicators, then set the state
+    // if the number of the expanded indicators are equal to the number of total indicators, then set the state
     groupBtn.state =
       groupBtn.expIndicators === groupBtn.totalIndicators
         ? 'expanded'
@@ -73,9 +73,6 @@ export function toggleCalcRowState(
         const indicators = (<HTMLElement>(
           config.gridElRef.nativeElement
         )).querySelectorAll(`.group-indicator[level="${i.toString()}"]`);
-        // const actLevelIndicators = (<HTMLElement>(
-        //   config.gridElRef.nativeElement
-        // )).querySelectorAll(`.group-indicator[level="${level.toString()}"]`);
         if (
           Array.from(indicators).every(
             (indicator) => indicator.getAttribute('state') === 'expanded'
