@@ -18,7 +18,6 @@ export function groupLevelBtnClick(
     (btn) => btn.level === groupBtnLevel
   )!;
   groupBtn.state = newGroupBtnState;
-  const maxLevel = config.groupLevelButtons.at(-1)?.level!;
 
   // expanding/collapsing logic
   switch (groupBtnLevel) {
@@ -29,6 +28,7 @@ export function groupLevelBtnClick(
       ) {
         toggleLevel(config, 3, newGroupBtnState, renderer2);
         console.log('case 1');
+        checkStatesViaConsol(config);
         break;
       }
       if (
@@ -38,6 +38,7 @@ export function groupLevelBtnClick(
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 3, newGroupBtnState, renderer2);
+          checkStatesViaConsol(config);
         }, 700);
         console.log('case 2');
         break;
@@ -48,6 +49,7 @@ export function groupLevelBtnClick(
           toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
             toggleLevel(config, 3, newGroupBtnState, renderer2);
+            checkStatesViaConsol(config);
           }, 700);
         }, 700);
         console.log('case 3');
@@ -55,10 +57,32 @@ export function groupLevelBtnClick(
       }
       break;
     case 2:
+      if (
+        getGroupBtnState(2, config) === 'collapsed' &&
+        getGroupBtnState(3, config) === 'expanded'
+      ) {
+        toggleLevel(config, 3, newGroupBtnState, renderer2);
+        setTimeout(() => {
+          toggleLevel(config, 2, newGroupBtnState, renderer2);
+          checkStatesViaConsol(config);
+        }, 700);
+        console.log('case 9');
+        break;
+      }
+      if (
+        getGroupBtnState(2, config) === 'collapsed' &&
+        getGroupBtnState(3, config) === 'collapsed'
+      ) {
+        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        console.log('case 10');
+        checkStatesViaConsol(config);
+        break;
+      }
       if (getGroupBtnState(1, config) === 'collapsed') {
         toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
+          checkStatesViaConsol(config);
         }, 700);
         console.log('case 4');
         break;
@@ -66,8 +90,41 @@ export function groupLevelBtnClick(
       if (getGroupBtnState(1, config) === 'expanded') {
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         console.log('case 5 ');
+        checkStatesViaConsol(config);
         break;
       }
+      break;
+    case 1:
+      if (
+        getGroupBtnState(1, config) === 'collapsed' &&
+        getGroupBtnState(3, config) === 'expanded'
+      ) {
+        toggleLevel(config, 3, newGroupBtnState, renderer2);
+        setTimeout(() => {
+          toggleLevel(config, 2, newGroupBtnState, renderer2);
+          setTimeout(() => {
+            toggleLevel(config, 1, newGroupBtnState, renderer2);
+            checkStatesViaConsol(config);
+          }, 700);
+        }, 700);
+        console.log('case 6');
+        break;
+      }
+      if (
+        getGroupBtnState(1, config) === 'collapsed' &&
+        getGroupBtnState(2, config) === 'expanded'
+      ) {
+        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        setTimeout(() => {
+          toggleLevel(config, 1, newGroupBtnState, renderer2);
+          checkStatesViaConsol(config);
+        }, 700);
+        console.log('case 7');
+        break;
+      }
+      toggleLevel(config, 1, newGroupBtnState, renderer2);
+      console.log('case 8');
+      checkStatesViaConsol(config);
       break;
   }
 }
@@ -97,4 +154,24 @@ function getGroupBtnState(
   config: EnhancedGridConfig
 ): string | undefined {
   return config.groupLevelButtons.find((btn) => btn.level === level)?.state;
+}
+
+function checkStatesViaConsol(config: EnhancedGridConfig) {
+  console.table(config.groupLevelButtons, [
+    'level',
+    'state',
+    'expIndicators',
+    'collIndicators',
+  ]);
+  const groupLvlBtns = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelectorAll('.group-level-btn');
+  const groupLvlBtnData: any[] = [];
+  groupLvlBtns.forEach((btn) => {
+    groupLvlBtnData.push({
+      level: btn.getAttribute('level'),
+      state: btn.getAttribute('state'),
+    });
+  });
+  console.table(groupLvlBtnData);
 }
