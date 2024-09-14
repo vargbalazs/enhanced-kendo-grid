@@ -35,20 +35,24 @@ export function groupLevelBtnClick(
         getGroupBtnState(2, config) === 'collapsed' &&
         getGroupBtnState(1, config) === 'expanded'
       ) {
+        methods.drawOverlay(config, renderer2, 'on');
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 3, newGroupBtnState, renderer2);
+          methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
         // console.log('case 2');
         break;
       }
       if (getGroupBtnState(1, config) === 'collapsed') {
+        methods.drawOverlay(config, renderer2, 'on');
         toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
             toggleLevel(config, 3, newGroupBtnState, renderer2);
+            methods.drawOverlay(config, renderer2, 'off');
             // checkStatesViaConsol(config);
           }, 700);
         }, 700);
@@ -61,9 +65,11 @@ export function groupLevelBtnClick(
         getGroupBtnState(2, config) === 'collapsed' &&
         getGroupBtnState(3, config) === 'expanded'
       ) {
+        methods.drawOverlay(config, renderer2, 'on');
         toggleLevel(config, 3, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
+          methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
         // console.log('case 9');
@@ -79,9 +85,11 @@ export function groupLevelBtnClick(
         break;
       }
       if (getGroupBtnState(1, config) === 'collapsed') {
+        methods.drawOverlay(config, renderer2, 'on');
         toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
+          methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
         // console.log('case 4');
@@ -99,12 +107,14 @@ export function groupLevelBtnClick(
         getGroupBtnState(1, config) === 'collapsed' &&
         getGroupBtnState(3, config) === 'expanded'
       ) {
+        methods.drawOverlay(config, renderer2, 'on');
         toggleLevel(config, 3, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
             toggleLevel(config, 1, newGroupBtnState, renderer2);
             // checkStatesViaConsol(config);
+            methods.drawOverlay(config, renderer2, 'off');
           }, 700);
         }, 700);
         // console.log('case 6');
@@ -114,9 +124,11 @@ export function groupLevelBtnClick(
         getGroupBtnState(1, config) === 'collapsed' &&
         getGroupBtnState(2, config) === 'expanded'
       ) {
+        methods.drawOverlay(config, renderer2, 'on');
         toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
           toggleLevel(config, 1, newGroupBtnState, renderer2);
+          methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
         // console.log('case 7');

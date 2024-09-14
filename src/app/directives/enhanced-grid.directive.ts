@@ -383,6 +383,13 @@ export class EnhancedGridDirective
         methods.toggleSortedColumnClass(sortChangeEvent, this.config);
       }
     );
+
+    // if the grid is grouped, then store the original width and height of the grid
+    if (this.grouped) {
+      const grid = <HTMLElement>this.config.gridElRef.nativeElement;
+      this.config.overlay.originalWidth = getComputedStyle(grid).width;
+      this.config.overlay.originalHeight = getComputedStyle(grid).height;
+    }
   }
 
   ngOnDestroy(): void {

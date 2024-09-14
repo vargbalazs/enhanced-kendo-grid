@@ -20,6 +20,7 @@ import { FormErrorMessage } from '../interfaces/form-error-message.interface';
 import { ListSource } from '../interfaces/list-source.interface';
 import { GroupedData } from '../interfaces/grouped-data.interface';
 import { GroupLevelButton } from '../interfaces/group-level-button.interface';
+import { Overlay } from '../interfaces/overlay.interface';
 
 export class EnhancedGridConfig {
   // the data of the grid - just one page, if paging is enabled
@@ -250,4 +251,11 @@ export class EnhancedGridConfig {
 
   // store the group level buttons and their states
   public groupLevelButtons: GroupLevelButton[] = [];
+
+  // div element for the overlay
+  public overlay: Overlay = {
+    element: document.createElement('div'),
+    originalWidth: '',
+    originalHeight: '',
+  };
 }
