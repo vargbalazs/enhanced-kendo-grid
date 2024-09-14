@@ -26,9 +26,27 @@ export function groupLevelBtnClick(
         getGroupBtnState(2, config) === 'expanded' &&
         getGroupBtnState(1, config) === 'expanded'
       ) {
-        toggleLevel(config, 3, newGroupBtnState, renderer2);
-        // console.log('case 1');
-        // checkStatesViaConsol(config);
+        // if lvl 2 has at least one collapsed group, then first expand it
+        // this happens, if we collapse a group by clicking on an indicator
+        const level2Indicator = (<HTMLElement>(
+          config.gridElRef.nativeElement
+        )).querySelectorAll(
+          `.group-indicator[level="${2}"][state="collapsed"]`
+        ).length;
+        if (level2Indicator > 0) {
+          methods.drawOverlay(config, renderer2, 'on');
+          methods.toggleLevel(config, 2, 'expanded', renderer2);
+          setTimeout(() => {
+            methods.toggleLevel(config, 3, newGroupBtnState, renderer2);
+            // console.log('case 1');
+            // checkStatesViaConsol(config);
+            methods.drawOverlay(config, renderer2, 'off');
+          }, 700);
+        } else {
+          methods.toggleLevel(config, 3, newGroupBtnState, renderer2);
+          // console.log('case 1');
+          // checkStatesViaConsol(config);
+        }
         break;
       }
       if (
@@ -36,9 +54,9 @@ export function groupLevelBtnClick(
         getGroupBtnState(1, config) === 'expanded'
       ) {
         methods.drawOverlay(config, renderer2, 'on');
-        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
-          toggleLevel(config, 3, newGroupBtnState, renderer2);
+          methods.toggleLevel(config, 3, newGroupBtnState, renderer2);
           methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
@@ -47,11 +65,11 @@ export function groupLevelBtnClick(
       }
       if (getGroupBtnState(1, config) === 'collapsed') {
         methods.drawOverlay(config, renderer2, 'on');
-        toggleLevel(config, 1, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
+          methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
-            toggleLevel(config, 3, newGroupBtnState, renderer2);
+            methods.toggleLevel(config, 3, newGroupBtnState, renderer2);
             methods.drawOverlay(config, renderer2, 'off');
             // checkStatesViaConsol(config);
           }, 700);
@@ -66,9 +84,9 @@ export function groupLevelBtnClick(
         getGroupBtnState(3, config) === 'expanded'
       ) {
         methods.drawOverlay(config, renderer2, 'on');
-        toggleLevel(config, 3, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 3, newGroupBtnState, renderer2);
         setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
+          methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
           methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
@@ -79,16 +97,16 @@ export function groupLevelBtnClick(
         getGroupBtnState(2, config) === 'collapsed' &&
         getGroupBtnState(3, config) === 'collapsed'
       ) {
-        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
         // console.log('case 10');
         // checkStatesViaConsol(config);
         break;
       }
       if (getGroupBtnState(1, config) === 'collapsed') {
         methods.drawOverlay(config, renderer2, 'on');
-        toggleLevel(config, 1, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 1, newGroupBtnState, renderer2);
         setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
+          methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
           methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
@@ -96,7 +114,7 @@ export function groupLevelBtnClick(
         break;
       }
       if (getGroupBtnState(1, config) === 'expanded') {
-        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
         // console.log('case 5 ');
         // checkStatesViaConsol(config);
         break;
@@ -108,11 +126,11 @@ export function groupLevelBtnClick(
         getGroupBtnState(3, config) === 'expanded'
       ) {
         methods.drawOverlay(config, renderer2, 'on');
-        toggleLevel(config, 3, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 3, newGroupBtnState, renderer2);
         setTimeout(() => {
-          toggleLevel(config, 2, newGroupBtnState, renderer2);
+          methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
           setTimeout(() => {
-            toggleLevel(config, 1, newGroupBtnState, renderer2);
+            methods.toggleLevel(config, 1, newGroupBtnState, renderer2);
             // checkStatesViaConsol(config);
             methods.drawOverlay(config, renderer2, 'off');
           }, 700);
@@ -125,40 +143,20 @@ export function groupLevelBtnClick(
         getGroupBtnState(2, config) === 'expanded'
       ) {
         methods.drawOverlay(config, renderer2, 'on');
-        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        methods.toggleLevel(config, 2, newGroupBtnState, renderer2);
         setTimeout(() => {
-          toggleLevel(config, 1, newGroupBtnState, renderer2);
+          methods.toggleLevel(config, 1, newGroupBtnState, renderer2);
           methods.drawOverlay(config, renderer2, 'off');
           // checkStatesViaConsol(config);
         }, 700);
         // console.log('case 7');
         break;
       }
-      toggleLevel(config, 1, newGroupBtnState, renderer2);
+      methods.toggleLevel(config, 1, newGroupBtnState, renderer2);
       // console.log('case 8');
       // checkStatesViaConsol(config);
       break;
   }
-}
-
-function toggleLevel(
-  config: EnhancedGridConfig,
-  level: number,
-  newGroupBtnState: string,
-  renderer2: Renderer2
-) {
-  // get the group indicators for this level and perform a click action
-  const indicators = (<HTMLElement>(
-    config.gridElRef.nativeElement
-  )).querySelectorAll(`.group-indicator[level="${level.toString()}"]`);
-  indicators.forEach((indicator) => {
-    // get the actual state for the indicator/calc row
-    const indicatorState = indicator.getAttribute('state');
-    // toggle the state only if the indicator/calc row hasn't the new state already
-    if (indicatorState !== newGroupBtnState) {
-      methods.toggleCalcRowState(indicator, renderer2, config);
-    }
-  });
 }
 
 function getGroupBtnState(
