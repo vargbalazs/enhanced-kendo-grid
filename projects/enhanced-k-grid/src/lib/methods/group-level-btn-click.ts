@@ -159,13 +159,6 @@ export function groupLevelBtnClick(
   }
 }
 
-function getGroupBtnState(
-  level: number,
-  config: EnhancedGridConfig
-): string | undefined {
-  return config.groupLevelButtons.find((btn) => btn.level === level)?.state;
-}
-
 function checkStatesViaConsol(config: EnhancedGridConfig) {
   console.table(config.groupLevelButtons, [
     'level',
