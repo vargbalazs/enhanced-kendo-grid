@@ -1,5 +1,6 @@
 import { Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import * as methods from './index';
 
 export function drawGroupLevelBtns(
   config: EnhancedGridConfig,
@@ -30,7 +31,9 @@ export function drawGroupLevelBtns(
     header.appendChild(btn);
     // attach click event listeners
     // add click listener
-    listener = renderer2.listen(btn, 'click', () => {});
+    listener = renderer2.listen(btn, 'click', () => {
+      methods.groupLevelBtnClick(btn, config);
+    });
     listeners.push(listener);
   });
 
