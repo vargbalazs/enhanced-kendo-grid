@@ -349,3 +349,13 @@
 .enhanced.k-grid .group-indicator .material-symbols-outlined {
   font-size: 15px;
 }
+
+.enhanced.k-grid .group-level-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  padding-inline: 4px;
+  font-size: 10px;
+  cursor: pointer;
+}
