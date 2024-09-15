@@ -24,6 +24,10 @@
     [listSources]="listSources"
     [grouped]="true"
   >
+    <ng-template kendoGridToolbarTemplate>
+      <button (click)="expandAll()">Expand all</button>
+      <button (click)="collapseAll()">Collapse all</button>
+    </ng-template>
     <kendo-grid-column
       field="grouplevel1"
       [width]="20"

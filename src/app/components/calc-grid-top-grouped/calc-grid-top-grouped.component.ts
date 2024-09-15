@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,6 +14,7 @@ import {
 } from '@progress/kendo-angular-grid';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { DataService } from 'src/app/data/data.service';
+import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directive';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
 import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
@@ -29,6 +30,8 @@ import { Row } from 'src/app/model/row.model';
   styleUrls: ['./calc-grid-top-grouped.component.css'],
 })
 export class CalcGridTopGroupedComponent {
+  @ViewChild(EnhancedGridDirective)
+  enhancedGridDirective!: EnhancedGridDirective;
   rows: Row[] = inject(DataService).generateData(50);
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
@@ -212,5 +215,13 @@ export class CalcGridTopGroupedComponent {
     return (control: AbstractControl): ValidationErrors | null => {
       return !control.value ? { customReq: true } : null;
     };
+  }
+
+  expandAll() {
+    this.enhancedGridDirective.expandAllGroup();
+  }
+
+  collapseAll() {
+    this.enhancedGridDirective.collapseAllGroup();
   }
 }
