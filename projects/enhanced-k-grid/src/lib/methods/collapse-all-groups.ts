@@ -25,7 +25,7 @@ export function collapseAllGroups(
     // if the last btn is expanded or any of the last level indicators is expanded
     if (
       methods.getGroupBtnState(3, config) === 'expanded' ||
-      indicators.length > 0
+      (indicators.length > 0 && maxLevel === 3)
     ) {
       // collapse from last to first
       methods.drawOverlay(config, renderer2, 'on');
