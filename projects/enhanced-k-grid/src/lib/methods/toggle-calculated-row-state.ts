@@ -21,15 +21,18 @@ export function toggleCalcRowState(
     // update the state for the corresponding group lvl btn
     groupBtn.collIndicators += 1;
     groupBtn.expIndicators -= 1;
-    // if there is at least one collapsed indicator, then set the state of the appr. group lvl btn accordingly
-    groupBtn.state = groupBtn.collIndicators > 0 ? 'collapsed' : 'expanded';
-    if (groupBtn.collIndicators > 0) {
+    // if the number of the collapsed indicators are equal to the number of total indicators, then set the state
+    groupBtn.state =
+      groupBtn.collIndicators === groupBtn.totalIndicators
+        ? 'collapsed'
+        : 'expanded';
+    if (groupBtn.collIndicators === groupBtn.totalIndicators) {
       // set the state for the clicked btn itself
       const btnEl = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
         `.group-level-btn[level="${level}"]`
       );
       renderer2.setAttribute(btnEl, 'state', 'collapsed');
-      // set also the state for all next level btns
+      // set also the state for all next level btns, because in case of collapsing they should be collapsed too
       const maxLevel = config.groupLevelButtons.at(-1)?.level!;
       for (let i = level + 1; i <= maxLevel; i++) {
         const groupBtnNext = config.groupLevelButtons.find(
@@ -50,15 +53,18 @@ export function toggleCalcRowState(
     // update the state for the corresponding group lvl btn
     groupBtn.collIndicators -= 1;
     groupBtn.expIndicators += 1;
-    // if there is at least one collapsed indicator, then set the state of the appr. group lvl btn accordingly
-    groupBtn.state = groupBtn.collIndicators > 0 ? 'collapsed' : 'expanded';
+    // if the number of the collapsed indicators are equal to the number of total indicators, then set the state
+    groupBtn.state =
+      groupBtn.expIndicators === groupBtn.totalIndicators
+        ? 'expanded'
+        : 'collapsed';
     if (groupBtn.expIndicators === groupBtn.totalIndicators) {
       // set the state for the clicked btn itself
       const btnEl = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
         `.group-level-btn[level="${level}"]`
       );
       renderer2.setAttribute(btnEl, 'state', 'expanded');
-      // set also the state for all next level btns, but only if all of the indicators of the next level are expanded
+      // set also the state for all next level btns, if every indicator is expanded
       const maxLevel = config.groupLevelButtons.at(-1)?.level!;
       for (let i = level + 1; i <= maxLevel; i++) {
         const groupBtnNext = config.groupLevelButtons.find(
@@ -67,6 +73,9 @@ export function toggleCalcRowState(
         const indicators = (<HTMLElement>(
           config.gridElRef.nativeElement
         )).querySelectorAll(`.group-indicator[level="${i.toString()}"]`);
+        // const actLevelIndicators = (<HTMLElement>(
+        //   config.gridElRef.nativeElement
+        // )).querySelectorAll(`.group-indicator[level="${level.toString()}"]`);
         if (
           Array.from(indicators).every(
             (indicator) => indicator.getAttribute('state') === 'expanded'
