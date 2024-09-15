@@ -633,4 +633,12 @@ export class EnhancedGridDirective
     this.selectedKeysChange.emit(this.config.selectedCells);
     this.aggregatesChange.emit(this.config.aggregates);
   }
+
+  expandAllGroup() {
+    methods.expandAllGroups(this.config, this.renderer2);
+  }
+
+  collapseAllGroup() {
+    console.log('collapse');
+  }
 }
