@@ -70,3 +70,4 @@ export * from './get-child-row-indexes';
 export * from './get-next-visible-calc-row';
 export * from './draw-group-level-btns';
 export * from './group-level-btn-click';
+export * from './draw-overlay';
