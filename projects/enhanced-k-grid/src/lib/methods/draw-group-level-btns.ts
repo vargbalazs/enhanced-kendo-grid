@@ -14,6 +14,9 @@ export function drawGroupLevelBtns(
         field: col.field,
         level: +col.field.at(-1)!,
         state: 'expanded',
+        expIndicators: getTotalIndicacorsForLevel(+col.field.at(-1)!, config),
+        collIndicators: 0,
+        totalIndicators: getTotalIndicacorsForLevel(+col.field.at(-1)!, config),
       });
     });
   // define click event listeners
@@ -43,4 +46,15 @@ export function drawGroupLevelBtns(
 
   // store the click listeners for unlistening on destroy
   config.groupLevelListener = listeners;
+}
+
+// get the number of total indicators (+ signs)
+function getTotalIndicacorsForLevel(
+  level: number,
+  config: EnhancedGridConfig
+): number {
+  const totalInd = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelectorAll(`.group-indicator[level="${level}"]`).length;
+  return totalInd;
 }
