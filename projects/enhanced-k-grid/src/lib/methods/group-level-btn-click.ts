@@ -54,6 +54,21 @@ export function groupLevelBtnClick(
         break;
       }
       break;
+    case 2:
+      if (getGroupBtnState(1, config) === 'collapsed') {
+        toggleLevel(config, 1, newGroupBtnState, renderer2);
+        setTimeout(() => {
+          toggleLevel(config, 2, newGroupBtnState, renderer2);
+        }, 700);
+        console.log('case 4');
+        break;
+      }
+      if (getGroupBtnState(1, config) === 'expanded') {
+        toggleLevel(config, 2, newGroupBtnState, renderer2);
+        console.log('case 5 ');
+        break;
+      }
+      break;
   }
 }
 
