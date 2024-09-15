@@ -7,27 +7,30 @@ export function drawGroupLevelBtns(
   renderer2: Renderer2
 ) {
   // get the group column names
-  const groupColNames: string[] = [];
   config.columns
     .filter((col) => col.field.startsWith('grouplevel'))
     .forEach((col) => {
-      groupColNames.push(col.field);
+      config.groupLevelButtons.push({
+        field: col.field,
+        level: +col.field.at(-1)!,
+        state: 'expanded',
+      });
     });
   // define click event listeners
   const listeners: (() => void)[] = [];
   let listener!: () => void;
   // iterate through the group columns
-  groupColNames.forEach((colName) => {
+  config.groupLevelButtons.forEach((groupBtn) => {
     // query for the header elements
     const header = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `th[kendogridlogicalcell][ng-reflect-header-label-text=${colName}] span.k-link`
+      `th[kendogridlogicalcell][ng-reflect-header-label-text=${groupBtn.field}] span.k-link`
     )!;
     // build the btn with the group lvl in it
     const btn = renderer2.createElement('button') as HTMLButtonElement;
     renderer2.addClass(btn, 'group-level-btn');
-    renderer2.setAttribute(btn, 'level', colName.at(-1)!);
+    renderer2.setAttribute(btn, 'level', groupBtn.level.toString());
     renderer2.setAttribute(btn, 'state', 'expanded');
-    renderer2.setProperty(btn, 'innerHTML', colName.at(-1));
+    renderer2.setProperty(btn, 'innerHTML', groupBtn.level);
     // add the group lvl btn
     header.appendChild(btn);
     // attach click event listeners
