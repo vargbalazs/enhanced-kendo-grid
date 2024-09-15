@@ -11,66 +11,53 @@ export function expandAllGroups(
   const groupBtns = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelectorAll('.group-level-btn');
-  // loop through the buttons and expand it, if the state is collapsed
-  // but break after the first collapsed btn, because we will expand all the next buttons after that
-  for (let i = 0; i <= groupBtns.length - 1; i++) {
-    const btn = groupBtns.item(i);
-    if (btn.getAttribute('state') === 'collapsed') {
-      const level = +btn.getAttribute('level')!;
-      // first set the expanded state both in the dom and in the config class
-      btn.setAttribute('state', 'expanded');
-      const groupBtn = config.groupLevelButtons.find(
-        (btn) => btn.level === level
-      )!;
-      groupBtn.state = 'expanded';
-      // expand this level and all others after that
-      switch (level) {
-        case 1:
-          methods.drawOverlay(config, renderer2, 'on');
-          methods.toggleLevel(config, 1, 'expanded', renderer2);
-          setTimeout(() => {
-            methods.toggleLevel(config, 2, 'expanded', renderer2);
-            setTimeout(() => {
-              methods.toggleLevel(config, 3, 'expanded', renderer2);
-              methods.drawOverlay(config, renderer2, 'off');
-              // checkStatesViaConsol(config);
-            }, 700);
-          }, 700);
-          break;
-        case 2:
-          methods.drawOverlay(config, renderer2, 'on');
-          methods.toggleLevel(config, 2, 'expanded', renderer2);
-          setTimeout(() => {
-            methods.toggleLevel(config, 3, 'expanded', renderer2);
-            methods.drawOverlay(config, renderer2, 'off');
-            // checkStatesViaConsol(config);
-          }, 700);
-          break;
-        case 3:
-          // if lvl 2 has at least one collapsed group, then first expand it
-          // this happens, if we collapse a group by clicking on an indicator
-          const level2Indicator = (<HTMLElement>(
-            config.gridElRef.nativeElement
-          )).querySelectorAll(
-            `.group-indicator[level="${2}"][state="collapsed"]`
-          ).length;
-          if (level2Indicator > 0) {
-            methods.drawOverlay(config, renderer2, 'on');
-            methods.toggleLevel(config, 2, 'expanded', renderer2);
-            setTimeout(() => {
-              methods.toggleLevel(config, 3, 'expanded', renderer2);
-              methods.drawOverlay(config, renderer2, 'off');
-              // checkStatesViaConsol(config);
-            }, 700);
-          } else {
-            methods.toggleLevel(config, 3, 'expanded', renderer2);
-            // checkStatesViaConsol(config);
-          }
-          break;
-      }
-      break;
-    }
+  // if all group indicators are expanded, then return
+  const indicators = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelectorAll('.group-indicator');
+  if (
+    Array.from(indicators).every(
+      (btn) => btn.getAttribute('state') === 'expanded'
+    )
+  ) {
+    return;
   }
+  const maxLevel = config.groupLevelButtons.at(-1)?.level!;
+  for (let i = 0; i <= groupBtns.length - 1; i++) {
+    // first set the expanded state both in the dom and in the config class
+    const btn = groupBtns.item(i);
+    btn.setAttribute('state', 'expanded');
+    const groupBtn = config.groupLevelButtons.find(
+      (btn) => btn.level === i + 1
+    )!;
+    groupBtn.state = 'expanded';
+  }
+  // do the expanding
+  // it can be, that not all 3 levels are present, in this case we have to handle this
+  if (maxLevel === 1) {
+    methods.toggleLevel(config, 1, 'expanded', renderer2);
+    // checkStatesViaConsol(config);
+    return;
+  }
+  if (maxLevel === 2) {
+    methods.drawOverlay(config, renderer2, 'on');
+    methods.toggleLevel(config, 1, 'expanded', renderer2);
+    setTimeout(() => {
+      methods.toggleLevel(config, 2, 'expanded', renderer2);
+      methods.drawOverlay(config, renderer2, 'off');
+    }, 700);
+    return;
+  }
+  methods.drawOverlay(config, renderer2, 'on');
+  methods.toggleLevel(config, 1, 'expanded', renderer2);
+  setTimeout(() => {
+    methods.toggleLevel(config, 2, 'expanded', renderer2);
+    setTimeout(() => {
+      methods.toggleLevel(config, 3, 'expanded', renderer2);
+      methods.drawOverlay(config, renderer2, 'off');
+      // checkStatesViaConsol(config);
+    }, 700);
+  }, 700);
 }
 
 function checkStatesViaConsol(config: EnhancedGridConfig) {
