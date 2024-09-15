@@ -639,6 +639,6 @@ export class EnhancedGridDirective
   }
 
   collapseAllGroup() {
-    console.log('collapse');
+    methods.collapseAllGroups(this.config, this.renderer2);
   }
 }
