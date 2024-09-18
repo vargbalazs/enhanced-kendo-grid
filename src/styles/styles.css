@@ -360,7 +360,7 @@
   cursor: pointer;
 }
 
-.enhanced.k-grid + .overlay {
+.enhanced.k-grid .overlay {
   background-color: black;
   opacity: 0.1;
   position: absolute;
