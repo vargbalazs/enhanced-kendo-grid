@@ -14,9 +14,9 @@ export function drawOverlay(
     renderer2.addClass(overlay, 'overlay');
     renderer2.setStyle(overlay, 'width', config.overlay.originalWidth);
     renderer2.setStyle(overlay, 'height', config.overlay.originalHeight);
-    renderer2.appendChild(gridParent, overlay);
+    renderer2.appendChild(grid, overlay);
     config.overlay.element = overlay;
   } else {
-    renderer2.removeChild(gridParent, config.overlay.element);
+    renderer2.removeChild(grid, config.overlay.element);
   }
 }
