@@ -12,7 +12,8 @@ export function drawOverlay(
   const gridParent = grid.parentElement!;
   if (visibility === 'on') {
     renderer2.addClass(overlay, 'overlay');
-    renderer2.setStyle(overlay, 'width', config.overlay.originalWidth);
+    //renderer2.setStyle(overlay, 'width', config.overlay.originalWidth);
+    renderer2.setStyle(overlay, 'width', getComputedStyle(grid).width);
     renderer2.setStyle(overlay, 'height', config.overlay.originalHeight);
     renderer2.appendChild(grid, overlay);
     config.overlay.element = overlay;
