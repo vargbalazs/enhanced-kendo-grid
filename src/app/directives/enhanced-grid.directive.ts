@@ -118,6 +118,8 @@ export class EnhancedGridDirective
     this.config = new EnhancedGridConfig();
     // get the element ref of the grid
     this.config.gridElRef = element;
+    // store the grid component
+    this.config.gridComponent = this.grid;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -268,6 +270,9 @@ export class EnhancedGridDirective
 
     // store the grouped setting
     this.config.grouped = this.grouped;
+
+    // store the form group creating function
+    this.config.cellEditingFormGroupFn = this.kendoGridInCellEditing;
 
     // reset the grid
     this.resetState();

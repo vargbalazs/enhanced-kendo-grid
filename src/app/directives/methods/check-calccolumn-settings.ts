@@ -49,5 +49,12 @@ export function checkCalcColSettings(config: EnhancedGridConfig) {
         }
       });
     }
+    // if we have custom calc column, then there should be exist also a custom function
+    if (calcCol.calculateFunction === 'custom' && !calcCol.customFunction) {
+      console.error(
+        `The column '${calcCol.name}' is set to a custom calculated one, but there is no custom function defined.`
+      );
+      config.wrongCalcColSettings = true;
+    }
   });
 }
