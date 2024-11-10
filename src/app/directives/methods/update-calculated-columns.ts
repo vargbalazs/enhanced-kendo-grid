@@ -103,9 +103,9 @@ export function updateCalculatedColumns(config: EnhancedGridConfig) {
           });
           if (keyAndFieldCalcCol.fieldName) {
             row[keyAndFieldCalcCol.key][keyAndFieldCalcCol.fieldName] =
-              'custom';
+              calcCol.customFunction!(fg, row);
           } else {
-            row[calcCol.field] = calcCol.customFunction!(fg);
+            row[calcCol.field] = calcCol.customFunction!(fg, row);
           }
         });
         break;

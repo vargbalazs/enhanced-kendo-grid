@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,6 +14,7 @@ import {
 } from '@progress/kendo-angular-grid';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { DataService } from 'src/app/data/data.service';
+import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directive';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
 import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
@@ -29,6 +30,8 @@ import { Row } from 'src/app/model/row.model';
   styleUrls: ['./calc-grid-custom.component.css'],
 })
 export class CalcGridCustomComponent {
+  @ViewChild(EnhancedGridDirective)
+  enhancedGridDirective!: EnhancedGridDirective;
   rows: Row[] = inject(DataService).generateData(50);
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
@@ -94,15 +97,68 @@ export class CalcGridCustomComponent {
   colCalculation: ColumnCalculation = {
     calculatedColumns: [
       {
-        name: 'total-q1',
-        field: 'totalq1',
+        name: 'calc-column1',
+        field: 'calccolumn1',
         calculateByColumns: ['jan', 'feb', 'mar'],
         calculateFunction: 'custom',
-        customFunction: (formGroup: typeof this.formGroup) => {
+        customFunction: (
+          formGroup: typeof this.formGroup,
+          row: Row & { [key: string]: any }
+        ) => {
           let result =
             +formGroup.controls.jan.value! +
-            +formGroup.controls.feb.value! -
-            formGroup.controls.mar.value!;
+            +formGroup.controls.feb.value! +
+            +formGroup.controls.mar.value!;
+          return result;
+        },
+      },
+      {
+        name: 'calc-column2',
+        field: 'calccolumn2',
+        calculateByColumns: ['jan', 'feb', 'mar'],
+        calculateFunction: 'custom',
+        customFunction: (
+          formGroup: typeof this.formGroup,
+          row: Row & { [key: string]: any }
+        ) => {
+          let result = 0;
+          switch (formGroup.controls.category.value) {
+            case 'cat 1':
+              let cat1sum = +this.enhancedGridDirective.getCalculatedData(
+                'calcsum1',
+                'calccolumn1'
+              );
+              result = +row['calccolumn1'] / cat1sum;
+              break;
+            case 'cat 2':
+              let cat2sum = +this.enhancedGridDirective.getCalculatedData(
+                'calcsum2',
+                'calccolumn1'
+              );
+              result = +row['calccolumn1'] / cat2sum;
+              break;
+            case 'cat 3':
+              let cat3sum = +this.enhancedGridDirective.getCalculatedData(
+                'calcsum4',
+                'calccolumn1'
+              );
+              result = +row['calccolumn1'] / cat3sum;
+              break;
+            case 'cat 4':
+              let cat4sum = +this.enhancedGridDirective.getCalculatedData(
+                'calcsum5',
+                'calccolumn1'
+              );
+              result = +row['calccolumn1'] / cat4sum;
+              break;
+            case 'cat 5':
+              let cat5sum = +this.enhancedGridDirective.getCalculatedData(
+                'calcsum6',
+                'calccolumn1'
+              );
+              result = +row['calccolumn1'] / cat5sum;
+              break;
+          }
           return result;
         },
       },
@@ -111,7 +167,7 @@ export class CalcGridCustomComponent {
 
   rowCalculation: RowCalculation = {
     titleField: 'id',
-    calculatedFields: ['jan', 'feb', 'mar', 'totalq1'],
+    calculatedFields: ['jan', 'feb', 'mar', 'calccolumn1', 'calccolumn2'],
     calculatedRows: [
       {
         name: 'calcsum1',

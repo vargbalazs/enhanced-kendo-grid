@@ -330,6 +330,15 @@ export class EnhancedGridDirective
           this.grid
         );
         methods.updateCalculatedRows(this.config);
+        // if we have any custom calculated column, then we update the calc column values one again
+        // becase it can be, that some of the custom calculated columns are using calculated row values
+        if (
+          this.config.colCalculation.calculatedColumns.some(
+            (calcCol) => calcCol.calculateFunction === 'custom'
+          )
+        ) {
+          methods.updateCalculatedColumns(this.config);
+        }
         // if the grid is a grouped one and the settings are ok, then add the groupp column(s)
         if (
           this.config.grouped &&
@@ -639,11 +648,18 @@ export class EnhancedGridDirective
     this.aggregatesChange.emit(this.config.aggregates);
   }
 
+  // epxands all groups (if grid is grouped)
   expandAllGroup() {
     methods.expandAllGroups(this.config, this.renderer2);
   }
 
+  // collapse all groups (if grid is grouped)
   collapseAllGroup() {
     methods.collapseAllGroups(this.config, this.renderer2);
+  }
+
+  // get data from a calculated row in a given column
+  getCalculatedData(calcRowName: string, columnField: string): any {
+    return methods.getCalcData(calcRowName, columnField, this.config);
   }
 }
