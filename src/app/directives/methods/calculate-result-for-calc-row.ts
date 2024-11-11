@@ -10,10 +10,11 @@ export function calculateResultForCalcRow(
   let result = 0;
   switch (calcRow.calculateFunction) {
     case 'sum':
-      result = filteredData.reduce((acc, rowData) => {
-        if (key === 'calccolumn2') console.log(parseFloat(rowData[key]));
-        return fieldName ? acc + +rowData[key][fieldName] : acc + +rowData[key];
-      }, 0);
+      result = filteredData.reduce(
+        (acc, rowData) =>
+          fieldName ? acc + +rowData[key][fieldName] : acc + +rowData[key],
+        0
+      );
       break;
     case 'avg':
       let countOfNumberValues = 0;
