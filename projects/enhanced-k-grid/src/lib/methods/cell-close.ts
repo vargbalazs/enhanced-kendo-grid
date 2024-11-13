@@ -102,27 +102,31 @@ export function cellClose(
   // enable filtering, but only if the data is valid
   if (grid.filterable && (<FormGroup>args.formGroup).valid)
     methods.handleFiltering(config, 'on');
-  // recalculate the grid if needed and if the data is valid
-  if (
-    config.calculatedGrid &&
-    config.shouldRecalculate &&
-    (<FormGroup>args.formGroup).valid
-  ) {
-    methods.updateCalculatedColumns(config);
-    methods.updateCalculatedRows(config);
-    // if we have any custom calculated column, then we update the calc column values once again
-    // because it can be, that some of the custom calculated columns are using calculated row values
-    // we have also to update the rows once again in order to consider the new column values in the calculated rows
+  // setTimeout is needed, because if we have custom function in a calculated column, the calculation over the grid is a little bit slow
+  // and so we need to run the calculation async
+  setTimeout(() => {
+    // recalculate the grid if needed and if the data is valid
     if (
-      config.colCalculation.calculatedColumns.some(
-        (calcCol) => calcCol.calculateFunction === 'custom'
-      )
+      config.calculatedGrid &&
+      config.shouldRecalculate &&
+      (<FormGroup>args.formGroup).valid
     ) {
       methods.updateCalculatedColumns(config);
       methods.updateCalculatedRows(config);
+      // if we have any custom calculated column, then we update the calc column values once again
+      // because it can be, that some of the custom calculated columns are using calculated row values
+      // we have also to update the rows once again in order to consider the new column values in the calculated rows
+      if (
+        config.colCalculation.calculatedColumns.some(
+          (calcCol) => calcCol.calculateFunction === 'custom'
+        )
+      ) {
+        methods.updateCalculatedColumns(config);
+        methods.updateCalculatedRows(config);
+      }
+      config.shouldRecalculate = false;
     }
-    config.shouldRecalculate = false;
-  }
+  });
   // reset the form group, if the data is valid
   if ((<FormGroup>args.formGroup).valid) {
     config.cellEditingFormGroup = new FormGroup({});
