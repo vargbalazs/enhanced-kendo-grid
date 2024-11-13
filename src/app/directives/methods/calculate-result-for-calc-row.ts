@@ -59,6 +59,27 @@ export function calculateResultForCalcRow(
     case 'count':
       result = filteredData.length;
       break;
+    case 'custom':
+      const values: any[] = [];
+      if (fieldName) {
+        // get the corresponding data row from the filtered data and get the column value out of it
+        (<string[]>calcRow.calculateByRows).forEach((row) => {
+          const calcRowData = filteredData.filter(
+            (filtData) => filtData.calcRowName === row
+          );
+          values.push(calcRowData[0][key][fieldName]);
+        });
+      } else {
+        // get the corresponding data row from the filtered data and get the column value out of it
+        (<string[]>calcRow.calculateByRows).forEach((row) => {
+          const calcRowData = filteredData.filter(
+            (filtData) => filtData.calcRowName === row
+          );
+          values.push(calcRowData[0][key]);
+        });
+      }
+      result = calcRow.customFunction!(values);
+      break;
   }
   return result;
 }

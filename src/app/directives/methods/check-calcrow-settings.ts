@@ -103,4 +103,24 @@ export function checkCalcRowSettings(config: EnhancedGridConfig) {
     );
     config.wrongCalcRowSettings = true;
   }
+
+  // if we have custom calc row, then there should be exist also a custom function
+  // custom calc row works only, if the calc row is calculated by defining other calculated rows (as string array)
+  config.rowCalculation.calculatedRows.forEach((calcRow) => {
+    if (calcRow.calculateFunction === 'custom' && !calcRow.customFunction) {
+      console.error(
+        `The row '${calcRow.name}' is set to a custom calculated one, but there is no custom function defined.`
+      );
+      config.wrongCalcRowSettings = true;
+    }
+    if (
+      calcRow.calculateFunction === 'custom' &&
+      !Array.isArray(calcRow.calculateByRows)
+    ) {
+      console.error(
+        `The row '${calcRow.name}' is set to a custom calculated one. In this case the row values can be calculated only by defining the source rows as an array.`
+      );
+      config.wrongCalcRowSettings = true;
+    }
+  });
 }

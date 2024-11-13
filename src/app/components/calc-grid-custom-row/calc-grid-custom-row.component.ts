@@ -145,10 +145,13 @@ export class CalcGridCustomRowComponent {
       },
       {
         name: 'calcsum4',
-        title: 'cat 3 sum',
+        title: 'cat 1 - cat 2',
         position: 23,
-        calculateByRows: { from: 24, to: 33 },
-        calculateFunction: 'sum',
+        calculateByRows: ['calcsum1', 'calcsum2'],
+        calculateFunction: 'custom',
+        customFunction: (values: any[]) => {
+          return +values[0] - +values[1];
+        },
         cssClass: 'custom-calcrow-4',
       },
       {
