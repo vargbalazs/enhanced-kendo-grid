@@ -93,6 +93,22 @@ export function updateCalculatedColumns(config: EnhancedGridConfig) {
           }
         });
         break;
+      case 'custom':
+        config.gridData.forEach((row) => {
+          const fg = config.cellEditingFormGroupFn({
+            dataItem: row,
+            isNew: false,
+            rowIndex: row.dataRowIndex,
+            sender: config.gridComponent,
+          });
+          if (keyAndFieldCalcCol.fieldName) {
+            row[keyAndFieldCalcCol.key][keyAndFieldCalcCol.fieldName] =
+              'custom';
+          } else {
+            row[calcCol.field] = calcCol.customFunction!(fg);
+          }
+        });
+        break;
     }
   });
 }

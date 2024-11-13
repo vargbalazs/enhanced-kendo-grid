@@ -1,6 +1,8 @@
 import {
   CellSelectionItem,
   ColumnComponent,
+  CreateFormGroupArgs,
+  GridComponent,
   NavigationCell,
   PagerSettings,
   SortSettings,
@@ -23,6 +25,9 @@ import { GroupLevelButton } from '../interfaces/group-level-button.interface';
 import { Overlay } from '../interfaces/overlay.interface';
 
 export class EnhancedGridConfig {
+  // the grid component
+  public gridComponent!: GridComponent;
+
   // the data of the grid - just one page, if paging is enabled
   public gridData: any[] = [];
 
@@ -167,6 +172,9 @@ export class EnhancedGridConfig {
 
   // the form group, which belongs to an edited cell
   public cellEditingFormGroup: FormGroup = new FormGroup({});
+
+  // the function to create a form group
+  public cellEditingFormGroupFn!: (args: CreateFormGroupArgs) => FormGroup;
 
   // subscription for status changing of an edited form group
   public statusChanges$: Subscription = new Subscription();
