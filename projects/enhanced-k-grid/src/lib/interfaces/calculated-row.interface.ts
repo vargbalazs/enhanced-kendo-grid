@@ -6,7 +6,7 @@ export interface CalculatedRow {
   calculateByField?: { fieldName: string; fieldValue: string };
   calculateByRows?: string[] | SimpleRowRange | ConditionalRowRange;
   calculateFunction?: 'sum' | 'avg' | 'min' | 'max' | 'count' | 'custom';
-  customFunction?: string;
+  customFunction?: (values: any[]) => any;
   cssClass?: string;
   state?: 'expanded' | 'collapsed';
   rowIndexes?: number[];
