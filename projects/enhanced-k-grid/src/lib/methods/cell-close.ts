@@ -110,6 +110,15 @@ export function cellClose(
   ) {
     methods.updateCalculatedColumns(config);
     methods.updateCalculatedRows(config);
+    // if we have any custom calculated column, then we update the calc column values one again
+    // becase it can be, that some of the custom calculated columns are using calculated row values
+    if (
+      config.colCalculation.calculatedColumns.some(
+        (calcCol) => calcCol.calculateFunction === 'custom'
+      )
+    ) {
+      methods.updateCalculatedColumns(config);
+    }
     config.shouldRecalculate = false;
   }
   // reset the form group, if the data is valid

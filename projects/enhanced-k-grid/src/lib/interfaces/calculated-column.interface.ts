@@ -6,5 +6,5 @@ export interface CalculatedColumn {
   calculateByColumns: string[];
   calculateFunction: 'sum' | 'avg' | 'min' | 'max' | 'count' | 'custom';
   composed?: boolean;
-  customFunction?: (formGroup: FormGroup) => any;
+  customFunction?: (formGroup: FormGroup, row: any) => any;
 }
