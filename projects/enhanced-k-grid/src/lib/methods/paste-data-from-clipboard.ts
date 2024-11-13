@@ -140,8 +140,8 @@ export function pasteFromClipboard(
           if (config.calculatedGrid) {
             methods.updateCalculatedColumns(config);
             methods.updateCalculatedRows(config);
-            // if we have any custom calculated column, then we update the calc column values one again
-            // becase it can be, that some of the custom calculated columns are using calculated row values
+            // if we have any custom calculated column, then we update the calc column values once again
+            // because it can be, that some of the custom calculated columns are using calculated row values
             if (
               config.colCalculation.calculatedColumns.some(
                 (calcCol) => calcCol.calculateFunction === 'custom'
