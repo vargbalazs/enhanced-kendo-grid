@@ -17,6 +17,7 @@ import { DataService } from 'src/app/data/data.service';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
 import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
+import { InfoTooltip } from 'src/app/directives/interfaces/info-tooltip.interface';
 import { ListSource } from 'src/app/directives/interfaces/list-source.interface';
 import { RowCalculation } from 'src/app/directives/interfaces/row-calculation.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
@@ -182,6 +183,14 @@ export class CalcGridInfoComponent {
       },
     ],
   };
+
+  infoTooltips: InfoTooltip[] = [
+    {
+      columnField: 'feb',
+      rowField: 'id',
+      rowValue: 8,
+    },
+  ];
 
   constructor(private formBuilder: FormBuilder) {
     this.createFormGroup = this.createFormGroup.bind(this);

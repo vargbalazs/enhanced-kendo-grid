@@ -23,6 +23,7 @@ import { ListSource } from '../interfaces/list-source.interface';
 import { GroupedData } from '../interfaces/grouped-data.interface';
 import { GroupLevelButton } from '../interfaces/group-level-button.interface';
 import { Overlay } from '../interfaces/overlay.interface';
+import { InfoTooltip } from '../interfaces/info-tooltip.interface';
 
 export class EnhancedGridConfig {
   // the grid component
@@ -266,4 +267,7 @@ export class EnhancedGridConfig {
     originalWidth: '',
     originalHeight: '',
   };
+
+  // store the info tooltips
+  public infoTooltips: InfoTooltip[] = [];
 }

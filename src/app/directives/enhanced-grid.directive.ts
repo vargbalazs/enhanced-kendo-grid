@@ -27,6 +27,7 @@ import { RowCalculation } from './interfaces/row-calculation.interface';
 import { ColumnCalculation } from './interfaces/column-calculation.interface';
 import { FormErrorMessage } from './interfaces/form-error-message.interface';
 import { ListSource } from './interfaces/list-source.interface';
+import { InfoTooltip } from './interfaces/info-tooltip.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -88,6 +89,9 @@ export class EnhancedGridDirective
 
   // input for indicating, whether the grid is a grouped one
   @Input() grouped: boolean = false;
+
+  // input for info tooltips
+  @Input() infoTooltips: InfoTooltip[] = [];
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -274,6 +278,9 @@ export class EnhancedGridDirective
     // store the form group creating function
     this.config.cellEditingFormGroupFn = this.kendoGridInCellEditing;
 
+    // store the info tooltips
+    this.config.infoTooltips = this.infoTooltips;
+
     // reset the grid
     this.resetState();
   }
@@ -406,6 +413,11 @@ export class EnhancedGridDirective
       this.config.overlay.originalWidth = getComputedStyle(grid).width;
       this.config.overlay.originalHeight = getComputedStyle(grid).height;
     }
+
+    // render the info icons - we need setTimeout, because we want also consider the calculated rows/columns, if any
+    setTimeout(() => {
+      methods.initInfoTooltip(this.config.infoTooltips, this.config);
+    });
   }
 
   ngOnDestroy(): void {

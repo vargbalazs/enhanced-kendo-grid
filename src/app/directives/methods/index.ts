@@ -76,3 +76,7 @@ export * from './toggle-level';
 export * from './collapse-all-groups';
 export * from './get-group-btn-state';
 export * from './get-calc-data';
+export * from './get-info-cell';
+export * from './paint-info-in-cell';
+export * from './init-info-tooltip';
+export * from './scroll-info-tooltips';
