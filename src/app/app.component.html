@@ -44,9 +44,14 @@
       <calc-grid-custom></calc-grid-custom>
     </ng-template>
   </kendo-tabstrip-tab>
-  <kendo-tabstrip-tab title="custom func row" [selected]="true">
+  <kendo-tabstrip-tab title="custom func row">
     <ng-template kendoTabContent>
       <calc-grid-custom-row></calc-grid-custom-row>
+    </ng-template>
+  </kendo-tabstrip-tab>
+  <kendo-tabstrip-tab title="info" [selected]="true">
+    <ng-template kendoTabContent>
+      <calc-grid-info></calc-grid-info>
     </ng-template>
   </kendo-tabstrip-tab>
 </kendo-tabstrip>

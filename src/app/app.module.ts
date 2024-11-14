@@ -14,6 +14,7 @@ import { CalcGridTopGroupedMultipleLevelModule } from './components/calc-grid-to
 import { CalcGridBottomGroupedMultipleLevelModule } from './components/calc-grid-bottom-grouped-multiple-lvl/calc-grid-bottom-grouped.module';
 import { CalcGridCustomModule } from './components/calc-grid-custom/calc-grid-custom.module';
 import { CalcGridCustomRowModule } from './components/calc-grid-custom-row/calc-grid-custom-row.module';
+import { CalcGridInfoModule } from './components/calc-grid-info/calc-grid-info.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { CalcGridCustomRowModule } from './components/calc-grid-custom-row/calc-
     CalcGridBottomGroupedMultipleLevelModule,
     CalcGridCustomModule,
     CalcGridCustomRowModule,
+    CalcGridInfoModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
