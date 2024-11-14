@@ -190,6 +190,11 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 8,
     },
+    {
+      columnField: 'project.projNumber',
+      rowField: 'id',
+      rowValue: 15,
+    },
   ];
 
   constructor(private formBuilder: FormBuilder) {

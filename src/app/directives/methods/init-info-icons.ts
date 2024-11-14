@@ -2,8 +2,8 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
 import * as methods from './index';
 
-// initializes the info tooltips
-export function initInfoTooltip(
+// initializes the info icons
+export function initInfoIcons(
   infoTooltips: InfoTooltip[],
   config: EnhancedGridConfig
 ) {

@@ -78,5 +78,5 @@ export * from './get-group-btn-state';
 export * from './get-calc-data';
 export * from './get-info-cell';
 export * from './paint-info-in-cell';
-export * from './init-info-tooltip';
-export * from './scroll-info-tooltips';
+export * from './init-info-icons';
+export * from './scroll-info-icons';
