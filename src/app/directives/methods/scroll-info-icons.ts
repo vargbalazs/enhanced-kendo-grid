@@ -21,32 +21,35 @@ export function scrollInfoIcons(
       config.columns[config.frozenColumns[i].columnIndex!].width;
   }
   listener = renderer2.listen(gridContent, 'scroll', (e) => {
-    icons.forEach((icon) => {
-      const colIndex = +icon.getAttribute('col-index')!;
-      const startTop = +icon.getAttribute('start-top')!;
-      const startLeft = +icon.getAttribute('start-left')!;
-      // if we are in a non-frozen column
-      if (colIndex > config.frozenColumns.length - 1) {
-        // if we are beneath a frozen column (left side), then hide it
-        if (
-          icon.getBoundingClientRect().left -
-            gridContent.getBoundingClientRect().left <
-          totalWidthFrozenCol
-        ) {
-          (<HTMLElement>icon).style.zIndex = '0';
-        }
-      } else {
-        // if we are in a frozen column and scroll left/right, we have to fix the icons
-        if (gridContent.scrollLeft > 0) {
-          //(<HTMLElement>icon).style.position = 'fixed';
-          // (<HTMLElement>icon).style.top = `${
-          //   startTop + gridContent.getBoundingClientRect().top
-          // }px`;
-          // (<HTMLElement>icon).style.left = `${
-          //   startLeft + gridContent.getBoundingClientRect().left
-          // }px`;
-        }
-      }
-    });
+    // icons.forEach((icon) => {
+    //   const colIndex = +icon.getAttribute('col-index')!;
+    //   const startTop = +icon.getAttribute('start-top')!;
+    //   const startLeft = +icon.getAttribute('start-left')!;
+    //   // if we are in a non-frozen column
+    //   if (colIndex > config.frozenColumns.length - 1) {
+    //     // if we are beneath a frozen column (left side), then hide it
+    //     if (
+    //       icon.getBoundingClientRect().left -
+    //         gridContent.getBoundingClientRect().left <
+    //       totalWidthFrozenCol
+    //     ) {
+    //       (<HTMLElement>icon).style.zIndex = '0';
+    //     }
+    //     (<HTMLElement>icon).style.left = `${
+    //       startLeft - gridContent.scrollLeft
+    //     }px`;
+    //   } else {
+    //     // if we are in a frozen column and scroll left/right, we have to fix the icons
+    //     if (gridContent.scrollLeft > 0) {
+    //       //(<HTMLElement>icon).style.position = 'fixed';
+    //       // (<HTMLElement>icon).style.top = `${
+    //       //   startTop + gridContent.getBoundingClientRect().top
+    //       // }px`;
+    //       // (<HTMLElement>icon).style.left = `${
+    //       //   startLeft + gridContent.getBoundingClientRect().left
+    //       // }px`;
+    //     }
+    //   }
+    // });
   });
 }

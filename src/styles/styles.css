@@ -16,7 +16,7 @@
 .enhanced.k-grid-md .k-table-td {
   padding-block: 0px;
   padding-inline: 2px;
-  /* position: relative; */
+  position: relative;
   height: 20px;
   font-size: 12px;
   font-family: "Inter";
@@ -370,6 +370,8 @@
 
 .enhanced.k-grid .info-icon {
   position: absolute;
+  left: 0;
+  top: 0;
   z-index: 99;
   color: red;
 }

@@ -185,6 +185,10 @@ export class EnhancedGridDirective
         }
         return;
       }
+      // if (this.infoTooltips.length > 0)
+      //   setTimeout(() => {
+      //     methods.initInfoIcons(this.infoTooltips, this.config);
+      //   });
       this.grid.closeCell();
       this.resetState();
     });

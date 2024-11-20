@@ -7,10 +7,6 @@ export function paintInfoInCell(
   config: EnhancedGridConfig,
   tooltip: InfoTooltip
 ) {
-  // get grid content
-  const gridContent = (<HTMLElement>(
-    config.gridElRef.nativeElement
-  )).querySelector('.k-grid-content')!;
   // create the wrapper div
   const iconDiv = document.createElement('div');
   iconDiv.innerHTML = 'i';
@@ -19,40 +15,10 @@ export function paintInfoInCell(
   const colIndex = +cell.getAttribute('ng-reflect-col-index')!;
   iconDiv.setAttribute('row-index', rowIndex.toString());
   iconDiv.setAttribute('col-index', colIndex.toString());
-  iconDiv.setAttribute(
-    'start-top',
-    `${
-      cell.getBoundingClientRect().top - gridContent.getBoundingClientRect().top
-    }`
-  );
-  iconDiv.setAttribute(
-    'start-left',
-    `${
-      cell.getBoundingClientRect().left -
-      gridContent.getBoundingClientRect().left
-    }`
-  );
   iconDiv.classList.add('info-icon');
-  // set the position
-  // if the icon is in a frozen column
-  if (colIndex < config.frozenColumns.length - 1) {
-    iconDiv.style.position = 'fixed';
-    iconDiv.style.top = `${
-      cell.getBoundingClientRect().top - gridContent.getBoundingClientRect().top
-    }px`;
-    iconDiv.style.left = `${
-      cell.getBoundingClientRect().left -
-      gridContent.getBoundingClientRect().left
-    }px`;
-  } else {
-    iconDiv.style.top = `${
-      cell.getBoundingClientRect().top - gridContent.getBoundingClientRect().top
-    }px`;
-    iconDiv.style.left = `${
-      cell.getBoundingClientRect().left -
-      gridContent.getBoundingClientRect().left
-    }px`;
-  }
-  // append to the grid content
-  gridContent.appendChild(iconDiv);
+  // position the icon according to the align of the cell
+  if (getComputedStyle(cell).textAlign !== 'right')
+    iconDiv.style.left = `${cell.getBoundingClientRect().width - 10}px`;
+  // if we are not in edit mode, then append the icon to the cell
+  if (!cell.classList.contains('k-grid-edit-cell')) cell.appendChild(iconDiv);
 }

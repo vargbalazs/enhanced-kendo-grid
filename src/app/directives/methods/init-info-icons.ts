@@ -7,6 +7,13 @@ export function initInfoIcons(
   infoTooltips: InfoTooltip[],
   config: EnhancedGridConfig
 ) {
+  // first get the info icons, and if we have any, then remove them from the DOM
+  const infoIcons = (<HTMLElement>(
+    config.gridElRef.nativeElement
+  )).querySelectorAll('[info-icon]');
+  if (infoIcons.length > 0) infoIcons.forEach((icon) => icon.remove());
+
+  // add the info icons to the corresponding cells
   infoTooltips.forEach((tooltip) => {
     const cell = methods.getInfoCell(
       tooltip.columnField,
