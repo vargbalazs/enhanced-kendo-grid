@@ -152,3 +152,15 @@ div[style*="background-color: rgb(255, 192, 0);"] {
   background-color: gray !important;
   color: white;
 }
+
+.enhanced.k-grid .info-icon .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.enhanced.k-grid .info-icon.right {
+  margin-left: -10px;
+}
+
+.enhanced.k-grid .info-icon {
+  padding-top: 1px;
+}

@@ -11,7 +11,9 @@ export function initInfoIcons(
   const infoIcons = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelectorAll('[info-icon]');
-  if (infoIcons.length > 0) infoIcons.forEach((icon) => icon.remove());
+  if (infoIcons.length > 0) {
+    infoIcons.forEach((icon) => icon.remove());
+  }
 
   // add the info icons to the corresponding cells
   infoTooltips.forEach((tooltip) => {
@@ -21,6 +23,8 @@ export function initInfoIcons(
       tooltip.rowValue,
       config
     );
-    if (cell) methods.paintInfoInCell(cell, config, tooltip);
+    if (cell) {
+      methods.paintInfoInCell(cell, config, tooltip);
+    }
   });
 }

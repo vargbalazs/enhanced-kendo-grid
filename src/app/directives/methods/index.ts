@@ -79,4 +79,4 @@ export * from './get-calc-data';
 export * from './get-info-cell';
 export * from './paint-info-in-cell';
 export * from './init-info-icons';
-export * from './scroll-info-icons';
+export * from './show-info-tooltip';

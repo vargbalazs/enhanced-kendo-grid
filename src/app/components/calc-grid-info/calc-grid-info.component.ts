@@ -186,14 +186,18 @@ export class CalcGridInfoComponent {
 
   infoTooltips: InfoTooltip[] = [
     {
+      name: 'feb - 8',
       columnField: 'feb',
       rowField: 'id',
       rowValue: 8,
+      icon: '<span class="material-symbols-outlined">info</span>',
     },
     {
+      name: 'proj numb - 15',
       columnField: 'project.projNumber',
       rowField: 'id',
       rowValue: 15,
+      icon: '<span class="material-symbols-outlined">info</span>',
     },
   ];
 

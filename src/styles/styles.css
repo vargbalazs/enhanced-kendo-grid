@@ -372,6 +372,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 99;
-  color: red;
+  color: blue;
+  cursor: pointer;
 }

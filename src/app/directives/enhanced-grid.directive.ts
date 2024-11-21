@@ -185,10 +185,6 @@ export class EnhancedGridDirective
         }
         return;
       }
-      // if (this.infoTooltips.length > 0)
-      //   setTimeout(() => {
-      //     methods.initInfoIcons(this.infoTooltips, this.config);
-      //   });
       this.grid.closeCell();
       this.resetState();
     });
@@ -421,12 +417,6 @@ export class EnhancedGridDirective
     // render the info tooltips - we need setTimeout, because we want also consider the calculated rows/columns, if any
     setTimeout(() => {
       methods.initInfoIcons(this.config.infoTooltips, this.config);
-      // reposition the info tooltips, if scrolling
-      methods.scrollInfoIcons(
-        this.config,
-        this.renderer2,
-        this.gridScrollListener
-      );
     });
   }
 
