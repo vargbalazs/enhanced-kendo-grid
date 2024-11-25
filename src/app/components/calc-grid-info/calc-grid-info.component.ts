@@ -186,6 +186,13 @@ export class CalcGridInfoComponent {
 
   infoTooltips: InfoTooltip[] = [
     {
+      name: 'jan - cat 1+ cat 2 sum',
+      columnField: 'jan',
+      rowField: 'id',
+      rowValue: 'cat 1+ cat 2 sum',
+      icon: '<span class="material-symbols-outlined">info</span>',
+    },
+    {
       name: 'feb - 8',
       columnField: 'feb',
       rowField: 'id',
@@ -197,6 +204,20 @@ export class CalcGridInfoComponent {
       columnField: 'project.projNumber',
       rowField: 'id',
       rowValue: 15,
+      icon: '<span class="material-symbols-outlined">info</span>',
+    },
+    {
+      name: 'dec - 3',
+      columnField: 'dec',
+      rowField: 'id',
+      rowValue: 3,
+      icon: '<span class="material-symbols-outlined">info</span>',
+    },
+    {
+      name: 'dec - cat 1+ cat 2 sum',
+      columnField: 'dec',
+      rowField: 'id',
+      rowValue: 'cat 1+ cat 2 sum',
       icon: '<span class="material-symbols-outlined">info</span>',
     },
   ];

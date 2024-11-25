@@ -202,6 +202,11 @@
   z-index: 99;
 }
 
+.tooltip.info {
+  background-color: #eff8ff;
+  border-color: #0172cb;
+}
+
 .tooltip .content {
   color: #f04438;
   font-size: 12px;
@@ -210,6 +215,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.tooltip.info .content {
+  color: #0172cb;
 }
 
 .tooltip .error {
@@ -292,6 +301,11 @@
   border: 2px solid #f04438;
 }
 
+.tooltip.info.common i::after {
+  background-color: #eff8ff;
+  border-color: #0172cb;
+}
+
 .tooltip.top i::after {
   left: 50%;
   transform: translate(-50%, -50%) rotate(45deg);
@@ -372,6 +386,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  color: blue;
+  color: #0172cb;
   cursor: pointer;
 }
