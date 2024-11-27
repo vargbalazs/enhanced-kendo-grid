@@ -23,6 +23,7 @@
     [errorMessages]="errorMessages"
     [listSources]="listSources"
     [infoTooltips]="infoTooltips"
+    [infoTooltipContainer]="infoTooltip"
   >
     <kendo-grid-column
       field="id"
@@ -167,3 +168,4 @@
 <div>selected cells: {{ selectedCells | json }}</div>
 <div *ngIf="checkDuplicates()">no duplicates</div>
 <div *ngIf="!checkDuplicates()">duplicates</div>
+<div #infoTooltip></div>

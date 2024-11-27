@@ -52,6 +52,33 @@ export function setPositionInfoTooltip(
     }
     return;
   }
+  // if the pos should be right
+  if (
+    infoTooltip.getBoundingClientRect().left <
+    gridContent.getBoundingClientRect().left
+  ) {
+    methods.changeInfoTooltipPos(
+      config,
+      'right',
+      rect,
+      gridContent,
+      infoTooltip
+    );
+    // left corner
+    if (
+      infoTooltip.getBoundingClientRect().top <
+      gridContent.getBoundingClientRect().top
+    ) {
+      methods.changeInfoTooltipPos(
+        config,
+        'bottom-right',
+        rect,
+        gridContent,
+        infoTooltip
+      );
+    }
+    return;
+  }
   // if the pos should be bottom
   if (
     infoTooltip.getBoundingClientRect().top <

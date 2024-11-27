@@ -23,11 +23,13 @@ import { RowCalculation } from 'src/app/directives/interfaces/row-calculation.in
 import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
+import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
 
 @Component({
   selector: 'calc-grid-info',
   templateUrl: './calc-grid-info.component.html',
   styleUrls: ['./calc-grid-info.component.css'],
+  providers: [InfoTooltipComponent],
 })
 export class CalcGridInfoComponent {
   rows: Row[] = inject(DataService).generateData(50);
@@ -184,6 +186,8 @@ export class CalcGridInfoComponent {
     ],
   };
 
+  customTooltipComp: InfoTooltipComponent = inject(InfoTooltipComponent);
+
   infoTooltips: InfoTooltip[] = [
     {
       name: 'jan - cat 1+ cat 2 sum',
@@ -191,6 +195,7 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 'cat 1+ cat 2 sum',
       icon: '<span class="material-symbols-outlined">info</span>',
+      content: 'jan - cat 1+ cat 2 sum',
     },
     {
       name: 'feb - 8',
@@ -198,6 +203,7 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 8,
       icon: '<span class="material-symbols-outlined">info</span>',
+      content: this.customTooltipComp,
     },
     {
       name: 'proj numb - 15',
@@ -205,6 +211,7 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 15,
       icon: '<span class="material-symbols-outlined">info</span>',
+      content: 'proj numb - 15',
     },
     {
       name: 'dec - 3',
@@ -212,6 +219,7 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 3,
       icon: '<span class="material-symbols-outlined">info</span>',
+      content: 'dec - 3',
     },
     {
       name: 'dec - cat 1+ cat 2 sum',
@@ -219,6 +227,23 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 'cat 1+ cat 2 sum',
       icon: '<span class="material-symbols-outlined">info</span>',
+      content: 'dec - cat 1+ cat 2 sum',
+    },
+    {
+      name: 'id - 5',
+      columnField: 'id',
+      rowField: 'id',
+      rowValue: 5,
+      icon: '<span class="material-symbols-outlined">info</span>',
+      content: 'id - 5',
+    },
+    {
+      name: 'id - cat 1+ cat 2 sum',
+      columnField: 'id',
+      rowField: 'id',
+      rowValue: 'cat 1+ cat 2 sum',
+      icon: '<span class="material-symbols-outlined">info</span>',
+      content: 'id - cat 1+ cat 2 sum',
     },
   ];
 

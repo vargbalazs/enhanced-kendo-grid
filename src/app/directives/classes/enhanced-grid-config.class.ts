@@ -273,4 +273,7 @@ export class EnhancedGridConfig {
 
   // store the info tooltips
   public infoTooltips: InfoTooltip[] = [];
+
+  // container for info tooltip components
+  public infoTooltipContainer: HTMLDivElement = document.createElement('div');
 }

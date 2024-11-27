@@ -1,3 +1,4 @@
+import { ElementRef } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
 import * as methods from './index';
@@ -23,14 +24,18 @@ export function toggleInfoTooltip(
     const infoIcon = cell.querySelector('[info-icon]')!;
     const rect = infoIcon.getBoundingClientRect();
     // create the info tooltip element
-    const infoTooltip = document.createElement('div');
+    //const infoTooltip = document.createElement('div');
+    const infoTooltip = config.infoTooltipContainer;
     infoTooltip.setAttribute('infotooltip', '');
     infoTooltip.classList.add('tooltip', 'common', 'info');
-    infoTooltip.innerHTML = `
-    <div class="content">
-        some content
-    </div>
-    <i></i>`;
+    if (typeof tooltip.content === 'string') {
+      infoTooltip.innerHTML = `
+        <div class="content">
+            ${tooltip.content}
+        </div>
+        <i></i>`;
+    } else {
+    }
     gridContent.appendChild(infoTooltip);
     // set the position of the tooltip
     methods.setPositionInfoTooltip(config, rect, gridContent, infoTooltip);
