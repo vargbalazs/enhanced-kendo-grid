@@ -1,4 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -24,14 +30,16 @@ import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
 import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
+import { InfoTooltipTwoComponent } from './info-tooltip-2/info-tooltip-2.component';
 
 @Component({
   selector: 'calc-grid-info',
   templateUrl: './calc-grid-info.component.html',
   styleUrls: ['./calc-grid-info.component.css'],
-  providers: [InfoTooltipComponent],
 })
-export class CalcGridInfoComponent {
+export class CalcGridInfoComponent implements OnInit {
+  @ViewChild('infoTooltip', { static: true, read: ViewContainerRef })
+  infoTooltipViewRef!: ViewContainerRef;
   rows: Row[] = inject(DataService).generateData(50);
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
@@ -186,8 +194,6 @@ export class CalcGridInfoComponent {
     ],
   };
 
-  customTooltipComp: InfoTooltipComponent = inject(InfoTooltipComponent);
-
   infoTooltips: InfoTooltip[] = [
     {
       name: 'jan - cat 1+ cat 2 sum',
@@ -196,6 +202,7 @@ export class CalcGridInfoComponent {
       rowValue: 'cat 1+ cat 2 sum',
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'jan - cat 1+ cat 2 sum',
+      closable: false,
     },
     {
       name: 'feb - 8',
@@ -203,7 +210,10 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 8,
       icon: '<span class="material-symbols-outlined">info</span>',
-      content: this.customTooltipComp,
+      content: InfoTooltipComponent,
+      width: '500px',
+      closable: true,
+      closeIcon: '<span class="material-symbols-outlined">close</span>',
     },
     {
       name: 'proj numb - 15',
@@ -211,7 +221,10 @@ export class CalcGridInfoComponent {
       rowField: 'id',
       rowValue: 15,
       icon: '<span class="material-symbols-outlined">info</span>',
-      content: 'proj numb - 15',
+      content: InfoTooltipTwoComponent,
+      width: '400px',
+      closable: true,
+      closeIcon: '<span class="material-symbols-outlined">close</span>',
     },
     {
       name: 'dec - 3',
@@ -220,6 +233,7 @@ export class CalcGridInfoComponent {
       rowValue: 3,
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'dec - 3',
+      closable: false,
     },
     {
       name: 'dec - cat 1+ cat 2 sum',
@@ -228,6 +242,7 @@ export class CalcGridInfoComponent {
       rowValue: 'cat 1+ cat 2 sum',
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'dec - cat 1+ cat 2 sum',
+      closable: false,
     },
     {
       name: 'id - 5',
@@ -236,6 +251,7 @@ export class CalcGridInfoComponent {
       rowValue: 5,
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'id - 5',
+      closable: false,
     },
     {
       name: 'id - cat 1+ cat 2 sum',
@@ -244,6 +260,7 @@ export class CalcGridInfoComponent {
       rowValue: 'cat 1+ cat 2 sum',
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'id - cat 1+ cat 2 sum',
+      closable: false,
     },
   ];
 
@@ -273,5 +290,9 @@ export class CalcGridInfoComponent {
     return (control: AbstractControl): ValidationErrors | null => {
       return !control.value ? { customReq: true } : null;
     };
+  }
+
+  ngOnInit(): void {
+    //this.infoTooltipViewRef.createComponent(InfoTooltipComponent);
   }
 }

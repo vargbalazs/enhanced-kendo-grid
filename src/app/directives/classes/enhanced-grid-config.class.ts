@@ -11,7 +11,7 @@ import { Rect } from '../interfaces/rect.interface';
 import { Subscription } from 'rxjs';
 import { CellData } from '../interfaces/celldata.interface';
 import { Aggregate } from '../interfaces/aggregate.interface';
-import { ElementRef } from '@angular/core';
+import { ElementRef, ViewContainerRef } from '@angular/core';
 import { FrozenColumn } from '../interfaces/frozencolumn.interface';
 import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
 import { RowCalculation } from '../interfaces/row-calculation.interface';
@@ -275,5 +275,8 @@ export class EnhancedGridConfig {
   public infoTooltips: InfoTooltip[] = [];
 
   // container for info tooltip components
-  public infoTooltipContainer: HTMLDivElement = document.createElement('div');
+  public infoTooltipContainer!: ViewContainerRef;
+
+  // store, whether a tooltip is visible
+  public isInfoTooltipVisible: boolean = false;
 }

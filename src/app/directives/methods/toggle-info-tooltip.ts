@@ -1,4 +1,3 @@
-import { ElementRef } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
 import * as methods from './index';
@@ -14,6 +13,10 @@ export function toggleInfoTooltip(
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content')!;
   if (toggle === 'on') {
+    // first remove any already visible tooltip - this can be the case if we hovered on a closable tooltip, but
+    // didn't close it
+    const infoTooltipToClose = gridContent.querySelector('[infotooltip]')!;
+    if (infoTooltipToClose) gridContent.removeChild(infoTooltipToClose);
     // get the corresponding cell and info icon
     const cell = methods.getInfoCell(
       tooltip.columnField,
@@ -24,23 +27,49 @@ export function toggleInfoTooltip(
     const infoIcon = cell.querySelector('[info-icon]')!;
     const rect = infoIcon.getBoundingClientRect();
     // create the info tooltip element
-    //const infoTooltip = document.createElement('div');
-    const infoTooltip = config.infoTooltipContainer;
+    const infoTooltip = document.createElement('div');
     infoTooltip.setAttribute('infotooltip', '');
     infoTooltip.classList.add('tooltip', 'common', 'info');
+    if (tooltip.width) infoTooltip.style.width = tooltip.width;
+    // if we have just a simple string
     if (typeof tooltip.content === 'string') {
       infoTooltip.innerHTML = `
         <div class="content">
             ${tooltip.content}
         </div>
         <i></i>`;
-    } else {
+    }
+    // if we have a component
+    else {
+      config.infoTooltipContainer.clear();
+      const compRef = config.infoTooltipContainer.createComponent(
+        tooltip.content
+      );
+      infoTooltip.appendChild(compRef.location.nativeElement);
+      infoTooltip.appendChild(document.createElement('i'));
     }
     gridContent.appendChild(infoTooltip);
+    // if the tooltip is closable, then add an x icon
+    if (tooltip.closable) {
+      const closeIcon = document.createElement('div');
+      closeIcon.classList.add('close-icon');
+      closeIcon.innerHTML = tooltip.closeIcon;
+      // close on click
+      closeIcon.addEventListener('click', () => {
+        const infoTooltip = gridContent.querySelector('[infotooltip]')!;
+        gridContent.removeChild(infoTooltip);
+        config.isInfoTooltipVisible = false;
+      });
+      infoTooltip.appendChild(closeIcon);
+      config.isInfoTooltipVisible = true;
+    }
     // set the position of the tooltip
     methods.setPositionInfoTooltip(config, rect, gridContent, infoTooltip);
   } else {
-    const infoTooltip = gridContent.querySelector('[infotooltip]')!;
-    gridContent.removeChild(infoTooltip);
+    // if tooltip is not closable, then remove on mouse out
+    if (!tooltip.closable) {
+      const infoTooltip = gridContent.querySelector('[infotooltip]')!;
+      gridContent.removeChild(infoTooltip);
+    }
   }
 }

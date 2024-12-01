@@ -205,6 +205,8 @@
 .tooltip.info {
   background-color: #eff8ff;
   border-color: #0172cb;
+  display: flex;
+  justify-content: space-between;
 }
 
 .tooltip .content {
@@ -388,4 +390,16 @@
   top: 0;
   color: #0172cb;
   cursor: pointer;
+}
+
+.enhanced.k-grid .close-icon {
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.enhanced.k-grid .close-icon .material-symbols-outlined {
+  font-size: 16px;
 }
