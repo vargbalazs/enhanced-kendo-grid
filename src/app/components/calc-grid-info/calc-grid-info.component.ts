@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   inject,
   OnInit,
@@ -31,15 +32,18 @@ import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
 import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
 import { InfoTooltipTwoComponent } from './info-tooltip-2/info-tooltip-2.component';
+import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directive';
 
 @Component({
   selector: 'calc-grid-info',
   templateUrl: './calc-grid-info.component.html',
   styleUrls: ['./calc-grid-info.component.css'],
 })
-export class CalcGridInfoComponent implements OnInit {
+export class CalcGridInfoComponent implements OnInit, AfterViewInit {
   @ViewChild('infoTooltip', { static: true, read: ViewContainerRef })
   infoTooltipViewRef!: ViewContainerRef;
+  @ViewChild(EnhancedGridDirective)
+  enhancedGridDirective!: EnhancedGridDirective;
   rows: Row[] = inject(DataService).generateData(50);
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
@@ -292,7 +296,10 @@ export class CalcGridInfoComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
-    //this.infoTooltipViewRef.createComponent(InfoTooltipComponent);
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    const val = this.enhancedGridDirective.getCellValue('id', 1, 'feb');
+    console.log(val);
   }
 }

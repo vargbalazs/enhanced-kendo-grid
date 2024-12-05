@@ -46,7 +46,13 @@ export function toggleInfoTooltip(
       const compRef = config.infoTooltipContainer.createComponent(
         tooltip.content
       );
-      (<EnhancedGridToolTipComponent>compRef.instance).fieldValue = 'test';
+      (<EnhancedGridToolTipComponent>compRef.instance).fieldValue =
+        methods.getCellValuePrivate(
+          tooltip.rowField,
+          tooltip.rowValue,
+          tooltip.columnField,
+          config.gridData
+        );
       (<EnhancedGridToolTipComponent>compRef.instance).gridData =
         config.gridData;
       infoTooltip.appendChild(compRef.location.nativeElement);

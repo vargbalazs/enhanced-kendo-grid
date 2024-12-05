@@ -707,4 +707,26 @@ export class EnhancedGridDirective
   getCalculatedData(calcRowName: string, columnField: string): any {
     return methods.getCalcData(calcRowName, columnField, this.config);
   }
+
+  // get a cell value
+  getCellValue(
+    rowField: string,
+    rowValue: any,
+    columnField: string,
+    gridData?: any[]
+  ): any {
+    if (gridData) {
+      methods.getCellValuePrivate(rowField, rowValue, columnField, gridData);
+    } else {
+      setTimeout(() => {
+        console.log(this.config.gridData);
+        methods.getCellValuePrivate(
+          rowField,
+          rowValue,
+          columnField,
+          this.config.gridData
+        );
+      });
+    }
+  }
 }
