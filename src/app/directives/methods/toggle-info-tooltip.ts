@@ -53,6 +53,7 @@ export function toggleInfoTooltip(
           tooltip.columnField,
           config.gridData
         );
+
       (<EnhancedGridToolTipComponent>compRef.instance).gridData =
         config.gridData;
       infoTooltip.appendChild(compRef.location.nativeElement);

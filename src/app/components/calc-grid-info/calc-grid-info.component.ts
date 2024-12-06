@@ -209,6 +209,15 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       closable: false,
     },
     {
+      name: 'mar - cat 1+ cat 2 sum',
+      columnField: 'mar',
+      rowField: 'id',
+      rowValue: 'cat 1+ cat 2 sum',
+      icon: '<span class="material-symbols-outlined">info</span>',
+      content: InfoTooltipComponent,
+      closable: true,
+    },
+    {
       name: 'feb - 8',
       columnField: 'feb',
       rowField: 'id',
