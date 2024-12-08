@@ -7,21 +7,36 @@ export function getCellValuePrivate(
   rowField: string,
   rowValue: any,
   columnField: string,
-  gridData: any[]
+  gridData: any[],
+  fromCalcRow: boolean
 ): any {
   const keyAndFieldRow = methods.extractKeyAndField(rowField);
   const keyAndFieldCol = methods.extractKeyAndField(columnField);
   let row: any[];
   if (keyAndFieldRow.fieldName) {
-    row = gridData.filter(
-      (row) =>
-        row[keyAndFieldRow.key][keyAndFieldRow.fieldName!] === rowValue &&
-        !row.calcRowName
-    );
+    if (fromCalcRow) {
+      row = gridData.filter(
+        (row) =>
+          row[keyAndFieldRow.key][keyAndFieldRow.fieldName!] === rowValue &&
+          row.calcRowName
+      );
+    } else {
+      row = gridData.filter(
+        (row) =>
+          row[keyAndFieldRow.key][keyAndFieldRow.fieldName!] === rowValue &&
+          !row.calcRowName
+      );
+    }
   } else {
-    row = gridData.filter(
-      (row) => row[rowField] === rowValue && !row.calcRowName
-    );
+    if (fromCalcRow) {
+      row = gridData.filter(
+        (row) => row[rowField] === rowValue && row.calcRowName
+      );
+    } else {
+      row = gridData.filter(
+        (row) => row[rowField] === rowValue && !row.calcRowName
+      );
+    }
   }
   if (keyAndFieldCol.fieldName) {
     return row[0][keyAndFieldCol.key][keyAndFieldCol.fieldName];

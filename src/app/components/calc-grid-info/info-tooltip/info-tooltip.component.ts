@@ -11,6 +11,22 @@ export class InfoTooltipComponent
   implements OnInit
 {
   ngOnInit(): void {
-    console.log(this.gridData);
+    //console.log(this.gridData);
+    const val = this.getCellValue(
+      'category',
+      'cat 2',
+      'feb',
+      this.gridData,
+      false
+    );
+    console.log(val);
+    const val2 = this.getCellValue(
+      'id',
+      'cat 1 sum',
+      'feb',
+      this.gridData,
+      true
+    );
+    console.log(val2);
   }
 }

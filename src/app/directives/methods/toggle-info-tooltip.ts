@@ -51,11 +51,13 @@ export function toggleInfoTooltip(
           tooltip.rowField,
           tooltip.rowValue,
           tooltip.columnField,
-          config.gridData
+          config.gridData,
+          tooltip.inCalcRow
         );
-
       (<EnhancedGridToolTipComponent>compRef.instance).gridData =
         config.gridData;
+      (<EnhancedGridToolTipComponent>compRef.instance).getCellValue =
+        methods.getCellValuePrivate;
       infoTooltip.appendChild(compRef.location.nativeElement);
       infoTooltip.appendChild(document.createElement('i'));
     }

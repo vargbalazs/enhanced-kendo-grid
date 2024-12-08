@@ -207,6 +207,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'jan - cat 1+ cat 2 sum',
       closable: false,
+      inCalcRow: true,
     },
     {
       name: 'mar - cat 1+ cat 2 sum',
@@ -216,6 +217,8 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       icon: '<span class="material-symbols-outlined">info</span>',
       content: InfoTooltipComponent,
       closable: true,
+      closeIcon: '<span class="material-symbols-outlined">close</span>',
+      inCalcRow: true,
     },
     {
       name: 'feb - 8',
@@ -227,6 +230,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       width: '500px',
       closable: true,
       closeIcon: '<span class="material-symbols-outlined">close</span>',
+      inCalcRow: false,
     },
     {
       name: 'proj numb - 15',
@@ -238,6 +242,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       width: '400px',
       closable: true,
       closeIcon: '<span class="material-symbols-outlined">close</span>',
+      inCalcRow: false,
     },
     {
       name: 'dec - 3',
@@ -247,6 +252,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'dec - 3',
       closable: false,
+      inCalcRow: false,
     },
     {
       name: 'dec - cat 1+ cat 2 sum',
@@ -256,6 +262,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'dec - cat 1+ cat 2 sum',
       closable: false,
+      inCalcRow: true,
     },
     {
       name: 'id - 5',
@@ -265,6 +272,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'id - 5',
       closable: false,
+      inCalcRow: false,
     },
     {
       name: 'id - cat 1+ cat 2 sum',
@@ -274,6 +282,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
       icon: '<span class="material-symbols-outlined">info</span>',
       content: 'id - cat 1+ cat 2 sum',
       closable: false,
+      inCalcRow: true,
     },
   ];
 
@@ -308,7 +317,36 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    const val = this.enhancedGridDirective.getCellValue('id', 1, 'feb');
-    console.log(val);
+    setTimeout(() => {
+      const normalValue = this.enhancedGridDirective.getCellValue(
+        'category',
+        'cat 2',
+        'feb'
+      );
+      console.log(`cat 2 - feb: ${normalValue}`);
+      const calcRowValue = this.enhancedGridDirective.getCellValue(
+        'id',
+        'cat 1 sum',
+        'feb',
+        true
+      );
+      console.log(`cat 1 sum - feb: ${calcRowValue}`);
+    });
+  }
+
+  getCellValue() {
+    const normalValue = this.enhancedGridDirective.getCellValue(
+      'category',
+      'cat 2',
+      'feb'
+    );
+    alert(normalValue);
+    const calcRowValue = this.enhancedGridDirective.getCellValue(
+      'id',
+      'cat 1 sum',
+      'feb',
+      true
+    );
+    alert(calcRowValue);
   }
 }

@@ -25,6 +25,9 @@
     [infoTooltips]="infoTooltips"
     [infoTooltipContainer]="infoTooltipViewRef"
   >
+    <ng-template kendoGridToolbarTemplate>
+      <button (click)="getCellValue()">Get cell value</button>
+    </ng-template>
     <kendo-grid-column
       field="id"
       [width]="100"

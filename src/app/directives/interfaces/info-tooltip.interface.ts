@@ -10,4 +10,5 @@ export interface InfoTooltip {
   closable: boolean;
   closeIcon?: any;
   width?: string;
+  inCalcRow: boolean;
 }
