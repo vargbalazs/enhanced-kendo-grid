@@ -19,7 +19,7 @@ export class InfoTooltipComponent
       this.gridData,
       false
     );
-    console.log(val);
+    //console.log(val);
     const val2 = this.getCellValue(
       'id',
       'cat 1 sum',
@@ -27,6 +27,6 @@ export class InfoTooltipComponent
       this.gridData,
       true
     );
-    console.log(val2);
+    //console.log(val2);
   }
 }

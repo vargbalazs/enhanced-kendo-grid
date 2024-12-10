@@ -323,14 +323,14 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
         'cat 2',
         'feb'
       );
-      console.log(`cat 2 - feb: ${normalValue}`);
+      //console.log(`cat 2 - feb: ${normalValue}`);
       const calcRowValue = this.enhancedGridDirective.getCellValue(
         'id',
         'cat 1 sum',
         'feb',
         true
       );
-      console.log(`cat 1 sum - feb: ${calcRowValue}`);
+      //console.log(`cat 1 sum - feb: ${calcRowValue}`);
     });
   }
 
