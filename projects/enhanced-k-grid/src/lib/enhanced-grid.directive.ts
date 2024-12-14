@@ -462,6 +462,10 @@ export class EnhancedGridDirective
         this.resetState.bind(this),
         this.kendoGridInCellEditing
       );
+      // init again the info icons, because on editing then get overridden in the edited row
+      setTimeout(() => {
+        methods.initInfoIcons(this.infoTooltips, this.config);
+      });
     }
 
     // if selecting with shift is allowed

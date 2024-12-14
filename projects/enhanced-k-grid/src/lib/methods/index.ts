@@ -79,4 +79,6 @@ export * from './get-calc-data';
 export * from './get-info-cell';
 export * from './paint-info-in-cell';
 export * from './init-info-icons';
-export * from './show-info-tooltip';
+export * from './toggle-info-tooltip';
+export * from './set-position-info-tooltip';
+export * from './change-info-tooltip-pos';

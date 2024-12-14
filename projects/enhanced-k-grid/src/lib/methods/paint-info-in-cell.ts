@@ -25,9 +25,12 @@ export function paintInfoInCell(
     iconDiv.classList.add('left');
     //iconDiv.style.left = '5px';
   }
-  // add hover event listener
+  // add hover and out event listener
   iconDiv.addEventListener('mouseover', (event) => {
-    methods.showInfoTooltip(tooltip);
+    methods.toggleInfoTooltip(tooltip, config, 'on');
+  });
+  iconDiv.addEventListener('mouseout', (event) => {
+    methods.toggleInfoTooltip(tooltip, config, 'off');
   });
   // if we are not in edit mode, then append the icon to the cell
   if (!cell.classList.contains('k-grid-edit-cell')) cell.appendChild(iconDiv);

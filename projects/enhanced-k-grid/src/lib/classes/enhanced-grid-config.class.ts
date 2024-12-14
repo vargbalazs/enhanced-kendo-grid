@@ -198,6 +198,9 @@ export class EnhancedGridConfig {
   // pos of the error tooltip
   public errorTooltipPos: string = '';
 
+  // pos of the info tooltip
+  public infoTooltipPos: string = '';
+
   // DOMRect of an edited cell
   public domRectEditedCell: DOMRect = new DOMRect();
 

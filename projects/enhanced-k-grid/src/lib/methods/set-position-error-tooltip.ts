@@ -77,7 +77,7 @@ export function setPositionErrorTooltip(
   }
 }
 
-function resetPos(el: HTMLDivElement) {
+export function resetPos(el: HTMLDivElement) {
   el.classList.remove('top');
   el.classList.remove('left');
   el.classList.remove('right');
