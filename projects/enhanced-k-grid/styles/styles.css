@@ -367,3 +367,9 @@
   top: 0;
   z-index: 999;
 }
+
+.enhanced.k-grid .info-icon {
+  position: absolute;
+  z-index: 99;
+  color: red;
+}

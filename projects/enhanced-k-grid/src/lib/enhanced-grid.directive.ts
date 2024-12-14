@@ -414,9 +414,15 @@ export class EnhancedGridDirective
       this.config.overlay.originalHeight = getComputedStyle(grid).height;
     }
 
-    // render the info icons - we need setTimeout, because we want also consider the calculated rows/columns, if any
+    // render the info tooltips - we need setTimeout, because we want also consider the calculated rows/columns, if any
     setTimeout(() => {
-      methods.initInfoTooltip(this.config.infoTooltips, this.config);
+      methods.initInfoIcons(this.config.infoTooltips, this.config);
+      // reposition the info tooltips, if scrolling
+      methods.scrollInfoIcons(
+        this.config,
+        this.renderer2,
+        this.gridScrollListener
+      );
     });
   }
 
