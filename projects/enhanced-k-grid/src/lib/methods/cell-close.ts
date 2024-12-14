@@ -138,4 +138,9 @@ export function cellClose(
     const rect = activeCell!.getBoundingClientRect();
     methods.toggleErrorTooltip(config, rect, 'off');
   }
+  // if we have some info tooltips
+  if (config.infoTooltips.length > 0)
+    setTimeout(() => {
+      methods.initInfoIcons(config.infoTooltips, config);
+    });
 }
