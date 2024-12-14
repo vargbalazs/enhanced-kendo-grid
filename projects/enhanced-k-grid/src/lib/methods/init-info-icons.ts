@@ -14,6 +14,6 @@ export function initInfoIcons(
       tooltip.rowValue,
       config
     );
-    if (cell) methods.paintInfoInCell(cell, config);
+    if (cell) methods.paintInfoInCell(cell, config, tooltip);
   });
 }
