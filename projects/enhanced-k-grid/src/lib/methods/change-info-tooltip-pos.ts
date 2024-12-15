@@ -53,5 +53,30 @@ export function changeInfoTooltipPos(
       config.infoTooltipPos = pos;
       infoTooltip.classList.add(config.infoTooltipPos);
       break;
+    case 'right':
+      infoTooltip.style.left = `${
+        rect.right +
+        gridContent.scrollLeft -
+        gridContent.getBoundingClientRect().left +
+        10
+      }px`;
+      infoTooltip.style.top = `${
+        rect.top -
+        gridContent.getBoundingClientRect().top -
+        (infoTooltip.getBoundingClientRect().height - rect.height) / 2 +
+        gridContent.scrollTop
+      }px`;
+      infoTooltip.classList.remove(config.infoTooltipPos);
+      config.infoTooltipPos = pos;
+      infoTooltip.classList.add(config.infoTooltipPos);
+      break;
+    case 'bottom-right':
+      infoTooltip.style.top = `${
+        rect.top - gridContent.getBoundingClientRect().top
+      }px`;
+      infoTooltip.classList.remove(config.infoTooltipPos);
+      config.infoTooltipPos = pos;
+      infoTooltip.classList.add(config.infoTooltipPos);
+      break;
   }
 }

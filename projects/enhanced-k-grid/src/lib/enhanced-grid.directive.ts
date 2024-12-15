@@ -11,6 +11,7 @@ import {
   Output,
   Renderer2,
   SimpleChanges,
+  ViewContainerRef,
 } from '@angular/core';
 import {
   CellSelectionItem,
@@ -93,6 +94,9 @@ export class EnhancedGridDirective
   // input for info tooltips
   @Input() infoTooltips: InfoTooltip[] = [];
 
+  // input for info tooltip container
+  @Input() infoTooltipContainer: HTMLDivElement = document.createElement('div');
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -117,7 +121,8 @@ export class EnhancedGridDirective
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
-    private element: ElementRef
+    private element: ElementRef,
+    private view: ViewContainerRef
   ) {
     this.config = new EnhancedGridConfig();
     // get the element ref of the grid
@@ -280,6 +285,9 @@ export class EnhancedGridDirective
 
     // store the info tooltips
     this.config.infoTooltips = this.infoTooltips;
+
+    // store the info tooltip container
+    this.config.infoTooltipContainer = this.infoTooltipContainer;
 
     // reset the grid
     this.resetState();

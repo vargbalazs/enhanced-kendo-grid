@@ -4,4 +4,5 @@ export interface InfoTooltip {
   rowField: string;
   rowValue: any;
   icon: any;
+  content: any | string;
 }
