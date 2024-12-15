@@ -95,7 +95,7 @@ export class EnhancedGridDirective
   @Input() infoTooltips: InfoTooltip[] = [];
 
   // input for info tooltip container
-  @Input() infoTooltipContainer: HTMLDivElement = document.createElement('div');
+  @Input() infoTooltipContainer!: ViewContainerRef;
 
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
@@ -117,6 +117,8 @@ export class EnhancedGridDirective
 
   // listener for mouseup for the whole document
   private docMouseUpListener: () => void = () => {};
+
+  private gridContentScrollListener: () => void = () => {};
 
   constructor(
     private grid: GridComponent,
@@ -426,6 +428,22 @@ export class EnhancedGridDirective
     setTimeout(() => {
       methods.initInfoIcons(this.config.infoTooltips, this.config);
     });
+
+    // register a scroll listener for removing a closable tooltip
+    const gridContent = (<HTMLElement>(
+      this.config.gridElRef.nativeElement
+    )).querySelector('.k-grid-content')!;
+    this.gridContentScrollListener = this.renderer2.listen(
+      gridContent,
+      'scroll',
+      () => {
+        if (this.config.isInfoTooltipVisible) {
+          const infoTooltip = gridContent.querySelector('[infotooltip]')!;
+          gridContent.removeChild(infoTooltip);
+          this.config.isInfoTooltipVisible = false;
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -438,6 +456,7 @@ export class EnhancedGridDirective
     this.filterButtonListener();
     this.gridScrollListener();
     this.gridScrollEndListener();
+    this.gridContentScrollListener();
     this.docMouseUpListener();
     this.config.expandCollapseListener.forEach((listener) => listener());
     this.config.groupLevelListener.forEach((listener) => listener());
