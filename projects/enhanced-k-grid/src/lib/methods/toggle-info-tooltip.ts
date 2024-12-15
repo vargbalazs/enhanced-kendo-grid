@@ -1,5 +1,6 @@
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
+import { EnhancedGridToolTipComponent } from '../enhanced-grid-tooltip.component';
 import * as methods from './index';
 
 // shows the info tooltip
@@ -45,6 +46,9 @@ export function toggleInfoTooltip(
       const compRef = config.infoTooltipContainer.createComponent(
         tooltip.content
       );
+      (<EnhancedGridToolTipComponent>compRef.instance).fieldValue = 'test';
+      (<EnhancedGridToolTipComponent>compRef.instance).gridData =
+        config.gridData;
       infoTooltip.appendChild(compRef.location.nativeElement);
       infoTooltip.appendChild(document.createElement('i'));
     }
@@ -64,7 +68,11 @@ export function toggleInfoTooltip(
       config.isInfoTooltipVisible = true;
     }
     // set the position of the tooltip
-    methods.setPositionInfoTooltip(config, rect, gridContent, infoTooltip);
+    // setTimeout is needed, because if we use in the custom tooltip component some variables from the component file, then
+    // the auto height value won't be the correct one
+    setTimeout(() => {
+      methods.setPositionInfoTooltip(config, rect, gridContent, infoTooltip);
+    });
   } else {
     // if tooltip is not closable, then remove on mouse out
     if (!tooltip.closable) {
