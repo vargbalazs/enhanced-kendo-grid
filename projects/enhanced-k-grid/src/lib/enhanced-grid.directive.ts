@@ -713,6 +713,7 @@ export class EnhancedGridDirective
     rowField: string,
     rowValue: any,
     columnField: string,
+    fromCalcRow: boolean = false,
     gridData?: any[]
   ): any {
     if (gridData) {
@@ -720,14 +721,16 @@ export class EnhancedGridDirective
         rowField,
         rowValue,
         columnField,
-        gridData
+        gridData,
+        fromCalcRow
       );
     } else {
       return methods.getCellValuePrivate(
         rowField,
         rowValue,
         columnField,
-        this.config.gridData
+        this.config.gridData,
+        fromCalcRow
       );
     }
   }
