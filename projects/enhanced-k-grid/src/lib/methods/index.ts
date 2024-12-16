@@ -82,3 +82,4 @@ export * from './init-info-icons';
 export * from './toggle-info-tooltip';
 export * from './set-position-info-tooltip';
 export * from './change-info-tooltip-pos';
+export * from './get-cell-value';
