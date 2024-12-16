@@ -16,7 +16,13 @@ export function toggleInfoTooltip(
   if (toggle === 'on') {
     // first remove any already visible tooltip - this can be the case if we hovered on a closable tooltip, but
     // didn't close it
+    // if we hover on the same info icon, then do nothing
     const infoTooltipToClose = gridContent.querySelector('[infotooltip]')!;
+    if (
+      infoTooltipToClose &&
+      infoTooltipToClose.getAttribute('name') === tooltip.name
+    )
+      return;
     if (infoTooltipToClose) gridContent.removeChild(infoTooltipToClose);
     // get the corresponding cell and info icon
     const cell = methods.getInfoCell(
@@ -30,6 +36,7 @@ export function toggleInfoTooltip(
     // create the info tooltip element
     const infoTooltip = document.createElement('div');
     infoTooltip.setAttribute('infotooltip', '');
+    infoTooltip.setAttribute('name', tooltip.name);
     infoTooltip.classList.add('tooltip', 'common', 'info');
     if (tooltip.width) infoTooltip.style.width = tooltip.width;
     // if we have just a simple string
