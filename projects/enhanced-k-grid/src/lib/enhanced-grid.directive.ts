@@ -716,17 +716,19 @@ export class EnhancedGridDirective
     gridData?: any[]
   ): any {
     if (gridData) {
-      methods.getCellValuePrivate(rowField, rowValue, columnField, gridData);
+      return methods.getCellValuePrivate(
+        rowField,
+        rowValue,
+        columnField,
+        gridData
+      );
     } else {
-      setTimeout(() => {
-        console.log(this.config.gridData);
-        methods.getCellValuePrivate(
-          rowField,
-          rowValue,
-          columnField,
-          this.config.gridData
-        );
-      });
+      return methods.getCellValuePrivate(
+        rowField,
+        rowValue,
+        columnField,
+        this.config.gridData
+      );
     }
   }
 }
