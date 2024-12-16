@@ -3,7 +3,7 @@ import * as methods from './index';
 // gets the value of a given cell
 // first we search the corresponding row based on the rowField and rowValue parameters
 // then we get the cell value based on the columnField parameter
-export function getCellValue(
+export function getCellValuePrivate(
   rowField: string,
   rowValue: any,
   columnField: string,
