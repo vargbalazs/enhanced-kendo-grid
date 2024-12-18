@@ -16,6 +16,7 @@ export function paintInfoInCell(
   const colIndex = +cell.getAttribute('ng-reflect-col-index')!;
   iconDiv.setAttribute('row-index', rowIndex.toString());
   iconDiv.setAttribute('col-index', colIndex.toString());
+  iconDiv.setAttribute('tooltip-name', tooltip.name);
   iconDiv.classList.add('info-icon');
   // position the icon according to the align of the cell
   if (getComputedStyle(cell).textAlign !== 'right') {
