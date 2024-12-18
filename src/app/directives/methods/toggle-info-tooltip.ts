@@ -49,6 +49,12 @@ export function toggleInfoTooltip(
     }
     // if we have a component
     else {
+      if (!config.infoTooltipContainer) {
+        console.error(
+          `In case of a component based info tooltip, the component, which contains the grid with the info tooltips, should have a 'div' element with a template reference variable called 'infoTooltip'.`
+        );
+        return;
+      }
       config.infoTooltipContainer.clear();
       const compRef = config.infoTooltipContainer.createComponent(
         tooltip.content
