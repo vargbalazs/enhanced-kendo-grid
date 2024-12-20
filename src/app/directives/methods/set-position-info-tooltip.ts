@@ -8,6 +8,10 @@ export function setPositionInfoTooltip(
   gridContent: Element,
   infoTooltip: HTMLDivElement
 ) {
+  // define the rects for easier access
+  const infoTooltipRect = infoTooltip.getBoundingClientRect();
+  const gridContentRect = gridContent.getBoundingClientRect();
+  // reset first
   methods.resetPos(infoTooltip);
   // calculate the left and top values as if the tooltip pos were top
   const left =
@@ -24,19 +28,7 @@ export function setPositionInfoTooltip(
   // the default info tooltip pos is top
   config.infoTooltipPos = 'top';
   infoTooltip.classList.add(config.infoTooltipPos);
-  infoTooltip.style.left = `${
-    rect.left -
-    gridContent.getBoundingClientRect().left -
-    (infoTooltip.getBoundingClientRect().width - rect.width) / 2 +
-    gridContent.scrollLeft
-  }px`;
-  infoTooltip.style.top = `${
-    rect.top -
-    gridContent.getBoundingClientRect().top -
-    infoTooltip.getBoundingClientRect().height -
-    10 +
-    gridContent.scrollTop
-  }px`;
+  methods.changeInfoTooltipPos(config, 'top', rect, gridContent, infoTooltip);
   // if the info icon is on the very right of the grid, then the pos of the tooltip should be left
   if (
     infoTooltip.getBoundingClientRect().right >

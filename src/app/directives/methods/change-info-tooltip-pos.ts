@@ -4,6 +4,7 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 export function changeInfoTooltipPos(
   config: EnhancedGridConfig,
   pos:
+    | 'top'
     | 'left'
     | 'right'
     | 'bottom'
@@ -16,6 +17,24 @@ export function changeInfoTooltipPos(
   infoTooltip: HTMLDivElement
 ) {
   switch (pos) {
+    case 'top':
+      infoTooltip.style.left = `${
+        rect.left -
+        gridContent.getBoundingClientRect().left -
+        (infoTooltip.getBoundingClientRect().width - rect.width) / 2 +
+        gridContent.scrollLeft
+      }px`;
+      infoTooltip.style.top = `${
+        rect.top -
+        gridContent.getBoundingClientRect().top -
+        infoTooltip.getBoundingClientRect().height -
+        10 +
+        gridContent.scrollTop
+      }px`;
+      infoTooltip.classList.remove(config.infoTooltipPos);
+      config.infoTooltipPos = pos;
+      infoTooltip.classList.add(config.infoTooltipPos);
+      break;
     case 'left':
       infoTooltip.style.left = `${
         rect.left +
