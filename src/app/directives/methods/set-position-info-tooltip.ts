@@ -9,7 +9,19 @@ export function setPositionInfoTooltip(
   infoTooltip: HTMLDivElement
 ) {
   methods.resetPos(infoTooltip);
-  // default pos is top
+  // calculate the left and top values as if the tooltip pos were top
+  const left =
+    rect.left -
+    gridContent.getBoundingClientRect().left -
+    (infoTooltip.getBoundingClientRect().width - rect.width) / 2 +
+    gridContent.scrollLeft;
+  const top =
+    rect.top -
+    gridContent.getBoundingClientRect().top -
+    infoTooltip.getBoundingClientRect().height -
+    10 +
+    gridContent.scrollTop;
+  // the default info tooltip pos is top
   config.infoTooltipPos = 'top';
   infoTooltip.classList.add(config.infoTooltipPos);
   infoTooltip.style.left = `${
@@ -25,7 +37,7 @@ export function setPositionInfoTooltip(
     10 +
     gridContent.scrollTop
   }px`;
-  // if the pos should be left
+  // if the info icon is on the very right of the grid, then the pos of the tooltip should be left
   if (
     infoTooltip.getBoundingClientRect().right >
     gridContent.getBoundingClientRect().right
@@ -37,7 +49,8 @@ export function setPositionInfoTooltip(
       gridContent,
       infoTooltip
     );
-    // right corner
+    // if the info icon is on the very right top corner of the grid, then the pos of the tooltip should be also left
+    // but with different classes and positions
     if (
       infoTooltip.getBoundingClientRect().top <
       gridContent.getBoundingClientRect().top
@@ -50,9 +63,23 @@ export function setPositionInfoTooltip(
         infoTooltip
       );
     }
+    // if the info icon is on the very right bottom corner of the grid, then the pos of the tooltip should be also left
+    // but with different classes and positions
+    if (
+      infoTooltip.getBoundingClientRect().bottom >
+      gridContent.getBoundingClientRect().bottom
+    ) {
+      methods.changeInfoTooltipPos(
+        config,
+        'top-left',
+        rect,
+        gridContent,
+        infoTooltip
+      );
+    }
     return;
   }
-  // if the pos should be right
+  // if the info icon is on the very left of the grid, then the pos of the tooltip should be right
   if (
     infoTooltip.getBoundingClientRect().left <
     gridContent.getBoundingClientRect().left
@@ -64,7 +91,8 @@ export function setPositionInfoTooltip(
       gridContent,
       infoTooltip
     );
-    // left corner
+    // if the info icon is on the very left top corner of the grid, then the pos of the tooltip should be also right
+    // but with different classes and positions
     if (
       infoTooltip.getBoundingClientRect().top <
       gridContent.getBoundingClientRect().top
@@ -77,9 +105,23 @@ export function setPositionInfoTooltip(
         infoTooltip
       );
     }
+    // if the info icon is on the very left bottom corner of the grid, then the pos of the tooltip should be also right
+    // but with different classes and positions
+    if (
+      infoTooltip.getBoundingClientRect().bottom >
+      gridContent.getBoundingClientRect().bottom
+    ) {
+      methods.changeInfoTooltipPos(
+        config,
+        'top-right',
+        rect,
+        gridContent,
+        infoTooltip
+      );
+    }
     return;
   }
-  // if the pos should be bottom
+  // if no matching for all other cases, then the info tooltip pos should be bottom
   if (
     infoTooltip.getBoundingClientRect().top <
     gridContent.getBoundingClientRect().top

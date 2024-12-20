@@ -3,7 +3,14 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 // changes the pos of the info tooltip
 export function changeInfoTooltipPos(
   config: EnhancedGridConfig,
-  pos: 'left' | 'right' | 'bottom' | 'bottom-left' | 'bottom-right',
+  pos:
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'bottom-left'
+    | 'bottom-right'
+    | 'top-right'
+    | 'top-left',
   rect: DOMRect,
   gridContent: Element,
   infoTooltip: HTMLDivElement
@@ -46,8 +53,11 @@ export function changeInfoTooltipPos(
       infoTooltip.classList.add(config.infoTooltipPos);
       break;
     case 'bottom-left':
+    case 'bottom-right':
       infoTooltip.style.top = `${
-        rect.top - gridContent.getBoundingClientRect().top
+        rect.top -
+        gridContent.getBoundingClientRect().top +
+        gridContent.scrollTop
       }px`;
       infoTooltip.classList.remove(config.infoTooltipPos);
       config.infoTooltipPos = pos;
@@ -70,9 +80,14 @@ export function changeInfoTooltipPos(
       config.infoTooltipPos = pos;
       infoTooltip.classList.add(config.infoTooltipPos);
       break;
-    case 'bottom-right':
+    case 'top-right':
+    case 'top-left':
       infoTooltip.style.top = `${
-        rect.top - gridContent.getBoundingClientRect().top
+        rect.top -
+        gridContent.getBoundingClientRect().top -
+        (infoTooltip.getBoundingClientRect().height - rect.height) +
+        gridContent.scrollTop -
+        10
       }px`;
       infoTooltip.classList.remove(config.infoTooltipPos);
       config.infoTooltipPos = pos;

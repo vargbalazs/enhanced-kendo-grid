@@ -84,4 +84,6 @@ export function resetPos(el: HTMLDivElement) {
   el.classList.remove('bottom');
   el.classList.remove('bottom-left');
   el.classList.remove('bottom-right');
+  el.classList.remove('top-right');
+  el.classList.remove('top-left');
 }
