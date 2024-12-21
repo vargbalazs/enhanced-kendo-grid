@@ -394,6 +394,7 @@ export class EnhancedGridDirective
 
     // create the selected area div
     methods.createSelectedArea(this.renderer2, this.config);
+    methods.resetSelectedArea(this.config.selectedArea, this.config);
 
     // handle selected area if scrolling from a frozen column
     methods.registerScrollEndListener(
