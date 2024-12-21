@@ -5,27 +5,28 @@ export function setPositionErrorTooltip(
   config: EnhancedGridConfig,
   rect: DOMRect
 ) {
+  // reset first
   resetPos(config.errorToolTip);
   // query the grid content
   const gridContent = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content')!;
-  // default pos is top
-  config.errorTooltipPos = 'top';
-  config.errorToolTip.classList.add(config.errorTooltipPos);
-  config.errorToolTip.style.left = `${
+  // calculate the left and top values as if the tooltip pos were top
+  const left =
     rect.left -
     gridContent.getBoundingClientRect().left -
     (config.errorToolTip.getBoundingClientRect().width - rect.width) / 2 +
-    gridContent.scrollLeft
-  }px`;
-  config.errorToolTip.style.top = `${
+    gridContent.scrollLeft;
+  const top =
     rect.top -
     gridContent.getBoundingClientRect().top -
     config.errorToolTip.getBoundingClientRect().height -
     10 +
-    gridContent.scrollTop
-  }px`;
+    gridContent.scrollTop;
+  // the default info tooltip pos is top
+  config.errorTooltipPos = 'top';
+  config.errorToolTip.classList.add(config.errorTooltipPos);
+  methods.changeErrorTooltipPos(config, 'top', rect, gridContent);
   // store scrollLeft, scrollTop
   config.gridScrollLeft = gridContent.scrollLeft;
   config.gridScrollTop = gridContent.scrollTop;
@@ -41,12 +42,19 @@ export function setPositionErrorTooltip(
     gridContent.getBoundingClientRect().right
   ) {
     methods.changeErrorTooltipPos(config, 'left', rect, gridContent);
-    // right corner
+    // right top corner
     if (
       config.errorToolTip.getBoundingClientRect().top <
       gridContent.getBoundingClientRect().top
     ) {
       methods.changeErrorTooltipPos(config, 'bottom-left', rect, gridContent);
+    }
+    // right bottom corner
+    if (
+      config.errorToolTip.getBoundingClientRect().bottom + 2 >
+      gridContent.getBoundingClientRect().bottom
+    ) {
+      methods.changeErrorTooltipPos(config, 'top-left', rect, gridContent);
     }
     return;
   }
@@ -58,12 +66,19 @@ export function setPositionErrorTooltip(
       config.editedColIndex > config.frozenColumns.length - 1)
   ) {
     methods.changeErrorTooltipPos(config, 'right', rect, gridContent);
-    // left corner
+    // left top corner
     if (
       config.errorToolTip.getBoundingClientRect().top <
       gridContent.getBoundingClientRect().top
     ) {
       methods.changeErrorTooltipPos(config, 'bottom-right', rect, gridContent);
+    }
+    // left bottom corner
+    if (
+      config.errorToolTip.getBoundingClientRect().bottom + 2 >
+      gridContent.getBoundingClientRect().bottom
+    ) {
+      methods.changeErrorTooltipPos(config, 'top-right', rect, gridContent);
     }
     return;
   }

@@ -282,6 +282,10 @@
   overflow: hidden;
 }
 
+.tooltip[id="error-tooltip"].bottom-left i {
+  top: 20%;
+}
+
 .tooltip.top-left i {
   position: absolute;
   top: 100%;
@@ -300,6 +304,10 @@
   width: 12px;
   height: 24px;
   overflow: hidden;
+}
+
+.tooltip[id="error-tooltip"].bottom-right i {
+  top: 20%;
 }
 
 .tooltip.top-right i {
