@@ -282,11 +282,31 @@
   overflow: hidden;
 }
 
+.tooltip.top-left i {
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  margin-top: -17px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
 .tooltip.bottom-right i {
   position: absolute;
   /* top: 20%; */
   right: 100%;
   margin-top: -12px;
+  width: 12px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.tooltip.top-right i {
+  position: absolute;
+  top: 100%;
+  right: 100%;
+  margin-top: -17px;
   width: 12px;
   height: 24px;
   overflow: hidden;
@@ -331,13 +351,15 @@
   transform: translate(-50%, 50%) rotate(45deg);
 }
 
-.tooltip.bottom-left i::after {
+.tooltip.bottom-left i::after,
+.tooltip.top-left i::after {
   left: -30%;
   top: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.tooltip.bottom-right i::after {
+.tooltip.bottom-right i::after,
+.tooltip.top-right i::after {
   left: 10%;
   top: 50%;
   transform: translate(50%, -50%) rotate(-45deg);
