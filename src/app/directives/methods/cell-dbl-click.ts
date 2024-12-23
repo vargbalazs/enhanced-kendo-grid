@@ -47,5 +47,15 @@ export function cellDblClick(
     ) {
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     }
+    // if we are in a non-editable column, then we have to empty the selectedCells array, because
+    // otherwise if we select with shift we would get an error, because selecting with shift needs to have an emtpy
+    // selectedCells array
+    if (
+      config.nonEditableColumns.some(
+        (nec) => nec.index === grid.activeCell.colIndex
+      )
+    ) {
+      config.selectedCells = [];
+    }
   }
 }
