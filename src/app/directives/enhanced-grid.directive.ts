@@ -623,6 +623,13 @@ export class EnhancedGridDirective
     }
   }
 
+  @HostListener('mouseenter', ['$event'])
+  onMouseOver(e: MouseEvent) {
+    // if selecting with mouse is allowed and we enter back on the grid, then clear the intervalId
+    // in order to stop the automatic selection of cells
+    if (this.selectingWithMouse) window.clearInterval(this.config.intervalId);
+  }
+
   @HostListener('mousemove', ['$event'])
   onMouseMove(e: MouseEvent) {
     // if selecting with mouse is allowed
