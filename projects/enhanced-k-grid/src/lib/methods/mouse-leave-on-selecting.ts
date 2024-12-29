@@ -64,6 +64,31 @@ export function mouseLeaveOnSelecting(
       }
     }, 300);
   }
+
+  // if we left the grid on the top
+  if (config.isMouseDown && e.pageY < gridContent.getBoundingClientRect().top) {
+    config.intervalId = window.setInterval(() => {
+      if (config.lastSelectedCell.itemKey > 0) {
+        // store the last selected cell and it's position
+        config.lastSelectedCell = {
+          itemKey: config.lastSelectedCell.itemKey - 1,
+          columnKey: config.lastSelectedCell.columnKey,
+        };
+
+        selectCells(config, grid, updateFn);
+
+        gridContent?.scrollBy({
+          top: -20,
+          behavior: 'smooth',
+        });
+      } else {
+        gridContent?.scrollBy({
+          top: -gridContent.scrollHeight,
+          behavior: 'smooth',
+        });
+      }
+    }, 300);
+  }
 }
 
 function selectCells(
