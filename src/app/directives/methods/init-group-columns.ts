@@ -40,7 +40,7 @@ export function initGroupColumns(
         let groupCell = (<HTMLElement>(
           config.gridElRef.nativeElement
         )).querySelector(
-          `[ng-reflect-data-row-index="${calcRowIndexes[j].index}"][ng-reflect-col-index="${groupColIndexes[i]}"]`
+          `[kendogridlogicalrow][data-kendo-grid-item-index="${calcRowIndexes[j].index}"] [kendogridcell][data-kendo-grid-column-index="${groupColIndexes[i]}"]`
         );
         calcRowStates.push(
           methods.getStateForCalcRow(config, calcRowIndexes[j].index)
@@ -104,11 +104,11 @@ export function initGroupColumns(
   config.expandCollapseListener = listeners;
   // initialize done
   config.groupColumnsInitialized = true;
-
+  // store the column widths
   config.columnWidths = [];
   config.columns.forEach((col) => {
     const cell = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[ng-reflect-col-index='${col.leafIndex}']`
+      `[kendogridcell][data-kendo-grid-column-index='${col.leafIndex}']`
     );
     config.columnWidths.push(getComputedStyle(cell!).width);
   });

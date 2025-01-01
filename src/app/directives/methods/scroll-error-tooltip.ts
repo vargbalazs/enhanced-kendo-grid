@@ -41,7 +41,7 @@ export function scrollErrorTooltip(
       ) {
         // we have to query for the active cell, because it's position is changed since going in edit mode the first time
         let activeCell = config.gridBody.querySelector(
-          `[ng-reflect-data-row-index="${config.editedCell.dataRowIndex}"][ng-reflect-col-index="${config.editedCell.colIndex}"]`
+          `[kendogridlogicalrow][data-kendo-grid-item-index="${config.editedCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${config.editedCell.colIndex}"]`
         )!;
         methods.toggleErrorTooltip(
           config,

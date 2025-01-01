@@ -14,17 +14,18 @@ export function selectWithMouse(
   const target = <HTMLElement>e.target;
   // if we move on a data cell
   if (
-    target?.hasAttribute('ng-reflect-data-row-index') &&
-    target?.hasAttribute('ng-reflect-col-index')
+    target?.parentElement?.hasAttribute('data-kendo-grid-item-index') &&
+    target?.hasAttribute('data-kendo-grid-column-index')
   ) {
     // store the grid body
     config.gridBody = target.parentElement!.parentElement!;
     // get the indexes
-    const dataRowIndex = +target.attributes.getNamedItem(
-      'ng-reflect-data-row-index'
+    const dataRowIndex = +target.parentElement.attributes.getNamedItem(
+      'data-kendo-grid-item-index'
     )!.value;
-    const columnIndex = +target.attributes.getNamedItem('ng-reflect-col-index')!
-      .value;
+    const columnIndex = +target.attributes.getNamedItem(
+      'data-kendo-grid-column-index'
+    )!.value;
 
     // store the first selected cell, it's position and it's value
     if (config.selectedCells.length === 0) {

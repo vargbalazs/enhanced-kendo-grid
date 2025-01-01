@@ -47,7 +47,7 @@ function getColumnCells(
     '[kendogridtablebody]'
   );
   const cells = gridBody?.querySelectorAll(
-    `[ng-reflect-col-index="${colIndex}"]`
+    `[kendogridcell][data-kendo-grid-column-index="${colIndex}"]`
   );
   return cells;
 }

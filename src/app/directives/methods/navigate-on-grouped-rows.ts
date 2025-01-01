@@ -24,9 +24,11 @@ export function navigateOnGroupedRows(
     // query for the last sel. cell and override target, because the target of the keydown event isn't the last sel. cell
     const direction = e.key === ARROWS.DOWN ? 1 : -1;
     target = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[ng-reflect-data-row-index="${
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${
         grid.activeCell.dataRowIndex + direction
-      }"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
+      }"] [kendogridcell][data-kendo-grid-column-index="${
+        grid.activeCell.colIndex
+      }"]`
     )!;
     // if the target isn't a data cell, then return
     if (!target) return;

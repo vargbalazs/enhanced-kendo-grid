@@ -14,7 +14,7 @@ export function getInfoCell(
   const colIndex = config.columns.findIndex((col) => col.field === columnField);
   // get the cell element
   let cell = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-    `[ng-reflect-data-row-index="${rowIndex}"][ng-reflect-col-index="${colIndex}"]`
+    `[kendogridlogicalrow][data-kendo-grid-item-index="${rowIndex}"] [kendogridcell][data-kendo-grid-column-index="${colIndex}"]`
   );
   return cell;
 }

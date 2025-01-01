@@ -98,7 +98,7 @@ function selectCells(
 ) {
   let target = <HTMLElement>(
     config.gridBody.querySelector(
-      `[ng-reflect-data-row-index="${config.lastSelectedCell.itemKey}"][ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${config.lastSelectedCell.itemKey}"] [kendogridcell][data-kendo-grid-column-index="${config.lastSelectedCell.columnKey}"]`
     )
   );
   methods.setRectValues(config.lastSelectedCellRect, target, config);

@@ -44,7 +44,7 @@ export function storeEditingFormGroup(
       }
       // get the pos of the edited cell
       let activeCell = config.gridBody.querySelector(
-        `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
+        `[kendogridlogicalrow][data-kendo-grid-item-index="${grid.activeCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${grid.activeCell.colIndex}"]`
       );
       config.editedCell = grid.activeCell;
       config.domRectEditedCell = activeCell!.getBoundingClientRect();

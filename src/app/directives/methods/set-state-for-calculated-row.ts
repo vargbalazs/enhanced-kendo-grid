@@ -22,7 +22,9 @@ export function setStateForCalcRow(
         calcRowExp?.rowIndexes?.forEach((rowIndex) => {
           const dataRow = (<HTMLElement>(
             config.gridElRef.nativeElement
-          )).querySelector(`[ng-reflect-data-row-index="${rowIndex}"]`);
+          )).querySelector(
+            `[kendogridlogicalrow][data-kendo-grid-item-index="${rowIndex}"]`
+          );
           // renderer2.removeClass(dataRow, 'collapsed-row');
           // renderer2.addClass(dataRow, 'expanded-row');
           // set also the calcrow name on each row
@@ -39,7 +41,9 @@ export function setStateForCalcRow(
         calcRowColl?.rowIndexes?.forEach((rowIndex) => {
           const dataRow = (<HTMLElement>(
             config.gridElRef.nativeElement
-          )).querySelector(`[ng-reflect-data-row-index="${rowIndex}"]`);
+          )).querySelector(
+            `[kendogridlogicalrow][data-kendo-grid-item-index="${rowIndex}"]`
+          );
           // renderer2.removeClass(dataRow, 'expanded-row');
           // renderer2.addClass(dataRow, 'collapsed-row');
           // set also the calcrow name on each row

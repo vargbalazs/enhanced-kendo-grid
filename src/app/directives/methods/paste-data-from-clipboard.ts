@@ -160,9 +160,9 @@ export function pasteFromClipboard(
           config.gridBody = target.parentElement?.parentElement!;
           methods.setRectValues(config.firstSelectedCellRect, target, config);
           target = config.gridBody!.querySelector(
-            `[ng-reflect-data-row-index="${
+            `[kendogridlogicalrow][data-kendo-grid-item-index="${
               config.selectedCells[config.selectedCells.length - 1].itemKey
-            }"][ng-reflect-col-index="${
+            }"] [kendogridcell][data-kendo-grid-column-index="${
               config.selectedCells[config.selectedCells.length - 1].columnKey
             }"]`
           )!;

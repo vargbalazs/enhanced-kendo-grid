@@ -1,5 +1,8 @@
 <kendo-tabstrip>
-  <kendo-tabstrip-tab title="normal grid (with sorting, paging, filtering)">
+  <kendo-tabstrip-tab
+    title="normal grid (with sorting, paging, filtering)"
+    [selected]="true"
+  >
     <ng-template kendoTabContent>
       <normal-grid></normal-grid>
     </ng-template>
@@ -49,7 +52,7 @@
       <calc-grid-custom-row></calc-grid-custom-row>
     </ng-template>
   </kendo-tabstrip-tab>
-  <kendo-tabstrip-tab title="info" [selected]="true">
+  <kendo-tabstrip-tab title="info">
     <ng-template kendoTabContent>
       <calc-grid-info></calc-grid-info>
     </ng-template>

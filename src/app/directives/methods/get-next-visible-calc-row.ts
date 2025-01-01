@@ -18,7 +18,7 @@ export function getNextVisibleCalcRow(
   const calcRowsDataRowIndexes: number[] = [];
   for (let i = 0; i <= calcRows.length - 1; i++) {
     const dataRowIndex = +calcRows[i].getAttribute(
-      'ng-reflect-data-row-index'
+      'data-kendo-grid-item-index'
     )!;
     calcRowsDataRowIndexes.push(dataRowIndex);
   }
@@ -46,7 +46,7 @@ export function getNextVisibleCalcRow(
       return row;
     }
     const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[ng-reflect-data-row-index="${calcRowsDataRowIndexes[ind]}"]`
+      `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[data-kendo-grid-item-index="${calcRowsDataRowIndexes[ind]}"]`
     )!;
     return row;
   } else {
@@ -57,7 +57,7 @@ export function getNextVisibleCalcRow(
       );
       if (index === 0) index = 1;
       const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-        `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[ng-reflect-data-row-index="${
+        `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[data-kendo-grid-item-index="${
           calcRowsDataRowIndexes[index - 1]
         }"]`
       )!;
@@ -66,7 +66,7 @@ export function getNextVisibleCalcRow(
     // if we are moving upwards, then 'actCalcRowDataRowIndex' will be the data row index of the previous calc row
     // and this can be visible, but hidden too, so we have to check for it
     const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[ng-reflect-data-row-index="${actCalcRowDataRowIndex}"]`
+      `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[data-kendo-grid-item-index="${actCalcRowDataRowIndex}"]`
     );
     // if it is visible, then this will be the next calc row
     if (row) {
@@ -78,7 +78,7 @@ export function getNextVisibleCalcRow(
           const row = (<HTMLElement>(
             config.gridElRef.nativeElement
           )).querySelector(
-            `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[ng-reflect-data-row-index="${
+            `[kendogridlogicalrow].calcrow:not([collapsed]):not([style*="display: none"])[data-kendo-grid-item-index="${
               calcRowsDataRowIndexes[i - 1]
             }"]`
           )!;

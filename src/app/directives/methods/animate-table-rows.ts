@@ -13,7 +13,7 @@ export function animateTableRows(
   const calcRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
     `[kendogridlogicalrow].${calcRowName}`
   );
-  const dataRowIndex = +calcRow!.getAttribute('ng-reflect-data-row-index')!;
+  const dataRowIndex = +calcRow!.getAttribute('data-kendo-grid-item-index')!;
   // get the corresponging calc row and some properties of it
   const row = config.rowCalculation.calculatedRows.find(
     (calcRow) => calcRow.name === calcRowName
@@ -29,14 +29,14 @@ export function animateTableRows(
   if (rowAlign === 'top') {
     for (let i = dataRowIndex + 1; i <= dataRowIndex + rowIndexesCount!; i++) {
       const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-        `[ng-reflect-data-row-index='${i}']`
+        `[data-kendo-grid-item-index='${i}']`
       );
       totalHeight += row!.getBoundingClientRect().height;
     }
   } else {
     for (let i = dataRowIndex - rowIndexesCount!; i <= dataRowIndex - 1; i++) {
       const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-        `[ng-reflect-data-row-index='${i}']`
+        `[data-kendo-grid-item-index='${i}']`
       );
       totalHeight += row!.getBoundingClientRect().height;
     }
@@ -79,7 +79,7 @@ export function animateTableRows(
   let collapsedSubGroupExists = false;
   for (let i = 0; i <= rowIndexes!.length - 1; i++) {
     const row = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[kendogridlogicalrow][ng-reflect-data-row-index='${
+      `[kendogridlogicalrow][data-kendo-grid-item-index='${
         rowIndexes![i]
       }'][collapsed]`
     );
@@ -92,7 +92,7 @@ export function animateTableRows(
   // get the detail rows
   let detailRows = null;
   for (let i = 0; i <= rowIndexes!.length - 1; i++) {
-    const row = `[kendogridlogicalrow][ng-reflect-data-row-index='${
+    const row = `[kendogridlogicalrow][data-kendo-grid-item-index='${
       rowIndexes![i]
     }']`;
     detailRows = (detailRows || jquery(row)).add(row);
@@ -100,7 +100,7 @@ export function animateTableRows(
   // if we have at least one collapsed sub group, we have to collect the html elements differently
   if (collapsedSubGroupExists) {
     let startRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes![0]}']`
+      `[kendogridlogicalrow][data-kendo-grid-item-index='${rowIndexes![0]}']`
     )!;
     // if the rowAlign is bottom and the startrow is collapsed, then this means, that the first sub-group is collapsed
     // in this case the startrow should be the div element, which holds the collapsed rows
@@ -108,12 +108,14 @@ export function animateTableRows(
       startRow = startRow.parentElement!;
     }
     let stopRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes!.at(-1)}']`
+      `[kendogridlogicalrow][data-kendo-grid-item-index='${rowIndexes!.at(
+        -1
+      )}']`
     )!;
     // if the 'stopRow' has the attr. 'collapsed', it means, that this isn't the last row, because there is also the hidden row with the same index, and we need this
     if (stopRow.hasAttribute('collapsed')) {
       stopRow = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-        `[kendogridlogicalrow][ng-reflect-data-row-index='${rowIndexes!.at(
+        `[kendogridlogicalrow][data-kendo-grid-item-index='${rowIndexes!.at(
           -1
         )}']:not([collapsed])`
       )!;
@@ -142,13 +144,13 @@ export function animateTableRows(
             const row = (<HTMLElement>(
               config.gridElRef.nativeElement
             )).querySelector(
-              `[kendogridlogicalrow][ng-reflect-data-row-index='${
+              `[kendogridlogicalrow][data-kendo-grid-item-index='${
                 rowIndexes![i]
               }']`
             );
             if (!row?.hasAttribute('collapsed')) {
               jquery(
-                `[kendogridlogicalrow][ng-reflect-data-row-index='${
+                `[kendogridlogicalrow][data-kendo-grid-item-index='${
                   rowIndexes![i]
                 }']`
               ).show();
@@ -183,7 +185,7 @@ export function animateTableRows(
         // the first child row shouldn't have also the collapsed attribute, because if we wouldn't filter it out,
         // the collapsingGroup would be inserted twice and this would lead to not desired results
         // get the first child row
-        let firstChildRow = `[kendogridlogicalrow][ng-reflect-data-row-index='${
+        let firstChildRow = `[kendogridlogicalrow][data-kendo-grid-item-index='${
           rowIndexes![0]
         }']:not([collapsed])`;
         // insert before this first child row
@@ -193,7 +195,7 @@ export function animateTableRows(
       // width of the columns (without padding and border)
       for (let i = 0; i <= config.columnWidths.length - 1; i++) {
         jquery(
-          `div[calcrowname=${calcRowName}] td[ng-reflect-col-index=${i}]`
+          `div[calcrowname=${calcRowName}] td[data-kendo-grid-column-index=${i}]`
         ).css('width', config.columnWidths[i]);
       }
       // do the animation
