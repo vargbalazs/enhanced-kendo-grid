@@ -130,7 +130,7 @@ export function selectWithShift(
 
     // query for the last sel. cell and override target, because the target of the keydown event isn't the last sel. cell
     target = gridBody!.querySelector(
-      `[ng-reflect-data-row-index="${config.lastSelectedCell.itemKey}"][ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${config.lastSelectedCell.itemKey}"] [kendogridcell][data-kendo-grid-column-index="${config.lastSelectedCell.columnKey}"]`
     )!;
     // if the grid is grouped, we have to handle selecting differently
     if (config.grouped) {

@@ -1,6 +1,8 @@
 // some checking functions
 export function isGroupCell(target: any) {
-  return (<HTMLElement>target).hasAttribute('ng-reflect-group-item');
+  return (<HTMLElement>target).parentElement?.hasAttribute(
+    'kendogridgroupheader'
+  );
 }
 
 export function isFilterCell(target: any) {

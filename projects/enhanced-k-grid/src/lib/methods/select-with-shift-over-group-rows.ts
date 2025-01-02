@@ -18,10 +18,12 @@ export function selectWithShiftOverGroupRows(
   const calcRowName =
     target.parentElement!.parentElement?.getAttribute('calcrowname');
   // get the row indexes of the actual cell and of the calc row
-  const cellDataRowIndex = +target.getAttribute('ng-reflect-data-row-index')!;
+  const cellDataRowIndex = +target.parentElement?.getAttribute(
+    'data-kendo-grid-item-index'
+  )!;
   const calcRowDataRowIndex = +(<HTMLElement>config.gridElRef.nativeElement)
     .querySelector(`[kendogridlogicalrow].${calcRowName}`)!
-    .getAttribute('ng-reflect-data-row-index')!;
+    .getAttribute('data-kendo-grid-item-index')!;
   // if the cell row index is less than the calc row index, then the calc row is bottom aligned, else top aligned
   const rowAlign = cellDataRowIndex < calcRowDataRowIndex ? 'bottom' : 'top';
   let nextCalcRow: Element = document.createElement('div');
@@ -31,10 +33,10 @@ export function selectWithShiftOverGroupRows(
     methods.getNextVisibleCalcRow(calcRowDataRowIndex, config, e, rowAlign)
   );
   // get the row index of this next calc row
-  rowIndex = +nextCalcRow.getAttribute('ng-reflect-data-row-index')!;
+  rowIndex = +nextCalcRow.getAttribute('data-kendo-grid-item-index')!;
   // the new target will be from this row
   target = nextCalcRow?.querySelector(
-    `td[ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
+    `td[data-kendo-grid-column-index="${config.lastSelectedCell.columnKey}"]`
   )!;
   // if we are selecting with shift, then we have to change also the last selected cell
   if (e.shiftKey) {
@@ -45,9 +47,9 @@ export function selectWithShiftOverGroupRows(
     };
   }
   // set also the focused cell
-  const logicalRowIndex = +nextCalcRow?.getAttribute(
-    'ng-reflect-logical-row-index'
-  )!;
+  // the logical row index includes also the header, that's why we add 1 to the datarow index
+  const logicalRowIndex =
+    +nextCalcRow?.getAttribute('data-kendo-grid-item-index')! + 1;
   if (e.key === ARROWS.DOWN) {
     grid.focusCell(logicalRowIndex - 1, grid.activeCell.colIndex);
   } else {

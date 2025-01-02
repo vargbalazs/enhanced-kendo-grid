@@ -26,7 +26,7 @@ export function drawGroupLevelBtns(
   config.groupLevelButtons.forEach((groupBtn) => {
     // query for the header elements
     const header = (<HTMLElement>config.gridElRef.nativeElement).querySelector(
-      `th[kendogridlogicalcell][ng-reflect-header-label-text=${groupBtn.field}] span.k-link`
+      `th[kendogridlogicalcell][aria-colindex="${groupBtn.level}"] span.k-link`
     )!;
     // build the btn with the group lvl in it
     const btn = renderer2.createElement('button') as HTMLButtonElement;

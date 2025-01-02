@@ -358,7 +358,7 @@ export class EnhancedGridDirective
           methods.updateCalculatedColumns(this.config);
           methods.updateCalculatedRows(this.config);
         }
-        // if the grid is a grouped one and the settings are ok, then add the groupp column(s)
+        // if the grid is a grouped one and the settings are ok, then add the group column(s)
         if (
           this.config.grouped &&
           methods.checkGroupedGridSettings(this.config)

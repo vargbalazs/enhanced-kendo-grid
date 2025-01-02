@@ -12,8 +12,10 @@ export function paintInfoInCell(
   const iconDiv = document.createElement('div');
   iconDiv.innerHTML = tooltip.icon;
   iconDiv.setAttribute('info-icon', '');
-  const rowIndex = +cell.getAttribute('ng-reflect-data-row-index')!;
-  const colIndex = +cell.getAttribute('ng-reflect-col-index')!;
+  const rowIndex = +cell.parentElement?.getAttribute(
+    'data-kendo-grid-item-index'
+  )!;
+  const colIndex = +cell.getAttribute('data-kendo-grid-column-index')!;
   iconDiv.setAttribute('row-index', rowIndex.toString());
   iconDiv.setAttribute('col-index', colIndex.toString());
   iconDiv.setAttribute('tooltip-name', tooltip.name);

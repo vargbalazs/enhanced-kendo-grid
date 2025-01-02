@@ -119,9 +119,9 @@ export function markCellsAsSelected(
         const cell = (<HTMLElement>(
           config.gridElRef.nativeElement
         )).querySelector(
-          `div > tr > td[ng-reflect-data-row-index='${
+          `div > tr[kendogridlogicalrow][data-kendo-grid-item-index='${
             firstCell.itemKey + j * verticalDirection
-          }'][ng-reflect-col-index='${
+          }'] > td[kendogridcell][data-kendo-grid-column-index='${
             firstCell.columnKey + i * horizontalDirection
           }']`
         );

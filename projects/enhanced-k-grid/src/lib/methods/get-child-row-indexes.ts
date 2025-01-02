@@ -33,7 +33,7 @@ export function getChildRowIndexes(
       const gridRow = (<HTMLElement>(
         config.gridElRef.nativeElement
       )).querySelector(`[kendogridlogicalrow].${row.calcRowName}`);
-      const rowIndex = +gridRow?.getAttribute('ng-reflect-data-row-index')!;
+      const rowIndex = +gridRow?.getAttribute('data-kendo-grid-item-index')!;
       rowIndexes.push(rowIndex);
       // search for any child calculated rows
       // this rows will be on group level 3
@@ -46,7 +46,9 @@ export function getChildRowIndexes(
           const gridRow = (<HTMLElement>(
             config.gridElRef.nativeElement
           )).querySelector(`[kendogridlogicalrow].${childCalcRow.name}`);
-          const rowIndex = +gridRow?.getAttribute('ng-reflect-data-row-index')!;
+          const rowIndex = +gridRow?.getAttribute(
+            'data-kendo-grid-item-index'
+          )!;
           rowIndexes.push(rowIndex);
           // get the already stored row indexes for each child row and add to the existing ones
           const calcRow = config.rowCalculation.calculatedRows.find(

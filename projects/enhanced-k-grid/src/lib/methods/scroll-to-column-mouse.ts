@@ -13,7 +13,7 @@ export function scrollToColumnMouse(config: EnhancedGridConfig) {
     config.gridElRef.nativeElement
   )).querySelector('.k-grid-content');
   const nextCell = gridContent?.querySelector(
-    `[ng-reflect-data-row-index="${config.lastSelectedCell.itemKey}"][ng-reflect-col-index="${config.lastSelectedCell.columnKey}"]`
+    `[kendogridlogicalrow][data-kendo-grid-item-index="${config.lastSelectedCell.itemKey}"] [kendogridcell][data-kendo-grid-column-index="${config.lastSelectedCell.columnKey}"]`
   );
   // if the grid content is scrolled and we select to the right from any of the frozen columns, then scroll
   if (
@@ -52,7 +52,7 @@ export function scrollToColumnMouse(config: EnhancedGridConfig) {
     });
   }
   // if we select to the left, but we aren't over a frozen column yet, then scroll only one column
-  // the check for z-index is needed, becase all other conditions are also met, if we scroll to the right
+  // the check for z-index is needed, because all other conditions are also met, if we scroll to the right
   if (
     config.lastSelectedCell.columnKey > config.frozenColumns.length - 1 &&
     gridContent!.scrollLeft > 0 &&

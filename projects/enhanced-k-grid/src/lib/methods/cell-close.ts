@@ -133,7 +133,7 @@ export function cellClose(
     config.statusChanges$.unsubscribe();
     // hide the error tooltip
     let activeCell = config.gridBody.querySelector(
-      `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${grid.activeCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${grid.activeCell.colIndex}"]`
     );
     const rect = activeCell!.getBoundingClientRect();
     methods.toggleErrorTooltip(config, rect, 'off');

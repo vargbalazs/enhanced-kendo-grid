@@ -83,8 +83,9 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
     // cells of a grouped row
     let groupCells = <NodeList>(
       gridContent.querySelectorAll(
-        `[ng-reflect-group-item][ng-reflect-logical-col-index="${config
-          .frozenColumns[i].columnIndex!}"]`
+        `[kendogridgroupheader] [kendogridlogicalcell][aria-colindex="${
+          config.frozenColumns[i].columnIndex! + 1
+        }"]`
       )
     );
     groupCells.forEach((node) => {
@@ -115,8 +116,9 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
       if (config.groupedGridData.length > 0) {
         let groupCells = <NodeList>(
           gridContent.querySelectorAll(
-            `[ng-reflect-group-item][ng-reflect-logical-col-index="${config
-              .frozenColumns[i].columnIndex!}"]`
+            `[kendogridgroupheader] [kendogridlogicalcell][aria-colindex="${
+              config.frozenColumns[i].columnIndex! + 1
+            }"]`
           )
         );
         groupCells.forEach((node) => {

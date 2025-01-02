@@ -26,9 +26,11 @@ export function scrollToColumnKeyboard(
   // moving right
   if (e.key === ARROWS.RIGHT) {
     const focusedCell = gridBody?.querySelector(
-      `[ng-reflect-data-row-index="${
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${
         grid.activeCell.dataRowIndex
-      }"][ng-reflect-col-index="${grid.activeCell.colIndex + 1}"]`
+      }"] [kendogridcell][data-kendo-grid-column-index="${
+        grid.activeCell.colIndex + 1
+      }"]`
     );
     // if the focused cell is behind the last frozen column
     if (
@@ -66,7 +68,7 @@ export function scrollToColumnKeyboard(
   }
 
   // moving with tab
-  if (e.key === 'Tab') {
+  if (e.key === 'Tab' && grid.activeCell) {
     // if the focused cell is behind the last frozen column
     if (
       grid.activeCell.colIndex - config.frozenColumns.length - 1 === -1 &&
@@ -79,7 +81,7 @@ export function scrollToColumnKeyboard(
     }
     // if the focused cell isn't fully visible at the right end
     const focusedCell = gridBody?.querySelector(
-      `[ng-reflect-data-row-index="${grid.activeCell.dataRowIndex}"][ng-reflect-col-index="${grid.activeCell.colIndex}"]`
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${grid.activeCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${grid.activeCell.colIndex}"]`
     );
     if (
       focusedCell?.getBoundingClientRect().right! >
@@ -95,9 +97,11 @@ export function scrollToColumnKeyboard(
   // moving left
   if (e.key === ARROWS.LEFT || e.key === ARROWS.UP || e.key === ARROWS.DOWN) {
     const focusedCell = gridBody?.querySelector(
-      `[ng-reflect-data-row-index="${
+      `[kendogridlogicalrow][data-kendo-grid-item-index="${
         grid.activeCell.dataRowIndex
-      }"][ng-reflect-col-index="${grid.activeCell.colIndex - 1}"]`
+      }"] [kendogridcell][data-kendo-grid-column-index="${
+        grid.activeCell.colIndex - 1
+      }"]`
     );
     if (
       focusedCell?.getBoundingClientRect().left! -

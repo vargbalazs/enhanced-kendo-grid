@@ -30,7 +30,7 @@ export function changeCellFocusWithTab(
   const focusedCell = (<HTMLElement>(
     config.gridElRef.nativeElement
   )).querySelector(
-    `[ng-reflect-data-row-index="${nav.dataRowIndex}"][ng-reflect-col-index="${nav.colIndex}"]`
+    `[kendogridlogicalrow][data-kendo-grid-item-index="${nav.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${nav.colIndex}"]`
   );
 
   // if the next selected cell is a hidden (collapsed) one
@@ -44,12 +44,12 @@ export function changeCellFocusWithTab(
       (calcRow) => calcRow.name === calcRowName
     );
     // get the row indexes of the focused cell and of the calc row
-    const cellDataRowIndex = focusedCell!.getAttribute(
-      'ng-reflect-data-row-index'
+    const cellDataRowIndex = focusedCell!.parentElement.getAttribute(
+      'data-kendo-grid-item-index'
     )!;
     const calcRowDataRowIndex = (<HTMLElement>config.gridElRef.nativeElement)
       .querySelector(`[kendogridlogicalrow].${calcRowName}`)!
-      .getAttribute('ng-reflect-data-row-index')!;
+      .getAttribute('data-kendo-grid-item-index')!;
     // if the cell row index is less than the calc row index, then the calc row is bottom aligned, else top aligned
     const rowAlign = cellDataRowIndex < calcRowDataRowIndex ? 'bottom' : 'top';
     let nextCalcRowName = '';
@@ -70,14 +70,16 @@ export function changeCellFocusWithTab(
         config.gridElRef.nativeElement
       )).querySelector(`[kendogridlogicalrow].${nextCalcRowName}`);
       // get the logical row index of this next calc row
-      const logicalRowIndex = +nextCalcRow?.getAttribute(
-        'ng-reflect-logical-row-index'
-      )!;
+      // the logical row index includes also the header, that's why we add 1 to the datarow index
+      const logicalRowIndex =
+        +nextCalcRow?.getAttribute('data-kendo-grid-item-index')! + 1;
       // focus the first cell of this row
       grid.focusCell(
         logicalRowIndex,
         e.shiftKey ? config.columns.length - 1 : 0
       );
+    } else {
+      return;
     }
   }
 
