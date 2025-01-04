@@ -4,7 +4,11 @@ import {
 } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
-import { ARROW_KEYS, NOT_ALLOWED_KEYS_FOR_EDITING } from '../consts/constants';
+import {
+  ARROW_KEYS,
+  ARROWS,
+  NOT_ALLOWED_KEYS_FOR_EDITING,
+} from '../consts/constants';
 import { FormGroup } from '@angular/forms';
 
 // edits the cell on keydown
@@ -96,6 +100,24 @@ export function editCellOnKeyDown(
   // if we hold shift, the focus should remain in the cell
   if (grid.isEditingCell() && !config.noFocusingWithArrowKeys && !e.shiftKey) {
     if (ARROW_KEYS.includes(e.key)) {
+      // if the edited field is of type date, then we have to set back the date to the entered one
+      // becase moving out from cell with up or down modifies the date
+      // this code is written to increase or decrease the DAY part
+      // if hours/mins/sec/ms are also used, we can modifiy the algorithm
+      const field = config.columns[grid.activeCell.colIndex].field;
+      const value = config.cellEditingFormGroup.controls[field].value;
+      if (value instanceof Date) {
+        if (e.key === ARROWS.UP) {
+          config.cellEditingFormGroup.patchValue({
+            day: new Date(value.getTime() - 24 * 60 * 60 * 1000),
+          });
+        }
+        if (e.key === ARROWS.DOWN) {
+          config.cellEditingFormGroup.patchValue({
+            day: new Date(value.getTime() + 24 * 60 * 60 * 1000),
+          });
+        }
+      }
       grid.closeCell();
       grid.focusCell(grid.activeCell.rowIndex, grid.activeCell.colIndex);
     }

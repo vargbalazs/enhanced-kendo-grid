@@ -79,6 +79,28 @@
       [class]="'non-editable'"
     ></kendo-grid-column>
     <kendo-grid-column
+      field="day"
+      [width]="140"
+      format="yyyy-MM-dd"
+      [class]="'!k-text-right'"
+    >
+      <ng-template kendoGridEditTemplate let-formGroup="formGroup">
+        <kendo-datepicker
+          kendoGridFocusable
+          [size]="'small'"
+          [fillMode]="'solid'"
+          format="yyyy-MM-dd"
+          [incompleteDateValidation]="true"
+          [formatPlaceholder]="{
+            year: 'Év',
+            month: 'Hónap',
+            day: 'Nap',
+          }"
+          [formControl]="formGroup.get('day')"
+        ></kendo-datepicker>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
       field="jan"
       [width]="100"
       [class]="'!k-text-right'"

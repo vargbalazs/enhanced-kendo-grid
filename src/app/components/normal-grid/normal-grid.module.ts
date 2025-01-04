@@ -6,6 +6,7 @@ import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NormalGridComponent } from './normal-grid.component';
 import { CommonModule } from '@angular/common';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
 @NgModule({
   declarations: [NormalGridComponent],
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
     EnhancedGridDirectiveModule,
     ComboBoxModule,
     ReactiveFormsModule,
+    DateInputsModule,
   ],
   providers: [],
   exports: [NormalGridComponent],

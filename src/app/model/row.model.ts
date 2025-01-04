@@ -19,4 +19,5 @@ export interface Row {
   dec?: number;
   total?: number;
   category?: string;
+  day?: Date;
 }

@@ -90,6 +90,7 @@
 .enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-touched,
 .enhanced .k-grid-edit-cell .k-input-solid.ng-invalid.ng-dirty,
 .enhanced .k-grid-edit-cell .k-input-solid:focus.ng-invalid,
+.enhanced .k-grid-edit-cell .k-datepicker.ng-invalid .k-input-inner:focus,
 .enhanced .k-grid-edit-cell .k-input-solid.k-combobox.ng-invalid {
   background-color: #fef3f2;
   color: #f04438;
@@ -98,6 +99,7 @@
 .enhanced .k-grid-edit-cell:has(.k-input-solid.ng-invalid.ng-touched),
 .enhanced .k-grid-edit-cell:has(.k-input-solid.ng-invalid.ng-dirty),
 .enhanced .k-grid-edit-cell:has(.k-input-solid:focus.ng-invalid),
+.enhanced .k-grid-edit-cell:has(.k-datepicker.ng-invalid .k-input-inner:focus),
 .enhanced .k-grid-edit-cell:has(.k-input-solid.k-combobox.ng-invalid) {
   background-color: #fef3f2;
   box-shadow: #f04438 0px 0px 0px 1.5px inset;
@@ -436,4 +438,8 @@
 
 .enhanced.k-grid .close-icon .material-symbols-outlined {
   font-size: 16px;
+}
+
+.enhanced .k-grid-edit-cell .k-datepicker {
+  border-radius: 0px;
 }

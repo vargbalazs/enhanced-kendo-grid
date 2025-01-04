@@ -48,6 +48,7 @@ export class NormalGridComponent implements OnInit {
     nov: [0, Validators.required],
     dec: [0, Validators.required],
     category: ['', Validators.required],
+    day: [new Date(), Validators.required],
   });
 
   selectableSettings: SelectableSettings = {
