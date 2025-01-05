@@ -100,6 +100,14 @@
         ></kendo-datepicker>
       </ng-template>
     </kendo-grid-column>
+    <kendo-grid-column field="bool" [width]="100">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div style="text-align: center">
+          <input type="checkbox" [checked]="dataItem.bool" />
+        </div>
+        <!-- {{ dataItem.bool ? "yes" : "no" }} -->
+      </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column
       field="jan"
       [width]="100"

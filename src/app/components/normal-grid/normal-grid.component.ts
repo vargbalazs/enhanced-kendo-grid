@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import {
   CellSelectionItem,
   CreateFormGroupArgs,
@@ -49,6 +54,7 @@ export class NormalGridComponent implements OnInit {
     dec: [0, Validators.required],
     category: ['', Validators.required],
     day: [new Date(), Validators.required],
+    bool: [false, Validators.required],
   });
 
   selectableSettings: SelectableSettings = {

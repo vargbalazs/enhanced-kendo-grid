@@ -36,6 +36,7 @@ function generateData(rowNumber: number): Row[] {
       dec: Math.round(Math.random() * 1000),
       category: `cat ${Math.ceil(i / 10)}`,
       day: new Date(Date.now() + i * 24 * 60 * 60 * 1000),
+      bool: i % 2 == 0,
     });
   }
 

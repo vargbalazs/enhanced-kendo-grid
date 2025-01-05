@@ -20,4 +20,5 @@ export interface Row {
   total?: number;
   category?: string;
   day?: Date;
+  bool?: boolean;
 }
