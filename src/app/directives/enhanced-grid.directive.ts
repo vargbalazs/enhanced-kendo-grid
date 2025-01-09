@@ -178,6 +178,11 @@ export class EnhancedGridDirective
       if (cellClickEvent.originalEvent instanceof KeyboardEvent) return;
       // if we double clicked a cell and edit mode is enabled, then enter in edit mode and return
       if (this.cellDblClicked && !!this.kendoGridInCellEditing) {
+        // if we double click on a checkbox column, then return
+        const checkBox = (<HTMLElement>(
+          cellClickEvent.originalEvent.target
+        )).querySelector('input[type="checkbox"]');
+        if (checkBox) return;
         this.onDblClick();
         this.cellDblClicked = false;
         // if it is a calculated row and the column is editable, don't allow editing
@@ -578,10 +583,15 @@ export class EnhancedGridDirective
   }
 
   @HostListener('dblclick', ['$event'])
-  onDblClick() {
+  onDblClick(e?: MouseEvent) {
     this.cellDblClicked = true;
     // if editing is allowed
     if (this.kendoGridInCellEditing) {
+      // if we double click on a checkbox column, then return
+      const checkBox = (<HTMLElement>e?.target)?.querySelector(
+        'input[type="checkbox"]'
+      );
+      if (checkBox) return;
       // sets the current cell into edit mode
       methods.cellDblClick(this.grid, this.config, this.kendoGridInCellEditing);
       // if we are on laptop and double tap, often the same cell will be selected twice, because mousemove fires twice
