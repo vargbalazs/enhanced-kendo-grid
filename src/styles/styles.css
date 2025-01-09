@@ -24,6 +24,12 @@
   color: #4f5e71;
 }
 
+.enhanced.k-grid-md td input[type="checkbox"],
+.enhanced.k-grid-md .k-table-td input[type="checkbox"] {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
 /* .enhanced.k-grid-md .k-table-td .k-grid-ignore-click {
   position: absolute;
   left: -10px;
