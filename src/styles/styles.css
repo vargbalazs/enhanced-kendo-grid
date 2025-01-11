@@ -200,6 +200,10 @@
   user-select: none;
 }
 
+.calcrow input[type="checkbox"] {
+  display: none;
+}
+
 .tooltip {
   position: absolute;
   width: 250px;

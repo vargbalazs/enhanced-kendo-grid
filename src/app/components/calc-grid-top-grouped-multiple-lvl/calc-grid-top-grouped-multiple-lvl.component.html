@@ -95,6 +95,13 @@
       [editable]="false"
       [class]="'non-editable'"
     ></kendo-grid-column>
+    <kendo-grid-column field="bool" [width]="100">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div style="text-align: center">
+          <input type="checkbox" [checked]="dataItem.bool" />
+        </div>
+      </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column
       field="jan"
       [width]="100"

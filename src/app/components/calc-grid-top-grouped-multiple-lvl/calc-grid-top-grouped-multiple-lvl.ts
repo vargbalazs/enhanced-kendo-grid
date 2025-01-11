@@ -59,6 +59,7 @@ export class CalcGridTopGroupedMultipleLevelComponent {
     nov: [0, Validators.required],
     dec: [0, Validators.required],
     category: ['', Validators.required],
+    bool: [false, Validators.required],
   });
 
   selectableSettings: SelectableSettings = {
