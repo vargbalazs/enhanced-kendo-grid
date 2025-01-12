@@ -29,6 +29,7 @@ import { ColumnCalculation } from './interfaces/column-calculation.interface';
 import { FormErrorMessage } from './interfaces/form-error-message.interface';
 import { ListSource } from './interfaces/list-source.interface';
 import { InfoTooltip } from './interfaces/info-tooltip.interface';
+import { IntlService } from '@progress/kendo-angular-intl';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -127,7 +128,8 @@ export class EnhancedGridDirective
     private grid: GridComponent,
     private renderer2: Renderer2,
     private element: ElementRef,
-    private view: ViewContainerRef
+    private view: ViewContainerRef,
+    private intl: IntlService
   ) {
     this.config = new EnhancedGridConfig();
     // get the element ref of the grid
@@ -524,7 +526,8 @@ export class EnhancedGridDirective
         this.config,
         this.renderer2,
         this.grid,
-        this.updateState.bind(this)
+        this.updateState.bind(this),
+        this.intl
       );
     }
 
