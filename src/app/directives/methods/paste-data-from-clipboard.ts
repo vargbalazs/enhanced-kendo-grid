@@ -1,13 +1,16 @@
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
+import { IntlService } from '@progress/kendo-angular-intl';
+import { DATE_FORMATS } from '../consts/constants';
 
 // paste data from clipboard (from excel)
 export function pasteFromClipboard(
   e: KeyboardEvent,
   config: EnhancedGridConfig,
   grid: GridComponent,
-  updateFn: () => void
+  updateFn: () => void,
+  intlService: IntlService
 ) {
   if (e.ctrlKey && e.key === 'v') {
     navigator.clipboard.readText().then((text) => {
@@ -15,7 +18,7 @@ export function pasteFromClipboard(
         // lines from excel end with \r\n
         const lines = text.split('\r\n');
         // get the cell values
-        const values: string[][] = [];
+        const values: any[][] = [];
         // we go to length - 2, because the last element is always empty
         for (let i = 0; i <= lines.length - 2; i++) {
           values.push(lines[i].split('\t'));
@@ -45,11 +48,30 @@ export function pasteFromClipboard(
                 // write the values into the grid
                 const field = config.columns[focusedCell.colIndex + i].field;
                 // handle date values
-                if (!isNaN(new Date(values[j][i]).getTime())) {
-                  const column = config.columns.filter(
-                    (col) => col.field === field
-                  )[0];
+                const column = config.columns.filter(
+                  (col) => col.field === field
+                )[0];
+                if (dataItem[field] instanceof Date) {
                   console.log(column.format);
+                  // parse the pasted value to date
+                  let temp = intlService.parseDate(values[j][i], [
+                    column.format,
+                    ...DATE_FORMATS,
+                  ]);
+                  if (!temp) {
+                    console.error('The pasted value is not a valid date.');
+                    return;
+                  }
+                  // format it according to the column format property
+                  let formattedDate = intlService.formatDate(
+                    temp,
+                    column.format
+                  );
+                  // parse it again and write it back to the values array
+                  values[j][i] = intlService.parseDate(
+                    formattedDate,
+                    column.format
+                  );
                 }
                 // if the field is a property of an object, we have to modify the appr. property
                 // in case of object fields we do nothing, because they have they own data sources
