@@ -45,3 +45,15 @@ export const NOT_ALLOWED_KEYS_FOR_EDITING: string[] = [
   'PageUp',
   'PageDown',
 ];
+
+export const DATE_FORMATS: string[] = [
+  'yyyy.MM.dd',
+  'yyyy-MM-dd',
+  'yyyy/MM/dd',
+  'dd.MM.yyyy',
+  'dd-MM-yyyy',
+  'dd/MM/yyyy',
+  'MM.dd.yyyy',
+  'MM-dd-yyyy',
+  'MM/dd/yyyy',
+];
