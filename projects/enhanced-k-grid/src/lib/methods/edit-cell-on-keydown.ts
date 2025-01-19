@@ -10,6 +10,7 @@ import {
   NOT_ALLOWED_KEYS_FOR_EDITING,
 } from '../consts/constants';
 import { FormGroup } from '@angular/forms';
+import { KeyAndField } from '../interfaces/key-and-field.interface';
 
 // edits the cell on keydown
 export function editCellOnKeyDown(
@@ -53,14 +54,21 @@ export function editCellOnKeyDown(
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     }
     // if the column is a checkbox column (it's value is a boolean), then switch the value and return
-    const field = config.columns[grid.activeCell.colIndex].field;
-    let value = config.cellEditingFormGroup.controls[field].value;
-    if (typeof value === 'boolean') {
+    const keyAndField = methods.extractKeyAndField(
+      config.columns[grid.activeCell.colIndex].field
+    );
+    let value = getValueFromFormGroup(keyAndField, config);
+    if (checkColumnValue(config, grid)) {
       // store the form group and value again, because if not, we would get wrong result switching the boolean values
       // because we would always rely on the first stored form group
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
-      value = config.cellEditingFormGroup.controls[field].value;
-      grid.activeCell.dataItem[field] = !value;
+      value = getValueFromFormGroup(keyAndField, config);
+      if (keyAndField.fieldName) {
+        grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
+          !value;
+      } else {
+        grid.activeCell.dataItem[keyAndField.key] = !value;
+      }
       methods.disableEditingOnCalculatedRow(grid, config);
       // enable paging, if feature was allowed
       if (grid.pageable) methods.handlePaging(config, 'on');
@@ -86,6 +94,26 @@ export function editCellOnKeyDown(
     if (grid.activeCell.dataItem.calculated) {
       methods.disableEditingOnCalculatedRow(grid, config);
       return;
+    }
+    // if the column is a checkbox column (it's value is a boolean), no editing is allowed -> return
+    // in case of space switching the values is allowed, but after that also return
+    if (checkColumnValue(config, grid)) {
+      if (e.code !== 'Space') {
+        methods.disableEditingOnCalculatedRow(grid, config);
+        return;
+      } else {
+        const keyAndField = methods.extractKeyAndField(
+          config.columns[grid.activeCell.colIndex].field
+        );
+        let value = getValueFromFormGroup(keyAndField, config);
+        if (keyAndField.fieldName) {
+          grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
+            !value;
+        } else {
+          grid.activeCell.dataItem[keyAndField.key] = !value;
+        }
+        return;
+      }
     }
     // get the column field name (key)
     config.fieldName = config.columns[grid.activeCell.colIndex].field;
@@ -117,11 +145,13 @@ export function editCellOnKeyDown(
   if (grid.isEditingCell() && !config.noFocusingWithArrowKeys && !e.shiftKey) {
     if (ARROW_KEYS.includes(e.key)) {
       // if the edited field is of type date, then we have to set back the date to the entered one
-      // becase moving out from cell with up or down modifies the date
+      // because moving out from cell with up or down modifies the date
       // this code is written to increase or decrease the DAY part
       // if hours/mins/sec/ms are also used, we can modifiy the algorithm
-      const field = config.columns[grid.activeCell.colIndex].field;
-      const value = config.cellEditingFormGroup.controls[field].value;
+      const keyAndField = methods.extractKeyAndField(
+        config.columns[grid.activeCell.colIndex].field
+      );
+      const value = getValueFromFormGroup(keyAndField, config);
       if (value instanceof Date) {
         if (e.key === ARROWS.UP) {
           config.cellEditingFormGroup.patchValue({
@@ -137,5 +167,29 @@ export function editCellOnKeyDown(
       grid.closeCell();
       grid.focusCell(grid.activeCell.rowIndex, grid.activeCell.colIndex);
     }
+  }
+}
+
+function checkColumnValue(
+  config: EnhancedGridConfig,
+  grid: GridComponent
+): boolean {
+  const keyAndField = methods.extractKeyAndField(
+    config.columns[grid.activeCell.colIndex].field
+  );
+  const value = getValueFromFormGroup(keyAndField, config);
+  return typeof value === 'boolean';
+}
+
+function getValueFromFormGroup(
+  keyAndField: KeyAndField,
+  config: EnhancedGridConfig
+): any {
+  if (keyAndField.fieldName) {
+    return config.cellEditingFormGroup.get(
+      `${keyAndField.key}.${keyAndField.fieldName}`
+    )?.value;
+  } else {
+    return config.cellEditingFormGroup.controls[keyAndField.key].value;
   }
 }

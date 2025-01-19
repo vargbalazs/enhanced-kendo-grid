@@ -570,6 +570,7 @@ export class EnhancedGridDirective
       this.onDblClick();
     // if we click on a checkbox, then change the underlying value
     if ((<HTMLInputElement>e.target).type === 'checkbox') {
+      // we should handle also the case, if the field is an object
       const field = this.config.columns[this.grid.activeCell.colIndex].field;
       this.grid.activeCell.dataItem[field] =
         !this.grid.activeCell.dataItem[field];
