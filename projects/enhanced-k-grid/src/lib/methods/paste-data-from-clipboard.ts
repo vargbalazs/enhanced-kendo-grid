@@ -52,7 +52,6 @@ export function pasteFromClipboard(
                   (col) => col.field === field
                 )[0];
                 if (dataItem[field] instanceof Date) {
-                  console.log(column.format);
                   // parse the pasted value to date
                   let temp = intlService.parseDate(values[j][i], [
                     column.format,
