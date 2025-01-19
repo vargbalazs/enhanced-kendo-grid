@@ -44,6 +44,13 @@ export function pasteFromClipboard(
               if (!grid.isEditing()) {
                 // write the values into the grid
                 const field = config.columns[focusedCell.colIndex + i].field;
+                // handle date values
+                if (!isNaN(new Date(values[j][i]).getTime())) {
+                  const column = config.columns.filter(
+                    (col) => col.field === field
+                  )[0];
+                  console.log(column.format);
+                }
                 // if the field is a property of an object, we have to modify the appr. property
                 // in case of object fields we do nothing, because they have they own data sources
                 // and we had to modify this datasource with the new pasted value

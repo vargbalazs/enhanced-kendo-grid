@@ -2,6 +2,7 @@ import { Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 import { GridComponent } from '@progress/kendo-angular-grid';
+import { IntlService } from '@progress/kendo-angular-intl';
 
 // copies the selected data to the clipboard
 export function copyDataToClipboard(
@@ -9,7 +10,8 @@ export function copyDataToClipboard(
   config: EnhancedGridConfig,
   renderer2: Renderer2,
   grid: GridComponent,
-  updateFn: () => void
+  updateFn: () => void,
+  intlService: IntlService
 ) {
   // if we press ctrl+c and there are some selected cells, then copy the data to the clipboard
   if (e.ctrlKey && e.key === 'c') {
@@ -81,6 +83,15 @@ export function copyDataToClipboard(
         config.rowCalculation.titleField !== fieldname
       ) {
         value = '';
+      }
+      // check if the value is a date and format it according to the defined format in the column definition
+      // if no format is defined, then use a default
+      if (<any>value instanceof Date) {
+        const format = config.columns[grid.activeCell.colIndex].format;
+        value = intlService.formatDate(
+          new Date(value),
+          !format ? 'yyyy.MM.dd' : format
+        );
       }
       config.selectedCellDatas = [
         {

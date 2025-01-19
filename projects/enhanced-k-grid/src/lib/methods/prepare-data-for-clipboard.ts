@@ -16,15 +16,12 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   ) {
     for (let i = 0; i <= rowOffset - 1; i++) {
       for (let j = 0; j <= columnOffset - 1; j++) {
+        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        value = parseValue(value);
         if (j < columnOffset - 1) {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString(),
-            '\t'
-          );
+          data = data.concat(value, '\t');
         } else {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString()
-          );
+          data = data.concat(value);
         }
       }
       data = data.concat('\r\n');
@@ -38,15 +35,12 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   ) {
     for (let i = rowOffset - 1; i >= 0; i--) {
       for (let j = 0; j <= columnOffset - 1; j++) {
+        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        value = parseValue(value);
         if (j < columnOffset - 1) {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString(),
-            '\t'
-          );
+          data = data.concat(value, '\t');
         } else {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString()
-          );
+          data = data.concat(value);
         }
       }
       data = data.concat('\r\n');
@@ -60,15 +54,12 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   ) {
     for (let i = rowOffset - 1; i >= 0; i--) {
       for (let j = columnOffset - 1; j >= 0; j--) {
+        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        value = parseValue(value);
         if (j > 0) {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString(),
-            '\t'
-          );
+          data = data.concat(value, '\t');
         } else {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString()
-          );
+          data = data.concat(value);
         }
       }
       data = data.concat('\r\n');
@@ -82,15 +73,12 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   ) {
     for (let i = 0; i <= rowOffset - 1; i++) {
       for (let j = columnOffset - 1; j >= 0; j--) {
+        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        value = parseValue(value);
         if (j > 0) {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString(),
-            '\t'
-          );
+          data = data.concat(value, '\t');
         } else {
-          data = data.concat(
-            config.selectedCellDatas[i + rowOffset * j].value.toString()
-          );
+          data = data.concat(value);
         }
       }
       data = data.concat('\r\n');
@@ -98,4 +86,10 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   }
 
   config.copiedDataToClipboard = data;
+}
+
+function parseValue(value: any): string {
+  if (value instanceof Date)
+    return new Date(value).toLocaleDateString(window.navigator.language);
+  return value.toString();
 }
