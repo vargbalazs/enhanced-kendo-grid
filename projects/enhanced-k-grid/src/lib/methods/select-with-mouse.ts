@@ -14,23 +14,24 @@ export function selectWithMouse(
   const target = <HTMLElement>e.target;
   // if we move on a data cell
   if (
-    target?.parentElement?.hasAttribute('data-kendo-grid-item-index') &&
-    target?.hasAttribute('data-kendo-grid-column-index')
+    target?.closest('[data-kendo-grid-item-index]') &&
+    target?.closest('[data-kendo-grid-column-index]')
   ) {
+    const cellTarget = target?.closest('[kendogridcell]')! as HTMLElement;
     // store the grid body
-    config.gridBody = target.parentElement!.parentElement!;
+    methods.storeGridBody(config, e);
     // get the indexes
-    const dataRowIndex = +target.parentElement.attributes.getNamedItem(
+    const dataRowIndex = +cellTarget.parentElement!.attributes.getNamedItem(
       'data-kendo-grid-item-index'
     )!.value;
-    const columnIndex = +target.attributes.getNamedItem(
+    const columnIndex = +cellTarget.attributes.getNamedItem(
       'data-kendo-grid-column-index'
     )!.value;
 
     // store the first selected cell, it's position and it's value
     if (config.selectedCells.length === 0) {
       // store the html element of the first cell
-      config.firstSelectedCellElement = target;
+      config.firstSelectedCellElement = cellTarget;
       // the cell itself
       config.selectedCells.push({
         itemKey: grid.activeCell.dataRowIndex,
@@ -39,7 +40,7 @@ export function selectWithMouse(
       Object.assign(config.firstSelectedCell, config.selectedCells[0]);
 
       // it's position
-      methods.setRectValues(config.firstSelectedCellRect, target, config);
+      methods.setRectValues(config.firstSelectedCellRect, cellTarget, config);
 
       // it's value
       // get the column field name
@@ -75,7 +76,7 @@ export function selectWithMouse(
       itemKey: dataRowIndex,
       columnKey: columnIndex,
     };
-    methods.setRectValues(config.lastSelectedCellRect, target, config);
+    methods.setRectValues(config.lastSelectedCellRect, cellTarget, config);
 
     // mark the cells as selected and update the state only if we move to another cell
     if (
