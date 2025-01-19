@@ -52,6 +52,22 @@ export function editCellOnKeyDown(
     if (Object.keys(config.cellEditingFormGroup.controls).length == 0) {
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     }
+    // if the column is a checkbox column (it's value is a boolean), then switch the value and return
+    const field = config.columns[grid.activeCell.colIndex].field;
+    let value = config.cellEditingFormGroup.controls[field].value;
+    if (typeof value === 'boolean') {
+      // store the form group and value again, because if not, we would get wrong result switching the boolean values
+      // because we would always rely on the first stored form group
+      methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
+      value = config.cellEditingFormGroup.controls[field].value;
+      grid.activeCell.dataItem[field] = !value;
+      methods.disableEditingOnCalculatedRow(grid, config);
+      // enable paging, if feature was allowed
+      if (grid.pageable) methods.handlePaging(config, 'on');
+      // enable filtering, if feature was allowed
+      if (grid.filterable) methods.handleFiltering(config, 'on');
+      return;
+    }
   }
 
   // if we enter in edit mode via typing any character, except enter or arrow keys or any other not allowed keys

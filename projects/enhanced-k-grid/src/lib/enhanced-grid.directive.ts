@@ -568,6 +568,12 @@ export class EnhancedGridDirective
       this.config.selectedCells.length <= 1
     )
       this.onDblClick();
+    // if we click on a checkbox, then change the underlying value
+    if ((<HTMLInputElement>e.target).type === 'checkbox') {
+      const field = this.config.columns[this.grid.activeCell.colIndex].field;
+      this.grid.activeCell.dataItem[field] =
+        !this.grid.activeCell.dataItem[field];
+    }
   }
 
   @HostListener('dblclick', ['$event'])
