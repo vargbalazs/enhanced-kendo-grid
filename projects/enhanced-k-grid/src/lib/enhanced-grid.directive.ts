@@ -577,8 +577,14 @@ export class EnhancedGridDirective
       this.config.selectedCells.length <= 1
     )
       this.onDblClick();
-    // if we click on a checkbox, then change the underlying value
-    if ((<HTMLInputElement>e.target).type === 'checkbox') {
+    // if we click on a checkbox and editing is allowed, then change the underlying value
+    // in fact we can also check/uncheck the checkbox, if editing is not allowed, because the checkbox itself
+    // is independent of the editable state of the grid
+    // in order to prevent editing, simple disable the checkbox in the template
+    if (
+      (<HTMLInputElement>e.target).type === 'checkbox' &&
+      !!this.kendoGridInCellEditing
+    ) {
       // we should handle also the case, if the field is an object
       const field = this.config.columns[this.grid.activeCell.colIndex].field;
       this.grid.activeCell.dataItem[field] =
