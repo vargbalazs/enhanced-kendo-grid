@@ -21,6 +21,7 @@
     [enablePasting]="true"
     [(aggregates)]="aggregates"
     [frozenColumns]="frozenColumns"
+    (dataCopied)="dataCopied($event)"
   >
     <kendo-grid-column
       field="id"

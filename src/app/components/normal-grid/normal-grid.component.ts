@@ -91,4 +91,8 @@ export class NormalGridComponent implements OnInit {
     );
     return unique.length === this.selectedCells.length;
   }
+
+  dataCopied(e: string) {
+    console.log(e);
+  }
 }

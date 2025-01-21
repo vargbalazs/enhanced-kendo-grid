@@ -104,6 +104,9 @@ export class EnhancedGridDirective
   // event emitter for updating the 'aggregates' input
   @Output() aggregatesChange = new EventEmitter<Aggregate>();
 
+  // event emitter for copying data
+  @Output() dataCopied = new EventEmitter<string>();
+
   // cell was double clicked
   private cellDblClicked: boolean = false;
 
@@ -527,7 +530,8 @@ export class EnhancedGridDirective
         this.renderer2,
         this.grid,
         this.updateState.bind(this),
-        this.intl
+        this.intl,
+        this.dataCopied
       );
     }
 
