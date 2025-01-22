@@ -546,7 +546,8 @@ export class EnhancedGridDirective
         this.config,
         this.grid,
         this.updateState.bind(this),
-        this.intl
+        this.intl,
+        this.dataPasted
       );
     }
 
