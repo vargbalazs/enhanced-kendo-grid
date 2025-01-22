@@ -14,6 +14,7 @@ import { GroupDescriptor } from '@progress/kendo-data-query';
 import { delay, from, toArray } from 'rxjs';
 import { accountNumbers, projects, rows } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
+import { PastingEvent } from 'src/app/directives/interfaces/pasting-event.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
@@ -93,6 +94,10 @@ export class NormalGridComponent implements OnInit {
   }
 
   dataCopied(e: string) {
+    console.log(e);
+  }
+
+  dataPasted(e: PastingEvent) {
     console.log(e);
   }
 }
