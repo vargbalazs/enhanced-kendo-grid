@@ -20,6 +20,12 @@ export function animateTableRows(
   );
   const rowIndexesCount = row?.rowIndexes?.length;
   const rowIndexes = row?.rowIndexes;
+  // set the state of the collapsed/expanded rows in the grid data
+  config.gridData.forEach((row) => {
+    if (rowIndexes?.includes(row.orderIndex)) {
+      row.collapsed = state === 'collapsed';
+    }
+  });
   // determine the row align (we can't use the existing property, because this isn't always present, f. e.
   // if we declare a calc row with its position)
   const rowAlign = dataRowIndex < rowIndexes![0] ? 'top' : 'bottom';
