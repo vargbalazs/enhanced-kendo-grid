@@ -30,6 +30,7 @@ import { FormErrorMessage } from './interfaces/form-error-message.interface';
 import { ListSource } from './interfaces/list-source.interface';
 import { InfoTooltip } from './interfaces/info-tooltip.interface';
 import { IntlService } from '@progress/kendo-angular-intl';
+import { PastingEvent } from './interfaces/pasting-event.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -106,6 +107,9 @@ export class EnhancedGridDirective
 
   // event emitter for copying data
   @Output() dataCopied = new EventEmitter<string>();
+
+  // event emitter for pasting data
+  @Output() dataPasted = new EventEmitter<PastingEvent>();
 
   // cell was double clicked
   private cellDblClicked: boolean = false;
