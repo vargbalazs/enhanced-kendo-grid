@@ -1,4 +1,4 @@
-import { Renderer2 } from '@angular/core';
+import { EventEmitter, Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 import { GridComponent } from '@progress/kendo-angular-grid';
@@ -11,7 +11,8 @@ export function copyDataToClipboard(
   renderer2: Renderer2,
   grid: GridComponent,
   updateFn: () => void,
-  intlService: IntlService
+  intlService: IntlService,
+  dataCopiedEvent: EventEmitter<string>
 ) {
   // if we press ctrl+c and there are some selected cells, then copy the data to the clipboard
   if (e.ctrlKey && e.key === 'c') {
@@ -26,9 +27,11 @@ export function copyDataToClipboard(
       renderer2.setStyle(config.selectedArea, 'boxShadow', 'none');
       // copy content to clipboard
       methods.prepareDataForClipboard(config);
-      navigator.clipboard
-        .writeText(config.copiedDataToClipboard)
-        .then(() => (config.dataCopied = true));
+      navigator.clipboard.writeText(config.copiedDataToClipboard).then(() => {
+        config.dataCopied = true;
+        // emit an event with the copied values in it
+        dataCopiedEvent.emit(config.copiedDataToClipboard);
+      });
     } else {
       // if just only one cell is copied
       // set the variables for resizing the selected area
@@ -110,7 +113,11 @@ export function copyDataToClipboard(
       // copy the data
       navigator.clipboard
         .writeText(config.selectedCellDatas[0].value.toString())
-        .then(() => (config.dataCopied = true));
+        .then(() => {
+          config.dataCopied = true;
+          // emit an event with the copied values in it
+          dataCopiedEvent.emit(config.selectedCellDatas[0].value.toString());
+        });
     }
   }
 }
