@@ -47,11 +47,26 @@ export function pasteFromClipboard(
               if (!grid.isEditing()) {
                 // write the values into the grid
                 const field = config.columns[focusedCell.colIndex + i].field;
+                // handle numbers
+                if (Number.isFinite(parseFloat(dataItem[field]))) {
+                  // since every date can be converted to a number, we have to check, whether the pasted value is a date
+                  let date = intlService.parseDate(values[j][i], [
+                    ...DATE_FORMATS,
+                  ]);
+                  if (date) {
+                    console.error('The pasted value is not a valid number.');
+                    return;
+                  }
+                  if (!Number.isFinite(parseFloat(values[j][i]))) {
+                    console.error('The pasted value is not a valid number.');
+                    return;
+                  }
+                }
                 // handle date values
-                const column = config.columns.filter(
-                  (col) => col.field === field
-                )[0];
                 if (dataItem[field] instanceof Date) {
+                  const column = config.columns.filter(
+                    (col) => col.field === field
+                  )[0];
                   // parse the pasted value to date
                   let temp = intlService.parseDate(values[j][i], [
                     column.format,
