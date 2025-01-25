@@ -279,4 +279,7 @@ export class EnhancedGridConfig {
 
   // store, whether a tooltip is visible
   public isInfoTooltipVisible: boolean = false;
+
+  // store, whether the values of collapsed rows should be copied
+  public copyCollapsedRows: boolean = true;
 }

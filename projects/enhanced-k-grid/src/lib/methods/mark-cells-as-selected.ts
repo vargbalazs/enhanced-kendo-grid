@@ -119,16 +119,18 @@ export function markCellsAsSelected(
           (row) => row.orderIndex === firstCell.itemKey + j * verticalDirection
         );
         // there is always a collapsed property, that's why we check explicitly for true
+        // since we store also in the regular 'config.selectedCellDatas' the 'hidden' value, this codeblock
+        // isn't really necessary, but we keep it for any future cases
         if (dataRow.collapsed === true) {
           config.hiddenSelectedCellDatas = [
             ...config.hiddenSelectedCellDatas,
-            { value: value },
+            { value: value, hidden: dataRow.collapsed },
           ];
         } else {
           // store also only the visible ones
           config.visibleSelectedCellDatas = [
             ...config.visibleSelectedCellDatas,
-            { value: value },
+            { value: value, hidden: dataRow.collapsed },
           ];
         }
 
@@ -161,6 +163,7 @@ export function markCellsAsSelected(
           ...config.selectedCellDatas,
           {
             value: value,
+            hidden: dataRow.collapsed,
           },
         ];
       }
