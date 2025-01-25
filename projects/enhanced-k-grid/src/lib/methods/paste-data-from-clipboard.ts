@@ -3,6 +3,8 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import * as methods from './index';
 import { IntlService } from '@progress/kendo-angular-intl';
 import { DATE_FORMATS } from '../consts/constants';
+import { EventEmitter } from '@angular/core';
+import { PastingEvent } from '../interfaces/pasting-event.interface';
 
 // paste data from clipboard (from excel)
 export function pasteFromClipboard(
@@ -10,7 +12,8 @@ export function pasteFromClipboard(
   config: EnhancedGridConfig,
   grid: GridComponent,
   updateFn: () => void,
-  intlService: IntlService
+  intlService: IntlService,
+  dataPastedEvent: EventEmitter<PastingEvent>
 ) {
   if (e.ctrlKey && e.key === 'v') {
     navigator.clipboard.readText().then((text) => {
@@ -55,10 +58,18 @@ export function pasteFromClipboard(
                   ]);
                   if (date) {
                     console.error('The pasted value is not a valid number.');
+                    dataPastedEvent.emit({
+                      error: 'The pasted value is not a valid number.',
+                      data: null,
+                    });
                     return;
                   }
                   if (!Number.isFinite(parseFloat(values[j][i]))) {
                     console.error('The pasted value is not a valid number.');
+                    dataPastedEvent.emit({
+                      error: 'The pasted value is not a valid number.',
+                      data: null,
+                    });
                     return;
                   }
                 }
@@ -74,6 +85,10 @@ export function pasteFromClipboard(
                   ]);
                   if (!temp) {
                     console.error('The pasted value is not a valid date.');
+                    dataPastedEvent.emit({
+                      error: 'The pasted value is not a valid date.',
+                      data: null,
+                    });
                     return;
                   }
                   // format it according to the column format property
@@ -101,6 +116,10 @@ export function pasteFromClipboard(
                     console.error(
                       `For the field ${keyAndField.key} there is no list source defined.`
                     );
+                    dataPastedEvent.emit({
+                      error: `For the field ${keyAndField.key} there is no list source defined.`,
+                      data: null,
+                    });
                     return;
                   }
                   // search the item based on the textfield
@@ -227,6 +246,8 @@ export function pasteFromClipboard(
           methods.resizeSelectedArea(config);
           config.selectedArea.style.border = config.selectedAreaBorder;
         }
+        // emit the pasted event
+        dataPastedEvent.emit({ error: '', data: values });
       }
     });
   }
