@@ -99,6 +99,9 @@ export class EnhancedGridDirective
   // input for info tooltip container
   @Input() infoTooltipContainer!: ViewContainerRef;
 
+  // input, whether the values of collapsed rows should be copied
+  @Input() copyCollapsedRows: boolean = true;
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
