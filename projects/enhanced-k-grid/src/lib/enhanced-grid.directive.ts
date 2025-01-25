@@ -312,6 +312,9 @@ export class EnhancedGridDirective
     // store the info tooltip container
     this.config.infoTooltipContainer = this.infoTooltipContainer;
 
+    // store whether we copy also the hidden cells
+    this.config.copyCollapsedRows = this.copyCollapsedRows;
+
     // reset the grid
     this.resetState();
   }

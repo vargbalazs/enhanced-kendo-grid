@@ -1,4 +1,5 @@
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
+import { CellData } from '../interfaces/celldata.interface';
 
 // prepares the copied values in a table form for the clipboard
 export function prepareDataForClipboard(config: EnhancedGridConfig) {
@@ -9,22 +10,35 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
   let columnOffset = Math.abs(lastCell.columnKey - firstCell.columnKey) + 1;
   let rowOffset = Math.abs(lastCell.itemKey - firstCell.itemKey) + 1;
 
+  // copy hidden values or not
+  let cellDatas: CellData[] = [];
+  if (config.copyCollapsedRows) {
+    cellDatas = config.selectedCellDatas;
+  } else {
+    cellDatas = config.selectedCellDatas.filter((cellData) => !cellData.hidden);
+  }
+
   // right and down
   if (
     firstCell.itemKey <= lastCell.itemKey &&
     firstCell.columnKey <= lastCell.columnKey
   ) {
     for (let i = 0; i <= rowOffset - 1; i++) {
+      let hidden = false;
       for (let j = 0; j <= columnOffset - 1; j++) {
-        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        let cellData = config.selectedCellDatas[i + rowOffset * j];
+        let value = cellData.value;
+        // if the value is in a hidden row
+        hidden = cellData.hidden! && !config.copyCollapsedRows;
+        value = hidden ? '' : value;
         value = parseValue(value);
         if (j < columnOffset - 1) {
-          data = data.concat(value, '\t');
+          if (!hidden) data = data.concat(value, '\t');
         } else {
           data = data.concat(value);
         }
       }
-      data = data.concat('\r\n');
+      if (!hidden) data = data.concat('\r\n');
     }
   }
 
@@ -34,16 +48,20 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey <= lastCell.columnKey
   ) {
     for (let i = rowOffset - 1; i >= 0; i--) {
+      let hidden = false;
       for (let j = 0; j <= columnOffset - 1; j++) {
-        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        let cellData = config.selectedCellDatas[i + rowOffset * j];
+        let value = cellData.value;
+        hidden = cellData.hidden! && !config.copyCollapsedRows;
+        value = hidden ? '' : value;
         value = parseValue(value);
         if (j < columnOffset - 1) {
-          data = data.concat(value, '\t');
+          if (!hidden) data = data.concat(value, '\t');
         } else {
           data = data.concat(value);
         }
       }
-      data = data.concat('\r\n');
+      if (!hidden) data = data.concat('\r\n');
     }
   }
 
@@ -53,16 +71,20 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey > lastCell.columnKey
   ) {
     for (let i = rowOffset - 1; i >= 0; i--) {
+      let hidden = false;
       for (let j = columnOffset - 1; j >= 0; j--) {
-        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        let cellData = config.selectedCellDatas[i + rowOffset * j];
+        let value = cellData.value;
+        hidden = cellData.hidden! && !config.copyCollapsedRows;
+        value = hidden ? '' : value;
         value = parseValue(value);
         if (j > 0) {
-          data = data.concat(value, '\t');
+          if (!hidden) data = data.concat(value, '\t');
         } else {
           data = data.concat(value);
         }
       }
-      data = data.concat('\r\n');
+      if (!hidden) data = data.concat('\r\n');
     }
   }
 
@@ -72,16 +94,20 @@ export function prepareDataForClipboard(config: EnhancedGridConfig) {
     firstCell.columnKey > lastCell.columnKey
   ) {
     for (let i = 0; i <= rowOffset - 1; i++) {
+      let hidden = false;
       for (let j = columnOffset - 1; j >= 0; j--) {
-        let value = config.selectedCellDatas[i + rowOffset * j].value;
+        let cellData = config.selectedCellDatas[i + rowOffset * j];
+        let value = cellData.value;
+        hidden = cellData.hidden! && !config.copyCollapsedRows;
+        value = hidden ? '' : value;
         value = parseValue(value);
         if (j > 0) {
-          data = data.concat(value, '\t');
+          if (!hidden) data = data.concat(value, '\t');
         } else {
           data = data.concat(value);
         }
       }
-      data = data.concat('\r\n');
+      if (!hidden) data = data.concat('\r\n');
     }
   }
 
