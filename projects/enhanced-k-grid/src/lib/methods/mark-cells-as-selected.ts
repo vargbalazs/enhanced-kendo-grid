@@ -115,17 +115,11 @@ export function markCellsAsSelected(
           value = '';
         }
         // if we have a grouped grid and select over hidden rows, then we have to store this values separately
-        // such cells have a 'tr' parent element with an attribute 'collapsed'
-        const cell = (<HTMLElement>(
-          config.gridElRef.nativeElement
-        )).querySelector(
-          `div > tr[kendogridlogicalrow][data-kendo-grid-item-index='${
-            firstCell.itemKey + j * verticalDirection
-          }'] > td[kendogridcell][data-kendo-grid-column-index='${
-            firstCell.columnKey + i * horizontalDirection
-          }']`
+        const dataRow = config.gridData.find(
+          (row) => row.orderIndex === firstCell.itemKey + j * verticalDirection
         );
-        if (cell?.parentElement?.attributes.getNamedItem('collapsed')) {
+        // there is always a collapsed property, that's why we check explicitly for true
+        if (dataRow.collapsed === true) {
           config.hiddenSelectedCellDatas = [
             ...config.hiddenSelectedCellDatas,
             { value: value },
@@ -137,6 +131,32 @@ export function markCellsAsSelected(
             { value: value },
           ];
         }
+
+        /* this codeblock is not more valid */
+        // such cells have a 'tr' parent element with an attribute 'collapsed'
+        // const cell = (<HTMLElement>(
+        //   config.gridElRef.nativeElement
+        // )).querySelector(
+        //   `div > tr[kendogridlogicalrow][data-kendo-grid-item-index='${
+        //     firstCell.itemKey + j * verticalDirection
+        //   }'] > td[kendogridcell][data-kendo-grid-column-index='${
+        //     firstCell.columnKey + i * horizontalDirection
+        //   }']`
+        // );
+        // if (cell?.parentElement?.attributes.getNamedItem('collapsed')) {
+        //   config.hiddenSelectedCellDatas = [
+        //     ...config.hiddenSelectedCellDatas,
+        //     { value: value },
+        //   ];
+        // } else {
+        //   // store also only the visible ones
+        //   config.visibleSelectedCellDatas = [
+        //     ...config.visibleSelectedCellDatas,
+        //     { value: value },
+        //   ];
+        // }
+        /* block end */
+
         config.selectedCellDatas = [
           ...config.selectedCellDatas,
           {
