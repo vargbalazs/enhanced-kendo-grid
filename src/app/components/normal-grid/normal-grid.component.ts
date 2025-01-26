@@ -100,4 +100,8 @@ export class NormalGridComponent implements OnInit {
   dataPasted(e: PastingEvent) {
     console.log(e);
   }
+
+  cellValueChanging(e: typeof this.formGroup) {
+    console.log(e.controls.bool.value);
+  }
 }

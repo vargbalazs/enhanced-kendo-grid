@@ -131,6 +131,7 @@ export function cellClose(
   if ((<FormGroup>args.formGroup).valid) {
     config.cellEditingFormGroup = new FormGroup({});
     config.statusChanges$.unsubscribe();
+    config.valueChanges$.unsubscribe();
     // hide the error tooltip
     let activeCell = config.gridBody.querySelector(
       `[kendogridlogicalrow][data-kendo-grid-item-index="${grid.activeCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${grid.activeCell.colIndex}"]`

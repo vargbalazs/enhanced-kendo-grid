@@ -23,6 +23,7 @@
     [frozenColumns]="frozenColumns"
     (dataCopied)="dataCopied($event)"
     (dataPasted)="dataPasted($event)"
+    (cellValueChanging)="cellValueChanging($event)"
   >
     <kendo-grid-column
       field="id"
