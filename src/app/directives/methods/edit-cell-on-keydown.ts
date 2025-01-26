@@ -50,19 +50,23 @@ export function editCellOnKeyDown(
     // if grid is a calc grid, then mark it for recalculating
     if (config.calculatedGrid) config.shouldRecalculate = true;
     // store the form group for the edited cell, but only if there is no stored form group already
-    if (Object.keys(config.cellEditingFormGroup.controls).length == 0) {
+    // and the field isn't a boolean one
+    // we don't want to store the form group in case of a boolean field, because we don't want to subscribe to the
+    // valueChanges event of the form group twice
+    if (
+      Object.keys(config.cellEditingFormGroup.controls).length == 0 &&
+      !isFieldBoolean(config, grid)
+    ) {
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     }
     // if the column is a checkbox column (it's value is a boolean), then switch the value and return
-    const keyAndField = methods.extractKeyAndField(
-      config.columns[grid.activeCell.colIndex].field
-    );
-    let value = getValueFromFormGroup(keyAndField, config);
-    if (checkColumnValue(config, grid)) {
-      // store the form group and value again, because if not, we would get wrong result switching the boolean values
-      // because we would always rely on the first stored form group
+    if (isFieldBoolean(config, grid)) {
+      // store the form group in order to subscribe to the valueChanges event of the form group
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
-      value = getValueFromFormGroup(keyAndField, config);
+      const keyAndField = methods.extractKeyAndField(
+        config.columns[grid.activeCell.colIndex].field
+      );
+      let value = getActiveCellValue(config, grid);
       if (keyAndField.fieldName) {
         grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
           !value;
@@ -88,8 +92,9 @@ export function editCellOnKeyDown(
     !NOT_ALLOWED_KEYS_FOR_EDITING.includes(e.key) && // the pressed key is a 'regular' one
     !grid.isEditingCell() // we are not in edit mode elsewhere in the grid
   ) {
-    // store the form group for the edited cell
-    methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
+    // store the form group for the edited cell, but only if we are typing in a non-boolean field
+    if (!isFieldBoolean(config, grid))
+      methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     // if we are in a calculated row, then make the column not editable
     if (grid.activeCell.dataItem.calculated) {
       methods.disableEditingOnCalculatedRow(grid, config);
@@ -97,7 +102,7 @@ export function editCellOnKeyDown(
     }
     // if the column is a checkbox column (it's value is a boolean), no editing is allowed -> return
     // in case of space switching the values is allowed, but after that also return
-    if (checkColumnValue(config, grid)) {
+    if (isFieldBoolean(config, grid)) {
       if (e.code !== 'Space') {
         methods.disableEditingOnCalculatedRow(grid, config);
         return;
@@ -105,13 +110,14 @@ export function editCellOnKeyDown(
         const keyAndField = methods.extractKeyAndField(
           config.columns[grid.activeCell.colIndex].field
         );
-        let value = getValueFromFormGroup(keyAndField, config);
+        let value = getActiveCellValue(config, grid); //getValueFromFormGroup(keyAndField, config);
         if (keyAndField.fieldName) {
           grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
             !value;
         } else {
           grid.activeCell.dataItem[keyAndField.key] = !value;
         }
+        // store the form group in order to subscribe to the valueChanges event of the form group
         methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
         return;
       }
@@ -193,4 +199,36 @@ function getValueFromFormGroup(
   } else {
     return config.cellEditingFormGroup.controls[keyAndField.key].value;
   }
+}
+
+function isFieldBoolean(
+  config: EnhancedGridConfig,
+  grid: GridComponent
+): boolean {
+  const keyAndField = methods.extractKeyAndField(
+    config.columns[grid.activeCell.colIndex].field
+  );
+  let value: any = '';
+  if (keyAndField.fieldName) {
+    value = grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName];
+  } else {
+    value = grid.activeCell.dataItem[keyAndField.key];
+  }
+  return typeof value === 'boolean';
+}
+
+function getActiveCellValue(
+  config: EnhancedGridConfig,
+  grid: GridComponent
+): any {
+  const keyAndField = methods.extractKeyAndField(
+    config.columns[grid.activeCell.colIndex].field
+  );
+  let value: any = '';
+  if (keyAndField.fieldName) {
+    value = grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName];
+  } else {
+    value = grid.activeCell.dataItem[keyAndField.key];
+  }
+  return value;
 }
