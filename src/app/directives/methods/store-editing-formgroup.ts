@@ -71,13 +71,12 @@ export function storeEditingFormGroup(
       }
       let newValue: any = '';
       if (keyAndField.fieldName) {
-        newValue = dataItem[keyAndField.key][keyAndField.fieldName]
+        newValue = dataItem[keyAndField.key]
           ? dataItem[keyAndField.key][keyAndField.fieldName]
           : null;
       } else {
         newValue = dataItem[keyAndField.key];
       }
-      console.log(newValue);
       config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
     }
   );

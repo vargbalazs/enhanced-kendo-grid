@@ -177,7 +177,9 @@ function isFieldBoolean(
   );
   let value: any = '';
   if (keyAndField.fieldName) {
-    value = grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName];
+    value = grid.activeCell.dataItem[keyAndField.key]
+      ? grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName]
+      : null;
   } else {
     value = grid.activeCell.dataItem[keyAndField.key];
   }
