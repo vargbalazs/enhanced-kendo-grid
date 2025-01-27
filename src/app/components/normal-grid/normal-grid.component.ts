@@ -102,6 +102,6 @@ export class NormalGridComponent implements OnInit {
   }
 
   cellValueChanging(e: typeof this.formGroup) {
-    console.log(e.controls.bool.value);
+    //console.log(e.controls.feb.value);
   }
 }
