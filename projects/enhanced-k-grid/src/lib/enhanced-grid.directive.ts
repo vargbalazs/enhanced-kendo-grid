@@ -608,7 +608,7 @@ export class EnhancedGridDirective
       this.config.selectedCells.length <= 1
     )
       this.onDblClick();
-    // if we click on a checkbox and editing is allowed, then change the underlying value
+    // if we click on a checkbox and editing is allowed, then change the underlying value and emit the changed value event
     // in fact we can also check/uncheck the checkbox, if editing is not allowed, because the checkbox itself
     // is independent of the editable state of the grid
     // in order to prevent editing, simple disable the checkbox in the template
@@ -616,10 +616,26 @@ export class EnhancedGridDirective
       (<HTMLInputElement>e.target).type === 'checkbox' &&
       !!this.kendoGridInCellEditing
     ) {
-      // we should handle also the case, if the field is an object
-      const field = this.config.columns[this.grid.activeCell.colIndex].field;
-      this.grid.activeCell.dataItem[field] =
-        !this.grid.activeCell.dataItem[field];
+      const keyAndField = methods.extractKeyAndField(
+        this.config.columns[this.grid.activeCell.colIndex].field
+      );
+      if (keyAndField.fieldName) {
+        this.grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
+          !this.grid.activeCell.dataItem[keyAndField.key][
+            keyAndField.fieldName
+          ];
+      } else {
+        this.grid.activeCell.dataItem[keyAndField.key] =
+          !this.grid.activeCell.dataItem[keyAndField.key];
+      }
+      const args: CreateFormGroupArgs = {
+        dataItem: this.grid.activeCell.dataItem,
+        isNew: false,
+        sender: this.grid,
+        rowIndex: this.grid.activeCell.rowIndex,
+      };
+      this.config.cellEditingFormGroup = this.kendoGridInCellEditing(args);
+      this.config.cellValueChangingEvent.emit(this.config.cellEditingFormGroup);
     }
   }
 

@@ -56,25 +56,28 @@ export function storeEditingFormGroup(
           status === 'INVALID' ? 'on' : 'off'
         );
     });
+  // subscribe for value changing
   config.valueChanges$ = config.cellEditingFormGroup.valueChanges.subscribe(
-    (value) => {
+    (dataItem) => {
       const keyAndField = methods.extractKeyAndField(
         config.columns[grid.activeCell.colIndex].field
       );
-      let val: any = '';
+      let oldValue: any = '';
       if (keyAndField.fieldName) {
-        val = grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName];
+        oldValue =
+          config.originalDataItem[keyAndField.key][keyAndField.fieldName];
       } else {
-        val = grid.activeCell.dataItem[keyAndField.key];
+        oldValue = config.originalDataItem[keyAndField.key];
       }
-      // if we are in a checkbox column, then unsubscribe immediately and return
-      if (typeof val === 'boolean') {
-        console.log('boolean');
-        config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
-        config.valueChanges$.unsubscribe();
-        return;
+      let newValue: any = '';
+      if (keyAndField.fieldName) {
+        newValue = dataItem[keyAndField.key][keyAndField.fieldName]
+          ? dataItem[keyAndField.key][keyAndField.fieldName]
+          : null;
+      } else {
+        newValue = dataItem[keyAndField.key];
       }
-      console.log('belép');
+      console.log(newValue);
       config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
     }
   );

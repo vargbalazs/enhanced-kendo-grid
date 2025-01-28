@@ -52,7 +52,7 @@ export function editCellOnKeyDown(
     // store the form group for the edited cell, but only if there is no stored form group already
     // and the field isn't a boolean one
     // we don't want to store the form group in case of a boolean field, because we don't want to subscribe to the
-    // valueChanges event of the form group twice
+    // valueChanges event of the form group in this case; if the field is a boolean one, we just emit the new value
     if (
       Object.keys(config.cellEditingFormGroup.controls).length == 0 &&
       !isFieldBoolean(config, grid)
@@ -61,18 +61,7 @@ export function editCellOnKeyDown(
     }
     // if the column is a checkbox column (it's value is a boolean), then switch the value and return
     if (isFieldBoolean(config, grid)) {
-      // store the form group in order to subscribe to the valueChanges event of the form group
-      methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
-      const keyAndField = methods.extractKeyAndField(
-        config.columns[grid.activeCell.colIndex].field
-      );
-      let value = getActiveCellValue(config, grid);
-      if (keyAndField.fieldName) {
-        grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
-          !value;
-      } else {
-        grid.activeCell.dataItem[keyAndField.key] = !value;
-      }
+      toggleCeckboxValue(config, grid, cellEditingFormGroupFn);
       methods.disableEditingOnCalculatedRow(grid, config);
       // enable paging, if feature was allowed
       if (grid.pageable) methods.handlePaging(config, 'on');
@@ -92,7 +81,7 @@ export function editCellOnKeyDown(
     !NOT_ALLOWED_KEYS_FOR_EDITING.includes(e.key) && // the pressed key is a 'regular' one
     !grid.isEditingCell() // we are not in edit mode elsewhere in the grid
   ) {
-    // store the form group for the edited cell, but only if we are typing in a non-boolean field
+    // store the form group for the edited cell, but only if we are typing in a non-boolean field (reason see above)
     if (!isFieldBoolean(config, grid))
       methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     // if we are in a calculated row, then make the column not editable
@@ -107,18 +96,7 @@ export function editCellOnKeyDown(
         methods.disableEditingOnCalculatedRow(grid, config);
         return;
       } else {
-        const keyAndField = methods.extractKeyAndField(
-          config.columns[grid.activeCell.colIndex].field
-        );
-        let value = getActiveCellValue(config, grid); //getValueFromFormGroup(keyAndField, config);
-        if (keyAndField.fieldName) {
-          grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
-            !value;
-        } else {
-          grid.activeCell.dataItem[keyAndField.key] = !value;
-        }
-        // store the form group in order to subscribe to the valueChanges event of the form group
-        methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
+        toggleCeckboxValue(config, grid, cellEditingFormGroupFn);
         return;
       }
     }
@@ -177,17 +155,6 @@ export function editCellOnKeyDown(
   }
 }
 
-function checkColumnValue(
-  config: EnhancedGridConfig,
-  grid: GridComponent
-): boolean {
-  const keyAndField = methods.extractKeyAndField(
-    config.columns[grid.activeCell.colIndex].field
-  );
-  const value = getValueFromFormGroup(keyAndField, config);
-  return typeof value === 'boolean';
-}
-
 function getValueFromFormGroup(
   keyAndField: KeyAndField,
   config: EnhancedGridConfig
@@ -231,4 +198,28 @@ function getActiveCellValue(
     value = grid.activeCell.dataItem[keyAndField.key];
   }
   return value;
+}
+
+function toggleCeckboxValue(
+  config: EnhancedGridConfig,
+  grid: GridComponent,
+  cellEditingFormGroupFn: (args: CreateFormGroupArgs) => FormGroup
+) {
+  const keyAndField = methods.extractKeyAndField(
+    config.columns[grid.activeCell.colIndex].field
+  );
+  let value = getActiveCellValue(config, grid);
+  if (keyAndField.fieldName) {
+    grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] = !value;
+  } else {
+    grid.activeCell.dataItem[keyAndField.key] = !value;
+  }
+  const args: CreateFormGroupArgs = {
+    dataItem: grid.activeCell.dataItem,
+    isNew: false,
+    sender: grid,
+    rowIndex: grid.activeCell.rowIndex,
+  };
+  config.cellEditingFormGroup = cellEditingFormGroupFn(args);
+  config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
 }
