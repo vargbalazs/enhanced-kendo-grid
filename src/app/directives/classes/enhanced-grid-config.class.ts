@@ -24,6 +24,7 @@ import { GroupedData } from '../interfaces/grouped-data.interface';
 import { GroupLevelButton } from '../interfaces/group-level-button.interface';
 import { Overlay } from '../interfaces/overlay.interface';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
+import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event';
 
 export class EnhancedGridConfig {
   // the grid component
@@ -287,5 +288,6 @@ export class EnhancedGridConfig {
   public copyCollapsedRows: boolean = true;
 
   // store the event emitter for cell value changing
-  public cellValueChangingEvent: EventEmitter<any> = new EventEmitter();
+  public cellValueChangingEvent: EventEmitter<CellValueChangingEvent> =
+    new EventEmitter();
 }

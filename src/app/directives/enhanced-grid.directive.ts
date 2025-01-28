@@ -31,6 +31,7 @@ import { ListSource } from './interfaces/list-source.interface';
 import { InfoTooltip } from './interfaces/info-tooltip.interface';
 import { IntlService } from '@progress/kendo-angular-intl';
 import { PastingEvent } from './interfaces/pasting-event.interface';
+import { CellValueChangingEvent } from './interfaces/cellvalue-changing-event';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -115,7 +116,7 @@ export class EnhancedGridDirective
   @Output() dataPasted = new EventEmitter<PastingEvent>();
 
   // event emitter for cell value changing
-  @Output() cellValueChanging = new EventEmitter();
+  @Output() cellValueChanging = new EventEmitter<CellValueChangingEvent>();
 
   // cell was double clicked
   private cellDblClicked: boolean = false;
@@ -619,14 +620,15 @@ export class EnhancedGridDirective
       const keyAndField = methods.extractKeyAndField(
         this.config.columns[this.grid.activeCell.colIndex].field
       );
+      let value: boolean = false;
       if (keyAndField.fieldName) {
+        value =
+          this.grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName];
         this.grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName] =
-          !this.grid.activeCell.dataItem[keyAndField.key][
-            keyAndField.fieldName
-          ];
+          !value;
       } else {
-        this.grid.activeCell.dataItem[keyAndField.key] =
-          !this.grid.activeCell.dataItem[keyAndField.key];
+        value = this.grid.activeCell.dataItem[keyAndField.key];
+        this.grid.activeCell.dataItem[keyAndField.key] = !value;
       }
       const args: CreateFormGroupArgs = {
         dataItem: this.grid.activeCell.dataItem,
@@ -635,7 +637,14 @@ export class EnhancedGridDirective
         rowIndex: this.grid.activeCell.rowIndex,
       };
       this.config.cellEditingFormGroup = this.kendoGridInCellEditing(args);
-      this.config.cellValueChangingEvent.emit(this.config.cellEditingFormGroup);
+      const cellValueChangingEvent: CellValueChangingEvent = {
+        cellEditingFormGroup: this.config.cellEditingFormGroup,
+        activeCell: this.grid.activeCell,
+        keyAndField: keyAndField,
+        oldValue: value,
+        newValue: !value,
+      };
+      this.config.cellValueChangingEvent.emit(cellValueChangingEvent);
     }
   }
 

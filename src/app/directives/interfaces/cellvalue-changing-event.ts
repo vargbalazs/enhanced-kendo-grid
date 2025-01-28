@@ -7,4 +7,5 @@ export interface CellValueChangingEvent {
   activeCell: NavigationCell;
   keyAndField: KeyAndField;
   oldValue: any;
+  newValue: any;
 }
