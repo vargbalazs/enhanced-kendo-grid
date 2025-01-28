@@ -31,7 +31,7 @@ import { ListSource } from './interfaces/list-source.interface';
 import { InfoTooltip } from './interfaces/info-tooltip.interface';
 import { IntlService } from '@progress/kendo-angular-intl';
 import { PastingEvent } from './interfaces/pasting-event.interface';
-import { CellValueChangingEvent } from './interfaces/cellvalue-changing-event';
+import { CellValueChangingEvent } from './interfaces/cellvalue-changing-event.interface';
 
 @Directive({
   selector: '[enhancedGrid]',

@@ -6,7 +6,7 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import * as methods from './index';
-import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event';
+import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event.interface';
 
 // store the form group for the edited cell
 export function storeEditingFormGroup(

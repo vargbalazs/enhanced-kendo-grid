@@ -24,7 +24,7 @@ import { GroupedData } from '../interfaces/grouped-data.interface';
 import { GroupLevelButton } from '../interfaces/group-level-button.interface';
 import { Overlay } from '../interfaces/overlay.interface';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
-import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event';
+import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event.interface';
 
 export class EnhancedGridConfig {
   // the grid component
