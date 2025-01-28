@@ -11,6 +11,7 @@ import {
 } from '../consts/constants';
 import { FormGroup } from '@angular/forms';
 import { KeyAndField } from '../interfaces/key-and-field.interface';
+import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event.interface';
 
 // edits the cell on keydown
 export function editCellOnKeyDown(
@@ -223,5 +224,12 @@ function toggleCeckboxValue(
     rowIndex: grid.activeCell.rowIndex,
   };
   config.cellEditingFormGroup = cellEditingFormGroupFn(args);
-  config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
+  const cellValueChangingEvent: CellValueChangingEvent = {
+    cellEditingFormGroup: config.cellEditingFormGroup,
+    activeCell: grid.activeCell,
+    keyAndField: keyAndField,
+    oldValue: value,
+    newValue: !value,
+  };
+  config.cellValueChangingEvent.emit(cellValueChangingEvent);
 }

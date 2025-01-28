@@ -6,6 +6,7 @@ import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import * as methods from './index';
+import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event.interface';
 
 // store the form group for the edited cell
 export function storeEditingFormGroup(
@@ -77,7 +78,14 @@ export function storeEditingFormGroup(
       } else {
         newValue = dataItem[keyAndField.key];
       }
-      config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
+      const cellValueChangingEvent: CellValueChangingEvent = {
+        cellEditingFormGroup: config.cellEditingFormGroup,
+        activeCell: grid.activeCell,
+        keyAndField: keyAndField,
+        oldValue: oldValue,
+        newValue: newValue,
+      };
+      config.cellValueChangingEvent.emit(cellValueChangingEvent);
     }
   );
 }
