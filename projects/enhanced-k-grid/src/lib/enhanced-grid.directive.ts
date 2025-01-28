@@ -408,12 +408,6 @@ export class EnhancedGridDirective
               (row, index) => (row.orderIndex = index)
             );
           });
-        // add a field 'collapsed' to the grid data - this is to store the collapsed state of the row
-        // if we have this, we can filter the hidden cells while selecting with shift much faster, than selecting with queryselector
-        // only calc grids can have collapsed rows, where paging, filtering and sorting aren't allowed, so we don't need to add this field to 'fullGridData'
-        this.config.gridData.forEach((row) => (row.collapsed = false));
-        // add also another field, which holds the order index of the rows
-        this.config.gridData.forEach((row, index) => (row.orderIndex = index));
       });
     }
 
