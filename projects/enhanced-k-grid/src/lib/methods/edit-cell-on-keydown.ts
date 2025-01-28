@@ -112,6 +112,7 @@ export function editCellOnKeyDown(
         } else {
           grid.activeCell.dataItem[keyAndField.key] = !value;
         }
+        methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
         return;
       }
     }

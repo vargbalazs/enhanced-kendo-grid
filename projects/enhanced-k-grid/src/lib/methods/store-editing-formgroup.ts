@@ -56,4 +56,26 @@ export function storeEditingFormGroup(
           status === 'INVALID' ? 'on' : 'off'
         );
     });
+  config.valueChanges$ = config.cellEditingFormGroup.valueChanges.subscribe(
+    (value) => {
+      const keyAndField = methods.extractKeyAndField(
+        config.columns[grid.activeCell.colIndex].field
+      );
+      let val: any = '';
+      if (keyAndField.fieldName) {
+        val = grid.activeCell.dataItem[keyAndField.key][keyAndField.fieldName];
+      } else {
+        val = grid.activeCell.dataItem[keyAndField.key];
+      }
+      // if we are in a checkbox column, then unsubscribe immediately and return
+      if (typeof val === 'boolean') {
+        console.log('boolean');
+        config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
+        config.valueChanges$.unsubscribe();
+        return;
+      }
+      console.log('belép');
+      config.cellValueChangingEvent.emit(config.cellEditingFormGroup);
+    }
+  );
 }

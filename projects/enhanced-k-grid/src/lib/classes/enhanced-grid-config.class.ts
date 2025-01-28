@@ -11,7 +11,7 @@ import { Rect } from '../interfaces/rect.interface';
 import { Subscription } from 'rxjs';
 import { CellData } from '../interfaces/celldata.interface';
 import { Aggregate } from '../interfaces/aggregate.interface';
-import { ElementRef, ViewContainerRef } from '@angular/core';
+import { ElementRef, EventEmitter, ViewContainerRef } from '@angular/core';
 import { FrozenColumn } from '../interfaces/frozencolumn.interface';
 import { NonEditableColumn } from '../interfaces/non-editable-column.interface';
 import { RowCalculation } from '../interfaces/row-calculation.interface';
@@ -180,6 +180,9 @@ export class EnhancedGridConfig {
   // subscription for status changing of an edited form group
   public statusChanges$: Subscription = new Subscription();
 
+  // subscription for value changing of an edited form group
+  public valueChanges$: Subscription = new Subscription();
+
   // div element for the error tooltip
   public errorToolTip: HTMLDivElement = document.createElement('div');
 
@@ -282,4 +285,7 @@ export class EnhancedGridConfig {
 
   // store, whether the values of collapsed rows should be copied
   public copyCollapsedRows: boolean = true;
+
+  // store the event emitter for cell value changing
+  public cellValueChangingEvent: EventEmitter<any> = new EventEmitter();
 }

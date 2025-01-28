@@ -114,6 +114,9 @@ export class EnhancedGridDirective
   // event emitter for pasting data
   @Output() dataPasted = new EventEmitter<PastingEvent>();
 
+  // event emitter for cell value changing
+  @Output() cellValueChanging = new EventEmitter();
+
   // cell was double clicked
   private cellDblClicked: boolean = false;
 
@@ -314,6 +317,9 @@ export class EnhancedGridDirective
 
     // store whether we copy also the hidden cells
     this.config.copyCollapsedRows = this.copyCollapsedRows;
+
+    // store the event emitter for cell value changing
+    this.config.cellValueChangingEvent = this.cellValueChanging;
 
     // reset the grid
     this.resetState();
