@@ -115,55 +115,34 @@ export function markCellsAsSelected(
           value = '';
         }
         // if we have a grouped grid and select over hidden rows, then we have to store this values separately
-        const dataRow = config.gridData.find(
-          (row) => row.orderIndex === firstCell.itemKey + j * verticalDirection
-        );
-        // there is always a collapsed property, that's why we check explicitly for true
-        // since we store also in the regular 'config.selectedCellDatas' the 'hidden' value, this codeblock
-        // isn't really necessary, but we keep it for any future cases
-        if (dataRow.collapsed === true) {
-          config.hiddenSelectedCellDatas = [
-            ...config.hiddenSelectedCellDatas,
-            { value: value, hidden: dataRow.collapsed },
-          ];
-        } else {
-          // store also only the visible ones
-          config.visibleSelectedCellDatas = [
-            ...config.visibleSelectedCellDatas,
-            { value: value, hidden: dataRow.collapsed },
-          ];
+        let dataRow: any;
+        if (config.grouped) {
+          dataRow = config.gridData.find(
+            (row) =>
+              row.orderIndex === firstCell.itemKey + j * verticalDirection
+          );
+          // there is always a collapsed property, that's why we check explicitly for true
+          // since we store also in the regular 'config.selectedCellDatas' the 'hidden' value, this codeblock
+          // isn't really necessary, but we keep it for any future cases
+          if (dataRow.collapsed === true) {
+            config.hiddenSelectedCellDatas = [
+              ...config.hiddenSelectedCellDatas,
+              { value: value, hidden: dataRow.collapsed },
+            ];
+          } else {
+            // store also only the visible ones
+            config.visibleSelectedCellDatas = [
+              ...config.visibleSelectedCellDatas,
+              { value: value, hidden: dataRow.collapsed },
+            ];
+          }
         }
-
-        /* this codeblock is not more valid */
-        // such cells have a 'tr' parent element with an attribute 'collapsed'
-        // const cell = (<HTMLElement>(
-        //   config.gridElRef.nativeElement
-        // )).querySelector(
-        //   `div > tr[kendogridlogicalrow][data-kendo-grid-item-index='${
-        //     firstCell.itemKey + j * verticalDirection
-        //   }'] > td[kendogridcell][data-kendo-grid-column-index='${
-        //     firstCell.columnKey + i * horizontalDirection
-        //   }']`
-        // );
-        // if (cell?.parentElement?.attributes.getNamedItem('collapsed')) {
-        //   config.hiddenSelectedCellDatas = [
-        //     ...config.hiddenSelectedCellDatas,
-        //     { value: value },
-        //   ];
-        // } else {
-        //   // store also only the visible ones
-        //   config.visibleSelectedCellDatas = [
-        //     ...config.visibleSelectedCellDatas,
-        //     { value: value },
-        //   ];
-        // }
-        /* block end */
 
         config.selectedCellDatas = [
           ...config.selectedCellDatas,
           {
             value: value,
-            hidden: dataRow.collapsed,
+            hidden: config.grouped ? dataRow.collapsed : false,
           },
         ];
       }
