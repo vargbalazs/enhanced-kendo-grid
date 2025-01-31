@@ -186,6 +186,9 @@ export function pasteFromClipboard(
                     config.rowCalculation.titleField !== columnField
                   )
                     value = '';
+                  // don't consider also values from an empty row
+                  if (config.gridData[focusedCell.dataRowIndex + j].empty)
+                    value = '';
                 }
                 config.selectedCellDatas = [
                   ...config.selectedCellDatas,

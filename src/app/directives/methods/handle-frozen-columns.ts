@@ -112,6 +112,16 @@ export function handleFrozenColumns(config: EnhancedGridConfig) {
         ...config.columns[config.frozenColumns[i].columnIndex!].style,
         'border-right': 'var(--frozen-column-right-border-style)',
       };
+      // add a class for the first non frozen column - this is needed, because if we have empty rows, we remove the left border from the cells of the empty row
+      // but if this is the cell after the last frozen column, then we don't want to remove this
+      const cells = (<HTMLElement>(
+        config.gridElRef.nativeElement
+      )).querySelectorAll(
+        `[kendogridcell][data-kendo-grid-column-index="${
+          config.frozenColumns[i].columnIndex! + 1
+        }"]`
+      );
+      cells.forEach((cell) => cell.classList.add('first-non-frozen-column'));
       // if it is a grouped grid
       if (config.groupedGridData.length > 0) {
         let groupCells = <NodeList>(

@@ -114,6 +114,21 @@ export function markCellsAsSelected(
         ) {
           value = '';
         }
+        // don't consider also values in an empty row
+        if (
+          config.gridData[
+            firstCell.itemKey -
+              (grid.skip ? grid.skip : 0) +
+              j * verticalDirection
+          ].calculated &&
+          config.gridData[
+            firstCell.itemKey -
+              (grid.skip ? grid.skip : 0) +
+              j * verticalDirection
+          ].empty
+        ) {
+          value = '';
+        }
         // if we have a grouped grid and select over hidden rows, then we have to store this values separately
         let dataRow: any;
         if (config.grouped) {

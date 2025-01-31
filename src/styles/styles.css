@@ -194,10 +194,16 @@
   color: rgba(84, 84, 84, 0.5);
 }
 
-.calcrow .hide-value {
+.calcrow .hide-value,
+.calcrow.emptyrow .empty {
   color: transparent !important;
   cursor: default;
   user-select: none;
+}
+
+.calcrow.emptyrow .empty:not(.first-non-frozen-column) {
+  background-color: white !important;
+  border-left: 1px solid white;
 }
 
 .calcrow input[type="checkbox"] {
