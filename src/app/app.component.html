@@ -1,5 +1,8 @@
 <kendo-tabstrip>
-  <kendo-tabstrip-tab title="normal grid (with sorting, paging, filtering)">
+  <kendo-tabstrip-tab
+    title="normal grid (with sorting, paging, filtering)"
+    [selected]="true"
+  >
     <ng-template kendoTabContent>
       <normal-grid></normal-grid>
     </ng-template>
@@ -54,7 +57,7 @@
       <calc-grid-info></calc-grid-info>
     </ng-template>
   </kendo-tabstrip-tab>
-  <kendo-tabstrip-tab title="grid with empty row" [selected]="true">
+  <kendo-tabstrip-tab title="grid with empty row">
     <ng-template kendoTabContent>
       <grid-with-empty-row></grid-with-empty-row>
     </ng-template>

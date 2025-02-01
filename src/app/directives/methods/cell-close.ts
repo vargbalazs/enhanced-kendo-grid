@@ -129,6 +129,14 @@ export function cellClose(
   });
   // reset the form group, if the data is valid
   if ((<FormGroup>args.formGroup).valid) {
+    if (
+      config.cellValueChangingEventValue?.oldValue !==
+      config.cellValueChangingEventValue?.newValue
+    ) {
+      config.cellValueChangedEvent.emit(config.cellValueChangingEventValue);
+      config.cellValueChangingEventValue = undefined;
+    }
+
     config.cellEditingFormGroup = new FormGroup({});
     config.statusChanges$.unsubscribe();
     config.valueChanges$.unsubscribe();

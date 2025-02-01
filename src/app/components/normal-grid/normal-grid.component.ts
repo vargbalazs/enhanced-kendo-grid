@@ -14,6 +14,7 @@ import { GroupDescriptor } from '@progress/kendo-data-query';
 import { delay, from, toArray } from 'rxjs';
 import { accountNumbers, projects, rows } from 'src/app/data/data';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
+import { CellValueChangedEvent } from 'src/app/directives/interfaces/cellvalue-changed-event.interface';
 import { CellValueChangingEvent } from 'src/app/directives/interfaces/cellvalue-changing-event.interface';
 import { PastingEvent } from 'src/app/directives/interfaces/pasting-event.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
@@ -103,6 +104,10 @@ export class NormalGridComponent implements OnInit {
   }
 
   cellValueChanging(e: CellValueChangingEvent) {
+    console.log(e);
+  }
+
+  cellValueChanged(e: CellValueChangedEvent) {
     console.log(e);
   }
 }

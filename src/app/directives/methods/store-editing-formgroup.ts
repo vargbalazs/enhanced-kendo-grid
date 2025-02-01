@@ -86,6 +86,7 @@ export function storeEditingFormGroup(
         newValue: newValue,
       };
       config.cellValueChangingEvent.emit(cellValueChangingEvent);
+      config.cellValueChangingEventValue = cellValueChangingEvent;
     }
   );
 }
