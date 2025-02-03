@@ -1,24 +1,24 @@
-# EnhancedKGrid
+# Enhanced kendo-grid
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+The goal of this project was to create an excel like grid based on the existing kendo-grid. I didn't want to create a spreadsheet component, but a grid, which holds regular array data, which we can edit, select, copy, paste, with wich we can do calculations and create so called 'calculation grids'.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name --project enhanced-k-grid` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project enhanced-k-grid`.
-> Note: Don't forget to add `--project enhanced-k-grid` or else it will be added to the default project in your `angular.json` file. 
+- change focus with tab
+- select cells with shift
+- select cells with mouse
+- copy and paste values with visual effects
+- copy and paste events
+- calculate aggregates for selected cells
+- frozen columns
+- cell value changing and cell value changed events
+- calculated rows
+- calculated columns
+- empty rows (as a separator)
+- custom error messages for invalid data
+- grouped rows (max 3 levels) with slide animation
+- info tooltips (also with components as tooltip content)
 
-## Build
+## Documentation
 
-Run `ng build enhanced-k-grid` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build enhanced-k-grid`, go to the dist folder `cd dist/enhanced-k-grid` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test enhanced-k-grid` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+**1. Basic usage**
