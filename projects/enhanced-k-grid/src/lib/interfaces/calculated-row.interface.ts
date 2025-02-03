@@ -12,6 +12,7 @@ export interface CalculatedRow {
   rowIndexes?: number[];
   groupLevel?: number;
   parentRowName?: string;
+  empty?: boolean;
 }
 
 export interface SimpleRowRange {
