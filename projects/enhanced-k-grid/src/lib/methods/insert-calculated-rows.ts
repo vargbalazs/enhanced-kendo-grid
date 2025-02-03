@@ -43,6 +43,16 @@ export function insertCalculatedRows(
 // callback for styling calculated rows
 function rowCallback(context: RowClassArgs) {
   if (context.dataItem.calculated)
-    return { calcrow: true, [context.dataItem.calcRowName]: true };
+    if (!context.dataItem.empty) {
+      return {
+        calcrow: true,
+        [context.dataItem.calcRowName]: true,
+      };
+    } else
+      return {
+        calcrow: true,
+        [context.dataItem.calcRowName]: true,
+        emptyrow: true,
+      };
   return '';
 }

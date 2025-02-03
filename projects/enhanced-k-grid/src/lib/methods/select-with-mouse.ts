@@ -69,6 +69,13 @@ export function selectWithMouse(
       ) {
         config.selectedCellDatas[0].value = '';
       }
+      // don't consider also values in an empty row
+      if (
+        grid.activeCell.dataItem.calculated &&
+        grid.activeCell.dataItem.empty
+      ) {
+        config.selectedCellDatas[0].value = '';
+      }
     }
 
     // store the last selected cell and it's position

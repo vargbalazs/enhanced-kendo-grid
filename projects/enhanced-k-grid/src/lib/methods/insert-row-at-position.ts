@@ -13,6 +13,9 @@ export function insertRowAtPosition(
   if (index === -1) {
     rowData = structuredClone(config.gridData[0]);
   }
+  // if we clone from an empty row (which means, we already set the 'empty' property to true), then we have to remove the property,
+  // because if it is really an emtpy one, then the property will be set again
+  if (rowData.empty) delete rowData.empty;
   // write the title of the calculated row
   // if titleField is an object
   if (config.rowCalculation.titleField.includes('.')) {
@@ -29,6 +32,8 @@ export function insertRowAtPosition(
   }
   // mark the row as calculated
   rowData.calculated = true;
+  // mark the row as empty
+  if (calcRow.empty === true) rowData.empty = true;
   // add the unique name
   rowData.calcRowName = calcRow.name;
   // remove the field 'dataRowIndex' from the row - this is needed, because otherwise if we delete the cell content and then hit escape or click away, also the calc row and corresponding cell goes into edit mode and the cell value gets written back also in this cell in the calc row

@@ -87,6 +87,17 @@ export function copyDataToClipboard(
       ) {
         value = '';
       }
+      // don't consider also values in an empty row
+      if (
+        config.gridData[
+          grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0)
+        ].calculated &&
+        config.gridData[
+          grid.activeCell.dataRowIndex - (grid.skip ? grid.skip : 0)
+        ].empty
+      ) {
+        value = '';
+      }
       // check if the value is a date and format it according to the defined format in the column definition
       // if no format is defined, then use a default
       if (<any>value instanceof Date) {

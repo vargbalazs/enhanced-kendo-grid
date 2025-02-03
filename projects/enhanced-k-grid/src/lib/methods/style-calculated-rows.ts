@@ -33,6 +33,8 @@ export function styleCalculatedRows(
       // add the custom class
       cssClasses.push(...customCssClasses);
     }
+    // add style for emtpy rows
+    cssClasses.push('empty');
     // overwrite the cssClass property with the new array
     config.columns[i].cssClass = cssClasses;
     config.columnStyles.push({ cssClasses: cssClasses, columnIndex: i });
