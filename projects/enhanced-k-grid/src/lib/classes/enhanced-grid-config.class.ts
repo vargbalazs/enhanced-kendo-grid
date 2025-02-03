@@ -25,6 +25,7 @@ import { GroupLevelButton } from '../interfaces/group-level-button.interface';
 import { Overlay } from '../interfaces/overlay.interface';
 import { InfoTooltip } from '../interfaces/info-tooltip.interface';
 import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event.interface';
+import { CellValueChangedEvent } from '../interfaces/cellvalue-changed-event.interface';
 
 export class EnhancedGridConfig {
   // the grid component
@@ -290,4 +291,12 @@ export class EnhancedGridConfig {
   // store the event emitter for cell value changing
   public cellValueChangingEvent: EventEmitter<CellValueChangingEvent> =
     new EventEmitter();
+
+  // store the event emitter for cell value changed event
+  public cellValueChangedEvent: EventEmitter<CellValueChangedEvent> =
+    new EventEmitter();
+
+  // store the event value for the cell value changing event
+  public cellValueChangingEventValue: CellValueChangingEvent | undefined =
+    undefined;
 }

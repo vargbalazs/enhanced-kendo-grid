@@ -232,4 +232,5 @@ function toggleCeckboxValue(
     newValue: !value,
   };
   config.cellValueChangingEvent.emit(cellValueChangingEvent);
+  config.cellValueChangedEvent.emit(cellValueChangingEvent);
 }

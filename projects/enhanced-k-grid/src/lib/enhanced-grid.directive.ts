@@ -32,6 +32,7 @@ import { InfoTooltip } from './interfaces/info-tooltip.interface';
 import { IntlService } from '@progress/kendo-angular-intl';
 import { PastingEvent } from './interfaces/pasting-event.interface';
 import { CellValueChangingEvent } from './interfaces/cellvalue-changing-event.interface';
+import { CellValueChangedEvent } from './interfaces/cellvalue-changed-event.interface';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -117,6 +118,9 @@ export class EnhancedGridDirective
 
   // event emitter for cell value changing
   @Output() cellValueChanging = new EventEmitter<CellValueChangingEvent>();
+
+  // event emitter for cell value changed event
+  @Output() cellValueChanged = new EventEmitter<CellValueChangedEvent>();
 
   // cell was double clicked
   private cellDblClicked: boolean = false;
@@ -321,6 +325,9 @@ export class EnhancedGridDirective
 
     // store the event emitter for cell value changing
     this.config.cellValueChangingEvent = this.cellValueChanging;
+
+    // store the event emitter for cell value changed
+    this.config.cellValueChangedEvent = this.cellValueChanged;
 
     // reset the grid
     this.resetState();
@@ -647,6 +654,7 @@ export class EnhancedGridDirective
         newValue: !value,
       };
       this.config.cellValueChangingEvent.emit(cellValueChangingEvent);
+      this.config.cellValueChangedEvent.emit(cellValueChangingEvent);
     }
   }
 
