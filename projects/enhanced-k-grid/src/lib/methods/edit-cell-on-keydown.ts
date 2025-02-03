@@ -82,14 +82,14 @@ export function editCellOnKeyDown(
     !NOT_ALLOWED_KEYS_FOR_EDITING.includes(e.key) && // the pressed key is a 'regular' one
     !grid.isEditingCell() // we are not in edit mode elsewhere in the grid
   ) {
-    // store the form group for the edited cell, but only if we are typing in a non-boolean field (reason see above)
-    if (!isFieldBoolean(config, grid))
-      methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     // if we are in a calculated row, then make the column not editable
     if (grid.activeCell.dataItem.calculated) {
       methods.disableEditingOnCalculatedRow(grid, config);
       return;
     }
+    // store the form group for the edited cell, but only if we are typing in a non-boolean field (reason see above)
+    if (!isFieldBoolean(config, grid))
+      methods.storeEditingFormGroup(grid, config, cellEditingFormGroupFn);
     // if the column is a checkbox column (it's value is a boolean), no editing is allowed -> return
     // in case of space switching the values is allowed, but after that also return
     if (isFieldBoolean(config, grid)) {
