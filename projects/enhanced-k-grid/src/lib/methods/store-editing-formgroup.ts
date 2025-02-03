@@ -14,6 +14,10 @@ export function storeEditingFormGroup(
   config: EnhancedGridConfig,
   cellEditingFormGroupFn: (args: CreateFormGroupArgs) => FormGroup
 ) {
+  // if we have a date column and double click on the cell, the grid.activeCell has it's value
+  // but if we select a new day by clicking the calendar icon and selecting a day from the calendar,
+  // the grid.activeCell is undefined, that's why we have to store the activeCell
+  const activeCell = grid.activeCell;
   const args: CreateFormGroupArgs = {
     dataItem: grid.activeCell.dataItem,
     isNew: false,
@@ -61,7 +65,8 @@ export function storeEditingFormGroup(
   config.valueChanges$ = config.cellEditingFormGroup.valueChanges.subscribe(
     (dataItem) => {
       const keyAndField = methods.extractKeyAndField(
-        config.columns[grid.activeCell.colIndex].field
+        //config.columns[grid.activeCell.colIndex].field
+        config.columns[activeCell.colIndex].field
       );
       let oldValue: any = '';
       if (keyAndField.fieldName) {
@@ -80,7 +85,7 @@ export function storeEditingFormGroup(
       }
       const cellValueChangingEvent: CellValueChangingEvent = {
         cellEditingFormGroup: config.cellEditingFormGroup,
-        activeCell: grid.activeCell,
+        activeCell: activeCell, //grid.activeCell,
         keyAndField: keyAndField,
         oldValue: oldValue,
         newValue: newValue,
