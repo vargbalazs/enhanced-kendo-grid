@@ -22,3 +22,25 @@ The goal of this project was to create an excel like grid based on the existing 
 ## Documentation
 
 **1. Basic usage**
+
+To mark a grid as an enhanced one, use the attribute `enhancedGrid` on the griven grid, f. e.:
+
+```html
+<kendo-grid class="enhanced" style="width: 1500px" [style.maxHeight.%]="100" [kendoGridBinding]="rows" [kendoGridInCellEditing]="createFormGroup" [selectable]="selectableSettings" kendoGridSelectBy [(selectedKeys)]="selectedCells" [navigable]="true" [filterable]="true" [sortable]="true" [pageable]="true" [pageSize]="20" enhancedGrid> </kendo-grid>
+```
+
+It is important to note, that you have to add the class `enhanced` to the class list of the grid.
+
+**2. Navigation and selecting**
+
+By default, you can navigate within the grid with the arrow keys. If you want to navigate also with the `Tab` key, then set the following input property:
+
+```html
+[changeCellFocusWithTab]="true"
+```
+
+If you want to select cells while holding the `Shift` key or with the mouse, then add the following input properties to the grid:
+
+```html
+[selectingWithShift]="true" [selectingWithMouse]="true"
+```
