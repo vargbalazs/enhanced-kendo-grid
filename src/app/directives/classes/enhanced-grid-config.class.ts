@@ -299,4 +299,7 @@ export class EnhancedGridConfig {
   // store the event value for the cell value changing event
   public cellValueChangingEventValue: CellValueChangingEvent | undefined =
     undefined;
+
+  // store the collapsed row indexes
+  public collapsedRowIndexes: number[] = [];
 }

@@ -1,6 +1,7 @@
 import { Renderer2 } from '@angular/core';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import jquery from 'jquery';
+import * as methods from './index';
 
 // animates the other table rows, if one calculated row was expanded or collapsed
 export function animateTableRows(
@@ -20,12 +21,6 @@ export function animateTableRows(
   );
   const rowIndexesCount = row?.rowIndexes?.length;
   const rowIndexes = row?.rowIndexes;
-  // set the state of the collapsed/expanded rows in the grid data
-  config.gridData.forEach((row) => {
-    if (rowIndexes?.includes(row.orderIndex)) {
-      row.collapsed = state === 'collapsed';
-    }
-  });
   // determine the row align (we can't use the existing property, because this isn't always present, f. e.
   // if we declare a calc row with its position)
   const rowAlign = dataRowIndex < rowIndexes![0] ? 'top' : 'bottom';
@@ -165,6 +160,12 @@ export function animateTableRows(
         } else {
           detailRows!.show();
         }
+        // get the collapsed row indexes
+        methods.getCollapsedRowIndexes(config);
+        // set the state of the collapsed/expanded rows in the grid data
+        config.gridData.forEach((row) => {
+          row.collapsed = config.collapsedRowIndexes.includes(row.orderIndex);
+        });
       }, 700);
       break;
     case 'collapsed':
@@ -206,6 +207,12 @@ export function animateTableRows(
       }
       // do the animation
       collapsingGroup.slideUp(700);
+      // get the collapsed row indexes
+      methods.getCollapsedRowIndexes(config);
+      // set the state of the collapsed/expanded rows in the grid data
+      config.gridData.forEach((row) => {
+        row.collapsed = config.collapsedRowIndexes.includes(row.orderIndex);
+      });
       break;
   }
 }
