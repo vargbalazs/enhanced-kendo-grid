@@ -25,6 +25,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'normal-grid',
   templateUrl: './normal-grid.component.html',
   styleUrls: ['./normal-grid.component.css'],
+  standalone: false,
 })
 export class NormalGridComponent implements OnInit {
   rows: Row[] = rows;

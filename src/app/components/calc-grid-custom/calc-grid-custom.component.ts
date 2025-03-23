@@ -28,6 +28,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'calc-grid-custom',
   templateUrl: './calc-grid-custom.component.html',
   styleUrls: ['./calc-grid-custom.component.css'],
+  standalone: false,
 })
 export class CalcGridCustomComponent {
   @ViewChild(EnhancedGridDirective)

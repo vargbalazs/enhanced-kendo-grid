@@ -28,6 +28,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'calc-grid-top-grouped',
   templateUrl: './calc-grid-top-grouped.component.html',
   styleUrls: ['./calc-grid-top-grouped.component.css'],
+  standalone: false,
 })
 export class CalcGridTopGroupedComponent {
   @ViewChild(EnhancedGridDirective)

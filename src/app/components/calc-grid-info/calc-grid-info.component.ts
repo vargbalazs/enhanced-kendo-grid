@@ -38,6 +38,7 @@ import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directiv
   selector: 'calc-grid-info',
   templateUrl: './calc-grid-info.component.html',
   styleUrls: ['./calc-grid-info.component.css'],
+  standalone: false,
 })
 export class CalcGridInfoComponent implements OnInit, AfterViewInit {
   @ViewChild('infoTooltip', { static: true, read: ViewContainerRef })

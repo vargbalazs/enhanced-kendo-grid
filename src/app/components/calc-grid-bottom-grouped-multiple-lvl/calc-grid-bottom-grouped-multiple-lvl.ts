@@ -28,6 +28,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'calc-grid-bottom-grouped-multiple-lvl',
   templateUrl: './calc-grid-bottom-grouped-multiple-lvl.component.html',
   styleUrls: ['./calc-grid-bottom-grouped-multiple-lvl.component.css'],
+  standalone: false,
 })
 export class CalcGridBottomGroupedMultipleLevelComponent {
   @ViewChild(EnhancedGridDirective)

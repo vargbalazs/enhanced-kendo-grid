@@ -27,6 +27,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'grid-with-empty-row',
   templateUrl: './grid-with-empty-row.component.html',
   styleUrls: ['./grid-with-empty-row.component.css'],
+  standalone: false,
 })
 export class GridWithEmptyRowComponent {
   rows: Row[] = inject(DataService).generateData(50);

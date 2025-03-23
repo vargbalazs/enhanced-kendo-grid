@@ -27,6 +27,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'calc-grid-top',
   templateUrl: './calc-grid-top.component.html',
   styleUrls: ['./calc-grid-top.component.css'],
+  standalone: false,
 })
 export class CalcGridTopComponent {
   rows: Row[] = inject(DataService).generateData(50);

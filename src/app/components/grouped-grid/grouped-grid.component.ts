@@ -22,6 +22,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'grouped-grid',
   templateUrl: './grouped-grid.component.html',
   styleUrls: ['./grouped-grid.component.css'],
+  standalone: false,
 })
 export class GroupedGridComponent {
   rows: Row[] = rows;

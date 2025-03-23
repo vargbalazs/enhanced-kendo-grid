@@ -27,6 +27,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'calc-grid-bottom-grouped',
   templateUrl: './calc-grid-bottom-grouped.component.html',
   styleUrls: ['./calc-grid-bottom-grouped.component.css'],
+  standalone: false,
 })
 export class CalcGridBottomGroupedComponent {
   rows: Row[] = inject(DataService).generateData(50);

@@ -27,6 +27,7 @@ import { Row } from 'src/app/model/row.model';
   selector: 'calc-grid-top-grouped-multiple-lvl',
   templateUrl: './calc-grid-top-grouped-multiple-lvl.component.html',
   styleUrls: ['./calc-grid-top-grouped-multiple-lvl.component.css'],
+  standalone: false,
 })
 export class CalcGridTopGroupedMultipleLevelComponent {
   rows: Row[] = inject(DataService).generateData(50);
