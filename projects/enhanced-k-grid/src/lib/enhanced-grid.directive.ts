@@ -36,6 +36,7 @@ import { CellValueChangedEvent } from './interfaces/cellvalue-changed-event.inte
 
 @Directive({
   selector: '[enhancedGrid]',
+  standalone: false,
 })
 export class EnhancedGridDirective
   implements OnInit, OnDestroy, AfterViewInit, OnChanges
