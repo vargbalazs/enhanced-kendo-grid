@@ -1,5 +1,8 @@
 <kendo-tabstrip>
-  <kendo-tabstrip-tab title="normal grid (with sorting, paging, filtering)">
+  <kendo-tabstrip-tab
+    title="normal grid (with sorting, paging, filtering)"
+    [selected]="true"
+  >
     <ng-template kendoTabContent>
       <normal-grid></normal-grid>
     </ng-template>
@@ -29,10 +32,7 @@
       <calc-grid-bottom-grouped></calc-grid-bottom-grouped>
     </ng-template>
   </kendo-tabstrip-tab>
-  <kendo-tabstrip-tab
-    title="calc grid top grouped multiple level"
-    [selected]="true"
-  >
+  <kendo-tabstrip-tab title="calc grid top grouped multiple level">
     <ng-template kendoTabContent>
       <calc-grid-top-grouped-multiple-lvl></calc-grid-top-grouped-multiple-lvl>
     </ng-template>
