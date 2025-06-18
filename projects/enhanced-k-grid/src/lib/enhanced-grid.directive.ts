@@ -253,6 +253,16 @@ export class EnhancedGridDirective
       }
     );
 
+    this.grid.dataStateChange.subscribe((e) => {
+      if (
+        this.rowCalculation.calculatedRows.length === 0 &&
+        this.colCalculation.calculatedColumns.length > 0
+      ) {
+        this.config.gridData = (<GridDataResult>this.grid.data).data;
+        methods.updateCalculatedColumns(this.config);
+      }
+    });
+
     // store whether the grid is sortable
     this.config.sortable = this.grid.sortable;
 
@@ -278,14 +288,21 @@ export class EnhancedGridDirective
         this.grid.pageable ||
         this.grid.groupable)
     ) {
-      console.error(
-        `A calculated grid can't be sorted, filtered, paged or grouped.`
-      );
-      this.grid.sortable = false;
-      this.config.sortable = false;
-      this.grid.filterable = false;
-      this.grid.pageable = false;
-      this.grid.groupable = false;
+      // if we have only column calculations, then sorting, filtering and paging should be allowed
+      if (
+        this.rowCalculation.calculatedRows.length === 0 &&
+        this.colCalculation.calculatedColumns.length > 0
+      ) {
+      } else {
+        console.error(
+          `A calculated grid can't be sorted, filtered, paged or grouped.`
+        );
+        this.grid.sortable = false;
+        this.config.sortable = false;
+        this.grid.filterable = false;
+        this.grid.pageable = false;
+        this.grid.groupable = false;
+      }
     }
 
     // store the showCellErrorMessages input property
@@ -371,6 +388,10 @@ export class EnhancedGridDirective
     ) {
       setTimeout(() => {
         methods.updateCalculatedColumns(this.config);
+        // calculate also for the entire grid data in order to get to work sorting, paging and filtering on calculated columns
+        // but only if we have no row calculations (because in this case sorting, paging and filtering isn't possible)
+        if (this.rowCalculation.calculatedRows.length === 0)
+          methods.updateCalculatedColumnsForEntireGrid(this.config);
       });
     }
 
