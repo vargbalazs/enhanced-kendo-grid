@@ -253,7 +253,7 @@ export class EnhancedGridDirective
       }
     );
 
-    this.grid.dataStateChange.subscribe((e) => {
+    this.config.dataStateChange$ = this.grid.dataStateChange.subscribe((e) => {
       if (
         this.rowCalculation.calculatedRows.length === 0 &&
         this.colCalculation.calculatedColumns.length > 0
@@ -522,6 +522,7 @@ export class EnhancedGridDirective
     this.config.columnClick$.unsubscribe();
     this.config.filterChange$.unsubscribe();
     this.config.sortChange$.unsubscribe();
+    this.config.dataStateChange$.unsubscribe();
     this.filterButtonListener();
     this.gridScrollListener();
     this.gridScrollEndListener();

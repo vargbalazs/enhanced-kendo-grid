@@ -112,6 +112,9 @@ export class EnhancedGridConfig {
   // subscription for sorting
   public sortChange$: Subscription = new Subscription();
 
+  // subscription for state changing
+  public dataStateChange$: Subscription = new Subscription();
+
   // array for the selected cells
   public selectedCells: CellSelectionItem[] = [];
 
