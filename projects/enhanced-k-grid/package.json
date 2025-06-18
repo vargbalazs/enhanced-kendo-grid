@@ -1,6 +1,6 @@
 {
   "name": "enhanced-k-grid",
-  "version": "0.0.224",
+  "version": "0.0.225",
   "peerDependencies": {
     "@angular/common": ">=19.2.0",
     "@angular/core": ">=19.2.0",
