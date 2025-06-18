@@ -16,6 +16,7 @@ import { CalcGridCustomModule } from './components/calc-grid-custom/calc-grid-cu
 import { CalcGridCustomRowModule } from './components/calc-grid-custom-row/calc-grid-custom-row.module';
 import { CalcGridInfoModule } from './components/calc-grid-info/calc-grid-info.module';
 import { GridWithEmptyRowModule } from './components/grid-with-empty-row/grid-with-empty-row.module';
+import { CalcGridOnlyColWithFiltSortPageModule } from './components/calc-grid-only-col-with-filt-sort-page/calc-grid-only-col-with-filt-sort-page.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { GridWithEmptyRowModule } from './components/grid-with-empty-row/grid-wi
     CalcGridCustomRowModule,
     CalcGridInfoModule,
     GridWithEmptyRowModule,
+    CalcGridOnlyColWithFiltSortPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
