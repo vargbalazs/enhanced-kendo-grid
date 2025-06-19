@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,11 +14,11 @@ import {
 } from '@progress/kendo-angular-grid';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { DataService } from 'src/app/data/data.service';
+import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directive';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
 import { ColumnCalculation } from 'src/app/directives/interfaces/column-calculation.interface';
 import { FormErrorMessage } from 'src/app/directives/interfaces/form-error-message.interface';
 import { ListSource } from 'src/app/directives/interfaces/list-source.interface';
-import { RowCalculation } from 'src/app/directives/interfaces/row-calculation.interface';
 import { AccountNumber } from 'src/app/model/account-number.model';
 import { Project } from 'src/app/model/project.model';
 import { Row } from 'src/app/model/row.model';
@@ -40,6 +40,8 @@ export class CalcGridOnlyColWithFiltSortPageComponent {
     'project.projNumber',
     'category',
   ];
+  @ViewChild(EnhancedGridDirective)
+  enhancedGridDirective!: EnhancedGridDirective;
 
   formGroup = this.formBuilder.group({
     accountNumber: [{ id: 0, accNumber: '', accName: '' }, Validators.required],
@@ -142,5 +144,9 @@ export class CalcGridOnlyColWithFiltSortPageComponent {
     return (control: AbstractControl): ValidationErrors | null => {
       return !control.value ? { customReq: true } : null;
     };
+  }
+
+  recalculate() {
+    this.enhancedGridDirective.recalculate();
   }
 }

@@ -253,6 +253,8 @@ export class EnhancedGridDirective
       }
     );
 
+    // subscribe to the data state change event
+    // this is needed, if we have a calc grid with only column calculation, because in this case also filtering, paging, and sorting should be possible
     this.config.dataStateChange$ = this.grid.dataStateChange.subscribe((e) => {
       if (
         this.rowCalculation.calculatedRows.length === 0 &&
@@ -858,6 +860,27 @@ export class EnhancedGridDirective
         this.config.gridData,
         fromCalcRow
       );
+    }
+  }
+
+  // recalculate the grid
+  recalculate() {
+    methods.updateCalculatedColumns(this.config);
+    // calculate also for the entire grid data in order to get to work sorting, paging and filtering on calculated columns
+    // but only if we have no row calculations (because in this case sorting, paging and filtering isn't possible)
+    if (this.rowCalculation.calculatedRows.length === 0)
+      methods.updateCalculatedColumnsForEntireGrid(this.config);
+    methods.updateCalculatedRows(this.config);
+    // if we have any custom calculated column, then we update the calc column values once again
+    // because it can be, that some of the custom calculated columns are using calculated row values
+    // we have also to update the rows once again in order to consider the new column values in the calculated rows
+    if (
+      this.config.colCalculation.calculatedColumns.some(
+        (calcCol) => calcCol.calculateFunction === 'custom'
+      )
+    ) {
+      methods.updateCalculatedColumns(this.config);
+      methods.updateCalculatedRows(this.config);
     }
   }
 }

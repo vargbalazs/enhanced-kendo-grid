@@ -166,6 +166,7 @@
     </ng-template>
   </kendo-grid>
 </div>
+<button kendoButton (click)="recalculate()">recalculate</button>
 <div>selected cells: {{ selectedCells | json }}</div>
 <div *ngIf="checkDuplicates()">no duplicates</div>
 <div *ngIf="!checkDuplicates()">duplicates</div>
