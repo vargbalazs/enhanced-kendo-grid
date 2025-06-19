@@ -26,6 +26,9 @@
     [errorMessages]="errorMessages"
     [listSources]="listSources"
   >
+    <ng-template kendoGridToolbarTemplate>
+      <kendo-textbox></kendo-textbox>
+    </ng-template>
     <kendo-grid-column
       field="id"
       [width]="100"

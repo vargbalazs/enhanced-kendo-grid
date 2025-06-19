@@ -164,7 +164,7 @@ export class EnhancedGridDirective
       this.config.gridData = (<GridDataResult>this.grid.data).data;
 
       // if the grid data is grouped
-      if (this.config.gridData[0].aggregates) {
+      if (this.config.gridData[0]?.aggregates) {
         this.config.gridData = methods.flattenGroupedData(
           (<GridDataResult>this.grid.data).data
         );
@@ -554,6 +554,12 @@ export class EnhancedGridDirective
 
     // if editing is allowed
     if (this.kendoGridInCellEditing) {
+      // if we type in an input control on the toolbar, then return
+      if (
+        (e.target as HTMLElement).parentElement?.parentElement?.nodeName ===
+        'KENDO-GRID-TOOLBAR'
+      )
+        return;
       methods.editCellOnKeyDown(
         this.config,
         e,

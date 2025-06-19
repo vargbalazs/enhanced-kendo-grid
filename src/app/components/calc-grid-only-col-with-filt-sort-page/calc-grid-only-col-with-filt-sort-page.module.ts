@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CalcGridOnlyColWithFiltSortPageComponent } from './calc-grid-only-col-with-filt-sort-page.component';
 import { ButtonModule } from '@progress/kendo-angular-buttons';
+import { InputsModule } from '@progress/kendo-angular-inputs';
 
 @NgModule({
   declarations: [CalcGridOnlyColWithFiltSortPageComponent],
@@ -16,7 +17,8 @@ import { ButtonModule } from '@progress/kendo-angular-buttons';
     EnhancedGridDirectiveModule,
     ComboBoxModule,
     ReactiveFormsModule,
-    ButtonModule
+    ButtonModule,
+    InputsModule,
   ],
   providers: [],
   exports: [CalcGridOnlyColWithFiltSortPageComponent],
