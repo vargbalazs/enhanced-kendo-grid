@@ -90,7 +90,7 @@
 }
 
 .enhanced .k-grid-edit-cell .k-input-md .k-input-inner {
-  padding: 0;
+  padding: 0 0 0 2px;
 }
 
 .enhanced .k-grid-edit-cell .k-input-sm {
@@ -463,4 +463,8 @@
 
 .enhanced .k-grid-edit-cell .k-datepicker {
   border-radius: 0px;
+}
+
+.enhanced .k-grid-edit-cell .k-numerictextbox .k-input-spinner {
+  display: none;
 }
