@@ -152,4 +152,19 @@ export function cellClose(
     setTimeout(() => {
       methods.initInfoIcons(config.infoTooltips, config);
     });
+  // if the data in the edited cell is a valid number, then write the number value back in the grid data
+  // with this, sorting and filtering will work as expected, because the edited value will be threated as a number
+  const dataField = config.columns[config.editedColIndex]?.field;
+  if (dataField) {
+    if (isValidNumber(config.gridData[config.editedRowIndex][dataField]))
+      config.gridData[config.editedRowIndex][dataField] =
+        +config.gridData[config.editedRowIndex][dataField];
+  }
+  config.editedColIndex = -1;
+  config.editedRowIndex = -1;
+}
+
+function isValidNumber(value: any): boolean {
+  const number = parseFloat(value);
+  return !isNaN(number) && isFinite(number);
 }
