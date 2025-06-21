@@ -180,6 +180,70 @@ export class EnhancedGridDirective
       this.config.fullGridData.forEach(
         (row, index) => (row.dataRowIndex = index)
       );
+
+      // if we have column calculations and these are valid
+      if (
+        this.colCalculation.calculatedColumns.length > 0 &&
+        !this.config.wrongCalcColSettings
+      ) {
+        setTimeout(() => {
+          methods.updateCalculatedColumns(this.config);
+          // calculate also for the entire grid data in order to get to work sorting, paging and filtering on calculated columns
+          // but only if we have no row calculations (because in this case sorting, paging and filtering isn't possible)
+          if (this.rowCalculation.calculatedRows.length === 0)
+            methods.updateCalculatedColumnsForEntireGrid(this.config);
+        });
+      }
+
+      // if we have row calculations and these are valid
+      if (
+        this.rowCalculation.calculatedRows.length > 0 &&
+        !this.config.wrongCalcRowSettings
+      ) {
+        setTimeout(() => {
+          methods.insertCalculatedRows(
+            this.rowCalculation,
+            this.config,
+            this.grid
+          );
+          methods.updateCalculatedRows(this.config);
+          // if we have any custom calculated column, then we update the calc column values once again
+          // because it can be, that some of the custom calculated columns are using calculated row values
+          // we have also to update the rows once again in order to consider the new column values in the calculated rows
+          if (
+            this.config.colCalculation.calculatedColumns.some(
+              (calcCol) => calcCol.calculateFunction === 'custom'
+            )
+          ) {
+            methods.updateCalculatedColumns(this.config);
+            methods.updateCalculatedRows(this.config);
+          }
+          // if the grid is a grouped one and the settings are ok, then add the group column(s)
+          if (
+            this.config.grouped &&
+            methods.checkGroupedGridSettings(this.config)
+          )
+            setTimeout(() => {
+              // init the group columns, but only if the grouped settings are valid
+              methods.initGroupColumns(this.config, this.renderer2);
+              // draw the group level btns
+              methods.drawGroupLevelBtns(this.config, this.renderer2);
+              // add a field 'collapsed' to the grid data - this is to store the collapsed state of the row
+              // if we have this, we can filter the hidden cells while selecting with shift much faster, than selecting with queryselector
+              // only calc grids can have collapsed rows, where paging, filtering and sorting aren't allowed, so we don't need to add this field to 'fullGridData'
+              this.config.gridData.forEach((row) => (row.collapsed = false));
+              // add also another field, which holds the order index of the rows
+              this.config.gridData.forEach(
+                (row, index) => (row.orderIndex = index)
+              );
+            });
+        });
+      }
+
+      // render the info tooltips - we need setTimeout, because we want also consider the calculated rows/columns, if any
+      setTimeout(() => {
+        methods.initInfoIcons(this.config.infoTooltips, this.config);
+      });
     }
   }
 
@@ -383,64 +447,64 @@ export class EnhancedGridDirective
     // check the settings for calculated columns
     methods.checkCalcColSettings(this.config);
 
-    // if we have column calculations and these are valid
-    if (
-      this.colCalculation.calculatedColumns.length > 0 &&
-      !this.config.wrongCalcColSettings
-    ) {
-      setTimeout(() => {
-        methods.updateCalculatedColumns(this.config);
-        // calculate also for the entire grid data in order to get to work sorting, paging and filtering on calculated columns
-        // but only if we have no row calculations (because in this case sorting, paging and filtering isn't possible)
-        if (this.rowCalculation.calculatedRows.length === 0)
-          methods.updateCalculatedColumnsForEntireGrid(this.config);
-      });
-    }
+    // // if we have column calculations and these are valid
+    // if (
+    //   this.colCalculation.calculatedColumns.length > 0 &&
+    //   !this.config.wrongCalcColSettings
+    // ) {
+    //   setTimeout(() => {
+    //     methods.updateCalculatedColumns(this.config);
+    //     // calculate also for the entire grid data in order to get to work sorting, paging and filtering on calculated columns
+    //     // but only if we have no row calculations (because in this case sorting, paging and filtering isn't possible)
+    //     if (this.rowCalculation.calculatedRows.length === 0)
+    //       methods.updateCalculatedColumnsForEntireGrid(this.config);
+    //   });
+    // }
 
-    // if we have row calculations and these are valid
-    if (
-      this.rowCalculation.calculatedRows.length > 0 &&
-      !this.config.wrongCalcRowSettings
-    ) {
-      setTimeout(() => {
-        methods.insertCalculatedRows(
-          this.rowCalculation,
-          this.config,
-          this.grid
-        );
-        methods.updateCalculatedRows(this.config);
-        // if we have any custom calculated column, then we update the calc column values once again
-        // because it can be, that some of the custom calculated columns are using calculated row values
-        // we have also to update the rows once again in order to consider the new column values in the calculated rows
-        if (
-          this.config.colCalculation.calculatedColumns.some(
-            (calcCol) => calcCol.calculateFunction === 'custom'
-          )
-        ) {
-          methods.updateCalculatedColumns(this.config);
-          methods.updateCalculatedRows(this.config);
-        }
-        // if the grid is a grouped one and the settings are ok, then add the group column(s)
-        if (
-          this.config.grouped &&
-          methods.checkGroupedGridSettings(this.config)
-        )
-          setTimeout(() => {
-            // init the group columns, but only if the grouped settings are valid
-            methods.initGroupColumns(this.config, this.renderer2);
-            // draw the group level btns
-            methods.drawGroupLevelBtns(this.config, this.renderer2);
-            // add a field 'collapsed' to the grid data - this is to store the collapsed state of the row
-            // if we have this, we can filter the hidden cells while selecting with shift much faster, than selecting with queryselector
-            // only calc grids can have collapsed rows, where paging, filtering and sorting aren't allowed, so we don't need to add this field to 'fullGridData'
-            this.config.gridData.forEach((row) => (row.collapsed = false));
-            // add also another field, which holds the order index of the rows
-            this.config.gridData.forEach(
-              (row, index) => (row.orderIndex = index)
-            );
-          });
-      });
-    }
+    // // if we have row calculations and these are valid
+    // if (
+    //   this.rowCalculation.calculatedRows.length > 0 &&
+    //   !this.config.wrongCalcRowSettings
+    // ) {
+    //   setTimeout(() => {
+    //     methods.insertCalculatedRows(
+    //       this.rowCalculation,
+    //       this.config,
+    //       this.grid
+    //     );
+    //     methods.updateCalculatedRows(this.config);
+    //     // if we have any custom calculated column, then we update the calc column values once again
+    //     // because it can be, that some of the custom calculated columns are using calculated row values
+    //     // we have also to update the rows once again in order to consider the new column values in the calculated rows
+    //     if (
+    //       this.config.colCalculation.calculatedColumns.some(
+    //         (calcCol) => calcCol.calculateFunction === 'custom'
+    //       )
+    //     ) {
+    //       methods.updateCalculatedColumns(this.config);
+    //       methods.updateCalculatedRows(this.config);
+    //     }
+    //     // if the grid is a grouped one and the settings are ok, then add the group column(s)
+    //     if (
+    //       this.config.grouped &&
+    //       methods.checkGroupedGridSettings(this.config)
+    //     )
+    //       setTimeout(() => {
+    //         // init the group columns, but only if the grouped settings are valid
+    //         methods.initGroupColumns(this.config, this.renderer2);
+    //         // draw the group level btns
+    //         methods.drawGroupLevelBtns(this.config, this.renderer2);
+    //         // add a field 'collapsed' to the grid data - this is to store the collapsed state of the row
+    //         // if we have this, we can filter the hidden cells while selecting with shift much faster, than selecting with queryselector
+    //         // only calc grids can have collapsed rows, where paging, filtering and sorting aren't allowed, so we don't need to add this field to 'fullGridData'
+    //         this.config.gridData.forEach((row) => (row.collapsed = false));
+    //         // add also another field, which holds the order index of the rows
+    //         this.config.gridData.forEach(
+    //           (row, index) => (row.orderIndex = index)
+    //         );
+    //       });
+    //   });
+    // }
 
     // if filtering is enabled then add event listener to the filter row in order to
     // set the non-editable cell styles
@@ -495,10 +559,10 @@ export class EnhancedGridDirective
       this.config.overlay.originalHeight = getComputedStyle(grid).height;
     }
 
-    // render the info tooltips - we need setTimeout, because we want also consider the calculated rows/columns, if any
-    setTimeout(() => {
-      methods.initInfoIcons(this.config.infoTooltips, this.config);
-    });
+    // // render the info tooltips - we need setTimeout, because we want also consider the calculated rows/columns, if any
+    // setTimeout(() => {
+    //   methods.initInfoIcons(this.config.infoTooltips, this.config);
+    // });
 
     // register a scroll listener for removing a closable tooltip
     const gridContent = (<HTMLElement>(
