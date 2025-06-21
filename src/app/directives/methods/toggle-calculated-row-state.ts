@@ -87,9 +87,33 @@ export function toggleCalcRowState(
       }
     }
   }
-  renderer2.setProperty(
-    div,
-    'innerHTML',
-    `<span class="material-symbols-outlined">${icon}</span>`
-  );
+  // renderer2.setProperty(
+  //   div,
+  //   'innerHTML',
+  //   `<span class="material-symbols-outlined">${icon}</span>`
+  // );
+  switch (state) {
+    case 'expanded':
+      if (config.expandIconClass === '') {
+        renderer2.setProperty(div, 'innerHTML', `<span>+</span>`);
+      } else {
+        renderer2.setProperty(
+          div,
+          'innerHTML',
+          `<span class="${config.expandIconClass}"></span>`
+        );
+      }
+      break;
+    case 'collapsed':
+      if (config.collapseIconClass === '') {
+        renderer2.setProperty(div, 'innerHTML', `<span>-</span>`);
+      } else {
+        renderer2.setProperty(
+          div,
+          'innerHTML',
+          `<span class="${config.collapseIconClass}"></span>`
+        );
+      }
+      break;
+  }
 }
