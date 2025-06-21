@@ -305,4 +305,10 @@ export class EnhancedGridConfig {
 
   // store the collapsed row indexes
   public collapsedRowIndexes: number[] = [];
+
+  // class for expand icon in grouped grid
+  public expandIconClass: string = '';
+
+  // class for collapse icon in grouped grid
+  public collapseIconClass: string = '';
 }

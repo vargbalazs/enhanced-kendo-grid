@@ -105,6 +105,12 @@ export class EnhancedGridDirective
   // input, whether the values of collapsed rows should be copied
   @Input() copyCollapsedRows: boolean = true;
 
+  // input for expand icon class
+  @Input() expandIconClass: string = '';
+
+  // input for collapse icon class
+  @Input() collapseIconClass: string = '';
+
   // event emitter for updating the 'selectedKeys' input
   @Output() selectedKeysChange = new EventEmitter<CellSelectionItem[]>();
 
@@ -412,6 +418,10 @@ export class EnhancedGridDirective
 
     // store the event emitter for cell value changed
     this.config.cellValueChangedEvent = this.cellValueChanged;
+
+    // store the expand/collapse icon classes
+    this.config.expandIconClass = this.expandIconClass;
+    this.config.collapseIconClass = this.collapseIconClass;
 
     // reset the grid
     this.resetState();

@@ -61,13 +61,37 @@ export function initGroupColumns(
     // build the div with the group indicator in it
     const div = renderer2.createElement('div') as HTMLDivElement;
     renderer2.addClass(div, 'group-indicator');
-    const icon =
-      calcRowStates[calcRowIndex].state === 'expanded' ? 'remove' : 'add';
-    renderer2.setProperty(
-      div,
-      'innerHTML',
-      `<span class="material-symbols-outlined">${icon}</span>`
-    );
+    // const icon =
+    //   calcRowStates[calcRowIndex].state === 'expanded' ? 'remove' : 'add';
+    // renderer2.setProperty(
+    //   div,
+    //   'innerHTML',
+    //   `<span class="material-symbols-outlined">${icon}</span>`
+    // );
+    switch (calcRowStates[calcRowIndex].state) {
+      case 'expanded':
+        if (config.collapseIconClass === '') {
+          renderer2.setProperty(div, 'innerHTML', `<span>-</span>`);
+        } else {
+          renderer2.setProperty(
+            div,
+            'innerHTML',
+            `<span class="${config.collapseIconClass}"></span>`
+          );
+        }
+        break;
+      case 'collapsed':
+        if (config.expandIconClass === '') {
+          renderer2.setProperty(div, 'innerHTML', `<span>+</span>`);
+        } else {
+          renderer2.setProperty(
+            div,
+            'innerHTML',
+            `<span class="${config.expandIconClass}"></span>`
+          );
+        }
+        break;
+    }
     // add calc row state, calc row name and group level as attributes
     renderer2.setAttribute(div, 'state', calcRowStates[calcRowIndex].state);
     renderer2.setAttribute(
