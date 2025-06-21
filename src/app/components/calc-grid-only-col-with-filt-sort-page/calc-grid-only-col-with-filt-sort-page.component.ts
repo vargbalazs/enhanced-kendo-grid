@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,6 +12,7 @@ import {
   CreateFormGroupArgs,
   SelectableSettings,
 } from '@progress/kendo-angular-grid';
+import { delay, Observable, of } from 'rxjs';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { DataService } from 'src/app/data/data.service';
 import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directive';
@@ -29,8 +30,9 @@ import { Row } from 'src/app/model/row.model';
   styleUrls: ['./calc-grid-only-col-with-filt-sort-page.component.css'],
   standalone: false,
 })
-export class CalcGridOnlyColWithFiltSortPageComponent {
+export class CalcGridOnlyColWithFiltSortPageComponent implements OnInit {
   rows: Row[] = inject(DataService).generateData(50);
+  rows$!: Observable<Row[]>;
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   frozenColumns = [
@@ -120,6 +122,10 @@ export class CalcGridOnlyColWithFiltSortPageComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.createFormGroup = this.createFormGroup.bind(this);
+  }
+
+  ngOnInit(): void {
+    this.rows$ = of(this.rows).pipe(delay(2000));
   }
 
   createFormGroup(args: CreateFormGroupArgs): FormGroup {

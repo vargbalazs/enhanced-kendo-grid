@@ -33,6 +33,7 @@ import { Row } from 'src/app/model/row.model';
 import { InfoTooltipComponent } from './info-tooltip/info-tooltip.component';
 import { InfoTooltipTwoComponent } from './info-tooltip-2/info-tooltip-2.component';
 import { EnhancedGridDirective } from 'src/app/directives/enhanced-grid.directive';
+import { delay, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'calc-grid-info',
@@ -46,6 +47,7 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
   @ViewChild(EnhancedGridDirective)
   enhancedGridDirective!: EnhancedGridDirective;
   rows: Row[] = inject(DataService).generateData(50);
+  rows$!: Observable<Row[]>;
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   frozenColumns = [
@@ -381,24 +383,47 @@ export class CalcGridInfoComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.rows$ = of(this.rows).pipe(
+      delay(2000),
+      tap(() => {
+        setTimeout(() => {
+          const normalValue = this.enhancedGridDirective.getCellValue(
+            'category',
+            'cat 2',
+            'feb'
+          );
+          console.log(`cat 2 - feb: ${normalValue}`);
+          setTimeout(() => {
+            const calcRowValue = this.enhancedGridDirective.getCellValue(
+              'id',
+              'cat 1 sum',
+              'feb',
+              true
+            );
+            console.log(`cat 1 sum - feb: ${calcRowValue}`);
+          });
+        });
+      })
+    );
+  }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      const normalValue = this.enhancedGridDirective.getCellValue(
-        'category',
-        'cat 2',
-        'feb'
-      );
-      //console.log(`cat 2 - feb: ${normalValue}`);
-      const calcRowValue = this.enhancedGridDirective.getCellValue(
-        'id',
-        'cat 1 sum',
-        'feb',
-        true
-      );
-      //console.log(`cat 1 sum - feb: ${calcRowValue}`);
-    });
+    // setTimeout(() => {
+    //   const normalValue = this.enhancedGridDirective.getCellValue(
+    //     'category',
+    //     'cat 2',
+    //     'feb'
+    //   );
+    //   //console.log(`cat 2 - feb: ${normalValue}`);
+    //   const calcRowValue = this.enhancedGridDirective.getCellValue(
+    //     'id',
+    //     'cat 1 sum',
+    //     'feb',
+    //     true
+    //   );
+    //   //console.log(`cat 1 sum - feb: ${calcRowValue}`);
+    // });
   }
 
   getCellValue() {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,6 +12,7 @@ import {
   CreateFormGroupArgs,
   SelectableSettings,
 } from '@progress/kendo-angular-grid';
+import { delay, Observable, of } from 'rxjs';
 import { accountNumbers, calcGridRows, projects } from 'src/app/data/data';
 import { DataService } from 'src/app/data/data.service';
 import { Aggregate } from 'src/app/directives/interfaces/aggregate.interface';
@@ -29,8 +30,9 @@ import { Row } from 'src/app/model/row.model';
   styleUrls: ['./calc-grid-top-grouped-multiple-lvl.component.css'],
   standalone: false,
 })
-export class CalcGridTopGroupedMultipleLevelComponent {
+export class CalcGridTopGroupedMultipleLevelComponent implements OnInit {
   rows: Row[] = inject(DataService).generateData(50);
+  rows$!: Observable<Row[]>;
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
   frozenColumns = [
@@ -229,6 +231,10 @@ export class CalcGridTopGroupedMultipleLevelComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.createFormGroup = this.createFormGroup.bind(this);
+  }
+
+  ngOnInit(): void {
+    this.rows$ = of(this.rows).pipe(delay(2000));
   }
 
   createFormGroup(args: CreateFormGroupArgs): FormGroup {

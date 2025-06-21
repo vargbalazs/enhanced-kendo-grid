@@ -154,14 +154,15 @@ export function cellClose(
     });
   // if the data in the edited cell is a valid number, then write the number value back in the grid data
   // with this, sorting and filtering will work as expected, because the edited value will be threated as a number
-  const dataField = config.columns[config.editedColIndex]?.field;
-  if (dataField) {
-    if (isValidNumber(config.gridData[config.editedRowIndex][dataField]))
-      config.gridData[config.editedRowIndex][dataField] =
-        +config.gridData[config.editedRowIndex][dataField];
+  const dataField = config.columns[config.editedCell.colIndex]?.field;
+  const rowIndex = grid.filterable
+    ? config.editedCell.rowIndex - 2
+    : config.editedCell.rowIndex - 1;
+  if (dataField && rowIndex >= 0) {
+    if (isValidNumber(config.gridData[rowIndex][dataField]))
+      config.gridData[rowIndex][dataField] =
+        +config.gridData[rowIndex][dataField];
   }
-  config.editedColIndex = -1;
-  config.editedRowIndex = -1;
 }
 
 function isValidNumber(value: any): boolean {
