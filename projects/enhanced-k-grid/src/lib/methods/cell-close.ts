@@ -40,6 +40,7 @@ export function cellClose(
     // if some filters or sorting are active, we use the 'editedRowIndexFilterOrSort' for putting the cell in edit mode
     if (grid.filter?.filters || grid.sort!.length > 0) {
       args.formGroup = config.originalDataItem;
+      console.log('invalid', config.editedRowIndexFilterOrSort);
       grid.editCell(
         config.editedRowIndexFilterOrSort,
         config.editedColIndex,
@@ -157,13 +158,20 @@ export function cellClose(
   const dataField = config.columns[config.editedCell.colIndex]?.field;
   // depending, whether the grid is filterable and/or filter or sorting is active, we adjust the row index
   let rowIndex = 0;
-  if (grid.filter?.filters || grid.sort!.length > 0)
+  if (grid.filter?.filters || grid.sort!.length > 0) {
     rowIndex = config.editedRowIndexFilterOrSort;
-  rowIndex = grid.filterable
-    ? config.editedCell.rowIndex - 2
-    : config.editedCell.rowIndex - 1;
+  } else {
+    rowIndex = grid.filterable
+      ? config.editedCell.rowIndex - 2
+      : config.editedCell.rowIndex - 1;
+  }
   if (dataField && rowIndex >= 0) {
-    if (isValidNumber(config.gridData[rowIndex][dataField]))
+    // we need the null check, because if we filter or sort, we use the editedRowIndexFilterOrSort for determining the row index
+    // and after the cell close method this value remains and if we filter again and the row numbers in the new filtered set
+    // are lower, than the preserved row index, then we would get an error
+    // we could also set the editedRowIndexFilterOrSort to -1 at the end of the method, and this works,
+    // but we won't do that for now (we won't mess up something unintentional)
+    if (isValidNumber(config.gridData[rowIndex]?.[dataField]))
       config.gridData[rowIndex][dataField] =
         +config.gridData[rowIndex][dataField];
   }
