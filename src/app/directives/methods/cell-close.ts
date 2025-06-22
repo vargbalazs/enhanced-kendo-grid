@@ -155,7 +155,11 @@ export function cellClose(
   // if the data in the edited cell is a valid number, then write the number value back in the grid data
   // with this, sorting and filtering will work as expected, because the edited value will be threated as a number
   const dataField = config.columns[config.editedCell.colIndex]?.field;
-  const rowIndex = grid.filterable
+  // depending, whether the grid is filterable and/or filter or sorting is active, we adjust the row index
+  let rowIndex = 0;
+  if (grid.filter?.filters || grid.sort!.length > 0)
+    rowIndex = config.editedRowIndexFilterOrSort;
+  rowIndex = grid.filterable
     ? config.editedCell.rowIndex - 2
     : config.editedCell.rowIndex - 1;
   if (dataField && rowIndex >= 0) {
