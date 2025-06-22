@@ -40,7 +40,6 @@ export function cellClose(
     // if some filters or sorting are active, we use the 'editedRowIndexFilterOrSort' for putting the cell in edit mode
     if (grid.filter?.filters || grid.sort!.length > 0) {
       args.formGroup = config.originalDataItem;
-      console.log('invalid', config.editedRowIndexFilterOrSort);
       grid.editCell(
         config.editedRowIndexFilterOrSort,
         config.editedColIndex,
