@@ -433,8 +433,8 @@ export class EnhancedGridDirective
       this.grid.columnList.toArray()
     )).filter((c) => !c.hidden);
 
-    // get the non-editable columns
-    (<ColumnComponent[]>this.grid.columnList.toArray()).forEach((c, i) => {
+    // get the non-editable columns without the hidden ones, that's why we use the config.columns array from above
+    this.config.columns.forEach((c, i) => {
       if (!c.editable)
         this.config.nonEditableColumns.push({ column: c, index: i });
     });
