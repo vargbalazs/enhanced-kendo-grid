@@ -141,11 +141,13 @@ export function cellClose(
     config.statusChanges$.unsubscribe();
     config.valueChanges$.unsubscribe();
     // hide the error tooltip
-    let activeCell = config.gridBody.querySelector(
-      `[kendogridlogicalrow][data-kendo-grid-item-index="${grid.activeCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${grid.activeCell.colIndex}"]`
-    );
-    const rect = activeCell!.getBoundingClientRect();
-    methods.toggleErrorTooltip(config, rect, 'off');
+    if (grid.activeCell) {
+      let activeCell = config.gridBody.querySelector(
+        `[kendogridlogicalrow][data-kendo-grid-item-index="${grid.activeCell.dataRowIndex}"] [kendogridcell][data-kendo-grid-column-index="${grid.activeCell.colIndex}"]`
+      );
+      const rect = activeCell!.getBoundingClientRect();
+      methods.toggleErrorTooltip(config, rect, 'off');
+    }
   }
   // if we have some info tooltips
   if (config.infoTooltips.length > 0)
