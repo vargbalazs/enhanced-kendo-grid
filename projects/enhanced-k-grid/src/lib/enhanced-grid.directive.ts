@@ -963,4 +963,9 @@ export class EnhancedGridDirective
       methods.updateCalculatedRows(this.config);
     }
   }
+
+  // close the actual edited cell
+  closeEditedCell() {
+    methods.closeEditedCell(this.grid, this.config, this.resetState.bind(this));
+  }
 }
