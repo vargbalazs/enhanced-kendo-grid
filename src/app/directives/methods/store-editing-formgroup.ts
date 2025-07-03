@@ -4,7 +4,7 @@ import {
 } from '@progress/kendo-angular-grid';
 import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 import { FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import * as methods from './index';
 import { CellValueChangingEvent } from '../interfaces/cellvalue-changing-event.interface';
 
@@ -27,7 +27,7 @@ export function storeEditingFormGroup(
   config.cellEditingFormGroup = cellEditingFormGroupFn(args);
   // subscribe for status changing
   config.statusChanges$ = config.cellEditingFormGroup.statusChanges
-    .pipe(debounceTime(1))
+    .pipe(distinctUntilChanged())
     .subscribe((status) => {
       // if showing error messages is allowed, then assign the error messages to the form errors
       if (config.showCellErrorMessages) {
