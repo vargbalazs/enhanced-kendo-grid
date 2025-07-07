@@ -33,6 +33,7 @@ import { IntlService } from '@progress/kendo-angular-intl';
 import { PastingEvent } from './interfaces/pasting-event.interface';
 import { CellValueChangingEvent } from './interfaces/cellvalue-changing-event.interface';
 import { CellValueChangedEvent } from './interfaces/cellvalue-changed-event.interface';
+import { ARROWS } from './consts/constants';
 
 @Directive({
   selector: '[enhancedGrid]',
@@ -619,6 +620,29 @@ export class EnhancedGridDirective
       return;
     }
 
+    if (e.shiftKey && Object.values(ARROWS).includes(e.key as ARROWS)) {
+      // if selecting with shift is allowed
+      if (this.selectingWithShift) {
+        methods.selectWithShift(
+          e,
+          this.grid,
+          this.config,
+          this.resetState.bind(this),
+          this.updateState.bind(this),
+          this.renderer2
+        );
+      }
+      // if there are frozen columns
+      if (this.config.frozenColumns.length > 0)
+        methods.scrollToColumnKeyboard(
+          this.config,
+          this.grid,
+          e,
+          this.renderer2
+        );
+      return;
+    }
+
     // general reset
     methods.resetOnKeydown(e, this.resetState.bind(this), this.config);
 
@@ -645,18 +669,6 @@ export class EnhancedGridDirective
       setTimeout(() => {
         methods.initInfoIcons(this.infoTooltips, this.config);
       });
-    }
-
-    // if selecting with shift is allowed
-    if (this.selectingWithShift) {
-      methods.selectWithShift(
-        e,
-        this.grid,
-        this.config,
-        this.resetState.bind(this),
-        this.updateState.bind(this),
-        this.renderer2
-      );
     }
 
     // if copying is allowed

@@ -31,7 +31,7 @@ import { Row } from 'src/app/model/row.model';
   standalone: false,
 })
 export class CalcGridOnlyColWithFiltSortPageComponent implements OnInit {
-  rows: Row[] = inject(DataService).generateData(200);
+  rows: Row[] = inject(DataService).generateData(60);
   rows$!: Observable<Row[]>;
   accountNumbers: AccountNumber[] = accountNumbers;
   projects: Project[] = projects;
