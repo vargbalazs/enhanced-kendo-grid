@@ -159,9 +159,9 @@ export function selectWithShift(
       config.rowIndex != config.lastSelectedCell.itemKey ||
       config.colIndex != config.lastSelectedCell.columnKey
     ) {
-      methods.markCellsAsSelected(config, grid);
-      methods.calculateAggregates(config);
-      updateFn();
+      //methods.markCellsAsSelected(config, grid);
+      //methods.calculateAggregates(config);
+      //updateFn();
 
       // set the indexes to the indexes of the last selected cell
       config.rowIndex = config.lastSelectedCell.itemKey;

@@ -709,6 +709,17 @@ export class EnhancedGridDirective
       methods.navigateOnGroupedRows(e, this.config, this.grid);
   }
 
+  @HostListener('document:keyup', ['$event'])
+  onKeyUp(e: KeyboardEvent) {
+    if (this.selectingWithShift) {
+      if (e.shiftKey && Object.values(ARROWS).includes(e.key as ARROWS)) {
+        methods.markCellsAsSelected(this.config, this.grid);
+        methods.calculateAggregates(this.config);
+        this.updateState();
+      }
+    }
+  }
+
   @HostListener('click', ['$event'])
   onClick(e: PointerEvent) {
     // if we clicked the header, the filter row, or any other part of the grid except a data cell
