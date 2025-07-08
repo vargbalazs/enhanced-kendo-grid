@@ -1,9 +1,13 @@
 import { GridComponent, GridDataResult } from '@progress/kendo-angular-grid';
 import * as methods from './index';
+import { EnhancedGridConfig } from '../classes/enhanced-grid-config.class';
 
 // indicates, if we reached the right end of the data table
-export function rightEndReached(grid: GridComponent): boolean {
-  return grid.activeCell.colIndex >= grid.columns.length - 1;
+export function rightEndReached(
+  grid: GridComponent,
+  config: EnhancedGridConfig
+): boolean {
+  return grid.activeCell.colIndex >= config.columns.length - 1;
 }
 
 // indicates, if we reached the left end of the data table

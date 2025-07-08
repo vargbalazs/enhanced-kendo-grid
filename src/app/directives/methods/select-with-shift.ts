@@ -103,7 +103,7 @@ export function selectWithShift(
     switch (e.key) {
       case ARROWS.RIGHT:
         // exit if we reach one of the edges
-        if (methods.rightEndReached(grid)) return;
+        if (methods.rightEndReached(grid, config)) return;
         config.lastSelectedCell = {
           itemKey: grid.activeCell.dataRowIndex,
           columnKey: grid.activeCell.colIndex + 1,
