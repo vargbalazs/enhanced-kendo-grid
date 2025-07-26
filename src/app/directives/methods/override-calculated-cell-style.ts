@@ -8,7 +8,7 @@ export function overrideCalculatedCellStyle(config: EnhancedGridConfig) {
   // this is needed, because if we select a calculated cell, the style is gone,
   // but if we deselect it, we need the style back
   for (let i = 0; i <= config.columns.length - 1; i++) {
-    config.columns[i].cssClass = config.columnStyles[i].cssClasses;
+    config.columns[i].cssClass = config.columnStyles[i]?.cssClasses;
   }
   // removes the class from a calculated cell
   for (let i = 0; i <= config.selectedCells.length - 1; i++) {
