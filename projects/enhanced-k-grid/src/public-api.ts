@@ -10,3 +10,4 @@ export * from './lib/interfaces/info-tooltip.interface';
 export * from './lib/interfaces/pasting-event.interface';
 export * from './lib/interfaces/cellvalue-changing-event.interface';
 export * from './lib/interfaces/cellvalue-changed-event.interface';
+export * from './lib/interfaces/calculated-row.interface';
