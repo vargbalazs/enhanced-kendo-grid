@@ -117,72 +117,77 @@ export class CalcGridTopComponent {
   };
 
   rowCalculation: RowCalculation = {
-    titleField: 'id',
-    calculatedFields: [
-      'jan',
-      'feb',
-      'mar',
-      'apr',
-      'may',
-      'jun',
-      'totalq1',
-      'totalq2',
-      'total1hy',
-    ],
-    calculatedRows: [
-      {
-        name: 'calcsum1',
-        title: 'cat 1 sum',
-        calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
-        calculateFunction: 'sum',
-        cssClass: 'custom-calcrow-1',
-        align: 'top',
-      },
-      {
-        name: 'calcsum2',
-        title: 'cat 2 sum',
-        calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
-        calculateFunction: 'sum',
-        cssClass: 'custom-calcrow-2',
-        align: 'top',
-      },
-      {
-        name: 'calcsum3',
-        title: 'cat 1+ cat 2 sum',
-        position: 0,
-        calculateByRows: ['calcsum1', 'calcsum2'],
-        calculateFunction: 'sum',
-        cssClass: 'custom-calcrow-3',
-      },
-      {
-        name: 'calcsum4',
-        title: 'cat 3 sum',
-        position: 23,
-        calculateByRows: { from: 24, to: 33 },
-        calculateFunction: 'sum',
-        cssClass: 'custom-calcrow-4',
-      },
-      {
-        name: 'calcsum5',
-        title: 'cat 4 sum',
-        position: 34,
-        calculateByRows: {
-          from: { field: 'id', value: 31 },
-          to: { field: 'id', value: 40 },
-        },
-        calculateFunction: 'sum',
-        cssClass: 'custom-calcrow-5',
-      },
-      {
-        name: 'calcsum6',
-        title: 'cat 5 sum',
-        position: 45,
-        calculateByRows: { from: 46, to: 55 },
-        calculateFunction: 'sum',
-        cssClass: 'custom-calcrow-6',
-      },
-    ],
+    titleField: '',
+    calculatedFields: [],
+    calculatedRows: [],
   };
+  // {
+  //   titleField: 'id',
+  //   calculatedFields: [
+  //     'jan',
+  //     'feb',
+  //     'mar',
+  //     'apr',
+  //     'may',
+  //     'jun',
+  //     'totalq1',
+  //     'totalq2',
+  //     'total1hy',
+  //   ],
+  //   calculatedRows: [
+  //     {
+  //       name: 'calcsum1',
+  //       title: 'cat 1 sum',
+  //       calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
+  //       calculateFunction: 'sum',
+  //       cssClass: 'custom-calcrow-1',
+  //       align: 'top',
+  //     },
+  //     {
+  //       name: 'calcsum2',
+  //       title: 'cat 2 sum',
+  //       calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
+  //       calculateFunction: 'sum',
+  //       cssClass: 'custom-calcrow-2',
+  //       align: 'top',
+  //     },
+  //     {
+  //       name: 'calcsum3',
+  //       title: 'cat 1+ cat 2 sum',
+  //       position: 0,
+  //       calculateByRows: ['calcsum1', 'calcsum2'],
+  //       calculateFunction: 'sum',
+  //       cssClass: 'custom-calcrow-3',
+  //     },
+  //     {
+  //       name: 'calcsum4',
+  //       title: 'cat 3 sum',
+  //       position: 23,
+  //       calculateByRows: { from: 24, to: 33 },
+  //       calculateFunction: 'sum',
+  //       cssClass: 'custom-calcrow-4',
+  //     },
+  //     {
+  //       name: 'calcsum5',
+  //       title: 'cat 4 sum',
+  //       position: 34,
+  //       calculateByRows: {
+  //         from: { field: 'id', value: 31 },
+  //         to: { field: 'id', value: 40 },
+  //       },
+  //       calculateFunction: 'sum',
+  //       cssClass: 'custom-calcrow-5',
+  //     },
+  //     {
+  //       name: 'calcsum6',
+  //       title: 'cat 5 sum',
+  //       position: 45,
+  //       calculateByRows: { from: 46, to: 55 },
+  //       calculateFunction: 'sum',
+  //       cssClass: 'custom-calcrow-6',
+  //     },
+  //   ],
+  // };
 
   constructor(private formBuilder: FormBuilder) {
     this.createFormGroup = this.createFormGroup.bind(this);
@@ -209,6 +214,76 @@ export class CalcGridTopComponent {
   customReq(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return !control.value ? { customReq: true } : null;
+    };
+  }
+
+  switchToBottom() {
+    this.rowCalculation = {
+      titleField: 'id',
+      calculatedFields: [
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'totalq1',
+        'totalq2',
+        'total1hy',
+      ],
+      calculatedRows: [
+        {
+          name: 'calcsum1',
+          title: 'cat 1 sum',
+          calculateByField: { fieldName: 'category', fieldValue: 'cat 1' },
+          calculateFunction: 'sum',
+          cssClass: 'custom-calcrow-1',
+          align: 'top',
+        },
+        {
+          name: 'calcsum2',
+          title: 'cat 2 sum',
+          calculateByField: { fieldName: 'category', fieldValue: 'cat 2' },
+          calculateFunction: 'sum',
+          cssClass: 'custom-calcrow-2',
+          align: 'top',
+        },
+        {
+          name: 'calcsum3',
+          title: 'cat 1+ cat 2 sum',
+          position: 0,
+          calculateByRows: ['calcsum1', 'calcsum2'],
+          calculateFunction: 'sum',
+          cssClass: 'custom-calcrow-3',
+        },
+        {
+          name: 'calcsum4',
+          title: 'cat 3 sum',
+          position: 23,
+          calculateByRows: { from: 24, to: 33 },
+          calculateFunction: 'sum',
+          cssClass: 'custom-calcrow-4',
+        },
+        {
+          name: 'calcsum5',
+          title: 'cat 4 sum',
+          position: 34,
+          calculateByRows: {
+            from: { field: 'id', value: 31 },
+            to: { field: 'id', value: 40 },
+          },
+          calculateFunction: 'sum',
+          cssClass: 'custom-calcrow-5',
+        },
+        {
+          name: 'calcsum6',
+          title: 'cat 5 sum',
+          position: 45,
+          calculateByRows: { from: 46, to: 55 },
+          calculateFunction: 'sum',
+          cssClass: 'custom-calcrow-6',
+        },
+      ],
     };
   }
 }
