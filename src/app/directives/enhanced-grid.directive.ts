@@ -172,7 +172,8 @@ export class EnhancedGridDirective
       setTimeout(() => {
         if (!this.config.gridData.some((row) => row.calculated)) {
           console.log('not calculated');
-          console.log(this.rowCalculation);
+          // store the updated row calculation
+          this.config.rowCalculation = this.rowCalculation;
           // if we have row calculations and these are valid
           if (
             this.rowCalculation.calculatedRows.length > 0 &&
