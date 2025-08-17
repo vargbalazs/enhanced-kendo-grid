@@ -168,10 +168,8 @@ export class EnhancedGridDirective
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['rowCalculation']?.currentValue && this.dataLoaded) {
-      console.log('row calc change');
       setTimeout(() => {
         if (!this.config.gridData.some((row) => row.calculated)) {
-          console.log('not calculated');
           // store the updated row calculation
           this.config.rowCalculation = this.rowCalculation;
           // if we have row calculations and these are valid
@@ -218,9 +216,12 @@ export class EnhancedGridDirective
                     (row, index) => (row.orderIndex = index)
                   );
                 });
-              console.log(this.config.gridData);
             });
           }
+          // render the info tooltips - we need setTimeout, because we want also consider the calculated rows/columns, if any
+          setTimeout(() => {
+            methods.initInfoIcons(this.config.infoTooltips, this.config);
+          });
         }
       });
     }
