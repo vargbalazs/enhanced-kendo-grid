@@ -150,6 +150,8 @@ export class EnhancedGridDirective
   // whether a checkbox cell was clicked
   private checkBoxColumnDblClicked: boolean = false;
 
+  private dataLoaded: boolean = false;
+
   constructor(
     private grid: GridComponent,
     private renderer2: Renderer2,
@@ -165,7 +167,64 @@ export class EnhancedGridDirective
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['rowCalculation']?.currentValue && this.dataLoaded) {
+      console.log('row calc change');
+      setTimeout(() => {
+        if (!this.config.gridData.some((row) => row.calculated)) {
+          console.log('not calculated');
+          console.log(this.rowCalculation);
+          // if we have row calculations and these are valid
+          if (
+            this.rowCalculation.calculatedRows.length > 0 &&
+            !this.config.wrongCalcRowSettings
+          ) {
+            setTimeout(() => {
+              methods.insertCalculatedRows(
+                this.rowCalculation,
+                this.config,
+                this.grid
+              );
+              methods.updateCalculatedRows(this.config);
+              // if we have any custom calculated column, then we update the calc column values once again
+              // because it can be, that some of the custom calculated columns are using calculated row values
+              // we have also to update the rows once again in order to consider the new column values in the calculated rows
+              if (
+                this.config.colCalculation.calculatedColumns.some(
+                  (calcCol) => calcCol.calculateFunction === 'custom'
+                )
+              ) {
+                methods.updateCalculatedColumns(this.config);
+                methods.updateCalculatedRows(this.config);
+              }
+              // if the grid is a grouped one and the settings are ok, then add the group column(s)
+              if (
+                this.config.grouped &&
+                methods.checkGroupedGridSettings(this.config)
+              )
+                setTimeout(() => {
+                  // init the group columns, but only if the grouped settings are valid
+                  methods.initGroupColumns(this.config, this.renderer2);
+                  // draw the group level btns
+                  methods.drawGroupLevelBtns(this.config, this.renderer2);
+                  // add a field 'collapsed' to the grid data - this is to store the collapsed state of the row
+                  // if we have this, we can filter the hidden cells while selecting with shift much faster, than selecting with queryselector
+                  // only calc grids can have collapsed rows, where paging, filtering and sorting aren't allowed, so we don't need to add this field to 'fullGridData'
+                  this.config.gridData.forEach(
+                    (row) => (row.collapsed = false)
+                  );
+                  // add also another field, which holds the order index of the rows
+                  this.config.gridData.forEach(
+                    (row, index) => (row.orderIndex = index)
+                  );
+                });
+              console.log(this.config.gridData);
+            });
+          }
+        }
+      });
+    }
     if (changes['kendoGridBinding']?.currentValue) {
+      this.dataLoaded = true;
       // get the data of the grid
       // if paging is enabled, this gets only the first page data
       this.config.gridData = (<GridDataResult>this.grid.data).data;
